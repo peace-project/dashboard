@@ -1,0 +1,127 @@
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                   xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/20100501/BPMN20.xsd"
+                   id="ComplexGatewayTest"
+                   targetNamespace="http://dsg.wiai.uniba.de/betsy/bpmn/complexGateway">
+   <bpmn2:process id="ComplexGateway" isExecutable="true">
+      <bpmn2:startEvent id="StartEvent" name="Start">
+         <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+      </bpmn2:startEvent>
+      <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="StartEvent" targetRef="start"/>
+      <bpmn2:scriptTask scriptFormat="groovy" id="start" name="Start">
+         <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+         <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing><bpmn2:script><![CDATA[
+try {
+    java.io.File f = new java.io.File("log" + testCaseNumber + ".txt");
+    f.createNewFile();
+} catch (java.io.IOException ignore) {}
+]]></bpmn2:script></bpmn2:scriptTask>
+      <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="start" targetRef="ComplexGateway_1"/>
+      <bpmn2:complexGateway id="ComplexGateway_1" gatewayDirection="Diverging">
+         <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
+         <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
+         <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
+         <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
+      </bpmn2:complexGateway>
+      <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="ComplexGateway_1"
+                          targetRef="ScriptTask_1">
+         <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">
+            ${test.contains("a")}
+        </bpmn2:conditionExpression>
+      </bpmn2:sequenceFlow>
+      <bpmn2:scriptTask scriptFormat="groovy" id="ScriptTask_1" name="Task 1">
+         <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
+         <bpmn2:outgoing>SequenceFlow_16</bpmn2:outgoing><bpmn2:script><![CDATA[
+java.io.BufferedWriter bw = new java.io.BufferedWriter(new java.io.FileWriter("log" + testCaseNumber + ".txt", true));
+try{
+    bw.append("SCRIPT_task1");
+    bw.newLine();
+} catch (java.io.IOException ignored){
+} finally {
+    if (bw != null) {
+        try {
+            bw.close();
+        } catch (java.io.IOException ignored){}
+    }
+}
+]]></bpmn2:script></bpmn2:scriptTask>
+      <bpmn2:sequenceFlow id="SequenceFlow_16" name="" sourceRef="ScriptTask_1"
+                          targetRef="ComplexGateway_2"/>
+      <bpmn2:sequenceFlow id="SequenceFlow_14" name="" sourceRef="ComplexGateway_1"
+                          targetRef="ScriptTask_2">
+         <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">
+            ${test.contains("b")}
+        </bpmn2:conditionExpression>
+      </bpmn2:sequenceFlow>
+      <bpmn2:scriptTask scriptFormat="groovy" id="ScriptTask_2" name="Task 2">
+         <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
+         <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing><bpmn2:script><![CDATA[
+java.io.BufferedWriter bw = new java.io.BufferedWriter(new java.io.FileWriter("log" + testCaseNumber + ".txt", true));
+try{
+    bw.append("SCRIPT_task2");
+    bw.newLine();
+} catch (java.io.IOException ignored){
+} finally {
+    if (bw != null) {
+        try {
+            bw.close();
+        } catch (java.io.IOException ignored){}
+    }
+}
+]]></bpmn2:script></bpmn2:scriptTask>
+      <bpmn2:sequenceFlow id="SequenceFlow_17" name="" sourceRef="ScriptTask_2"
+                          targetRef="ComplexGateway_2"/>
+      <bpmn2:sequenceFlow id="SequenceFlow_15" name="" sourceRef="ComplexGateway_1"
+                          targetRef="ScriptTask_3">
+         <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">
+            ${test.contains("c")}
+        </bpmn2:conditionExpression>
+      </bpmn2:sequenceFlow>
+      <bpmn2:scriptTask scriptFormat="groovy" id="ScriptTask_3" name="Task 3&#xD;&#xA;">
+         <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
+         <bpmn2:outgoing>SequenceFlow_18</bpmn2:outgoing><bpmn2:script><![CDATA[
+java.io.BufferedWriter bw = new java.io.BufferedWriter(new java.io.FileWriter("log" + testCaseNumber + ".txt", true));
+try{
+    bw.append("SCRIPT_task3");
+    bw.newLine();
+} catch (java.io.IOException ignored){
+} finally {
+    if (bw != null) {
+        try {
+            bw.close();
+        } catch (java.io.IOException ignored){}
+    }
+}
+]]></bpmn2:script></bpmn2:scriptTask>
+      <bpmn2:sequenceFlow id="SequenceFlow_18" name="" sourceRef="ScriptTask_3"
+                          targetRef="ComplexGateway_2"/>
+      <bpmn2:complexGateway id="ComplexGateway_2" gatewayDirection="Converging">
+         <bpmn2:incoming>SequenceFlow_16</bpmn2:incoming>
+         <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
+         <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
+         <bpmn2:outgoing>SequenceFlow_19</bpmn2:outgoing>
+         <bpmn2:activationCondition xsi:type="bpmn2:tFormalExpression">activationCount &gt;= 1</bpmn2:activationCondition>
+      </bpmn2:complexGateway>
+      <bpmn2:sequenceFlow id="SequenceFlow_19" name="" sourceRef="ComplexGateway_2" targetRef="end"/>
+      <bpmn2:scriptTask scriptFormat="groovy" id="end" name="End">
+         <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
+         <bpmn2:outgoing>SequenceFlow_20</bpmn2:outgoing><bpmn2:script><![CDATA[
+java.io.BufferedWriter bw = new java.io.BufferedWriter(new java.io.FileWriter("log" + testCaseNumber + ".txt", true));
+try{
+    bw.append("SCRIPT_task4");
+    bw.newLine();
+} catch (java.io.IOException ignored){
+} finally {
+    if (bw != null) {
+        try {
+            bw.close();
+        } catch (java.io.IOException ignored){}
+    }
+}
+]]></bpmn2:script></bpmn2:scriptTask>
+      <bpmn2:sequenceFlow id="SequenceFlow_20" name="" sourceRef="end" targetRef="EndEvent_2"/>
+      <bpmn2:endEvent id="EndEvent_2">
+         <bpmn2:incoming>SequenceFlow_20</bpmn2:incoming>
+      </bpmn2:endEvent>
+   </bpmn2:process>
+</bpmn2:definitions>

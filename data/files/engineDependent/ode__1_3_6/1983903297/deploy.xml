@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03"
+        xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+   <process xmlns:tns="http://dsg.wiai.uniba.de/betsy/activities/bpel/invokeCatchAll"
+            name="tns:Invoke-CatchAll">
+      <active>true</active>
+      <provide xmlns:tns="http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface"
+               partnerLink="MyRoleLink">
+         <service name="tns:Invoke-CatchAllTestInterfaceService" port="TestInterfacePort"/>
+      </provide>
+      <invoke xmlns:tns="http://dsg.wiai.uniba.de/betsy/activities/wsdl/testpartner"
+              partnerLink="TestPartnerLink">
+         <service name="tns:TestService" port="TestPort"/>
+      </invoke>
+   </process>
+</deploy>

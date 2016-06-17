@@ -1,0 +1,305 @@
+[
+  {
+    "result": {
+        "performance": {
+          "process_duration": {
+            "min": 0,
+            "max": 434,
+            "avg±ci": "1.22 ± 0.02",
+            "sd": 4.21
+          },
+          "throughput": {
+            "min": "",
+            "max": 1061.27,
+            "avg±ci": "",
+            "sd": ""
+          },
+          "number_of_process_instances": {
+            "min": "",
+            "max": 575210,
+            "avg±ci": "",
+            "sd": ""
+          }
+         },
+        "resource_utilisation": {
+          "cpu": {
+            "min": 24.48,
+            "max": 56.35,
+            "avg±ci": "48.52 ± 0.28",
+            "sd": 5.00
+          },
+          "ram": {
+            "min": 677.10,
+            "max": 1073.15,
+            "avg±ci": "991.86 ± 4.24",
+            "sd": 75.21
+          },
+          "io": {
+            "min": "",
+            "max": "",
+            "avg±ci": "",
+            "sd": ""
+          },
+          "size_of_stored_data": {
+            "min": "",
+            "max": "",
+            "avg±ci": "",
+            "sd": ""
+          }
+        } 
+    },
+    "logFiles": [
+    ],
+    "featureID": "Performance__BPMN__Default__Micro-Benchmark__Micro-Benchmark",
+    "tool": {
+      "toolID": "benchflow__0.1",
+      "name": "benchflow",
+      "version": "0.1"
+    },
+    "engineID": "camunda__7_4_0",
+    "engineDependentFiles": [
+
+    ],
+    "additionalData": [
+      {
+        "environment": {
+          "server1": {
+            "cpu_cores": 64,
+            "cpu_power": "1400 MHz",
+            "ram": 128,
+            "network": "10 Gbit/s",
+            "host_operating_system": "Ubuntu 14.04.3 LTS",
+            "docker_engine": "1.8.2",
+            "configuration": "Ubuntu 14.04.01, Oracle Server 7u79",
+            "docker_container": "",
+            "purpose": "Load Drivers"
+          },
+          "server2": {
+            "cpu_cores": 12,
+            "cpu_power": "800 MHz",
+            "ram": 64,
+            "network": "10 Gbit/s",
+            "host_operating_system": "Ubuntu 14.04.3 LTS",
+            "docker_engine": "1.8.2",
+            "configuration": "Ubuntu 14.04.01, Oracle Server 7u79, Apache Tomcat 7.0.62, Max Java Heap: 32GB, Max DB Connections Number: 100",
+            "docker_container": "camunda/camunda-bpm-platform:tomcat-7.4.0",
+            "purpose": "WfMS"
+          },
+          "server3": {
+            "cpu_cores": 64,
+            "cpu_power": "2300 MHz",
+            "ram": 128,
+            "network": "10 Gbit/s",
+            "host_operating_system": "Ubuntu 14.04.3 LTS",
+            "docker_engine": "1.8.2",
+            "configuration": "MySQL Community Server 5.6.26",
+            "docker_container": "mysql:5.6.26",
+            "purpose": "DBMS"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "result": {
+        "performance": {
+          "process_duration": {
+            "min": 0,
+            "max": 663,
+            "avg±ci": "8.16 ± 0.07",
+            "sd": 14.65
+          },
+          "throughput": {
+            "min": "",
+            "max": 1402.33,
+            "avg±ci": "",
+            "sd": ""
+          },
+          "number_of_process_instances": {
+            "min": "",
+            "max": 758659,
+            "avg±ci": "",
+            "sd": ""
+          }
+        },
+        "resource_utilisation": {
+          "cpu": {
+            "min": 20.18,
+            "max": 89.79,
+            "avg±ci": "66.10 ± 0.20",
+            "sd": 3.61
+          },
+          "ram": {
+            "min": 5086.21,
+            "max": 12472.32,
+            "avg±ci": "12201.16 ± 54.66",
+            "sd": 966.79
+          },
+          "io": {
+            "min": "",
+            "max": "",
+            "avg±ci": "",
+            "sd": ""
+          },
+          "size_of_stored_data": {
+            "min": "",
+            "max": "",
+            "avg±ci": "",
+            "sd": ""
+          }
+        }  
+     },
+    "logFiles": [
+    ],
+    "featureID": "Performance__BPMN__Default__Micro-Benchmark__Micro-Benchmark",
+    "tool": {
+      "toolID": "benchflow__0.1",
+      "name": "benchflow",
+      "version": "0.1"
+    },
+    "engineID": "engine_a__N_NN_N",
+    "engineDependentFiles": [
+
+    ],
+    "additionalData": [
+      {
+        "environment": {
+          "server1": {
+            "cpu_cores": 64,
+            "cpu_power": "1400 MHz",
+            "ram": 128,
+            "network": "10 Gbit/s",
+            "host_operating_system": "Ubuntu 14.04.3 LTS",
+            "docker_engine": "1.8.2",
+            "configuration": "Ubuntu 14.04.01, Oracle Server 7u79",
+            "docker_container": "",
+            "purpose": "Load Drivers"
+          },
+          "server2": {
+            "cpu_cores": 12,
+            "cpu_power": "800 MHz",
+            "ram": 64,
+            "network": "10 Gbit/s",
+            "host_operating_system": "Ubuntu 14.04.3 LTS",
+            "docker_engine": "1.8.2",
+            "configuration": "Ubuntu 14.04.01, Oracle Server 7u79, Max Java Heap: 32GB, Max DB Connections Number: 100",
+            "docker_container": "",
+            "purpose": "WfMS"
+          },
+          "server3": {
+            "cpu_cores": 64,
+            "cpu_power": "2300 MHz",
+            "ram": 128,
+            "network": "10 Gbit/s",
+            "host_operating_system": "Ubuntu 14.04.3 LTS",
+            "docker_engine": "1.8.2",
+            "configuration": "MySQL Community Server 5.6.26",
+            "docker_container": "mysql:5.6.26",
+            "purpose": "DBMS"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "result": {
+        "performance": {
+          "process_duration": {
+            "min": 6,
+            "max": 5195,
+            "avg±ci": "540.02 ± 122.30",
+            "sd": 1525.27
+          },
+          "throughput": {
+            "min": "",
+            "max": 1.78,
+            "avg±ci": "",
+            "sd": ""
+          },
+          "number_of_process_instances": {
+            "min": "",
+            "max": 2392,
+            "avg±ci": "",
+            "sd": ""
+          }
+        },
+        "resource_utilisation": {
+          "cpu": {
+            "min": 0.00,
+            "max": 12.78,
+            "avg±ci": "0.66 ± 0.05",
+            "sd": 1.24
+          },
+          "ram": {
+            "min": 2608.13,
+            "max": 2875.39,
+            "avg±ci": "2786.54 ± 1.77",
+            "sd": 74.86
+          },
+          "io": {
+            "min": "",
+            "max": "",
+            "avg±ci": "",
+            "sd": ""
+          },
+          "size_of_stored_data": {
+            "min": "",
+            "max": "",
+            "avg±ci": "",
+            "sd": ""
+          }
+        }
+    },
+    "logFiles": [
+    ],
+    "featureID": "Performance__BPMN__Default__Micro-Benchmark__Micro-Benchmark",
+    "tool": {
+      "toolID": "benchflow__0.1",
+      "name": "benchflow",
+      "version": "0.1"
+    },
+    "engineID": "engine_b__N_NN_N",
+    "engineDependentFiles": [
+
+    ],
+    "additionalData": [
+      {
+        "environment": {
+          "server1": {
+            "cpu_cores": 64,
+            "cpu_power": "1400 MHz",
+            "ram": 128,
+            "network": "10 Gbit/s",
+            "host_operating_system": "Ubuntu 14.04.3 LTS",
+            "docker_engine": "1.8.2",
+            "configuration": "Ubuntu 14.04.01, Oracle Server 7u79",
+            "docker_container": "",
+            "purpose": "Load Drivers"
+          },
+          "server2": {
+            "cpu_cores": 12,
+            "cpu_power": "800 MHz",
+            "ram": 64,
+            "network": "10 Gbit/s",
+            "host_operating_system": "Ubuntu 14.04.3 LTS",
+            "docker_engine": "1.8.2",
+            "configuration": "Ubuntu 14.04.01, Oracle Server 7u79, Apache Tomcat 7.0.62, Max Java Heap: 32GB, Max DB Connections Number: 100",
+            "docker_container": "",
+            "purpose": "WfMS"
+          },
+          "server3": {
+            "cpu_cores": 64,
+            "cpu_power": "2300 MHz",
+            "ram": 128,
+            "network": "10 Gbit/s",
+            "host_operating_system": "Ubuntu 14.04.3 LTS",
+            "docker_engine": "1.8.2",
+            "configuration": "MySQL Community Server 5.6.26",
+            "docker_container": "mysql:5.6.26",
+            "purpose": "DBMS"
+          }
+        }
+      }
+    ]
+  }
+]

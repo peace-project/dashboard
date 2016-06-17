@@ -1,0 +1,18 @@
+
+
+<ul class="filter-items" id="filter-items-engine-lastest">
+    <li><label class="filter-eng-item"><input type="checkbox" class="checkbox-filter" value="latest" id="cbox-lversions" checked=""><span class="checkbox-icon"></span>Latest versions</label></li>
+</ul>
+
+
+{{#each engines}}
+
+    <h3 class="filter-group-title" data-toggle="collapse" data-target="#filter-items-engine-{{name}}" aria-expanded="false" aria-controls="filter-items-engine-{{name}}">{{capitalize name}} <span class="entypo-right-open"></span></h3>
+
+<ul class="filter-items collapse" id="filter-items-engine-{{name}}">
+    <li><label class="filter-eng-item"><input type="checkbox" class="checkbox-filter" data-engine-all="{{name}}" value="all" id="all_engine_{{name}}"><span class="checkbox-icon"></span> All</label></li>
+    {{#each instances}}
+        <li><label class="filter-eng-item"><input type="checkbox" class="checkbox-filter" data-dimension="engines" data-engine="{{name}}" value="{{id}}"><span class="checkbox-icon"></span> {{versionLong}}</label></li>
+    {{/each}}
+    </ul>
+{{/each}}

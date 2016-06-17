@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <title>Performance Benchmark | PEACE Dashboard</title>
+</head>
+<body>
+
+	<header class="mainhead">
+
+		<nav class="navbar navbar-default">
+			<div id="main-navbar" class="container-fluid">
+				<div class="nav-container">		
+					<div class="navbar-header">
+					 	<a class="navbar-brand" href="index.html">PEACE</a>
+					</div>
+					 <div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="conformance.html">Capabilites</a></li>
+							<li><a href="engines-overview.html">Engines</a></li>
+							<li><a href="about.html">About</a></li>
+						</ul>					
+					</div>
+				</div>
+			</div>
+			<div id="sub-navbar" role="navigation">
+
+				<ul class="nav navbar-nav">
+                    <li><a href="conformance.html">Conformance</a></li>
+                    <li><a href="expressiveness.html">Expressiveness</a></li>
+					<li class="active"><a href="performance.html">Performance</a></li>
+				</ul>
+			</div>
+		
+		</nav>
+	</header>
+
+	<div id="page-performance" class="content-wrapper">
+		<div class="row">
+            <div class="sidebar">
+                <div class="sidebar-inner">
+                    <section id="filter-section">
+                        <h1>Filters</h1>
+
+                        <div class="filter-box">
+                            <h2 class="filter-title">Language</h2>
+                            <div id="filter-items-language" class="filter-items btn-group" data-toggle="buttons" aria-label="Language">
+                                <label class="btn filter-item-btn active ">
+                                    <input type="radio" name="langs" id="lang1" autocomplete="off" data-filter="language" value="BPMN" checked>BPMN
+                                </label>
+                                <label class="btn filter-item-btn">
+                                    <input type="radio" name="langs" id="lang2" autocomplete="off" data-filter="language" value="BPEL" >BPEL
+                                </label>                                
+                            </div>
+                        </div>
+
+                        <div class="filter-box">
+                            <h2 class="filter-title">Engine</h2>
+                            <div id="filter-items-engine"></div>
+                        </div>
+
+
+                        <div class="filter-box">
+                            <h2 class="filter-title">Experiment</h2>
+                            <div class="filter-search-box">
+                                <input type="text" class="filter-search-input" data-search="constructs"  placeholder="Search experiment">
+                            </div>                            
+                            <ul id="filter-items-constructs" class="filter-items scrollable-filter-list">
+                            </ul>
+                        </div>
+                    </section>
+                 </div>
+            </div>
+
+			<div class="content-section"> 
+				<section id="stats-section">
+					<div class="container">
+						<h1>Stats of supported status</h1>
+						<canvas id="conformance-chart" width="612" height="300"></canvas>
+					</div>
+				</section>
+
+				<section id="results-section">
+					<h1>Performance Results</h1>
+                    <div id="cap-table-div" class="table-responsive"></div>
+				</section>
+			</div>	
+
+
+		</div>
+	</div>
+	<footer id="footer" class="foot-container">
+		<p class="credits">© 2016 Peace. <a href="about.html">About</a></p>
+        <ul class="social">
+            <li><a href="#"><span class="entypo-mail"></span></a></li>
+            <li><a href="https://github.com/uniba-dsg/peace-project"><span class="entypo-github"></span></a></li>
+        </ul>
+	</footer>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    <script src="js/moment.min.js"></script>
+
+
+	<script src="js/handlebars.runtime.min.js"></script>
+    <script src="js/templates.js"></script>
+
+    <script src="js/underscore-min.js"></script>
+
+	<script src="js/peace.js"></script>
+    <script type="text/javascript">
+        peace.init('performance');
+    </script>
+
+</body>
+</html>
+

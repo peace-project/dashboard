@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <title> Engines Comparison | PEACE Dashboard</title>
+</head>
+<body>
+<header class="mainhead">
+
+    <nav class="navbar navbar-default">
+        <div id="main-navbar" class="container-fluid">
+            <div class="nav-container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html">PEACE</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="conformance.html">Capabilites</a></li>
+                        <li class="active"><a href="engines-overview.html">Engines</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="sub-navbar" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a href="engines-overview.html">Overview</a></li>
+                <li class="active"><a href="engines-compare.html" id="engine-compare-link">Compare</a></li>
+            </ul>
+        </div>
+
+    </nav>
+</header>
+
+<div class="container">
+    <section id="results-eng-section">
+        <h1>Engines Comparison</h1>
+        <dif class="checkboxes">
+            <div id="filter-engine-compare">
+                <label class="filter-item"><input type="checkbox" class="checkbox-filter"
+                                                  id="show-differences"><span
+                        class="checkbox-icon"></span>Only show differences</label>
+                <label class="filter-item"><input type="checkbox" class="checkbox-filter" id="show-percentage"><span
+                        class="checkbox-icon"></span>Show percentages</label>
+            </div>
+            <dif id="error-different-languages" class="alert alert-info">
+                You have currently selected one BPMN engine and one BPEL engine. You can only compare engines of the
+                same language.
+            </dif>
+        </dif>
+        <div class="table-responsive eng-table">
+            <table class="table" id="table-eng-compare">
+                <thead>
+                <tr id="engine-compare-header">
+                    <th class="compare-cell-left">
+                        <div class="dropdown dropdown-engine-select" id="dropdown-engine-a">
+                            <button class="btn dropdown-toggle" type="button"
+                                    data-toggle="dropdown">select engine<span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                            </ul>
+                        </div>
+                    </th>
+                    <th class="compare-cell-middle">Comparison</th>
+                    <th class="compare-cell-right">
+                        <div class="dropdown dropdown-engine-select" id="dropdown-engine-b">
+                            <button class="btn dropdown-toggle" type="button"
+                                    data-toggle="dropdown">select engine<span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                            </ul>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="table-compare">
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<footer id="footer" class="foot-container">
+    <p class="credits">© 2016 Peace. <a href="about.html">About</a></p>
+    <ul class="social">
+        <li><a href="#"><span class="entypo-mail"></span></a></li>
+        <li><a href="https://github.com/uniba-dsg/peace-project"><span class="entypo-github"></span></a></li>
+    </ul>
+</footer>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script src="js/underscore-min.js"></script>
+<script src="js/peace.js"></script>
+<script type="text/javascript">
+    peace.init('engines-compare');
+</script>
+
+</body>
+
+</html>

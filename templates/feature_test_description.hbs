@@ -1,0 +1,88 @@
+
+<h3 class="test-desc-title">Ids</h3>
+<table class="table feature-test-desc" width="100%">
+    <tbody>
+        <tr> 
+            <td>Feature Id</td>
+            <td class="test-desc-val">{{test.featureID}} </td>
+        </tr>
+        <tr> 
+            <td>Engine Id</td>
+            <td class="test-desc-val">{{test.engineID}} </td>
+        </tr>
+        <tr>
+            <td>Tool Id</td>
+            <td class="test-desc-val">{{test.toolID}} </td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 class="test-desc-title">Description</h3>
+
+<table class="table feature-test-desc" width="100%">
+    <tbody>
+        <tr>
+            <td>Deployable</td> 
+            <td class="test-desc-val tresult-{{test.testDeployable}}">
+            <span>{{test.testDeployableHtml}}</span> 
+            {{test.testDeployable}} </td>
+        </tr>
+        <tr>
+            <td>Successful</td>
+            <td class="test-desc-val tresult-{{test.testSuccessful}}">
+            <span>{{test.testSuccessfulHtml}}</span> {{test.testSuccessful}}</td>
+        </tr>   
+        <tr>
+            <td>Execution duration </td> 
+            <td class="test-desc-val">{{test.executionDuration}} ms</td>
+        </tr>
+        <tr>
+            <td>Execution date</td>
+            <td class="test-desc-val">{{test.executionTimestamp}} </td>
+        </tr>
+    </tbody>
+</table> 
+
+
+
+<h3 class="test-desc-title">Test Cases</h3>
+
+<table class="table feature-testcases" width="100%">
+    <thead>    
+        <tr>
+            <th class="tcase-number-th">#</th>
+            <th class="tcase-name-th">Name</th>
+            <th class="tcase-result-th">Result</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each test.testCases}}
+            <tr>
+                <td class="tcase-number"><div>{{number}}</td>
+                <td class="tcase-name">{{name}} </td>
+                <td class="tcase-result tcase-result-{{resultType}}">{{breaklines message}}</td>
+            </tr>
+         {{/each}}
+        </tbody>
+</table> 
+
+<h3 class="test-desc-title">Engine Dependent Files</h3>
+{{#if test.engineDependentFiles.length}}
+<ul class="list-files"> 
+   {{#each test.engineDependentFiles}}
+        <li><span class="entypo-doc-text"></span><a target="_blank" href="data/{{url}}">{{title}}</a></li>
+    {{/each}}
+</ul>
+{{else}}
+    <p class="empty-message">No files </p>
+{{/if}}
+
+<h3 class="test-desc-title">Log files</h3>
+{{#if test.logFiles.length}}
+<ul class="list-files">
+    {{#each test.logFiles}}
+        <li><span class="entypo-doc-text"></span><a target="_blank" href="data/{{url}}">{{title}}</a></li>
+    {{/each}}
+</ul>
+{{/if}}
+

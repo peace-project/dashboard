@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03"
+        xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+   <process xmlns:tns="http://dsg.wiai.uniba.de/betsy/activities/bpel/scopeTerminationHandlers"
+            name="tns:Scope-TerminationHandlers">
+      <provide xmlns:tns="http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface"
+               partnerLink="MyRoleLink">
+         <service name="tns:Scope-TerminationHandlersTestInterfaceService" port="TestInterfacePort"/>
+      </provide>
+   </process>
+</deploy>

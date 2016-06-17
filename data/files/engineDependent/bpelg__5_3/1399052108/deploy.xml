@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03"
+        xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+   <process xmlns:tns="http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/multipleInstancesWithADesignTimeKnowledge"
+            name="tns:WCP13-MultipleInstancesWithAPrioriDesignTimeKnowledge">
+      <provide xmlns:tns="http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface"
+               partnerLink="MyRoleLink">
+         <service name="tns:WCP13-MultipleInstancesWithAPrioriDesignTimeKnowledgeTestInterfaceService" port="TestInterfacePort"/>
+      </provide>
+      <invoke xmlns:tns="http://dsg.wiai.uniba.de/betsy/activities/wsdl/testpartner"
+              partnerLink="TestPartnerLink">
+         <service name="TestService" port="TestPort">
+            <wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing">
+               <wsa:Address>http://localhost:2000/bpel-testpartner</wsa:Address>
+            </wsa:EndpointReference>
+         </service>
+      </invoke>
+   </process>
+</deploy>

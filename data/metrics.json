@@ -1,0 +1,39 @@
+[
+   {
+      "process_duration":{
+         "name":"Process Duration",
+         "description":"The duration of the process instances",
+         "unit": "seconds"
+      },
+      "throughput":{
+         "name":"Throughput",
+         "description":"The number of process instances completed per second",
+         "unit": "process instances/second"
+      },
+      "number_of_process_instances":{
+         "name":"Number of Process Instances",
+         "description":"The number of process instances",
+         "unit": ""
+      },
+      "cpu":{
+         "name":"CPU",
+         "description":"The CPU utilization in percentage",
+         "unit": "%"
+      },
+      "ram":{
+         "name":"RAM",
+         "description":"The RAM utilization in MegaByte",
+         "unit": "MB"
+      },
+      "size_of_stored_data":{
+         "name":"Size of Stored Data",
+         "description":"The size of data stored in the DBMS in MegaByte",
+         "unit": "MB"
+      },
+      "io":{
+         "name":"IO",
+         "description":"The IO utilization in MegaByte",
+         "unit": "MB"
+      }
+   }
+]

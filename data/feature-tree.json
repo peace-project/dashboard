@@ -1,0 +1,2506 @@
+[
+  {
+    "languages": [
+      {
+        "name": "BPEL",
+        "groups": [{
+          "name": "cfpatterns",
+          "description": "The original 20 Workflow Control-Flow patterns from van der Aalst et al.",
+          "id": "Expressiveness__BPEL__cfpatterns",
+          "constructs": [
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP20-CancelCase",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP20_CancelCase__WCP20-CancelCase"
+              }],
+              "name": "WCP20_CancelCase",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP20_CancelCase"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP05-SimpleMerge",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP05_SimpleMerge__WCP05-SimpleMerge"
+              }],
+              "name": "WCP05_SimpleMerge",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP05_SimpleMerge"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP16-DeferredChoice",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP16_DeferredChoice__WCP16-DeferredChoice"
+              }],
+              "name": "WCP16_DeferredChoice",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP16_DeferredChoice"
+            },
+            {
+              "features": [{
+                "upperBound": "+/-",
+                "name": "WCP19-CancelActivity",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP19_CancelActivity__WCP19-CancelActivity"
+              }],
+              "name": "WCP19_CancelActivity",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP19_CancelActivity"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP14-MultipleInstancesWithAPrioriRuntimeKnowledge",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP14_MultipleInstancesWithAPrioriRuntimeKnowledge__WCP14-MultipleInstancesWithAPrioriRuntimeKnowledge"
+              }],
+              "name": "WCP14_MultipleInstancesWithAPrioriRuntimeKnowledge",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP14_MultipleInstancesWithAPrioriRuntimeKnowledge"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP04-ExclusiveChoice",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP04_ExclusiveChoice__WCP04-ExclusiveChoice"
+              }],
+              "name": "WCP04_ExclusiveChoice",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP04_ExclusiveChoice"
+            },
+            {
+              "features": [
+                {
+                  "upperBound": "+",
+                  "name": "WCP12-MultipleInstancesWithoutSynchronization",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP12_MultipleInstancesWithoutSynchronization__WCP12-MultipleInstancesWithoutSynchronization"
+                },
+                {
+                  "upperBound": "+/-",
+                  "name": "WCP12-MultipleInstancesWithoutSynchronization-Partial",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP12_MultipleInstancesWithoutSynchronization__WCP12-MultipleInstancesWithoutSynchronization-Partial"
+                },
+                {
+                  "upperBound": "+",
+                  "name": "WCP12-MultipleInstancesWithoutSynchronization-Sync",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP12_MultipleInstancesWithoutSynchronization__WCP12-MultipleInstancesWithoutSynchronization-Sync"
+                },
+                {
+                  "upperBound": "+/-",
+                  "name": "WCP12-MultipleInstancesWithoutSynchronization-Sync-Partial",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP12_MultipleInstancesWithoutSynchronization__WCP12-MultipleInstancesWithoutSynchronization-Sync-Partial"
+                },
+                {
+                  "upperBound": "+/-",
+                  "name": "WCP12-MultipleInstancesWithoutSynchronization-While-Partial",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP12_MultipleInstancesWithoutSynchronization__WCP12-MultipleInstancesWithoutSynchronization-While-Partial"
+                },
+                {
+                  "upperBound": "+/-",
+                  "name": "WCP12-MultipleInstancesWithoutSynchronization-While-Sync-Partial",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP12_MultipleInstancesWithoutSynchronization__WCP12-MultipleInstancesWithoutSynchronization-While-Sync-Partial"
+                }
+              ],
+              "name": "WCP12_MultipleInstancesWithoutSynchronization",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP12_MultipleInstancesWithoutSynchronization"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP02-ParallelSplit",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP02_ParallelSplit__WCP02-ParallelSplit"
+              }],
+              "name": "WCP02_ParallelSplit",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP02_ParallelSplit"
+            },
+            {
+              "features": [{
+                "upperBound": "+/-",
+                "name": "WCP17-InterleavedParallelRouting",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP17_InterleavedParallelRouting__WCP17-InterleavedParallelRouting"
+              }],
+              "name": "WCP17_InterleavedParallelRouting",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP17_InterleavedParallelRouting"
+            },
+            {
+              "features": [{
+                "upperBound": "+/-",
+                "name": "WCP18-Milestone",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP18_Milestone__WCP18-Milestone"
+              }],
+              "name": "WCP18_Milestone",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP18_Milestone"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP03-Synchronization",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP03_Synchronization__WCP03-Synchronization"
+              }],
+              "name": "WCP03_Synchronization",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP03_Synchronization"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP01-Sequence",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP01_Sequence__WCP01-Sequence"
+              }],
+              "name": "WCP01_Sequence",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP01_Sequence"
+            },
+            {
+              "features": [
+                {
+                  "upperBound": "+",
+                  "name": "WCP13-MultipleInstancesWithAPrioriDesignTimeKnowledge",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP13_MultipleInstancesWithAPrioriDesignTimeKnowledge__WCP13-MultipleInstancesWithAPrioriDesignTimeKnowledge"
+                },
+                {
+                  "upperBound": "+/-",
+                  "name": "WCP13-MultipleInstancesWithAPrioriDesignTimeKnowledge-Partial",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP13_MultipleInstancesWithAPrioriDesignTimeKnowledge__WCP13-MultipleInstancesWithAPrioriDesignTimeKnowledge-Partial"
+                }
+              ],
+              "name": "WCP13_MultipleInstancesWithAPrioriDesignTimeKnowledge",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP13_MultipleInstancesWithAPrioriDesignTimeKnowledge"
+            },
+            {
+              "features": [
+                {
+                  "upperBound": "+",
+                  "name": "WCP06-MultiChoice",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP06_MultiChoice__WCP06-MultiChoice"
+                },
+                {
+                  "upperBound": "+/-",
+                  "name": "WCP06-MultiChoice-Partial",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP06_MultiChoice__WCP06-MultiChoice-Partial"
+                }
+              ],
+              "name": "WCP06_MultiChoice",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP06_MultiChoice"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP11-ImplicitTermination",
+                "description": "",
+                "id": "Expressiveness__BPEL__cfpatterns__WCP11_ImplicitTermination__WCP11-ImplicitTermination"
+              }],
+              "name": "WCP11_ImplicitTermination",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP11_ImplicitTermination"
+            },
+            {
+              "features": [
+                {
+                  "upperBound": "+",
+                  "name": "WCP07-SynchronizingMerge",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP07_SynchronizingMerge__WCP07-SynchronizingMerge"
+                },
+                {
+                  "upperBound": "+/-",
+                  "name": "WCP07-SynchronizingMerge-Partial",
+                  "description": "",
+                  "id": "Expressiveness__BPEL__cfpatterns__WCP07_SynchronizingMerge__WCP07-SynchronizingMerge-Partial"
+                }
+              ],
+              "name": "WCP07_SynchronizingMerge",
+              "description": "",
+              "id": "Expressiveness__BPEL__cfpatterns__WCP07_SynchronizingMerge"
+            }
+          ]
+        }],
+        "id": "Expressiveness__BPEL"
+      },
+      {
+        "name": "BPMN",
+        "groups": [{
+          "name": "cfpatterns",
+          "description": "The original 20 Workflow Control-Flow patterns from van der Aalst et al.",
+          "id": "Expressiveness__BPMN__cfpatterns",
+          "constructs": [
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP13_MultipleInstancesWithAPrioriDesignTimeKnowledge",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP13_MultipleInstancesWithAPrioriDesignTimeKnowledge__WCP13_MultipleInstancesWithAPrioriDesignTimeKnowledge"
+              }],
+              "name": "WCP13_MultipleInstancesWithAPrioriDesignTimeKnowledge",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP13_MultipleInstancesWithAPrioriDesignTimeKnowledge"
+            },
+            {
+              "features": [{
+                "upperBound": "+/-",
+                "name": "WCP17_InterleavedParallelRouting",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP17_InterleavedParallelRouting__WCP17_InterleavedParallelRouting"
+              }],
+              "name": "WCP17_InterleavedParallelRouting",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP17_InterleavedParallelRouting"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP12_MultipleInstancesWithoutSynchronization",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP12_MultipleInstancesWithoutSynchronization__WCP12_MultipleInstancesWithoutSynchronization"
+              }],
+              "name": "WCP12_MultipleInstancesWithoutSynchronization",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP12_MultipleInstancesWithoutSynchronization"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP03_Synchronization",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP03_Synchronization__WCP03_Synchronization"
+              }],
+              "name": "WCP03_Synchronization",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP03_Synchronization"
+            },
+            {
+              "features": [
+                {
+                  "upperBound": "+",
+                  "name": "WCP06_MultiChoice_InclusiveGateway",
+                  "description": "",
+                  "id": "Expressiveness__BPMN__cfpatterns__WCP06_MultiChoice__WCP06_MultiChoice_InclusiveGateway"
+                },
+                {
+                  "upperBound": "+",
+                  "name": "WCP06_MultiChoice_Implicit",
+                  "description": "",
+                  "id": "Expressiveness__BPMN__cfpatterns__WCP06_MultiChoice__WCP06_MultiChoice_Implicit"
+                },
+                {
+                  "upperBound": "+",
+                  "name": "WCP06_MultiChoice_ComplexGateway",
+                  "description": "",
+                  "id": "Expressiveness__BPMN__cfpatterns__WCP06_MultiChoice__WCP06_MultiChoice_ComplexGateway"
+                }
+              ],
+              "name": "WCP06_MultiChoice",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP06_MultiChoice"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP05_SimpleMerge",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP05_SimpleMerge__WCP05_SimpleMerge"
+              }],
+              "name": "WCP05_SimpleMerge",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP05_SimpleMerge"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP02_ParallelSplit",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP02_ParallelSplit__WCP02_ParallelSplit"
+              }],
+              "name": "WCP02_ParallelSplit",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP02_ParallelSplit"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP08_MultiMerge",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP08_MultiMerge__WCP08_MultiMerge"
+              }],
+              "name": "WCP08_MultiMerge",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP08_MultiMerge"
+            },
+            {
+              "features": [
+                {
+                  "upperBound": "+",
+                  "name": "WCP20_CancelCaseError",
+                  "description": "",
+                  "id": "Expressiveness__BPMN__cfpatterns__WCP20_CancelCase__WCP20_CancelCaseError"
+                },
+                {
+                  "upperBound": "+",
+                  "name": "WCP20_CancelCaseCancel",
+                  "description": "",
+                  "id": "Expressiveness__BPMN__cfpatterns__WCP20_CancelCase__WCP20_CancelCaseCancel"
+                },
+                {
+                  "upperBound": "+",
+                  "name": "WCP20_CancelCaseTerminate",
+                  "description": "",
+                  "id": "Expressiveness__BPMN__cfpatterns__WCP20_CancelCase__WCP20_CancelCaseTerminate"
+                }
+              ],
+              "name": "WCP20_CancelCase",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP20_CancelCase"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP04_ExclusiveChoice",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP04_ExclusiveChoice__WCP04_ExclusiveChoice"
+              }],
+              "name": "WCP04_ExclusiveChoice",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP04_ExclusiveChoice"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP10_ArbitraryCycles",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP10_ArbitraryCycles__WCP10_ArbitraryCycles"
+              }],
+              "name": "WCP10_ArbitraryCycles",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP10_ArbitraryCycles"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP19_CancelTask",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP19_CancelTask__WCP19_CancelTask"
+              }],
+              "name": "WCP19_CancelTask",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP19_CancelTask"
+            },
+            {
+              "features": [{
+                "upperBound": "+/-",
+                "name": "WCP07_StructuredSynchronizingMerge",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP07_StructuredSynchronizingMerge__WCP07_StructuredSynchronizingMerge"
+              }],
+              "name": "WCP07_StructuredSynchronizingMerge",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP07_StructuredSynchronizingMerge"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP16_DeferredChoice",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP16_DeferredChoice__WCP16_DeferredChoice"
+              }],
+              "name": "WCP16_DeferredChoice",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP16_DeferredChoice"
+            },
+            {
+              "features": [
+                {
+                  "upperBound": "+/-",
+                  "name": "WCP09_Structured_Discriminator_ComplexGateway",
+                  "description": "",
+                  "id": "Expressiveness__BPMN__cfpatterns__WCP09_Structured_Discriminator__WCP09_Structured_Discriminator_ComplexGateway"
+                },
+                {
+                  "upperBound": "+/-",
+                  "name": "WCP09_Structured_Discriminator_MultiInstance",
+                  "description": "",
+                  "id": "Expressiveness__BPMN__cfpatterns__WCP09_Structured_Discriminator__WCP09_Structured_Discriminator_MultiInstance"
+                }
+              ],
+              "name": "WCP09_Structured_Discriminator",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP09_Structured_Discriminator"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP11_ImplicitTermination",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP11_ImplicitTermination__WCP11_ImplicitTermination"
+              }],
+              "name": "WCP11_ImplicitTermination",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP11_ImplicitTermination"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP01_Sequence",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP01_Sequence__WCP01_Sequence"
+              }],
+              "name": "WCP01_Sequence",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP01_Sequence"
+            },
+            {
+              "features": [{
+                "upperBound": "+",
+                "name": "WCP14_MultipleInstancesWithAPrioriRuntimeKnowledge",
+                "description": "",
+                "id": "Expressiveness__BPMN__cfpatterns__WCP14_MultipleInstancesWithAPrioriRuntimeKnowledge__WCP14_MultipleInstancesWithAPrioriRuntimeKnowledge"
+              }],
+              "name": "WCP14_MultipleInstancesWithAPrioriRuntimeKnowledge",
+              "description": "",
+              "id": "Expressiveness__BPMN__cfpatterns__WCP14_MultipleInstancesWithAPrioriRuntimeKnowledge"
+            }
+          ]
+        }],
+        "id": "Expressiveness__BPMN"
+      }
+    ],
+    "name": "Expressiveness",
+    "id": "Expressiveness"
+  },
+  {
+    "languages": [
+      {
+        "name": "BPMN",
+        "groups": [
+          {
+            "name": "errors",
+            "description": "Faulty processes which should be detected upon deployment.",
+            "id": "Conformance__BPMN__errors",
+            "constructs": [
+              {
+                "features": [
+                  {
+                    "name": "LoopTask_NegativeLoopMaximum",
+                    "description": "",
+                    "id": "Conformance__BPMN__errors__InvalidLoopConditions__LoopTask_NegativeLoopMaximum"
+                  },
+                  {
+                    "name": "MultiInstanceTask_NegativeLoopCardinality",
+                    "description": "",
+                    "id": "Conformance__BPMN__errors__InvalidLoopConditions__MultiInstanceTask_NegativeLoopCardinality"
+                  }
+                ],
+                "name": "InvalidLoopConditions",
+                "description": "Checking the detection of invalid loop conditions.",
+                "id": "Conformance__BPMN__errors__InvalidLoopConditions"
+              },
+              {
+                "features": [{
+                  "name": "ParallelGateway_Conditions",
+                  "description": "",
+                  "id": "Conformance__BPMN__errors__ParallelGateway_Conditions__ParallelGateway_Conditions"
+                }],
+                "name": "ParallelGateway_Conditions",
+                "description": "Checking the detection of invalid conditions attached to parallel gateways.",
+                "id": "Conformance__BPMN__errors__ParallelGateway_Conditions"
+              },
+              {
+                "features": [
+                  {
+                    "name": "ExclusiveDiverging_ParallelConverging",
+                    "description": "",
+                    "id": "Conformance__BPMN__errors__InvalidGatewayCombinations__ExclusiveDiverging_ParallelConverging"
+                  },
+                  {
+                    "name": "InclusiveDiverging_ParallelConverging",
+                    "description": "",
+                    "id": "Conformance__BPMN__errors__InvalidGatewayCombinations__InclusiveDiverging_ParallelConverging"
+                  }
+                ],
+                "name": "InvalidGatewayCombinations",
+                "description": "Checking the detection of invalid combinations of gateway types resulting, e.g., resulting in deadlocks.",
+                "id": "Conformance__BPMN__errors__InvalidGatewayCombinations"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Token_StartQuantity_Two",
+                    "description": "",
+                    "id": "Conformance__BPMN__errors__InvalidTokenQuantity__Token_StartQuantity_Two"
+                  },
+                  {
+                    "name": "Token_StartQuantity_Zero",
+                    "description": "",
+                    "id": "Conformance__BPMN__errors__InvalidTokenQuantity__Token_StartQuantity_Zero"
+                  },
+                  {
+                    "name": "Token_CompletionQuantity_Zero",
+                    "description": "",
+                    "id": "Conformance__BPMN__errors__InvalidTokenQuantity__Token_CompletionQuantity_Zero"
+                  }
+                ],
+                "name": "InvalidTokenQuantity",
+                "description": "Checking the detection of invalid token quantities.",
+                "id": "Conformance__BPMN__errors__InvalidTokenQuantity"
+              }
+            ]
+          },
+          {
+            "name": "data",
+            "description": "Model data flow within a process.",
+            "id": "Conformance__BPMN__data",
+            "constructs": [
+              {
+                "features": [{
+                  "name": "Property_ReadWrite_String",
+                  "description": "",
+                  "id": "Conformance__BPMN__data__Property__Property_ReadWrite_String"
+                }],
+                "name": "Property",
+                "description": "Properties are item-aware elements not visually displayed on a Process diagram. (see BPMN spec pp.208-209)",
+                "id": "Conformance__BPMN__data__Property"
+              },
+              {
+                "features": [{
+                  "name": "DataObject_ReadWrite_String",
+                  "description": "",
+                  "id": "Conformance__BPMN__data__DataObject__DataObject_ReadWrite_String"
+                }],
+                "name": "DataObject",
+                "description": "DataObjects are item-aware elements visually displayed on a Process diagram. (see BPMN spec pp.204-205)",
+                "id": "Conformance__BPMN__data__DataObject"
+              }
+            ]
+          },
+          {
+            "name": "basics",
+            "description": "The basic building blocks of BPMN.",
+            "id": "Conformance__BPMN__basics",
+            "constructs": [
+              {
+                "features": [{
+                  "name": "Participant",
+                  "description": "",
+                  "id": "Conformance__BPMN__basics__Participant__Participant"
+                }],
+                "name": "Participant",
+                "description": "A Participant, depicted as a Pool in a BPMN diagram, represents a specific PartnerEntity (e.g., a company) and/or a more general PartnerRole (e.g., a buyer, seller, or manufacturer) that are participating in a Collaboration (see BPMN spec, p.113).",
+                "id": "Conformance__BPMN__basics__Participant"
+              },
+              {
+                "features": [{
+                  "name": "Lanes",
+                  "description": "",
+                  "id": "Conformance__BPMN__basics__Lanes__Lanes"
+                }],
+                "name": "Lanes",
+                "description": "A Lane is a sub-partition within a Process to organize and categorize Activities.",
+                "id": "Conformance__BPMN__basics__Lanes"
+              },
+              {
+                "features": [{
+                  "name": "SequenceFlow",
+                  "description": "",
+                  "id": "Conformance__BPMN__basics__SequenceFlow__SequenceFlow"
+                }],
+                "name": "SequenceFlow",
+                "description": "A SequenceFlow is used to define the order between elements in a Process.",
+                "id": "Conformance__BPMN__basics__SequenceFlow"
+              },
+              {
+                "features": [
+                  {
+                    "name": "SequenceFlow_Conditional",
+                    "description": "",
+                    "id": "Conformance__BPMN__basics__SequenceFlow_Conditional__SequenceFlow_Conditional"
+                  },
+                  {
+                    "name": "SequenceFlow_ConditionalDefault",
+                    "description": "",
+                    "id": "Conformance__BPMN__basics__SequenceFlow_Conditional__SequenceFlow_ConditionalDefault"
+                  },
+                  {
+                    "name": "SequenceFlow_ConditionalDefault_Normal",
+                    "description": "",
+                    "id": "Conformance__BPMN__basics__SequenceFlow_Conditional__SequenceFlow_ConditionalDefault_Normal"
+                  }
+                ],
+                "name": "SequenceFlow_Conditional",
+                "description": "A conditional SequenceFlow is a SequenceFlow with an affixed condition.",
+                "id": "Conformance__BPMN__basics__SequenceFlow_Conditional"
+              }
+            ]
+          },
+          {
+            "name": "gateways",
+            "description": "Gateways control the routing behavior of a process.",
+            "id": "Conformance__BPMN__gateways",
+            "constructs": [
+              {
+                "features": [
+                  {
+                    "name": "ExclusiveGateway",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__ExclusiveGateway__ExclusiveGateway"
+                  },
+                  {
+                    "name": "ExclusiveGateway_Default",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__ExclusiveGateway__ExclusiveGateway_Default"
+                  },
+                  {
+                    "name": "ExclusiveGatewayMixed",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__ExclusiveGateway__ExclusiveGatewayMixed"
+                  }
+                ],
+                "name": "ExclusiveGateway",
+                "description": "A diverging Exclusive Gateway (Decision) is used to create alternative paths within a Process flow. A converging Exclusive Gateway is used to merge alternative paths. (see BPMN spec pp.289-291)",
+                "id": "Conformance__BPMN__gateways__ExclusiveGateway"
+              },
+              {
+                "features": [{
+                  "name": "ComplexGateway",
+                  "description": "",
+                  "id": "Conformance__BPMN__gateways__ComplexGateway__ComplexGateway"
+                }],
+                "name": "ComplexGateway",
+                "description": "The Complex Gateway can be used to model complex synchronization behavior not covered by other gateway types (see BPMN spec pp.294-296)",
+                "id": "Conformance__BPMN__gateways__ComplexGateway"
+              },
+              {
+                "features": [
+                  {
+                    "name": "InclusiveGateway",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__InclusiveGateway__InclusiveGateway"
+                  },
+                  {
+                    "name": "InclusiveGateway_Default",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__InclusiveGateway__InclusiveGateway_Default"
+                  }
+                ],
+                "name": "InclusiveGateway",
+                "description": "A diverging Inclusive Gateway (Inclusive Decision) can be used to create alternative but also parallel paths within a Process flow. A converging Inclusive Gateway is used to merge a combination of alternative and parallel paths. (see BPMN spec pp.291-292)",
+                "id": "Conformance__BPMN__gateways__InclusiveGateway"
+              },
+              {
+                "features": [
+                  {
+                    "name": "EventBasedGateway_Signals",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__EventBasedGateway__EventBasedGateway_Signals"
+                  },
+                  {
+                    "name": "EventBasedGateway_Timer",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__EventBasedGateway__EventBasedGateway_Timer"
+                  }
+                ],
+                "name": "EventBasedGateway",
+                "description": "The Event-Based Gateway represents a branching point in the Process where the alternative paths that follow the Gateway are based on Events that occur, rather than the evaluation of Expressions using Process data. (see BPMN spec pp.296-299)",
+                "id": "Conformance__BPMN__gateways__EventBasedGateway"
+              },
+              {
+                "features": [
+                  {
+                    "name": "ExclusiveDiverging_InclusiveConverging",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__MixedGatewayCombinations__ExclusiveDiverging_InclusiveConverging"
+                  },
+                  {
+                    "name": "InclusiveDiverging_ExclusiveConverging",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__MixedGatewayCombinations__InclusiveDiverging_ExclusiveConverging"
+                  },
+                  {
+                    "name": "ParallelDiverging_ExclusiveConverging",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__MixedGatewayCombinations__ParallelDiverging_ExclusiveConverging"
+                  },
+                  {
+                    "name": "ParallelDiverging_InclusiveConverging",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__MixedGatewayCombinations__ParallelDiverging_InclusiveConverging"
+                  }
+                ],
+                "name": "MixedGatewayCombinations",
+                "description": "Testing combinations of different gateway types.",
+                "id": "Conformance__BPMN__gateways__MixedGatewayCombinations"
+              },
+              {
+                "features": [
+                  {
+                    "name": "ParallelGateway",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__ParallelGateway__ParallelGateway"
+                  },
+                  {
+                    "name": "ParallelGateway_TrueParallelism",
+                    "description": "",
+                    "id": "Conformance__BPMN__gateways__ParallelGateway__ParallelGateway_TrueParallelism"
+                  }
+                ],
+                "name": "ParallelGateway",
+                "description": "A Parallel Gateway is used to synchronize (combine) parallel flows and to create parallel flows. (see BPMN spec pp.292-294)",
+                "id": "Conformance__BPMN__gateways__ParallelGateway"
+              }
+            ]
+          },
+          {
+            "name": "events",
+            "description": "Events make the BPMN process reactive, triggering start, end and intermediate events such as timers or messages.",
+            "id": "Conformance__BPMN__events",
+            "constructs": [
+              {
+                "features": [
+                  {
+                    "name": "Timer_IntermediateEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Timer_Event__Timer_IntermediateEvent"
+                  },
+                  {
+                    "name": "Timer_BoundaryEvent_SubProcess_NonInterrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Timer_Event__Timer_BoundaryEvent_SubProcess_NonInterrupting"
+                  },
+                  {
+                    "name": "Timer_BoundaryEvent_SubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Timer_Event__Timer_BoundaryEvent_SubProcess_Interrupting"
+                  },
+                  {
+                    "name": "Timer_BoundaryEvent_SubProcess_Interrupting_Activity",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Timer_Event__Timer_BoundaryEvent_SubProcess_Interrupting_Activity"
+                  },
+                  {
+                    "name": "Timer_StartEvent_EventSubProcess_NonInterrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Timer_Event__Timer_StartEvent_EventSubProcess_NonInterrupting"
+                  },
+                  {
+                    "name": "Timer_StartEvent_EventSubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Timer_Event__Timer_StartEvent_EventSubProcess_Interrupting"
+                  },
+                  {
+                    "name": "Timer_IntermediateTimeCycleEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Timer_Event__Timer_IntermediateTimeCycleEvent"
+                  },
+                  {
+                    "name": "Timer_BoundaryEvent_SubProcess_TimeCycle",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Timer_Event__Timer_BoundaryEvent_SubProcess_TimeCycle"
+                  },
+                  {
+                    "name": "Timer_StartEvent_TimeCycle_EventSubProcess_NonInterrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Timer_Event__Timer_StartEvent_TimeCycle_EventSubProcess_NonInterrupting"
+                  }
+                ],
+                "name": "Timer_Event",
+                "description": "Timer Events are used if the event should be triggered by a Timer. (see BPMN spec p.273)",
+                "id": "Conformance__BPMN__events__Timer_Event"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Error_BoundaryEvent_SubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Error_Event__Error_BoundaryEvent_SubProcess_Interrupting"
+                  },
+                  {
+                    "name": "Error_BoundaryEvent_Transaction_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Error_Event__Error_BoundaryEvent_Transaction_Interrupting"
+                  },
+                  {
+                    "name": "Error_EndEvent_TopLevel",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Error_Event__Error_EndEvent_TopLevel"
+                  },
+                  {
+                    "name": "Error_StartEvent_EventSubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Error_Event__Error_StartEvent_EventSubProcess_Interrupting"
+                  }
+                ],
+                "name": "Error_Event",
+                "description": "Error Events are used if the event should be triggered by an error. (see BPMN spec pp.264-265)",
+                "id": "Conformance__BPMN__events__Error_Event"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Message_StartEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Message_Event__Message_StartEvent"
+                  },
+                  {
+                    "name": "Message_IntermediateEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Message_Event__Message_IntermediateEvent"
+                  },
+                  {
+                    "name": "Message_EndEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Message_Event__Message_EndEvent"
+                  }
+                ],
+                "name": "Message_Event",
+                "description": "Message Events are used if the event should be triggered by a message. (see BPMN spec pp.269-270)",
+                "id": "Conformance__BPMN__events__Message_Event"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Conditional_BoundaryEvent_SubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Conditional_Event__Conditional_BoundaryEvent_SubProcess_Interrupting"
+                  },
+                  {
+                    "name": "Conditional_BoundaryEvent_SubProcess_NonInterrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Conditional_Event__Conditional_BoundaryEvent_SubProcess_NonInterrupting"
+                  },
+                  {
+                    "name": "Conditional_IntermediateEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Conditional_Event__Conditional_IntermediateEvent"
+                  },
+                  {
+                    "name": "Conditional_StartEvent_EventSubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Conditional_Event__Conditional_StartEvent_EventSubProcess_Interrupting"
+                  },
+                  {
+                    "name": "Conditional_StartEvent_EventSubProcess_NonInterrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Conditional_Event__Conditional_StartEvent_EventSubProcess_NonInterrupting"
+                  }
+                ],
+                "name": "Conditional_Event",
+                "description": "Conditional Events are used if the event should be triggered by a condition. (see BPMN spec pp.263-264)",
+                "id": "Conformance__BPMN__events__Conditional_Event"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Signal_EndEvent_SubProcess",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Signal_Event__Signal_EndEvent_SubProcess"
+                  },
+                  {
+                    "name": "Signal_BoundaryEvent_SubProcess_NonInterrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Signal_Event__Signal_BoundaryEvent_SubProcess_NonInterrupting"
+                  },
+                  {
+                    "name": "Signal_BoundaryEvent_SubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Signal_Event__Signal_BoundaryEvent_SubProcess_Interrupting"
+                  },
+                  {
+                    "name": "Signal_IntermediateEvent_ThrowAndCatch",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Signal_Event__Signal_IntermediateEvent_ThrowAndCatch"
+                  },
+                  {
+                    "name": "Signal_StartEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Signal_Event__Signal_StartEvent"
+                  },
+                  {
+                    "name": "Signal_EndEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Signal_Event__Signal_EndEvent"
+                  },
+                  {
+                    "name": "Signal_IntermediateEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Signal_Event__Signal_IntermediateEvent"
+                  },
+                  {
+                    "name": "Signal_StartEvent_EventSubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Signal_Event__Signal_StartEvent_EventSubProcess_Interrupting"
+                  },
+                  {
+                    "name": "Signal_StartEvent_EventSubProcess_NonInterrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Signal_Event__Signal_StartEvent_EventSubProcess_NonInterrupting"
+                  }
+                ],
+                "name": "Signal_Event",
+                "description": "Signal Events are used if the event should be triggered by a Signal. (see BPMN spec p.272)",
+                "id": "Conformance__BPMN__events__Signal_Event"
+              },
+              {
+                "features": [{
+                  "name": "Cancel_Event",
+                  "description": "",
+                  "id": "Conformance__BPMN__events__Cancel_Event__Cancel_Event"
+                }],
+                "name": "Cancel_Event",
+                "description": "Cancel Events are used in the context of modeling Transaction Sub-Processes. (see BPMN spec pp.261-262)",
+                "id": "Conformance__BPMN__events__Cancel_Event"
+              },
+              {
+                "features": [
+                  {
+                    "name": "EventDefinitionRef_Error_EndEvent_TopLevel",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__EventDefinitionRef__EventDefinitionRef_Error_EndEvent_TopLevel"
+                  },
+                  {
+                    "name": "EventDefinitionRef_Error_StartEvent_EventSubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__EventDefinitionRef__EventDefinitionRef_Error_StartEvent_EventSubProcess_Interrupting"
+                  },
+                  {
+                    "name": "EventDefinitionRef_Signal_BoundaryEvent_SubProcess_NonInterrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__EventDefinitionRef__EventDefinitionRef_Signal_BoundaryEvent_SubProcess_NonInterrupting"
+                  },
+                  {
+                    "name": "EventDefinitionRef_Timer_IntermediateEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__EventDefinitionRef__EventDefinitionRef_Timer_IntermediateEvent"
+                  }
+                ],
+                "name": "EventDefinitionRef",
+                "description": "Instead of defining EventDefinitions directly at the event element it is also possible to reference an EventDefinition defined elsewhere. (see BPMN spec p.235 and p.262)",
+                "id": "Conformance__BPMN__events__EventDefinitionRef"
+              },
+              {
+                "features": [{
+                  "name": "Terminate_Event",
+                  "description": "",
+                  "id": "Conformance__BPMN__events__Terminate_Event__Terminate_Event"
+                }],
+                "name": "Terminate_Event",
+                "description": "Terminate Events are used to terminate the execution of the whole process. (see BPMN spec pp.272-273)",
+                "id": "Conformance__BPMN__events__Terminate_Event"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Compensation_BoundaryEvent_SubProcess",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Compensation_Event__Compensation_BoundaryEvent_SubProcess"
+                  },
+                  {
+                    "name": "Compensation_EndEvent_SubProcess",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Compensation_Event__Compensation_EndEvent_SubProcess"
+                  },
+                  {
+                    "name": "Compensation_EndEvent_TopLevel",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Compensation_Event__Compensation_EndEvent_TopLevel"
+                  },
+                  {
+                    "name": "Compensation_IntermediateEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Compensation_Event__Compensation_IntermediateEvent"
+                  },
+                  {
+                    "name": "Compensation_StartEvent_EventSubProcess",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Compensation_Event__Compensation_StartEvent_EventSubProcess"
+                  },
+                  {
+                    "name": "Compensation_TriggeredByCancel",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Compensation_Event__Compensation_TriggeredByCancel"
+                  }
+                ],
+                "name": "Compensation_Event",
+                "description": "Compensation Events are used in the context of triggering or handling compensation. (see BPMN spec p.262)",
+                "id": "Conformance__BPMN__events__Compensation_Event"
+              },
+              {
+                "features": [{
+                  "name": "Link_Event",
+                  "description": "",
+                  "id": "Conformance__BPMN__events__Link_Event__Link_Event"
+                }],
+                "name": "Link_Event",
+                "description": "A Link Event is a mechanism for connecting two sections of a Process. (see BPMN spec pp.266-269)",
+                "id": "Conformance__BPMN__events__Link_Event"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Multiple_Parallel_IntermediateEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Multiple_Events__Multiple_Parallel_IntermediateEvent"
+                  },
+                  {
+                    "name": "Multiple_IntermediateEvent_ThrowFirstEventDefinition",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Multiple_Events__Multiple_IntermediateEvent_ThrowFirstEventDefinition"
+                  },
+                  {
+                    "name": "Multiple_IntermediateEvent_ThrowLastEventDefinition",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Multiple_Events__Multiple_IntermediateEvent_ThrowLastEventDefinition"
+                  },
+                  {
+                    "name": "Multiple_IntermediateThrowEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Multiple_Events__Multiple_IntermediateThrowEvent"
+                  },
+                  {
+                    "name": "Multiple_IntermediateEvent_MissingEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Multiple_Events__Multiple_IntermediateEvent_MissingEvent"
+                  },
+                  {
+                    "name": "Multiple_Parallel_IntermediateEvent_MissingEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Multiple_Events__Multiple_Parallel_IntermediateEvent_MissingEvent"
+                  }
+                ],
+                "name": "Multiple_Events",
+                "description": "Multiple Events combine different event definitions. (see BPMN spec pp.270-272)",
+                "id": "Conformance__BPMN__events__Multiple_Events"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Escalation_BoundaryEvent_SubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Escalation_Event__Escalation_BoundaryEvent_SubProcess_Interrupting"
+                  },
+                  {
+                    "name": "Escalation_BoundaryEvent_SubProcess_NonInterrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Escalation_Event__Escalation_BoundaryEvent_SubProcess_NonInterrupting"
+                  },
+                  {
+                    "name": "Escalation_EndEvent_SubProcess",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Escalation_Event__Escalation_EndEvent_SubProcess"
+                  },
+                  {
+                    "name": "Escalation_EndEvent_TopLevel",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Escalation_Event__Escalation_EndEvent_TopLevel"
+                  },
+                  {
+                    "name": "Escalation_IntermediateThrowEvent",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Escalation_Event__Escalation_IntermediateThrowEvent"
+                  },
+                  {
+                    "name": "Escalation_StartEvent_EventSubProcess_Interrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Escalation_Event__Escalation_StartEvent_EventSubProcess_Interrupting"
+                  },
+                  {
+                    "name": "Escalation_StartEvent_EventSubProcess_NonInterrupting",
+                    "description": "",
+                    "id": "Conformance__BPMN__events__Escalation_Event__Escalation_StartEvent_EventSubProcess_NonInterrupting"
+                  }
+                ],
+                "name": "Escalation_Event",
+                "description": "Escalation Events are used if the event should be triggered by an Escalation. (see BPMN spec pp.265-266)",
+                "id": "Conformance__BPMN__events__Escalation_Event"
+              }
+            ]
+          },
+          {
+            "name": "activities",
+            "description": "Activities can be Tasks, different kinds of SubProcesses, and CallActivities, and they model specific tasks in the real world.",
+            "id": "Conformance__BPMN__activities",
+            "constructs": [
+              {
+                "features": [
+                  {
+                    "name": "Loop_SubProcess",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__LoopTask__Loop_SubProcess"
+                  },
+                  {
+                    "name": "Loop_Task",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__LoopTask__Loop_Task"
+                  },
+                  {
+                    "name": "Loop_ConditionOnly",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__LoopTask__Loop_ConditionOnly"
+                  },
+                  {
+                    "name": "Loop_Maximum",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__LoopTask__Loop_Maximum"
+                  },
+                  {
+                    "name": "Loop_NoIteration_TestBeforeFalse",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__LoopTask__Loop_NoIteration_TestBeforeFalse"
+                  },
+                  {
+                    "name": "Loop_NoIteration_TestBeforeTrue",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__LoopTask__Loop_NoIteration_TestBeforeTrue"
+                  }
+                ],
+                "name": "LoopTask",
+                "description": "The StandardLoopCharacteristics class defines looping behavior based on a boolean condition. The Activity will loop as long as the boolean condition is true. (see BPMN spec p.189)",
+                "id": "Conformance__BPMN__activities__LoopTask"
+              },
+              {
+                "features": [
+                  {
+                    "name": "ReceiveTask",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__ReceiveTask__ReceiveTask"
+                  },
+                  {
+                    "name": "ReceiveTask_Instantiate",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__ReceiveTask__ReceiveTask_Instantiate"
+                  }
+                ],
+                "name": "ReceiveTask",
+                "description": "A Receive Task is a simple Task that is designed to wait for a Message to arrive from an external Participant (relative to the Process). Once the Message has been received, the Task is completed. (see BPMN spec p.159)",
+                "id": "Conformance__BPMN__activities__ReceiveTask"
+              },
+              {
+                "features": [
+                  {
+                    "name": "AdHocSubProcess_Sequential",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__AdHocSubProcess__AdHocSubProcess_Sequential"
+                  },
+                  {
+                    "name": "AdHocSubProcess_Parallel",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__AdHocSubProcess__AdHocSubProcess_Parallel"
+                  }
+                ],
+                "name": "AdHocSubProcess",
+                "description": "An Ad-Hoc Sub-Process is a specialized type of Sub-Process that is a group of Activities that have no required sequence relationships. (see BPMN spec p.179)",
+                "id": "Conformance__BPMN__activities__AdHocSubProcess"
+              },
+              {
+                "features": [{
+                  "name": "Transaction",
+                  "description": "",
+                  "id": "Conformance__BPMN__activities__Transaction__Transaction"
+                }],
+                "name": "Transaction",
+                "description": "A Transaction is a specialized type of Sub-Process that will have a special behavior that is controlled through a transaction protocol. (see BPMN spec p.176)",
+                "id": "Conformance__BPMN__activities__Transaction"
+              },
+              {
+                "features": [
+                  {
+                    "name": "MultiInstance_SubProcess",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__MultiInstanceTask__MultiInstance_SubProcess"
+                  },
+                  {
+                    "name": "MultiInstance_Task",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__MultiInstanceTask__MultiInstance_Task"
+                  },
+                  {
+                    "name": "MultiInstance_Sequential",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__MultiInstanceTask__MultiInstance_Sequential"
+                  },
+                  {
+                    "name": "MultiInstance_NoneBehavior",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__MultiInstanceTask__MultiInstance_NoneBehavior"
+                  },
+                  {
+                    "name": "MultiInstance_OneBehavior",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__MultiInstanceTask__MultiInstance_OneBehavior"
+                  },
+                  {
+                    "name": "MultiInstance_AllBehavior",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__MultiInstanceTask__MultiInstance_AllBehavior"
+                  },
+                  {
+                    "name": "MultiInstance_ComplexBehavior",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__MultiInstanceTask__MultiInstance_ComplexBehavior"
+                  },
+                  {
+                    "name": "MultiInstance_Parallel",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__MultiInstanceTask__MultiInstance_Parallel"
+                  }
+                ],
+                "name": "MultiInstanceTask",
+                "description": "MultiInstanceTasks allows for creation of a desired number of Activity instances. The instances can be defined to be executed in parallel or sequential. (see BPMN spec p.190)",
+                "id": "Conformance__BPMN__activities__MultiInstanceTask"
+              },
+              {
+                "features": [{
+                  "name": "SendTask",
+                  "description": "",
+                  "id": "Conformance__BPMN__activities__SendTask__SendTask"
+                }],
+                "name": "SendTask",
+                "description": "A Send Task is a simple Task that is designed to send a Message to an external Participant (relative to the Process). Once the Message has been sent, the Task is completed. (see BPMN spec p.157)",
+                "id": "Conformance__BPMN__activities__SendTask"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Token_Cardinality_Explicit",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__TokenCardinality__Token_Cardinality_Explicit"
+                  },
+                  {
+                    "name": "Token_Cardinality_Default",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__TokenCardinality__Token_Cardinality_Default"
+                  },
+                  {
+                    "name": "Token_Cardinality_Split_Default",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__TokenCardinality__Token_Cardinality_Split_Default"
+                  },
+                  {
+                    "name": "Token_Cardinality_Split_Explicit",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__TokenCardinality__Token_Cardinality_Split_Explicit"
+                  }
+                ],
+                "name": "TokenCardinality",
+                "description": "All activities can specify how much so called tokens are needed to start the execution/are created upon completion. (see BPMN spec pp.150-151)",
+                "id": "Conformance__BPMN__activities__TokenCardinality"
+              },
+              {
+                "features": [
+                  {
+                    "name": "CallActivity_Process",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__CallActivity__CallActivity_Process"
+                  },
+                  {
+                    "name": "CallActivity_GlobalTask",
+                    "description": "",
+                    "id": "Conformance__BPMN__activities__CallActivity__CallActivity_GlobalTask"
+                  }
+                ],
+                "name": "CallActivity",
+                "description": "A Call Activity identifies a point in the Process where a global Process or a Global Task is used. The Call Activity acts as a â\u20ac˜wrapperâ\u20ac™ for the invocation of a global Process or Global Task within the execution. (see BPMN spec p.182)",
+                "id": "Conformance__BPMN__activities__CallActivity"
+              },
+              {
+                "features": [{
+                  "name": "SubProcess",
+                  "description": "",
+                  "id": "Conformance__BPMN__activities__SubProcess__SubProcess"
+                }],
+                "name": "SubProcess",
+                "description": "A Sub-Process is an Activity whose internal details have been modeled using Activities, Gateways, Events, and Sequence Flows. (see BPMN spec p.171)",
+                "id": "Conformance__BPMN__activities__SubProcess"
+              }
+            ]
+          }
+        ],
+        "id": "Conformance__BPMN"
+      },
+      {
+        "name": "BPEL",
+        "groups": [
+          {
+            "name": "scopes",
+            "description": "Scopes provide the execution context of their enclosed activities.",
+            "id": "Conformance__BPEL__scopes",
+            "constructs": [
+              {
+                "features": [{
+                  "name": "Scope-PartnerLinks",
+                  "description": "",
+                  "id": "Conformance__BPEL__scopes__PartnerLinks__Scope-PartnerLinks"
+                }],
+                "name": "PartnerLinks",
+                "description": "The notion of <partnerLinks> is used to directly model peer-to-peer conversational partner relationships. (p. 36, BPEL)",
+                "id": "Conformance__BPEL__scopes__PartnerLinks"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Scope-EventHandlers-Async-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-Async-InitSync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-InitAsync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-Element-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-Element-InitAsync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-Element-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-Element-InitSync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-InitSync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-Flow-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-Flow-InitAsync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-Flow-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-Flow-InitSync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-MessageExchange-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-MessageExchange-InitAsync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-MessageExchange-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-MessageExchange-InitSync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-Internal-MessageExchange-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-Internal-MessageExchange-InitAsync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-Internal-MessageExchange-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-Internal-MessageExchange-InitSync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-FILO-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-FILO-MessageExchanges"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-FILO-MessageExchanges-Pick",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-FILO-MessageExchanges-Pick"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-Scope-MessageExchange-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-Scope-MessageExchange-InitAsync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-Scope-MessageExchange-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-Scope-MessageExchange-InitSync"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-OnAlarm-For",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-OnAlarm-For"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-OnAlarm-RepeatEvery",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-OnAlarm-RepeatEvery"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-OnAlarm-RepeatEvery-For",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-OnAlarm-RepeatEvery-For"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-OnAlarm-RepeatEvery-Until",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-OnAlarm-RepeatEvery-Until"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-OnAlarm-Until",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-OnAlarm-Until"
+                  },
+                  {
+                    "name": "Scope-EventHandlers-Parts",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__EventHandlers__Scope-EventHandlers-Parts"
+                  }
+                ],
+                "name": "EventHandlers",
+                "description": "Each scope, including the process scope, can have a set of event handlers. These event handlers can run concurrently and are invoked when the corresponding event occurs. (p. 137, BPEL)",
+                "id": "Conformance__BPEL__scopes__EventHandlers"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Scope-FaultHandlers",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Scope-FaultHandlers"
+                  },
+                  {
+                    "name": "Scope-FaultHandlers-OutboundLink",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Scope-FaultHandlers-OutboundLink"
+                  },
+                  {
+                    "name": "Scope-FaultHandlers-CatchAll",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Scope-FaultHandlers-CatchAll"
+                  },
+                  {
+                    "name": "Scope-FaultHandlers-CatchAll-Invoke",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Scope-FaultHandlers-CatchAll-Invoke"
+                  },
+                  {
+                    "name": "Scope-FaultHandlers-CatchAll-Invoke-Validate",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Scope-FaultHandlers-CatchAll-Invoke-Validate"
+                  },
+                  {
+                    "name": "Scope-FaultHandlers-OutboundLink-CatchAll",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Scope-FaultHandlers-OutboundLink-CatchAll"
+                  },
+                  {
+                    "name": "Process-FaultHandlers-FaultElement",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Process-FaultHandlers-FaultElement"
+                  },
+                  {
+                    "name": "Scope-FaultHandlers-FaultElement",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Scope-FaultHandlers-FaultElement"
+                  },
+                  {
+                    "name": "Scope-FaultHandlers-FaultMessageType",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Scope-FaultHandlers-FaultMessageType"
+                  },
+                  {
+                    "name": "Process-FaultHandlers-CatchOrder",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Process-FaultHandlers-CatchOrder"
+                  },
+                  {
+                    "name": "Scope-FaultHandlers-CatchOrder",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Scope-FaultHandlers-CatchOrder"
+                  },
+                  {
+                    "name": "Scope-FaultHandlers-VariableData",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__FaultHandlers__Scope-FaultHandlers-VariableData"
+                  }
+                ],
+                "name": "FaultHandlers",
+                "description": "Fault handling in a business process can be thought of as a mode switch from the normal processing in a scope. Fault handling in WS-BPEL is designed to be treated as \"reverse work,\" in that its aim is to undo the partial and unsuccessful work of a scope in which a fault has occurred. (p. 127, BPEL)",
+                "id": "Conformance__BPEL__scopes__FaultHandlers"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Scope-Isolated",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Scope-Attributes__Scope-Isolated"
+                  },
+                  {
+                    "name": "Scope-ExitOnStandardFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Scope-Attributes__Scope-ExitOnStandardFault"
+                  },
+                  {
+                    "name": "Scope-ExitOnStandardFault-JoinFailure",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Scope-Attributes__Scope-ExitOnStandardFault-JoinFailure"
+                  }
+                ],
+                "name": "Scope-Attributes",
+                "description": "All attributes of <scope> or <process>, being exitOnStandardFault and isolated",
+                "id": "Conformance__BPEL__scopes__Scope-Attributes"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Scope-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__MessageExchanges__Scope-MessageExchanges"
+                  },
+                  {
+                    "name": "Scope-Multiple-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__MessageExchanges__Scope-Multiple-MessageExchanges"
+                  },
+                  {
+                    "name": "MissingReply",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__MessageExchanges__MissingReply"
+                  },
+                  {
+                    "name": "MissingRequest",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__MessageExchanges__MissingRequest"
+                  }
+                ],
+                "name": "MessageExchanges",
+                "description": "Manages message exchanges consisting of inbound message activities (IMA) and optional replies.",
+                "id": "Conformance__BPEL__scopes__MessageExchanges"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Scope-Compensate",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Compensation__Scope-Compensate"
+                  },
+                  {
+                    "name": "Scope-Compensate-Flow",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Compensation__Scope-Compensate-Flow"
+                  },
+                  {
+                    "name": "Scope-CompensateScope",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Compensation__Scope-CompensateScope"
+                  },
+                  {
+                    "name": "Scope-ComplexCompensation",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Compensation__Scope-ComplexCompensation"
+                  },
+                  {
+                    "name": "Scope-RepeatedCompensation",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Compensation__Scope-RepeatedCompensation"
+                  },
+                  {
+                    "name": "Scope-RepeatableConstructCompensation",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Compensation__Scope-RepeatableConstructCompensation"
+                  }
+                ],
+                "name": "Compensation",
+                "description": "The ability to declare compensation logic alongside forward-working logic is the underpinning of the application-controlled error-handling framework of WS-BPEL. (p. 118, BPEL)",
+                "id": "Conformance__BPEL__scopes__Compensation"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Scope-Variables",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Variables__Scope-Variables"
+                  },
+                  {
+                    "name": "Scope-Variables-Overwriting",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__Variables__Scope-Variables-Overwriting"
+                  }
+                ],
+                "name": "Variables",
+                "description": "Variables can be attached to <scope> or <process> elements.",
+                "id": "Conformance__BPEL__scopes__Variables"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Scope-CorrelationSets-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__CorrelationSets__Scope-CorrelationSets-InitAsync"
+                  },
+                  {
+                    "name": "Scope-CorrelationSets-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__CorrelationSets__Scope-CorrelationSets-InitSync"
+                  }
+                ],
+                "name": "CorrelationSets",
+                "description": "Correlation can be used on every messaging activity and are defined on <scope> or <process>. They ensure that the messages are routed to the process instance where the correlation set matches.",
+                "id": "Conformance__BPEL__scopes__CorrelationSets"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Scope-TerminationHandlers",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__TerminationHandlers__Scope-TerminationHandlers"
+                  },
+                  {
+                    "name": "Scope-TerminationHandlers-OutboundLink",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__TerminationHandlers__Scope-TerminationHandlers-OutboundLink"
+                  },
+                  {
+                    "name": "Scope-TerminationHandlers-FaultNotPropagating",
+                    "description": "",
+                    "id": "Conformance__BPEL__scopes__TerminationHandlers__Scope-TerminationHandlers-FaultNotPropagating"
+                  }
+                ],
+                "name": "TerminationHandlers",
+                "description": "Termination handlers provide the ability for scopes to control the semantics of forced termination to some degree. (p. 136, BPEL)",
+                "id": "Conformance__BPEL__scopes__TerminationHandlers"
+              }
+            ]
+          },
+          {
+            "name": "basic",
+            "description": "Basic activities are the basic building blocks of a BPEL process.",
+            "id": "Conformance__BPEL__basic",
+            "constructs": [
+              {
+                "features": [
+                  {
+                    "name": "Rethrow",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Rethrow__Rethrow"
+                  },
+                  {
+                    "name": "Rethrow-FaultDataUnmodified",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Rethrow__Rethrow-FaultDataUnmodified"
+                  },
+                  {
+                    "name": "Rethrow-FaultData",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Rethrow__Rethrow-FaultData"
+                  }
+                ],
+                "name": "Rethrow",
+                "description": "The <rethrow> activity is used in fault handlers to rethrow the fault they caught, i.e. the fault name and, where present, the fault data of the original fault. (p. 96, BPEL)",
+                "id": "Conformance__BPEL__basic__Rethrow"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Invoke-Async",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-Async"
+                  },
+                  {
+                    "name": "Invoke-Sync",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-Sync"
+                  },
+                  {
+                    "name": "Invoke-InitializePartnerRole-Yes-Async",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-InitializePartnerRole-Yes-Async"
+                  },
+                  {
+                    "name": "Invoke-InitializePartnerRole-Yes-Sync",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-InitializePartnerRole-Yes-Sync"
+                  },
+                  {
+                    "name": "Invoke-InitializePartnerRole-No-Async",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-InitializePartnerRole-No-Async"
+                  },
+                  {
+                    "name": "Invoke-InitializePartnerRole-No-Sync",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-InitializePartnerRole-No-Sync"
+                  },
+                  {
+                    "name": "Invoke-Sync-Fault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-Sync-Fault"
+                  },
+                  {
+                    "name": "Invoke-Empty",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-Empty"
+                  },
+                  {
+                    "name": "Invoke-ToParts",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-ToParts"
+                  },
+                  {
+                    "name": "Invoke-FromParts",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-FromParts"
+                  },
+                  {
+                    "name": "Invoke-Correlation-Pattern-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-Correlation-Pattern-InitAsync"
+                  },
+                  {
+                    "name": "Invoke-Correlation-Pattern-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-Correlation-Pattern-InitSync"
+                  },
+                  {
+                    "name": "Invoke-Catch",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-Catch"
+                  },
+                  {
+                    "name": "Invoke-Catch-UndeclaredFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-Catch-UndeclaredFault"
+                  },
+                  {
+                    "name": "Invoke-CatchAll",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-CatchAll"
+                  },
+                  {
+                    "name": "Invoke-CatchAll-UndeclaredFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-CatchAll-UndeclaredFault"
+                  },
+                  {
+                    "name": "Invoke-CompensateScope-CompensationHandler",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-CompensateScope-CompensationHandler"
+                  },
+                  {
+                    "name": "Invoke-CompensationHandler",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Invoke__Invoke-CompensationHandler"
+                  }
+                ],
+                "name": "Invoke",
+                "description": "The <invoke> activity is used to call Web Services offered by service providers. (p. 84, BPEL)",
+                "id": "Conformance__BPEL__basic__Invoke"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Validate",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Validate__Validate"
+                  },
+                  {
+                    "name": "Validate-InvalidVariables",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Validate__Validate-InvalidVariables"
+                  }
+                ],
+                "name": "Validate",
+                "description": "The <validate> activity can be used to ensure that values of variables are valid against their associated XML data definition, including XML Schema simple type, complex type, element definition and XML definitions of WSDL parts. (p. 48, BPEL)",
+                "id": "Conformance__BPEL__basic__Validate"
+              },
+              {
+                "features": [
+                  {
+                    "name": "ReceiveReply-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-MessageExchanges"
+                  },
+                  {
+                    "name": "ReceiveReply-Multiple-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-Multiple-MessageExchanges"
+                  },
+                  {
+                    "name": "ReceiveReply-FIFO-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-FIFO-MessageExchanges"
+                  },
+                  {
+                    "name": "ReceiveReply-FILO-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-FILO-MessageExchanges"
+                  },
+                  {
+                    "name": "ReceiveReply-ConflictingRequestFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-ConflictingRequestFault"
+                  },
+                  {
+                    "name": "ReceiveReply-CorrelationViolation-No",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-CorrelationViolation-No"
+                  },
+                  {
+                    "name": "ReceiveReply-CorrelationViolation-Yes",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-CorrelationViolation-Yes"
+                  },
+                  {
+                    "name": "ReceiveReply-CorrelationViolation-Join",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-CorrelationViolation-Join"
+                  },
+                  {
+                    "name": "ReceiveReply",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply"
+                  },
+                  {
+                    "name": "ReceiveReply-Correlation-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-Correlation-InitAsync"
+                  },
+                  {
+                    "name": "ReceiveReply-Correlation-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-Correlation-InitSync"
+                  },
+                  {
+                    "name": "ReceiveReply-FromParts",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-FromParts"
+                  },
+                  {
+                    "name": "ReceiveReply-ToParts",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-ToParts"
+                  },
+                  {
+                    "name": "ReceiveReply-Fault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__ReceiveReply__ReceiveReply-Fault"
+                  }
+                ],
+                "name": "ReceiveReply",
+                "description": "The <reply> activity is used to send a response to a request previously accepted through an inbound message activity such as the <receive> activity. (p. 92, BPEL)",
+                "id": "Conformance__BPEL__basic__ReceiveReply"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Throw",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Throw__Throw"
+                  },
+                  {
+                    "name": "Throw-WithoutNamespace",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Throw__Throw-WithoutNamespace"
+                  },
+                  {
+                    "name": "Throw-FaultData",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Throw__Throw-FaultData"
+                  },
+                  {
+                    "name": "Throw-CustomFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Throw__Throw-CustomFault"
+                  },
+                  {
+                    "name": "Throw-CustomFaultInWsdl",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Throw__Throw-CustomFaultInWsdl"
+                  }
+                ],
+                "name": "Throw",
+                "description": "The <throw> activity is used when a business process needs to signal an internal fault explicitly. (p. 94, BPEL)",
+                "id": "Conformance__BPEL__basic__Throw"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Receive",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Receive__Receive"
+                  },
+                  {
+                    "name": "Receive-Correlation-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Receive__Receive-Correlation-InitAsync"
+                  },
+                  {
+                    "name": "Receive-Correlation-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Receive__Receive-Correlation-InitSync"
+                  },
+                  {
+                    "name": "Receive-AmbiguousReceiveFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Receive__Receive-AmbiguousReceiveFault"
+                  },
+                  {
+                    "name": "Receive-ConflictingReceiveFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Receive__Receive-ConflictingReceiveFault"
+                  }
+                ],
+                "name": "Receive",
+                "description": "A <receive> is a blocking activity in that it will not complete until a matching message is received by the process instance. (p.91, BPEL)",
+                "id": "Conformance__BPEL__basic__Receive"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Assign-Validate",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Validate"
+                  },
+                  {
+                    "name": "Assign-Property",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Property"
+                  },
+                  {
+                    "name": "Assign-To-Property",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-To-Property"
+                  },
+                  {
+                    "name": "Assign-PartnerLink",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-PartnerLink"
+                  },
+                  {
+                    "name": "Assign-Element-Variable",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Element-Variable"
+                  },
+                  {
+                    "name": "Assign-PartnerLink-PartnerRole",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-PartnerLink-PartnerRole"
+                  },
+                  {
+                    "name": "Assign-PartnerLink-UnsupportedReference",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-PartnerLink-UnsupportedReference"
+                  },
+                  {
+                    "name": "Assign-MismatchedAssignmentFailure",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-MismatchedAssignmentFailure"
+                  },
+                  {
+                    "name": "Assign-Literal",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Literal"
+                  },
+                  {
+                    "name": "Assign-Expression-From",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Expression-From"
+                  },
+                  {
+                    "name": "Assign-Expression-To",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Expression-To"
+                  },
+                  {
+                    "name": "Assign-ExpressionLanguage-From",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-ExpressionLanguage-From"
+                  },
+                  {
+                    "name": "Assign-ExpressionLanguage-To",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-ExpressionLanguage-To"
+                  },
+                  {
+                    "name": "Assign-Int",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Int"
+                  },
+                  {
+                    "name": "Assign-SelectionFailure",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-SelectionFailure"
+                  },
+                  {
+                    "name": "Assign-Copy-Query",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Copy-Query"
+                  },
+                  {
+                    "name": "Assign-Copy-QueryLanguage",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Copy-QueryLanguage"
+                  },
+                  {
+                    "name": "Assign-To-Query",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-To-Query"
+                  },
+                  {
+                    "name": "Assign-To-QueryLanguage",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-To-QueryLanguage"
+                  },
+                  {
+                    "name": "Assign-Copy-KeepSrcElementName",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Copy-KeepSrcElementName"
+                  },
+                  {
+                    "name": "Assign-Copy-IgnoreMissingFromData",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Copy-IgnoreMissingFromData"
+                  },
+                  {
+                    "name": "Assign-Copy-GetVariableProperty",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Copy-GetVariableProperty"
+                  },
+                  {
+                    "name": "Assign-Copy-DoXslTransform",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Copy-DoXslTransform"
+                  },
+                  {
+                    "name": "Assign-Copy-DoXslTransform-InvalidSourceFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Copy-DoXslTransform-InvalidSourceFault"
+                  },
+                  {
+                    "name": "Assign-Copy-DoXslTransform-XsltStylesheetNotFound",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Copy-DoXslTransform-XsltStylesheetNotFound"
+                  },
+                  {
+                    "name": "Assign-Copy-DoXslTransform-SubLanguageExecutionFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-Copy-DoXslTransform-SubLanguageExecutionFault"
+                  },
+                  {
+                    "name": "Assign-VariablesUnchangedInspiteOfFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Assign__Assign-VariablesUnchangedInspiteOfFault"
+                  }
+                ],
+                "name": "Assign",
+                "description": "Variable update occurs through the <assign> activity. (p. 94, BPEL)",
+                "id": "Conformance__BPEL__basic__Assign"
+              },
+              {
+                "features": [{
+                  "name": "Empty",
+                  "description": "",
+                  "id": "Conformance__BPEL__basic__Empty__Empty"
+                }],
+                "name": "Empty",
+                "description": "An activity which does nothing.",
+                "id": "Conformance__BPEL__basic__Empty"
+              },
+              {
+                "features": [{
+                  "name": "Exit",
+                  "description": "",
+                  "id": "Conformance__BPEL__basic__Exit__Exit"
+                }],
+                "name": "Exit",
+                "description": "The <exit> activity is used to immediately end the business process instance. (p. 96, BPEL)",
+                "id": "Conformance__BPEL__basic__Exit"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Wait-For",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Wait__Wait-For"
+                  },
+                  {
+                    "name": "Wait-For-InvalidExpressionValue",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Wait__Wait-For-InvalidExpressionValue"
+                  },
+                  {
+                    "name": "Wait-Until",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Wait__Wait-Until"
+                  }
+                ],
+                "name": "Wait",
+                "description": "The <wait> activity specifies a delay for a certain period of time or until a certain deadline is reached (p. 95, BPEL)",
+                "id": "Conformance__BPEL__basic__Wait"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Variables-UninitializedVariableFault-Reply",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Variables__Variables-UninitializedVariableFault-Reply"
+                  },
+                  {
+                    "name": "Variables-UninitializedVariableFault-Invoke",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Variables__Variables-UninitializedVariableFault-Invoke"
+                  },
+                  {
+                    "name": "Variables-DefaultInitialization",
+                    "description": "",
+                    "id": "Conformance__BPEL__basic__Variables__Variables-DefaultInitialization"
+                  }
+                ],
+                "name": "Variables",
+                "description": "Groups together several features regarding initialization of variables.",
+                "id": "Conformance__BPEL__basic__Variables"
+              }
+            ]
+          },
+          {
+            "name": "structured",
+            "description": "Structured activities compose basic activities into a control-flow graph.",
+            "id": "Conformance__BPEL__structured",
+            "constructs": [
+              {
+                "features": [
+                  {
+                    "name": "ForEach",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach"
+                  },
+                  {
+                    "name": "ForEach-Read-Counter",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-Read-Counter"
+                  },
+                  {
+                    "name": "ForEach-Write-Counter",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-Write-Counter"
+                  },
+                  {
+                    "name": "ForEach-Flow",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-Flow"
+                  },
+                  {
+                    "name": "ForEach-NegativeStopCounter",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-NegativeStopCounter"
+                  },
+                  {
+                    "name": "ForEach-CompletionCondition",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-CompletionCondition"
+                  },
+                  {
+                    "name": "ForEach-CompletionCondition-Parallel",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-CompletionCondition-Parallel"
+                  },
+                  {
+                    "name": "ForEach-CompletionCondition-SuccessfulBranchesOnly",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-CompletionCondition-SuccessfulBranchesOnly"
+                  },
+                  {
+                    "name": "ForEach-CompletionConditionFailure",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-CompletionConditionFailure"
+                  },
+                  {
+                    "name": "ForEach-Parallel",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-Parallel"
+                  },
+                  {
+                    "name": "ForEach-Parallel-Invoke",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-Parallel-Invoke"
+                  },
+                  {
+                    "name": "ForEach-NegativeStartCounter",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-NegativeStartCounter"
+                  },
+                  {
+                    "name": "ForEach-TooLargeStartCounter",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-TooLargeStartCounter"
+                  },
+                  {
+                    "name": "ForEach-CompletionCondition-NegativeBranches",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__ForEach__ForEach-CompletionCondition-NegativeBranches"
+                  }
+                ],
+                "name": "ForEach",
+                "description": "The <forEach> activity will execute its contained <scope> activity exactly N+1 times where N equals the <finalCounterValue> minus the <startCounterValue>. (p. 112, BPEL)",
+                "id": "Conformance__BPEL__structured__ForEach"
+              },
+              {
+                "features": [
+                  {
+                    "name": "RepeatUntil",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__RepeatUntil__RepeatUntil"
+                  },
+                  {
+                    "name": "RepeatUntilEquality",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__RepeatUntil__RepeatUntilEquality"
+                  },
+                  {
+                    "name": "RepeatUntil-Flow",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__RepeatUntil__RepeatUntil-Flow"
+                  }
+                ],
+                "name": "RepeatUntil",
+                "description": "The <repeatUntil> activity provides for repeated execution of a contained activity. The contained activity is executed until the given Boolean <condition> becomes true. (p. 100, BPEL)",
+                "id": "Conformance__BPEL__structured__RepeatUntil"
+              },
+              {
+                "features": [
+                  {
+                    "name": "If",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__If__If"
+                  },
+                  {
+                    "name": "If-Else",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__If__If-Else"
+                  },
+                  {
+                    "name": "If-ElseIf",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__If__If-ElseIf"
+                  },
+                  {
+                    "name": "If-ElseIf-Else",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__If__If-ElseIf-Else"
+                  },
+                  {
+                    "name": "If-SubLanguageExecutionFault",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__If__If-SubLanguageExecutionFault"
+                  },
+                  {
+                    "name": "If-SubLanguageExecutionFault-EmptyCondition",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__If__If-SubLanguageExecutionFault-EmptyCondition"
+                  }
+                ],
+                "name": "If",
+                "description": "The <if> activity provides conditional behavior. The activity consists of an ordered list of one or more conditional branches defined by the <if> and optional <elseif> elements, followed by an optional <else> element. (p. 99, BPEL)",
+                "id": "Conformance__BPEL__structured__If"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Flow",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow"
+                  },
+                  {
+                    "name": "Flow-Links",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-Links"
+                  },
+                  {
+                    "name": "Flow-BoundaryLinks",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-BoundaryLinks"
+                  },
+                  {
+                    "name": "Flow-Links-JoinCondition",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-Links-JoinCondition"
+                  },
+                  {
+                    "name": "Flow-Links-JoinFailure",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-Links-JoinFailure"
+                  },
+                  {
+                    "name": "Flow-Links-SuppressJoinFailure",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-Links-SuppressJoinFailure"
+                  },
+                  {
+                    "name": "Flow-Links-TransitionCondition",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-Links-TransitionCondition"
+                  },
+                  {
+                    "name": "Flow-GraphExample",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-GraphExample"
+                  },
+                  {
+                    "name": "Flow-Links-ReceiveCreatingInstances",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-Links-ReceiveCreatingInstances"
+                  },
+                  {
+                    "name": "Flow-Two-Starting-OnMessage-Correlation",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-Two-Starting-OnMessage-Correlation"
+                  },
+                  {
+                    "name": "Flow-Starting-Receive-OnMessage-Correlation",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-Starting-Receive-OnMessage-Correlation"
+                  },
+                  {
+                    "name": "Flow-Two-Starting-Receive-Correlation",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Flow__Flow-Two-Starting-Receive-Correlation"
+                  }
+                ],
+                "name": "Flow",
+                "description": "The <flow> activity provides concurrency and synchronization. (p. 102, BPEL)",
+                "id": "Conformance__BPEL__structured__Flow"
+              },
+              {
+                "features": [{
+                  "name": "Sequence",
+                  "description": "",
+                  "id": "Conformance__BPEL__structured__Sequence__Sequence"
+                }],
+                "name": "Sequence",
+                "description": "A <sequence> activity contains one or more activities that are performed sequentially, in the lexical order in which they appear within the <sequence> element. (p. 98, BPEL)",
+                "id": "Conformance__BPEL__structured__Sequence"
+              },
+              {
+                "features": [
+                  {
+                    "name": "Pick-Correlations-InitAsync",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-Correlations-InitAsync"
+                  },
+                  {
+                    "name": "Pick-Correlations-InitSync",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-Correlations-InitSync"
+                  },
+                  {
+                    "name": "Pick-CreateInstance",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-CreateInstance"
+                  },
+                  {
+                    "name": "Pick-MessageExchange",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-MessageExchange"
+                  },
+                  {
+                    "name": "Pick-MessageExchange-Scope",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-MessageExchange-Scope"
+                  },
+                  {
+                    "name": "Pick-Multiple-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-Multiple-MessageExchanges"
+                  },
+                  {
+                    "name": "Pick-Multiple-MessageExchanges-Scope",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-Multiple-MessageExchanges-Scope"
+                  },
+                  {
+                    "name": "Pick-FIFO-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-FIFO-MessageExchanges"
+                  },
+                  {
+                    "name": "Pick-FILO-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-FILO-MessageExchanges"
+                  },
+                  {
+                    "name": "Receive-Pick-FIFO-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Receive-Pick-FIFO-MessageExchanges"
+                  },
+                  {
+                    "name": "Receive-Pick-FILO-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Receive-Pick-FILO-MessageExchanges"
+                  },
+                  {
+                    "name": "Pick-Receive-FIFO-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-Receive-FIFO-MessageExchanges"
+                  },
+                  {
+                    "name": "Pick-Receive-FILO-MessageExchanges",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-Receive-FILO-MessageExchanges"
+                  },
+                  {
+                    "name": "Pick-CreateInstance-FromParts",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-CreateInstance-FromParts"
+                  },
+                  {
+                    "name": "Pick-OnAlarm-For",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-OnAlarm-For"
+                  },
+                  {
+                    "name": "Pick-OnAlarm-Until",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__Pick__Pick-OnAlarm-Until"
+                  }
+                ],
+                "name": "Pick",
+                "description": "The <pick> activity waits for the occurrence of exactly one event from a set of events, then executes the activity associated with that event. After an event has been selected, the other events are no longer accepted by that <pick>. (p. 100, BPEL)",
+                "id": "Conformance__BPEL__structured__Pick"
+              },
+              {
+                "features": [
+                  {
+                    "name": "While",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__While__While"
+                  },
+                  {
+                    "name": "While-Flow",
+                    "description": "",
+                    "id": "Conformance__BPEL__structured__While__While-Flow"
+                  }
+                ],
+                "name": "While",
+                "description": "The <while> activity provides for repeated execution of a contained activity. The contained activity is executed as long as the Boolean <condition> evaluates to true at the beginning of each iteration. (p. 99, BPEL)",
+                "id": "Conformance__BPEL__structured__While"
+              }
+            ]
+          }
+        ],
+        "id": "Conformance__BPEL"
+      }
+    ],
+    "name": "Conformance",
+    "id": "Conformance"
+  }
+]

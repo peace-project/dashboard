@@ -1,0 +1,38 @@
+[
+{
+  "license": "Apache-2.0",
+  "licenseURL": "http://spdx.org/licenses/Apache-2.0.html",
+  "configuration": [],
+  "releaseDate": "2015-11-30",
+  "programmingLanguage": "Java",
+  "name": "camunda",
+  "language": "BPMN",
+  "id": "camunda__7_4_0",
+  "version": "7.4.0",
+  "url": "http://www.camunda.org/"
+},
+{
+  "license": "Apache-2.0",
+  "licenseURL": "http://spdx.org/licenses/Apache-2.0.html",
+  "configuration": [],
+  "releaseDate": "YYYY-MM-DD",
+  "programmingLanguage": "Java",
+  "name": "engine_b",
+  "language": "BPMN",
+  "id": "engine_b__N_NN_N",
+  "version": "N.NN.N",
+  "url": "http://www.example.org/"
+},
+{
+  "license": "Apache-2.0",
+  "licenseURL": "http://spdx.org/licenses/Apache-2.0.html",
+  "configuration": [],
+  "releaseDate": "YYYY-MM-DD",
+  "programmingLanguage": "Java",
+  "name": "engine_a",
+  "language": "BPMN",
+  "id": "engine_a__N_NN_N",
+  "version": "N.NN.N",
+  "url": "http://www.example.org/"
+}
+]

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <title>PEACE Dashboard</title>
+</head>
+<body>
+
+	<header class="mainhead">
+		<nav class="navbar navbar-default navbar-index">
+			<div id="main-navbar" class="container-fluid">
+				<div class="nav-container">		
+					<div class="navbar-header">
+					 	<a class="navbar-brand" href="index.html">PEACE</a>
+					</div>
+					 <div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="conformance.html">Capabilites</a></li>
+							<li><a href="engines-overview.html">Engines</a></li>
+							<li><a href="about.html">About</a></li>
+						</ul>					
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+    <div class="jumbotron">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>PEACE Dashboard</h1>
+                    <h2>Benchmark for Conformance and Performance of Workflow Engines</h2>
+                </div>
+            </div>
+            <div class="index-window">
+                <img src="images/index_window.png">
+            </div>
+        </div>
+    </div>
+	<div id="page-index" class="main-content">
+    
+        <div class="container-ifeature">
+    		<div class="row">
+
+                <div class="col-sm-3 col-md-3">
+                    <a class=" ifeatures-col" href="conformance.html">
+                        <div class="ifeat-icon"><img src="images/standard2_icon.png" alt="Conformance"></div>
+                        <h3 class="ifeatures-title">Conformance</h3>
+                        <p class="ifeatures-text">In-depth analysis for the basic building blocks of BPMN and BPEL engines: Which language features are supported by which engine?</p>
+                       <p class="btn-index" href="conformance.html">Explore conformance benchmark</p>                     
+                       </a>
+                </div>
+
+    			<div class="col-sm-3 col-md-3"> 
+                    <a class="ifeatures-col" href="expressiveness.html">
+                        <div class="ifeat-icon"><img src="images/expressiveness_icon.png" alt="expressiveness"></div>
+                        <h3 class="ifeatures-title">Expressiveness</h3>
+                        <p class="ifeatures-text">In-depth analysis of the support for Workflow Patterns of BPMN and BPEL engines: Which and how well are the Workflow Patterns supported?</p>
+                      <p class="btn-index" href="expressiveness.html">Explore expressiveness benchmark</p>  
+                    </a>
+    			</div>	    
+                <div class="col-sm-3 col-md-3"> 
+                    <a class="ifeatures-col" href="performance.html">
+                        <div class="ifeat-icon"><img src="images/performance_icon_2.png" alt="expressiveness"></div>
+                        <h3 class="ifeatures-title">Performance</h3>
+                        <p class="ifeatures-text">Compares the runtime behavior and resource utilization of selected BPMN engines for different workloads and experiments.</p>
+                        <p class="btn-index" href="performance.html">Explore performance benchmark</p>  
+                    </a>
+                </div>  
+
+                <div class="col-sm-3 col-md-3">
+                    <a class="ifeatures-col" href="engines-overview.html">
+                        <div class="ifeat-icon"><img src="images/engine_icon_2.png" alt="Engines"></div> 
+                        <h3 class="ifeatures-title">Engines</h3>
+                        <p class="ifeatures-text">Get a quick overview of the capabilities of all tested engines, or compare the capabilities of two engines side-by-side.</p>
+                       <p class="btn-index" href="engines-overview.html">Explore engines under test</p>  
+                    </a>
+                </div> 
+
+            </div>
+    	</div>
+	</div>
+
+	<footer id="footer" class="foot-container">
+		<p class="credits">© 2016 Peace. <a href="about.html">About</a></p>
+        <ul class="social">
+            <li><a href="#"><span class="entypo-mail"></span></a></li>
+            <li><a href="https://github.com/uniba-dsg/peace-project"><span class="entypo-github"></span></a></li>
+        </ul>
+	</footer>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    <script src="js/moment.min.js"></script>
+</body>
+</html>

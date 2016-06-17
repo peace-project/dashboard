@@ -1,0 +1,45 @@
+<h3 class="feat-desc-title">Feature</h3>
+
+<table class="table feature-desc" width="100%">
+    <tbody>
+        <tr> 
+            <td class="popup-tb-title">Feature Id</td>
+            <td class="popup-tb-val">{{feature.id}} </td>
+        </tr>
+        <tr> 
+            <td class="popup-tb-title">Group</td>
+            <td class="popup-tb-val">{{feature.groupName}} </td>
+        </tr>
+        <tr>
+            <td class="popup-tb-title">Description</td>
+            <td class="popup-tb-val">{{feature.description}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 class="feat-desc-title">Test (Engine Independent)</h3>
+
+ <table class="table feature-desc" width="100%">
+    <tbody>       
+        <tr>
+            <td class="popup-tb-title">Description</td>
+            <td class="popup-tb-val">{{featureTestInfo.description}}</td>
+        </tr>
+        <tr> 
+            <td class="popup-tb-title">Engine Independent Files</td>
+            <td class="popup-tb-val">
+                <ul class="list-files">
+                {{#each engineIndependentFiles}}
+                    <li><span class="entypo-doc-text"></span><a href="{{url}}">{{title}}</a></li>
+                {{/each}}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="popup-tb-title">Process Image</td>
+            <td  class="popup-tb-val">
+                <img alt="{{img.alt}}" src="{{img.src}}" >
+            </td>
+        </tr>
+    </tbody>
+</table>
