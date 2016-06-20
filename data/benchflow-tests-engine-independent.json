@@ -8,9 +8,9 @@
     "loadFunction": {
       "description": "A load test function",
       "thinkTime": "1 sec",
-      "ramp-upTime": "30 sec",
+      "rampUpTime": "30 sec",
       "steadyStateTime": "9:30 min",
-      "ramp-downTime": "0 sec",
+      "rampDownTime": "0 sec",
       "connectionTimeout": "20 sec",
       "users": {
           "startUsers": 1,

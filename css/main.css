@@ -1966,6 +1966,14 @@ a:hover.pbility-info {
   min-width: 300px;
   text-align: center; }
 
+.additionalData-table {
+  word-break: break-all;
+  word-wrap: break-word;
+  font-size: 12px; }
+
+.additionalData-table tr {
+  border-bottom: 1px solid #ddd; }
+
 .tooltip.bottom .tooltip-arrow {
   border-bottom-color: #5B6475; }
 
@@ -2029,6 +2037,7 @@ a:hover.pbility-info {
   width: 176px;
   padding-right: 20px !important; }
 
+.additionalData-table-title,
 .feat-desc-title {
   font-size: 18px; }
 

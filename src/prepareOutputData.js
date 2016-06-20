@@ -326,6 +326,35 @@
             logFiles: createLinkFromPaths(test.logFiles)
         };
     }
+    //TODO here
+    function prepareHtmlEngineTestPerformance (featureTest,engineID){
+            console.log(featureTest);
+            var environment = featureTest.additionalData[0].environment;
+
+            var environmentValues=[];
+            for(var key in environment){
+                var values=[]
+                   values.push({
+                   configuration:environment[key].configuration,
+                   cpuCores:environment[key].cpu_cores,
+                   cpuPower:environment[key].cpu_power,
+                   dockerContainer:environment[key].docker_container,
+                   dockerEngine:environment[key].docker_engine,
+                   hostOperatingSystem:environment[key].host_operating_system,
+                   network:environment[key].network,
+                   purpose:environment[key].purpose,
+                   ram:environment[key].ram
+
+                   });
+
+                environmentValues.push({
+                    server: key,
+                    values: values
+                });
+            }
+
+            return environmentValues;
+        }
 
     function formatTescase(obj){
         var message, resultType;

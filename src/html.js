@@ -361,27 +361,31 @@
        
     }
 
-
+    //TODO here
     function buildTestIndependentPopover(){
+
         $('[data-test-info].info-engine-test').popover({
             //trigger: 'click hover',
-            html : true, 
+            html : true,
             placement: 'auto right',
             container: '.content-wrapper',
-            content: function() { return buildTestIndependentPopoverContent($(this).attr('data-test-info'), $(this).attr('data-test-engine'))}, 
+            content: function() { return buildTestIndependentPopoverContent($(this).attr('data-test-info'), $(this).attr('data-test-engine'))},
             title: function() {
               return '<span>Feature-Test</span> '  + getTestIndependentFeatureName($(this).attr('data-test-info'));
             }
-        }); 
+        });
 
 
         $('body').on('click', function (e) {
             $('[data-test-info].info-engine-test').each(function () {
                 if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
                     $(this).popover('hide');
+
                 }
+
             });
         });
+
     }      
 
     function buildEngineInfoPopover(){
@@ -402,8 +406,10 @@
                 if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
                     $(this).popover('hide');
                 }
+
             });
         });
+
     }
 
    function buildEngineInfoPopoverContent(engineIndex){
@@ -420,8 +426,21 @@
 
     function buildFeaturePopoverContent(featureIndex){
         var featureTestInfo =  getTestIndependentInfo(filteredData.features[featureIndex].id)
+        console.log(featureTestInfo);
+        var loadFunction=[];
+        loadFunction.push({
+            description:featureTestInfo.loadFunction.description,
+            thinkTime:featureTestInfo.loadFunction.thinkTime,
+            rampUpTime:featureTestInfo.loadFunction.rampUpTime,
+            steadyStateTime:featureTestInfo.loadFunction.steadyStateTime,
+            rampDownTime:featureTestInfo.loadFunction.rampDownTime,
+            connectionTimeout:featureTestInfo.loadFunction.connectionTimeout,
+            startUsers:featureTestInfo.loadFunction.users.startUsers,
+            steadyStateUsers:featureTestInfo.loadFunction.users.steadyStateUsers,
+            endUsers:featureTestInfo.loadFunction.users.endUsers})
         var outputData = { 
             featureTestInfo:  featureTestInfo,
+            loadFunction:loadFunction,
             engineIndependentFiles :  createLinkFromPaths(featureTestInfo.engineIndependentFiles),
             img : {alt:'image', src:'images/bpmn_processes/sequence_flow.png'},
             feature : filteredData.features[featureIndex]
@@ -429,11 +448,24 @@
         return renderFeaturePopover(outputData);
     }
 
+//TODO here
     function buildTestIndependentPopoverContent(featureIndex,  engineID){
+
         var featureTest = getFeatureTestByEngine(filteredData.features[featureIndex], engineID);
         if(featureTest == undefined){ return;}
-        return renderFeatureTestPopover(prepareHtmlEngineTest(featureTest, engineID));
+
+      if (capability==='performance'){
+
+           var output = prepareHtmlEngineTestPerformance(featureTest,engineID);
+
+        }else {
+          var  output=prepareHtmlEngineTest(featureTest, engineID);
+
+       }
+        return renderFeatureTestPopover(output);
     }
+
+
 
     function initializeTooltip(){
         $('[data-toggle="tooltip"]').tooltip({
@@ -460,29 +492,34 @@
     function onCollapseFeatureTable(){
 
         $('.row-feat-title').on('show.bs.collapse', function(){
+
             var tr = $(this).prev();
             if(tr.length == 1){
                 tr.addClass('row-expanded');
 
                 var expendIcon = tr.find('.entypo-right-open');
+
                 if(expendIcon.length == 1){
                     expendIcon.removeClass('entypo-right-open'); 
                     expendIcon.addClass('entypo-down-open'); 
                 }
             }
+
         });
 
         $('.row-feat-title').on('hidden.bs.collapse', function(){
-            var tr = $(this).prev();
-            if(tr.length == 1){
-                tr.removeClass('row-expanded');
 
-                var expendIcon = tr.find('.entypo-down-open');
-                 if(expendIcon.length == 1){
-                    expendIcon.removeClass('entypo-down-open');
-                    expendIcon.addClass('entypo-right-open');
-                 }
-            }
+               var tr = $(this).prev();
+                if(tr.length == 1){
+                    tr.removeClass('row-expanded');
+
+                    var expendIcon = tr.find('.entypo-down-open');
+                     if(expendIcon.length == 1){
+                        expendIcon.removeClass('entypo-down-open');
+                        expendIcon.addClass('entypo-right-open');
+                     }
+                }
+
          });
         
     }

@@ -66,6 +66,7 @@ var peace = (function($, _) {
                     return false;
                 }
                 process();
+
             }
         }
     }
@@ -902,6 +903,35 @@ var peace = (function($, _) {
             logFiles: createLinkFromPaths(test.logFiles)
         };
     }
+    //TODO here
+    function prepareHtmlEngineTestPerformance (featureTest,engineID){
+            console.log(featureTest);
+            var environment = featureTest.additionalData[0].environment;
+
+            var environmentValues=[];
+            for(var key in environment){
+                var values=[]
+                   values.push({
+                   configuration:environment[key].configuration,
+                   cpuCores:environment[key].cpu_cores,
+                   cpuPower:environment[key].cpu_power,
+                   dockerContainer:environment[key].docker_container,
+                   dockerEngine:environment[key].docker_engine,
+                   hostOperatingSystem:environment[key].host_operating_system,
+                   network:environment[key].network,
+                   purpose:environment[key].purpose,
+                   ram:environment[key].ram
+
+                   });
+
+                environmentValues.push({
+                    server: key,
+                    values: values
+                });
+            }
+
+            return environmentValues;
+        }
 
     function formatTescase(obj){
         var message, resultType;
@@ -967,9 +997,9 @@ var peace = (function($, _) {
             initializeTooltip();
             buildFeaturePopover();
                         
-        if(capability === 'conformance' || capability === 'expressiveness'){
+
             buildTestIndependentPopover();
-        } 
+
     }    
 
 
@@ -985,15 +1015,25 @@ var peace = (function($, _) {
     }
 
     function renderFeaturePopover(outputData){
+        console.log(outputData);
         var template = Peace.templates['feature_description'];
         var html  = template(outputData);
         return html;
     }
 
+//TODO here
     function renderFeatureTestPopover(test){
-        var template = Peace.templates['feature_test_description'];
-        var context = { test: test };
+
+        if (capability==='performance'){
+           var template = Peace.templates['additionalData_table'];
+           var context = {test:test}
+        }else{
+            var template = Peace.templates['feature_test_description'];
+            var context = { test: test };
+        }
+
         var html  = template(context);
+
         return html;
     }
     
@@ -1012,6 +1052,7 @@ var peace = (function($, _) {
         });
 
         Handlebars.registerHelper('getProperty', function(object, property, options) {
+
             if(object === undefined || !object.hasOwnProperty(property)){
                 return options.fn(false);
             } else {
@@ -1413,27 +1454,31 @@ var peace = (function($, _) {
        
     }
 
-
+    //TODO here
     function buildTestIndependentPopover(){
+
         $('[data-test-info].info-engine-test').popover({
             //trigger: 'click hover',
-            html : true, 
+            html : true,
             placement: 'auto right',
             container: '.content-wrapper',
-            content: function() { return buildTestIndependentPopoverContent($(this).attr('data-test-info'), $(this).attr('data-test-engine'))}, 
+            content: function() { return buildTestIndependentPopoverContent($(this).attr('data-test-info'), $(this).attr('data-test-engine'))},
             title: function() {
               return '<span>Feature-Test</span> '  + getTestIndependentFeatureName($(this).attr('data-test-info'));
             }
-        }); 
+        });
 
 
         $('body').on('click', function (e) {
             $('[data-test-info].info-engine-test').each(function () {
                 if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
                     $(this).popover('hide');
+
                 }
+
             });
         });
+
     }      
 
     function buildEngineInfoPopover(){
@@ -1454,8 +1499,10 @@ var peace = (function($, _) {
                 if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
                     $(this).popover('hide');
                 }
+
             });
         });
+
     }
 
    function buildEngineInfoPopoverContent(engineIndex){
@@ -1472,8 +1519,21 @@ var peace = (function($, _) {
 
     function buildFeaturePopoverContent(featureIndex){
         var featureTestInfo =  getTestIndependentInfo(filteredData.features[featureIndex].id)
+        console.log(featureTestInfo);
+        var loadFunction=[];
+        loadFunction.push({
+            description:featureTestInfo.loadFunction.description,
+            thinkTime:featureTestInfo.loadFunction.thinkTime,
+            rampUpTime:featureTestInfo.loadFunction.rampUpTime,
+            steadyStateTime:featureTestInfo.loadFunction.steadyStateTime,
+            rampDownTime:featureTestInfo.loadFunction.rampDownTime,
+            connectionTimeout:featureTestInfo.loadFunction.connectionTimeout,
+            startUsers:featureTestInfo.loadFunction.users.startUsers,
+            steadyStateUsers:featureTestInfo.loadFunction.users.steadyStateUsers,
+            endUsers:featureTestInfo.loadFunction.users.endUsers})
         var outputData = { 
             featureTestInfo:  featureTestInfo,
+            loadFunction:loadFunction,
             engineIndependentFiles :  createLinkFromPaths(featureTestInfo.engineIndependentFiles),
             img : {alt:'image', src:'images/bpmn_processes/sequence_flow.png'},
             feature : filteredData.features[featureIndex]
@@ -1481,11 +1541,24 @@ var peace = (function($, _) {
         return renderFeaturePopover(outputData);
     }
 
+//TODO here
     function buildTestIndependentPopoverContent(featureIndex,  engineID){
+
         var featureTest = getFeatureTestByEngine(filteredData.features[featureIndex], engineID);
         if(featureTest == undefined){ return;}
-        return renderFeatureTestPopover(prepareHtmlEngineTest(featureTest, engineID));
+
+      if (capability==='performance'){
+
+           var output = prepareHtmlEngineTestPerformance(featureTest,engineID);
+
+        }else {
+          var  output=prepareHtmlEngineTest(featureTest, engineID);
+
+       }
+        return renderFeatureTestPopover(output);
     }
+
+
 
     function initializeTooltip(){
         $('[data-toggle="tooltip"]').tooltip({
@@ -1512,29 +1585,34 @@ var peace = (function($, _) {
     function onCollapseFeatureTable(){
 
         $('.row-feat-title').on('show.bs.collapse', function(){
+
             var tr = $(this).prev();
             if(tr.length == 1){
                 tr.addClass('row-expanded');
 
                 var expendIcon = tr.find('.entypo-right-open');
+
                 if(expendIcon.length == 1){
                     expendIcon.removeClass('entypo-right-open'); 
                     expendIcon.addClass('entypo-down-open'); 
                 }
             }
+
         });
 
         $('.row-feat-title').on('hidden.bs.collapse', function(){
-            var tr = $(this).prev();
-            if(tr.length == 1){
-                tr.removeClass('row-expanded');
 
-                var expendIcon = tr.find('.entypo-down-open');
-                 if(expendIcon.length == 1){
-                    expendIcon.removeClass('entypo-down-open');
-                    expendIcon.addClass('entypo-right-open');
-                 }
-            }
+               var tr = $(this).prev();
+                if(tr.length == 1){
+                    tr.removeClass('row-expanded');
+
+                    var expendIcon = tr.find('.entypo-down-open');
+                     if(expendIcon.length == 1){
+                        expendIcon.removeClass('entypo-down-open');
+                        expendIcon.addClass('entypo-right-open');
+                     }
+                }
+
          });
         
     }

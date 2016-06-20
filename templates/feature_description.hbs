@@ -22,12 +22,53 @@
  <table class="table feature-desc" width="100%">
     <tbody>       
         <tr>
-            <td class="popup-tb-title">Description</td>
-            <td class="popup-tb-val">{{featureTestInfo.description}}</td>
+            <td  class="popup-tb-title">Description</td>
+            <td colspan=2 class="popup-tb-val">{{feature.description}}</td>
         </tr>
+
+            <td class="popup-tb-title"> LoadFunction</td>
+            <td class="popup-tb-title">Description</td>
+            <td class="popup-tb-val">{{loadFunction.0.description}}</td>
+
+        <tr>
+            <td></td>
+            <td class="popup-tb-title">Thinktime</td>
+            <td class="popup-tb-val">{{loadFunction.0.thinkTime}}</td>
+
+        </tr>
+        <tr><td></td>
+            <td class="popup-tb-title">Ramp-Up Time</td>
+            <td class="popup-tb-val">{{loadFunction.0.rampUpTime}}</td>
+        </tr>
+        <tr><td></td>
+            <td class="popup-tb-title">Steady-State Time</td>
+            <td class="popup-tb-val">{{loadFunction.0.steadyStateTime}}</td>
+        </tr>
+        <tr><td></td>
+            <td class="popup-tb-title">Ramp-Down Time</td>
+            <td class="popup-tb-val">{{loadFunction.0.rampDownTime}}</td>
+        </tr>
+
+        <tr><td></td>
+            <td class="popup-tb-title">Connection Timeout</td>
+            <td class="popup-tb-val">{{loadFunction.0.connectionTimeout}}</td>
+        </tr>
+        <tr><td></td>
+            <td class="popup-tb-title">Start Users</td>
+            <td class="popup-tb-val">{{loadFunction.0.startUsers}}</td>
+        </tr>
+        <tr><td></td>
+            <td class="popup-tb-title">Steady State Users</td>
+            <td class="popup-tb-val">{{loadFunction.0.steadyStateUsers}}</td>
+        </tr>
+        <tr><td></td>
+            <td class="popup-tb-title">End Users</td>
+            <td class="popup-tb-val">{{loadFunction.0.endUsers}}</td>
+        </tr>
+
         <tr> 
             <td class="popup-tb-title">Engine Independent Files</td>
-            <td class="popup-tb-val">
+            <td colspan=2 class="popup-tb-val">
                 <ul class="list-files">
                 {{#each engineIndependentFiles}}
                     <li><span class="entypo-doc-text"></span><a href="{{url}}">{{title}}</a></li>
@@ -37,7 +78,7 @@
         </tr>
         <tr>
             <td class="popup-tb-title">Process Image</td>
-            <td  class="popup-tb-val">
+            <td colspan=2 class="popup-tb-val">
                 <img alt="{{img.alt}}" src="{{img.src}}" >
             </td>
         </tr>
