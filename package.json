@@ -1,7 +1,7 @@
 {
   "name": "PEACEDashboard",
   "version": "0.1.0",
-  "description": "Peace Dashboard",
+  "description": "PEACE Dashboard",
   "scripts": {
     "start": "gulp"
   },
