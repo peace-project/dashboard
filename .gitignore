@@ -38,5 +38,6 @@ jspm_packages
 .eslintrc.json
 
 dist/
+dist./
 
 data/test/
