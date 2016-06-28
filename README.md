@@ -1,4 +1,6 @@
-# PEACE Dashboard Website
+# PEACE Dashboard
+
+*Web-based interactive dashboard for process engine benchmarks*
 
 ## Working with gulp
 
