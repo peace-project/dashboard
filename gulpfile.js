@@ -29,26 +29,34 @@ var paths = {
 var uncompressedJs  = 'peace.js';
 var compressedJs    = 'peace.min.js';
 
-gulp.task('default', ['build','test'], function() {
+gulp.task('default', function(cb) {
+    runSequence('build', 'test', cb);
 });
 
 gulp.task('build', function(cb) {
-    runSequence('clean', 'pages', 'libs', ['styles', 'templates','scripts'], cb);
+    runSequence('clean', 'copy:data', 'pages', 'images', 'libs', ['styles', 'templates','scripts'], cb);
 }); 
-    
-gulp.task('public', function(cb) {
-    runSequence('pages', 'libs', cb);
+
+gulp.task('pages', function() {
+    return gulp.src('src/*.html')
+        .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('pages', function(cb) {
-    return gulp.src('src/*.html')
-    .pipe(gulp.dest(paths.dist));
+gulp.task('images', function() {
+   return gulp.src('src/images/**/*.{svg,png,jpg}')
+        .pipe(gulp.dest('dist/images')); 
 });
 
 gulp.task('libs', function(cb) {
     return gulp.src('lib/**')
     .pipe(gulp.dest(paths.dist));
 });
+
+gulp.task('copy:data', function(cb) {
+    return gulp.src('data/**')
+    .pipe(gulp.dest(paths.dist));
+});
+
 
 gulp.task('clean', function() {
     // return the stream as the completion hint
@@ -84,7 +92,6 @@ gulp.task('scripts', function() {
         .pipe(concat(uncompressedJs))
         .pipe(sourcemaps.init())
         .pipe(gulp.dest(paths.dist+'/js'));
-
 });
 
 function watch() {
@@ -93,7 +100,6 @@ function watch() {
     gulp.watch('src/**/*.js', ['scripts', browserSync.reload]);
     gulp.watch('lib/**', ['lib', browserSync.reload]);
     gulp.watch('src/templates/**/*.hbs', ['templates', browserSync.reload]);
-   // gulp.watch('src/**/*.html').on('change', browserSync.reload);
 }
 
 gulp.task('test', function() {
@@ -106,9 +112,6 @@ gulp.task('test', function() {
 
     //call watch task
     watch(); 
-    //gulp.watch(paths.dist+'**', reload);
-    // gulp.watch('*.html').on('change', browserSync.reload);
-    // browserSync.stream();
 });
 
 
@@ -119,9 +122,3 @@ gulp.task('lint', function () {
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
 });
-
-
-
-
-
-
