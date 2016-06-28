@@ -10,63 +10,97 @@ var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
+var runSequence = require('run-sequence');
+var del = require('del');
 
 
 var paths = {
     scripts: [
-        'src/start.js','src/capfilters.js', 'src/init.js', 'src/filters.js', 'src/prepareOutputData.js', 
-        'src/render.js', 'src/html.js', 'src/json.js',  'src/engines.js', 'src/engines-overview.js', 
-        'src/engines-compare.js', 'src/utils.js', 'src/end.js'
+        'src/js/start.js','src/js/capfilters.js', 'src/js/init.js', 'src/js/filters.js', 'src/js/prepareOutputData.js', 
+        'src/js/render.js', 'src/js/html.js', 'src/js/json.js',  'src/js/engines.js', 'src/js/engines-overview.js', 
+        'src/js/engines-compare.js', 'src/js/utils.js', 'src/js/end.js'
         ],
-    startScript: 'src/init.js',
+    startScript: 'src/js/init.js',
     lib: 'lib/',
-    templates: 'templates/*.hbs',
+    templates: 'src/templates/*.hbs',
     dist: 'dist'
 };
 
 var uncompressedJs  = 'peace.js';
 var compressedJs    = 'peace.min.js';
 
-
-gulp.task('default', ['styles', 'templates','scripts', 'browser-sync', 'watch'], function() {
+gulp.task('default', ['build','browser-sync', 'watch'], function() {
 //  gulp.watch('sass/**/*.scss', ['styles']);
     //gulp.watch('js/**/*.js', ['lint']);
-
 });
 
+gulp.task('build', function(cb) {
+    runSequence('clean', 'public', ['styles', 'templates','scripts'], cb);
+}); 
+    
+gulp.task('public', function(cb) {
+    return gulp.src(['src/*.html', 'lib/**'])
+    .pipe(gulp.dest(paths.dist));
+});
+
+gulp.task('clean', function() {
+    // return the stream as the completion hint
+    return del([paths.dist]);
+});
+
+
 gulp.task('styles', function () {
-	gulp.src('sass/**/*.scss')
+	gulp.src('src/sass/**/*.scss')
 		.pipe(sass().on('error', sass.logError))
 		.pipe(autoprefixer({
 			browsers: ['last 2 versions']
 		}))
-        .pipe(concat('main.css'))
-		.pipe(gulp.dest('./css'))
-            .pipe(browserSync.stream());
+        .pipe(concat('peace.css'))
+		.pipe(gulp.dest(paths.dist+'/css'));
+            //.pipe(browserSync.stream());
 });
 
+gulp.task('templates', function(){
+  gulp.src(paths.templates)
+    .pipe(handlebars())
+    .pipe(wrap('Handlebars.template(<%= contents %>)'))
+    .pipe(declare({
+      namespace: 'Peace.templates',
+      noRedeclare: true, // Avoid duplicate declarations 
+    }))
+    .pipe(concat('peacetpl.js'))
+    .pipe(gulp.dest(paths.dist+'/js'));
+});
+
+gulp.task('scripts', function() {
+    gulp.src(paths.scripts)
+        .pipe(concat(uncompressedJs))
+        .pipe(sourcemaps.init())
+        .pipe(gulp.dest(paths.dist+'/js'));
+
+});
 
 gulp.task('watch', function() {
-    gulp.watch('sass/**/*.scss', ['styles']);
+    gulp.watch('src/sass/**/*.scss', ['styles']);
     gulp.watch('src/**/*.js', ['scripts']);
-    gulp.watch('templates/**/*.hbs', ['templates', browserSync.reload]);
-    gulp.watch('*.html').on('change', browserSync.reload);
+    gulp.watch('src/templates/**/*.hbs', ['templates', browserSync.reload]);
+    gulp.watch('src/**/*.html').on('change', browserSync.reload);
 
 });
 
 gulp.task('browser-sync', function() {
     browserSync.init({
         server: {
-            baseDir: './'
+            baseDir: './'+paths.dist
         }
     });
    
-   // gulp.watch('*.html').on('change', browserSync.reload);
-    //browserSync.stream();
+    // gulp.watch('*.html').on('change', browserSync.reload);
+    // browserSync.stream();
 });
 
 gulp.task('lint', function () {
-	return gulp.src(['js/main.js', 'js/peace-charts.js' ])
+	return gulp.src([paths.dist+'/js/peace.js' ])
         // eslint() attaches the lint output to the "eslint" property
         // of the file object so it can be used by other modules.
         .pipe(eslint())
@@ -78,25 +112,7 @@ gulp.task('lint', function () {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('templates', function(){
-  gulp.src(paths.templates)
-    .pipe(handlebars())
-    .pipe(wrap('Handlebars.template(<%= contents %>)'))
-    .pipe(declare({
-      namespace: 'Peace.templates',
-      noRedeclare: true, // Avoid duplicate declarations 
-    }))
-    .pipe(concat('templates.js'))
-    .pipe(gulp.dest('./js'));
-});
 
-gulp.task('scripts', function() {
-    gulp.src(paths.scripts)
-        .pipe(concat(uncompressedJs))
-        .pipe(sourcemaps.init())
-        .pipe(gulp.dest('./js'));
-
-});
 
 
 
