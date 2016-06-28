@@ -54,7 +54,7 @@ gulp.task('libs', function(cb) {
 
 gulp.task('copy:data', function(cb) {
     return gulp.src('data/**')
-    .pipe(gulp.dest(paths.dist));
+    .pipe(gulp.dest(paths.dist+'data'));
 });
 
 
