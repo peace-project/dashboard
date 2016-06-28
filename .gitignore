@@ -1,4 +1,7 @@
 
+
+*.DS_Store
+
 # Logs
 npm-debug.log*
 
@@ -33,5 +36,8 @@ jspm_packages
 .node_repl_history 
 
 .eslintrc.json
+
+dist/
+dist./
 
 data/test/
