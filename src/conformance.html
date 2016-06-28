@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+    <link href="lib/css/bootstrap.min.css" rel="stylesheet">
+    <link href="peace.css" rel="stylesheet">
 
-    <title>Expressiveness Benchmark | PEACE Dashboard</title>
+    <title> Conformance Benchmark | PEACE Dashboard</title>
 </head>
 <body>
 
@@ -32,8 +32,8 @@
 			<div id="sub-navbar" role="navigation">
 
 				<ul class="nav navbar-nav">
-                    <li><a href="conformance.html">Conformance</a></li>
-                    <li class="active"><a href="expressiveness.html">Expressiveness</a></li>
+                    <li class="active"><a href="conformance.html">Conformance</a></li>
+                    <li><a href="expressiveness.html">Expressiveness</a></li>
 					<li><a href="performance.html">Performance</a></li>
 				</ul>
 			</div>
@@ -41,7 +41,7 @@
 		</nav>
 	</header>
 
-	<div id="page-expressiveness" class="content-wrapper">
+	<div id="page-conformance" class="content-wrapper">
 		<div class="row">
             <div class="sidebar">
                 <div class="sidebar-inner">
@@ -66,16 +66,16 @@
                         </div>
 
                         <div class="filter-box">
-                            <h2 class="filter-title">Portability status <a class="pbility-info" title="The portabillity status filter can be used to show which patterns are supported by all engines (by selecting 'Only Fulfilled Standard'), or which patterns are not supported by all engines (by selecting 'With Deviations from Standard'). Selecting 'All' stops filtering." data-toggle="tooltip" ><span class="entypo-info"></span></a></h2>
+                            <h2 class="filter-title">Portability status <a class="pbility-info" title="The portabillity status filter can be used to show which language constructs and features are supported by all engines (by selecting 'Only ✔'), or which features are not supported by all engines (by selecting 'with ✖'). Selecting 'All ✔✖' stops filtering." data-toggle="tooltip"><span class="entypo-info"></span></a></h2>
                             <div id="filter-items-portability_status"  class="filter-items btn-group" data-toggle="buttons" >
                                 <label class="btn filter-item-btn filter-supported-item active ">
-                                    <input type="radio" name="portability_status" autocomplete="off" data-filter="portability_status" value="0" checked>All
+                                    <input type="radio" name="portability_status" autocomplete="off" data-filter="portability_status" value="0" checked>All <span class="entypo-check"></span> <span class="portable-all entypo-cancel-squared"></span>
                                 </label>
                                 <label class="btn filter-item-btn filter-supported-item">
-                                    <input type="radio" name="portability_status" autocomplete="off" data-filter="portability_status" value="1">Only Fulfilled Standard
+                                    <input type="radio" name="portability_status" autocomplete="off" data-filter="portability_status" value="1">Only <span class="entypo-check"></span>
                                 </label>                                
                                 <label class="btn filter-item-btn filter-supported-item">
-                                    <input type="radio" name="portability_status" autocomplete="off" data-filter="portability_status" value="2">With Deviations from Standard
+                                    <input type="radio" name="portability_status" autocomplete="off" data-filter="portability_status" value="2">With <span class="entypo-cancel-squared"></span>
                                 </label>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
 				</section>
 
 				<section id="results-section">
-					<h1>Expressiveness Results</h1>
+					<h1>Conformance Results</h1>
                     <div id="cap-table-div" class="table-responsive"></div>
 				</section>
 			</div>	
@@ -132,21 +132,19 @@
         </ul>
 	</footer>
 
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-    <script src="js/moment.min.js"></script>
+	<script src="lib/js/jquery.min.js"></script>
+	<script src="lib/js/bootstrap.min.js"></script>
+    <script src="lib/js/moment.min.js"></script>
 
+	<script src="lib/js/handlebars.runtime.min.js"></script>
+    <script src="lib/js/peacetpl.js"></script>
 
-	<script src="js/handlebars.runtime.min.js"></script>
-    <script src="js/templates.js"></script>
+    <script src="lib/js/Chart.js"></script>
+    <script src="lib/js/underscore-min.js"></script>
 
-    <script src="js/Chart.js"></script>
-    <script src="js/underscore-min.js"></script>
-
-
-	<script src="js/peace.js"></script>
+	<script src="peace.js"></script>
     <script type="text/javascript">
-        peace.init('expressiveness');
+        peace.init('conformance');
     </script>
 
 </body>
