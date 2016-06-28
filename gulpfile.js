@@ -44,7 +44,7 @@ gulp.task('pages', function() {
 
 gulp.task('images', function() {
    return gulp.src('src/images/**/*.{svg,png,jpg}')
-        .pipe(gulp.dest('dist/images')); 
+        .pipe(gulp.dest(paths.dist+'/images')); 
 });
 
 gulp.task('libs', function(cb) {
@@ -54,7 +54,7 @@ gulp.task('libs', function(cb) {
 
 gulp.task('copy:data', function(cb) {
     return gulp.src('data/**')
-    .pipe(gulp.dest(paths.dist+'data'));
+    .pipe(gulp.dest(paths.dist+'/data'));
 });
 
 
