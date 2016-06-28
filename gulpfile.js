@@ -29,17 +29,24 @@ var paths = {
 var uncompressedJs  = 'peace.js';
 var compressedJs    = 'peace.min.js';
 
-gulp.task('default', ['build','browser-sync', 'watch'], function() {
-//  gulp.watch('sass/**/*.scss', ['styles']);
-    //gulp.watch('js/**/*.js', ['lint']);
+gulp.task('default', ['build','test'], function() {
 });
 
 gulp.task('build', function(cb) {
-    runSequence('clean', 'public', ['styles', 'templates','scripts'], cb);
+    runSequence('clean', 'pages', 'libs', ['styles', 'templates','scripts'], cb);
 }); 
     
 gulp.task('public', function(cb) {
-    return gulp.src(['src/*.html', 'lib/**'])
+    runSequence('pages', 'libs', cb);
+});
+
+gulp.task('pages', function(cb) {
+    return gulp.src('src/*.html')
+    .pipe(gulp.dest(paths.dist));
+});
+
+gulp.task('libs', function(cb) {
+    return gulp.src('lib/**')
     .pipe(gulp.dest(paths.dist));
 });
 
@@ -80,35 +87,36 @@ gulp.task('scripts', function() {
 
 });
 
-gulp.task('watch', function() {
-    gulp.watch('src/sass/**/*.scss', ['styles']);
-    gulp.watch('src/**/*.js', ['scripts']);
+function watch() {
+    gulp.watch('src/**/*.html', ['pages', browserSync.reload]);
+    gulp.watch('src/sass/**/*.scss', ['styles' , browserSync.reload]);
+    gulp.watch('src/**/*.js', ['scripts', browserSync.reload]);
+    gulp.watch('lib/**', ['lib', browserSync.reload]);
     gulp.watch('src/templates/**/*.hbs', ['templates', browserSync.reload]);
-    gulp.watch('src/**/*.html').on('change', browserSync.reload);
+   // gulp.watch('src/**/*.html').on('change', browserSync.reload);
+}
 
-});
-
-gulp.task('browser-sync', function() {
+gulp.task('test', function() {
     browserSync.init({
+        notify: false,
         server: {
-            baseDir: './'+paths.dist
+            baseDir: paths.dist
         }
     });
-   
+
+    //call watch task
+    watch(); 
+    //gulp.watch(paths.dist+'**', reload);
     // gulp.watch('*.html').on('change', browserSync.reload);
     // browserSync.stream();
 });
 
+
+
 gulp.task('lint', function () {
 	return gulp.src([paths.dist+'/js/peace.js' ])
-        // eslint() attaches the lint output to the "eslint" property
-        // of the file object so it can be used by other modules.
         .pipe(eslint())
-        // eslint.format() outputs the lint results to the console.
-        // Alternatively use eslint.formatEach() (see Docs).
         .pipe(eslint.format())
-        // To have the process exit with an error code (1) on
-        // lint error, return the stream and pipe to failAfterError last.
         .pipe(eslint.failAfterError());
 });
 
