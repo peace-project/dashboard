@@ -85,7 +85,7 @@
                                             {{#if_eq ../../../../../metric "throughput"}}
 
                                               <td class="result-last" colspan="4">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
                                                     {{#getProperty this ../../../../../../metric}}
                                                            {{#if this.max includeZero=true}} {{this.max}} {{else}}--{{/if}}
                                                       {{/getProperty}}
@@ -95,14 +95,14 @@
 
                                              {{else}}
                                                 <td class="result">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
                                                     {{#getProperty this ../../../../../../metric}}
                                                            {{#if this.min includeZero=true}} {{this.min}} {{else}}--{{/if}}
                                                       {{/getProperty}}
                                                     </a>
                                                 </td>
                                                  <td class="result">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
                                                     {{#getProperty this ../../../../../../metric}}
                                                         {{#if this.max includeZero=true}} {{this.max}} {{else}}--{{/if}}
                                                       {{/getProperty}}

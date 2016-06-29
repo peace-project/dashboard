@@ -1967,8 +1967,6 @@ a:hover.pbility-info {
   text-align: center; }
 
 .additionalData-table {
-  word-break: break-all;
-  word-wrap: break-word;
   font-size: 12px; }
 
 .additionalData-table tr {

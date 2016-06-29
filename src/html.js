@@ -374,7 +374,10 @@
               return '<span>Feature-Test</span> '  + getTestIndependentFeatureName($(this).attr('data-test-info'));
             }
         });
-
+        $('[data-test-info].info-engine-test').on('click', function (e) {
+           e.preventDefault();
+          e.stopPropagation();
+        });
 
         $('body').on('click', function (e) {
             $('[data-test-info].info-engine-test').each(function () {
@@ -384,6 +387,7 @@
                 }
 
             });
+
         });
 
     }      

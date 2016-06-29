@@ -1,89 +1,19 @@
 this["Peace"] = this["Peace"] || {};
 this["Peace"]["templates"] = this["Peace"]["templates"] || {};
 this["Peace"]["templates"]["additionalData_table"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
-    var helper;
+    var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "                <td class=\"popup-tb-title\">"
-    + this.escapeExpression(((helper = (helper = helpers.server || (depth0 != null ? depth0.server : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"server","hash":{},"data":data}) : helper)))
-    + "</td>\r\n";
-},"3":function(depth0,helpers,partials,data) {
-    var stack1;
-
-  return "                <td class=\"popup-tb-val\"> "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.values : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.configuration : stack1), depth0))
-    + "</td>\r\n";
-},"5":function(depth0,helpers,partials,data) {
-    var stack1;
-
-  return "                <td class=\"popup-tb-val\"> "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.values : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.cpuCores : stack1), depth0))
-    + "</td>\r\n";
-},"7":function(depth0,helpers,partials,data) {
-    var stack1;
-
-  return "                <td class=\"popup-tb-val\"> "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.values : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.cpuPower : stack1), depth0))
-    + "</td>\r\n";
-},"9":function(depth0,helpers,partials,data) {
-    var stack1;
-
-  return "                <td class=\"popup-tb-val\"> "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.values : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.dockerContainer : stack1), depth0))
-    + "</td>\r\n";
-},"11":function(depth0,helpers,partials,data) {
-    var stack1;
-
-  return "                <td class=\"popup-tb-val\"> "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.values : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.dockerEngine : stack1), depth0))
-    + "</td>\r\n";
-},"13":function(depth0,helpers,partials,data) {
-    var stack1;
-
-  return "                <td class=\"popup-tb-val\"> "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.values : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.hostOperatingSystem : stack1), depth0))
-    + "</td>\r\n";
-},"15":function(depth0,helpers,partials,data) {
-    var stack1;
-
-  return "                <td class=\"popup-tb-val\"> "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.values : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.network : stack1), depth0))
-    + "</td>\r\n";
-},"17":function(depth0,helpers,partials,data) {
-    var stack1;
-
-  return "                <td class=\"popup-tb-val\"> "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.values : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.purpose : stack1), depth0))
-    + "</td>\r\n";
-},"19":function(depth0,helpers,partials,data) {
-    var stack1;
-
-  return "                <td class=\"popup-tb-val\"> "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.values : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.ram : stack1), depth0))
-    + "</td>\r\n";
+  return "            <tr>\r\n                <td>"
+    + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</td>\r\n                <td>"
+    + alias3(((helper = (helper = helpers.value || (depth0 != null ? depth0.value : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"value","hash":{},"data":data}) : helper)))
+    + "</td>\r\n            </tr>\r\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "<h3 class=\"additionalData-table-title\">Additional Data</h3>\r\n<table class=\"additionalData-table\" width=\"100%\">\r\n    <tbody>\r\n\r\n            <tr>\r\n                <th>Environment</th>\r\n            </tr>\r\n\r\n            <tr>\r\n                <td></td>\r\n"
+  return "<h3 class=\"additionalData-table-title\">Additional Data</h3>\r\n<table class=\"additionalData-table\" width=\"100%\">\r\n    <tbody>\r\n"
     + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.test : depth0),{"name":"each","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            <tr>\r\n                <td class=\"popup-tb-title\"> configuration</td>\r\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.test : depth0),{"name":"each","hash":{},"fn":this.program(3, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </tr>\r\n            <tr>\r\n                <td class=\"popup-tb-title\"> cpuCores</td>\r\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.test : depth0),{"name":"each","hash":{},"fn":this.program(5, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </tr>\r\n            <tr>\r\n                <td class=\"popup-tb-title\"> cpuPower</td>\r\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.test : depth0),{"name":"each","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </tr>\r\n            <tr>\r\n                <td class=\"popup-tb-title\"> dockerContainer</td>\r\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.test : depth0),{"name":"each","hash":{},"fn":this.program(9, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </tr>\r\n            <tr>\r\n                <td class=\"popup-tb-title\"> dockerEngine</td>\r\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.test : depth0),{"name":"each","hash":{},"fn":this.program(11, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </tr>\r\n            <tr>\r\n                <td class=\"popup-tb-title\"> hostOperatingSystem</td>\r\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.test : depth0),{"name":"each","hash":{},"fn":this.program(13, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </tr>\r\n            <tr>\r\n                <td class=\"popup-tb-title\"> network</td>\r\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.test : depth0),{"name":"each","hash":{},"fn":this.program(15, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </tr>\r\n            <tr>\r\n                <td class=\"popup-tb-title\"> purpose</td>\r\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.test : depth0),{"name":"each","hash":{},"fn":this.program(17, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </tr>\r\n            <tr>\r\n\r\n                <td class=\"popup-tb-title\"> ram</td>\r\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.test : depth0),{"name":"each","hash":{},"fn":this.program(19, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </tr>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n    </tbody>\r\n\r\n\r\n\r\n</table>";
+    + "    </tbody>\r\n</table>";
 },"useData":true});
 this["Peace"]["templates"]["conformance_table"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=helpers.helperMissing, alias2=this.escapeExpression;
@@ -839,7 +769,7 @@ this["Peace"]["templates"]["performance_table"] = Handlebars.template({"1":funct
     var stack1, alias1=this.lambda, alias2=this.escapeExpression;
 
   return "\n                                              <td class=\"result-last\" colspan=\"4\">\n                                                    <a role=\"button\" tabindex=\"0\" data-test-info=\""
-    + alias2(alias1((depths[5] != null ? depths[5].featureIndex : depths[5]), depth0))
+    + alias2(alias1(((stack1 = ((stack1 = (depths[8] != null ? depths[8].features : depths[8])) != null ? stack1['0'] : stack1)) != null ? stack1.featureIndex : stack1), depth0))
     + "\" data-test-engine=\""
     + alias2(alias1((depths[4] != null ? depths[4].id : depths[4]), depth0))
     + "\"  class=\"info-engine-test\" >\n"
@@ -861,13 +791,13 @@ this["Peace"]["templates"]["performance_table"] = Handlebars.template({"1":funct
     var stack1, alias1=this.lambda, alias2=this.escapeExpression, alias3=helpers.helperMissing;
 
   return "                                                <td class=\"result\">\n                                                    <a role=\"button\" tabindex=\"0\" data-test-info=\""
-    + alias2(alias1((depths[5] != null ? depths[5].featureIndex : depths[5]), depth0))
+    + alias2(alias1(((stack1 = ((stack1 = (depths[8] != null ? depths[8].features : depths[8])) != null ? stack1['0'] : stack1)) != null ? stack1.featureIndex : stack1), depth0))
     + "\" data-test-engine=\""
     + alias2(alias1((depths[4] != null ? depths[4].id : depths[4]), depth0))
     + "\"  class=\"info-engine-test\" >\n"
     + ((stack1 = (helpers.getProperty || (depth0 && depth0.getProperty) || alias3).call(depth0,depth0,(depths[6] != null ? depths[6].metric : depths[6]),{"name":"getProperty","hash":{},"fn":this.program(34, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "                                                    </a>\n                                                </td>\n                                                 <td class=\"result\">\n                                                    <a role=\"button\" tabindex=\"0\" data-test-info=\""
-    + alias2(alias1((depths[5] != null ? depths[5].featureIndex : depths[5]), depth0))
+    + alias2(alias1(((stack1 = ((stack1 = (depths[8] != null ? depths[8].features : depths[8])) != null ? stack1['0'] : stack1)) != null ? stack1.featureIndex : stack1), depth0))
     + "\" data-test-engine=\""
     + alias2(alias1((depths[4] != null ? depths[4].id : depths[4]), depth0))
     + "\"  class=\"info-engine-test\" >\n"

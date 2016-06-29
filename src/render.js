@@ -47,7 +47,7 @@
     }
 
     function renderFeaturePopover(outputData){
-        console.log(outputData);
+        
         var template = Peace.templates['feature_description'];
         var html  = template(outputData);
         return html;

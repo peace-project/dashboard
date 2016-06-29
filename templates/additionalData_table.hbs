@@ -1,80 +1,11 @@
 <h3 class="additionalData-table-title">Additional Data</h3>
 <table class="additionalData-table" width="100%">
     <tbody>
-
+        {{#each test}}
             <tr>
-                <th>Environment</th>
+                <td>{{name}}</td>
+                <td>{{value}}</td>
             </tr>
-
-            <tr>
-                <td></td>
-                {{#each test}}
-                <td class="popup-tb-title">{{server}}</td>
-                {{/each}}
-            <tr>
-                <td class="popup-tb-title"> configuration</td>
-                {{#each test}}
-                <td class="popup-tb-val"> {{values.0.configuration}}</td>
-                {{/each}}
-            </tr>
-            <tr>
-                <td class="popup-tb-title"> cpuCores</td>
-                {{#each test}}
-                <td class="popup-tb-val"> {{values.0.cpuCores}}</td>
-                {{/each}}
-            </tr>
-            <tr>
-                <td class="popup-tb-title"> cpuPower</td>
-                {{#each test}}
-                <td class="popup-tb-val"> {{values.0.cpuPower}}</td>
-                {{/each}}
-            </tr>
-            <tr>
-                <td class="popup-tb-title"> dockerContainer</td>
-                {{#each test}}
-                <td class="popup-tb-val"> {{values.0.dockerContainer}}</td>
-                {{/each}}
-            </tr>
-            <tr>
-                <td class="popup-tb-title"> dockerEngine</td>
-                {{#each test}}
-                <td class="popup-tb-val"> {{values.0.dockerEngine}}</td>
-                {{/each}}
-            </tr>
-            <tr>
-                <td class="popup-tb-title"> hostOperatingSystem</td>
-                {{#each test}}
-                <td class="popup-tb-val"> {{values.0.hostOperatingSystem}}</td>
-                {{/each}}
-            </tr>
-            <tr>
-                <td class="popup-tb-title"> network</td>
-                {{#each test}}
-                <td class="popup-tb-val"> {{values.0.network}}</td>
-                {{/each}}
-            </tr>
-            <tr>
-                <td class="popup-tb-title"> purpose</td>
-                {{#each test}}
-                <td class="popup-tb-val"> {{values.0.purpose}}</td>
-                {{/each}}
-            </tr>
-            <tr>
-
-                <td class="popup-tb-title"> ram</td>
-                {{#each test}}
-                <td class="popup-tb-val"> {{values.0.ram}}</td>
-                {{/each}}
-            </tr>
-
-
-
-
-
-
-
+        {{/each}}
     </tbody>
-
-
-
 </table>

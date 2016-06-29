@@ -327,35 +327,37 @@
         };
     }
     //TODO here
+
     function prepareHtmlEngineTestPerformance (featureTest,engineID){
-            console.log(featureTest);
-            var environment = featureTest.additionalData[0].environment;
 
-            var environmentValues=[];
-            for(var key in environment){
-                var values=[]
-                   values.push({
-                   configuration:environment[key].configuration,
-                   cpuCores:environment[key].cpu_cores,
-                   cpuPower:environment[key].cpu_power,
-                   dockerContainer:environment[key].docker_container,
-                   dockerEngine:environment[key].docker_engine,
-                   hostOperatingSystem:environment[key].host_operating_system,
-                   network:environment[key].network,
-                   purpose:environment[key].purpose,
-                   ram:environment[key].ram
-
-                   });
-
-                environmentValues.push({
-                    server: key,
-                    values: values
-                });
+        var additional = featureTest.additionalData;
+        var values=[];
+        var treeOfKey=[];
+        getChild("",additional,treeOfKey);
+        return treeOfKey;
+    }
+    function getChild(name,father,treeOfKey){
+        if (father instanceof (Array)){
+            for (var index=0;index<father.length;index++){
+                getChild(name,father[index],treeOfKey);
             }
-
-            return environmentValues;
         }
 
+        else if (father instanceof(Object)){
+            for (var key in father){
+                var nameNew=name.concat("."+key);
+                if ((father[key]) instanceof(Object)){
+                    getChild(nameNew, father[key],treeOfKey);
+                }else {
+                    treeOfKey.push({
+                        name:nameNew.substring(1,nameNew.length),
+                        value:father[key]
+                    });
+
+                }
+            }
+        }
+    }
     function formatTescase(obj){
         var message, resultType;
         if(obj.message === undefined || obj.message.toString().length == '0'){
