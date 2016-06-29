@@ -1,0 +1,16 @@
+sudo: required
+language: node_js
+cache:
+  directories:
+  - node_modules
+node_js:
+- '4.4.5'
+
+before_script:
+- npm install -g gulp
+- npm install
+
+script: ng build --prod
+
+after_script:
+- scripts/push-to-ghpages
