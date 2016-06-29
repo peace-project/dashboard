@@ -9,6 +9,7 @@ node_js:
 before_script:
 - npm install -g gulp
 - npm install
+- chmod u+x scripts/push-to-ghpages
 
 script: gulp build
 
