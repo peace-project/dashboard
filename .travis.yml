@@ -10,7 +10,7 @@ before_script:
 - npm install -g gulp
 - npm install
 
-script: ng build --prod
+script: npm build
 
 after_script:
 - scripts/push-to-ghpages
