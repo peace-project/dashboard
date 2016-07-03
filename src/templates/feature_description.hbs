@@ -25,47 +25,12 @@
             <td  class="popup-tb-title">Description</td>
             <td colspan=2 class="popup-tb-val">{{feature.description}}</td>
         </tr>
-
-            <td class="popup-tb-title"> LoadFunction</td>
-            <td class="popup-tb-title">Description</td>
-            <td class="popup-tb-val">{{loadFunction.0.description}}</td>
-
+        {{#each loadFunction}}
         <tr>
-            <td></td>
-            <td class="popup-tb-title">Thinktime</td>
-            <td class="popup-tb-val">{{loadFunction.0.thinkTime}}</td>
-
+            <td  class="popup-tb-title">{{name}}</td>
+            <td colspan=2 class="popup-tb-val">{{value}}</td>
         </tr>
-        <tr><td></td>
-            <td class="popup-tb-title">Ramp-Up Time</td>
-            <td class="popup-tb-val">{{loadFunction.0.rampUpTime}}</td>
-        </tr>
-        <tr><td></td>
-            <td class="popup-tb-title">Steady-State Time</td>
-            <td class="popup-tb-val">{{loadFunction.0.steadyStateTime}}</td>
-        </tr>
-        <tr><td></td>
-            <td class="popup-tb-title">Ramp-Down Time</td>
-            <td class="popup-tb-val">{{loadFunction.0.rampDownTime}}</td>
-        </tr>
-
-        <tr><td></td>
-            <td class="popup-tb-title">Connection Timeout</td>
-            <td class="popup-tb-val">{{loadFunction.0.connectionTimeout}}</td>
-        </tr>
-        <tr><td></td>
-            <td class="popup-tb-title">Start Users</td>
-            <td class="popup-tb-val">{{loadFunction.0.startUsers}}</td>
-        </tr>
-        <tr><td></td>
-            <td class="popup-tb-title">Steady State Users</td>
-            <td class="popup-tb-val">{{loadFunction.0.steadyStateUsers}}</td>
-        </tr>
-        <tr><td></td>
-            <td class="popup-tb-title">End Users</td>
-            <td class="popup-tb-val">{{loadFunction.0.endUsers}}</td>
-        </tr>
-
+        {{/each}}
         <tr> 
             <td class="popup-tb-title">Engine Independent Files</td>
             <td colspan=2 class="popup-tb-val">

@@ -349,8 +349,11 @@
                 if ((father[key]) instanceof(Object)){
                     getChild(nameNew, father[key],treeOfKey);
                 }else {
+                    if (nameNew.charAt(0)=='.'){
+                        nameNew=nameNew.substring(1,nameNew.length);
+                    }
                     treeOfKey.push({
-                        name:nameNew.substring(1,nameNew.length),
+                        name:nameNew,
                         value:father[key]
                     });
 

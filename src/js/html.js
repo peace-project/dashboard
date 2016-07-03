@@ -350,7 +350,10 @@
             content:    function() { return buildFeaturePopoverContent($(this).attr('data-feature-info'))}, 
             title:      function() { return '<span>Feature</span> ' + getTestIndependentFeatureName($(this).attr('data-feature-info'));}
         });   
-
+        $('[data-test-info].info-feature,[data-feature-info].info-exp-feature').on('click', function (e) {
+           e.preventDefault();
+          e.stopPropagation();
+        });
         $('body').on('click', function (e) {
             $('[data-feature-info].info-feature, [data-feature-info].info-exp-feature').each(function () {
                 if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
@@ -430,18 +433,11 @@
 
     function buildFeaturePopoverContent(featureIndex){
         var featureTestInfo =  getTestIndependentInfo(filteredData.features[featureIndex].id)
-        console.log(featureTestInfo);
         var loadFunction=[];
-        loadFunction.push({
-            description:featureTestInfo.loadFunction.description,
-            thinkTime:featureTestInfo.loadFunction.thinkTime,
-            rampUpTime:featureTestInfo.loadFunction.rampUpTime,
-            steadyStateTime:featureTestInfo.loadFunction.steadyStateTime,
-            rampDownTime:featureTestInfo.loadFunction.rampDownTime,
-            connectionTimeout:featureTestInfo.loadFunction.connectionTimeout,
-            startUsers:featureTestInfo.loadFunction.users.startUsers,
-            steadyStateUsers:featureTestInfo.loadFunction.users.steadyStateUsers,
-            endUsers:featureTestInfo.loadFunction.users.endUsers})
+        if (capability === 'performance'){
+            getChild("LoadFunction",featureTestInfo.loadFunction,loadFunction);
+
+        }
         var outputData = { 
             featureTestInfo:  featureTestInfo,
             loadFunction:loadFunction,
