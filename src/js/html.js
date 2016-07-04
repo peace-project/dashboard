@@ -367,7 +367,7 @@
     //TODO here
     function buildTestIndependentPopover(){
 
-        $('[data-test-info].info-engine-test').popover({
+        $('[data-test-info].info-engine-test:has(span)').popover({
             //trigger: 'click hover',
             html : true,
             placement: 'auto right',
