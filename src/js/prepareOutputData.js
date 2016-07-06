@@ -326,7 +326,41 @@
             logFiles: createLinkFromPaths(test.logFiles)
         };
     }
+    //TODO here
 
+    function prepareHtmlEngineTestPerformance (featureTest,engineID){
+
+        var additional = featureTest.additionalData;
+        var values=[];
+        var treeOfKey=[];
+        getChild("",additional,treeOfKey);
+        return treeOfKey;
+    }
+    function getChild(name,father,treeOfKey){
+        if (father instanceof (Array)){
+            for (var index=0;index<father.length;index++){
+                getChild(name,father[index],treeOfKey);
+            }
+        }
+
+        else if (father instanceof(Object)){
+            for (var key in father){
+                var nameNew=name.concat("."+key);
+                if ((father[key]) instanceof(Object)){
+                    getChild(nameNew, father[key],treeOfKey);
+                }else {
+                    if (nameNew.charAt(0)=='.'){
+                        nameNew=nameNew.substring(1,nameNew.length);
+                    }
+                    treeOfKey.push({
+                        name:nameNew,
+                        value:father[key]
+                    });
+
+                }
+            }
+        }
+    }
     function formatTescase(obj){
         var message, resultType;
         if(obj.message === undefined || obj.message.toString().length == '0'){

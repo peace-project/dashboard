@@ -29,9 +29,9 @@
             initializeTooltip();
             buildFeaturePopover();
                         
-        if(capability === 'conformance' || capability === 'expressiveness'){
+
             buildTestIndependentPopover();
-        } 
+
     }    
 
 
@@ -47,15 +47,25 @@
     }
 
     function renderFeaturePopover(outputData){
+        
         var template = Peace.templates['feature_description'];
         var html  = template(outputData);
         return html;
     }
 
+//TODO here
     function renderFeatureTestPopover(test){
-        var template = Peace.templates['feature_test_description'];
-        var context = { test: test };
+
+        if (capability==='performance'){
+           var template = Peace.templates['additionalData_table'];
+           var context = {test:test}
+        }else{
+            var template = Peace.templates['feature_test_description'];
+            var context = { test: test };
+        }
+
         var html  = template(context);
+
         return html;
     }
     
@@ -74,6 +84,7 @@
         });
 
         Handlebars.registerHelper('getProperty', function(object, property, options) {
+
             if(object === undefined || !object.hasOwnProperty(property)){
                 return options.fn(false);
             } else {
