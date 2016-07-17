@@ -374,15 +374,20 @@
             logFiles: createLinkFromPaths(test.logFiles)
         };
     }
-    //TODO here
 
     function prepareHtmlEngineTestPerformance (featureTest,engineID){
-
+    console.log(featureTest);
         var additional = featureTest.additionalData;
         var values=[];
         var treeOfKey=[];
         getChild("",additional,treeOfKey);
-        return treeOfKey;
+
+        var inclModels={
+            'treeOfKey': treeOfKey,
+            'models': createLinkFromPaths(featureTest.engineDependentFiles),
+        };
+        console.log(inclModels);
+        return inclModels;
     }
     function getChild(name,father,treeOfKey){
         if (father instanceof (Array)){
@@ -434,7 +439,11 @@
     }
 
     function getTitleFromPath(path){
-        var pathSegqments = path.split('\\');
+        if (!path.contains('\\')){
+            var pathSegqments = path.split('/');
+        }else{
+            var pathSegqments = path.split('\\');
+        }
         if (pathSegqments.length > 0){ return pathSegqments[pathSegqments.length-1] }
         return undefined;
     }
