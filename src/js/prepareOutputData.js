@@ -119,7 +119,8 @@
                 var test = data.tests[testIndex];
                 if (test !== undefined && hasEngineID(test)){
                     feature['results'][test.engineID] = test.result;
-                    var isFirstEntry = true;
+
+                    var isFirstEntry = true; 
                     for (var key in test.result) {
                         if (test.result.hasOwnProperty(key)) {
 
@@ -152,59 +153,10 @@
                     }
                 }
             });
-        deleteEmptyRows(feature);
+
+
     }
 
-    function deleteEmptyRows(feature){
-         var value=false;
-         var emptyRow=[];
-         var indexOfEngine=0;
-         for(var group in feature.metricTree){
-                var metricTreeGroup=feature.metricTree[group];
-             for (var name in metricTreeGroup.metrics){
-                value=false;
-                var metricGroup=metricTreeGroup.category;
-                var metricName=metricTreeGroup.metrics[name].metric;
-                for(var engine in feature.results){
-                    var engineMetricValue=feature.results[engine][metricGroup][metricName];
-                    var valueAttributes=[];
-                    for(var valueAttribute in engineMetricValue){
-                        valueAttributes.push(valueAttribute);
-                    }
-                }
-                for (var attribute in valueAttributes){
-                     var valueAttribute=valueAttributes[attribute];
-                     if (engineMetricValue[valueAttribute]){
-                         value=true;
-                         break;
-                     }else{}
-                }
-                if (value==false){
-                    indexOfEngine=0;
-                    for (var engine in feature.results){
-                         if (indexOfEngine==0){
-
-                            emptyRow.push({
-
-                                'metricGroupNumber':group,
-                                'metricNameNumber':name
-                            });
-                            indexOfEngine++;
-                         }
-                        var resultMetricGroup=feature.results[engine][metricGroup];
-                        _.omit(resultMetricGroup,resultMetricGroup[metricName].toString());
-
-                    }
-                }
-            }
-         }
-         for (var position in emptyRow){
-
-             var metricsInTree=feature.metricTree[emptyRow[position].metricGroupNumber].metrics;
-             var indexOfMetric=metricsInTree.indexOf(metricsInTree[emptyRow[position].metricNameNumber]);
-             metricsInTree.splice(indexOfMetric,1);
-         }
-    }
     function addFeatureAndTestData(construct){
         construct['features'] = [];
         construct['supportStatus'] = {};
