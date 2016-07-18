@@ -74,6 +74,7 @@ function engineCompare() {
         listen();
     });
 }
+
 function setCompareTable() {
     htmlData['table'] = htmlData['table'] || $('#table-compare');
     htmlData.table.empty();
@@ -124,8 +125,10 @@ function listen() {
         if (id == 'toggle-general') {
             htmlData.showGeneral = !htmlData.showGeneral;
             setCompareTable();
+            listen();
             return;
         }
+
         if (id != undefined) {
             id = id.replace('select-', '');
             if (childrenDisplayed(id)) {
