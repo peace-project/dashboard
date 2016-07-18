@@ -333,10 +333,14 @@
         var values=[];
         var treeOfKey=[];
         getChild("",additional,treeOfKey);
-
+        var bpmnModels=createLinkFromPaths(featureTest.engineDependentFiles);
+        for (var model in bpmnModels){
+        
+            bpmnModels[model].url=bpmnModels[model].url.concat('.png');
+        }
         var inclModels={
             'treeOfKey': treeOfKey,
-            'models': createLinkFromPaths(featureTest.engineDependentFiles),
+            'models': bpmnModels
         };
         console.log(inclModels);
         return inclModels;
