@@ -399,18 +399,6 @@
     "license": "Apache-2.0",
     "licenseURL": "http://spdx.org/licenses/Apache-2.0.html",
     "configuration": [],
-    "releaseDate": "2015-09-02",
-    "programmingLanguage": "Java",
-    "name": "activiti",
-    "language": "BPMN",
-    "id": "activiti__6_0_0_beta1",
-    "version": "6.0.0.beta1",
-    "url": "http://www.activiti.org/"
-  },
-  {
-    "license": "Apache-2.0",
-    "licenseURL": "http://spdx.org/licenses/Apache-2.0.html",
-    "configuration": [],
     "releaseDate": "2014-05-14",
     "programmingLanguage": "Java",
     "name": "jbpm",
