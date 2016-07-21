@@ -13,7 +13,7 @@
       "number_of_process_instances":{
          "name":"Number of Process Instances",
          "description":"The number of process instances",
-         "unit": ""
+         "unit": "absolute metric"
       },
       "cpu":{
          "name":"CPU",
