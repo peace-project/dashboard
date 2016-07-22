@@ -250,13 +250,15 @@
                 var sortedInstances = val.sort(sortVersionAscending).reverse();
                 var i=0;
                 var versions = [];
-                var max = (numOfversion < sortedInstances.length) ? numOfversion : sortedInstances.length; 
+                var max = (numOfversion < sortedInstances.length) ? numOfversion : sortedInstances.length;
+                var engineId;
                 while(i < max){
-                    if (sortedInstances[i].id.endsWith("__in-memory")&&i+1<sortedInstances.length&&sortedInstances[i].id.slice(0,-11)===sortedInstances[i+1].id){
+                    engineId=sortedInstances[i].id
+                    if (parseInt(engineId.substring(engineId.lastIndexOf('__')+2,engineId.lastIndexOf('__')+3)).toString()=='NaN'&&i+1<sortedInstances.length){
                         versions.push(sortedInstances[i+1].id);
                         i=i+2;
                     }else {
-                        versions.push(sortedInstances[i].id);
+                        versions.push(engineId);
                         i++
                     }
 
