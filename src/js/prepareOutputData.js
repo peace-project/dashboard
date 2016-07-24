@@ -318,6 +318,10 @@
                     htmlData['summaryRow'][engineID] += 1; 
                  } 
 
+            }else if (capability === 'conformance'&& construct['supportStatus'][engineID].supportedFeature > 0){
+                             construct['supportStatus'][engineID].html = '+/-' ;
+                             construct['supportStatus'][engineID].fullSupport = false;
+
             }
 
             construct['supportStatus'][engineID]['html_class'] = getResultClass(construct['supportStatus'][engineID].fullSupport,
