@@ -228,7 +228,9 @@ function addGeneralInfo() {
 }
 
 function addGeneralRow(engineAData, engineBData, name) {
-    if (!dataFilters.showDifferences || engineAData != engineBData) {
+  
+    if (!dataFilters.showDifferences ||(!(typeof engineAData[0]=="undefined" && typeof engineBData[0]=="undefined"))&& engineAData != engineBData) {
+
         htmlData.table.append($('<tr></tr>')
             .addClass('general-row')
             .append($('<td>' + engineAData + '</td>').addClass('compare-cell-left'))
@@ -236,6 +238,7 @@ function addGeneralRow(engineAData, engineBData, name) {
             .append($('<td>' + engineBData + '</td>').addClass('compare-cell-right'))
             .addClass(!dataFilters.showDifferences && (engineAData == engineBData ) ? '' : 'compare-diff-result')
         );
+
     }
 }
 
