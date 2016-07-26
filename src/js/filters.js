@@ -17,7 +17,7 @@
 
     function setupFilters(){
         if(dataFilters.groups == undefined){ dataFilters.groups = []; } 
-        if(dataFilters.engines == undefined || dataFilters.engines.length == 0){ dataFilters.engines = getLatestEngineVersions(1);} 
+        if(dataFilters.engines == undefined || dataFilters.engines.length == 0){ dataFilters.engines = getLatestEngineVersions();}
         if(dataFilters.constructs == undefined){ dataFilters.constructs =  []; }  
         if(dataFilters.features == undefined){ dataFilters.features =  []; } 
 
@@ -133,7 +133,7 @@
             filteredData.engines = copyEngines(normalizedData[dataFilters.language].engines); 
         }
 
-        if(dataFilters.engines.length === 0) { dataFilters.engines = getLatestEngineVersions(1); }
+        if(dataFilters.engines.length === 0) { dataFilters.engines = getLatestEngineVersions(); }
 
         filteredData.engines.forEach(function(engine, index){
             if(engine !== undefined) {  
@@ -243,26 +243,29 @@
         return a.id.localeCompare(b.id);
     }
 
-    function getLatestEngineVersions(numOfversion){
+    function getLatestEngineVersions(){
         var latestVersions =  _.chain(getEnginesByLanguage())
             .groupBy('name')
             .map(function(val, key){
                 var sortedInstances = val.sort(sortVersionAscending).reverse();
                 var i=0;
                 var versions = [];
-                var max = (numOfversion < sortedInstances.length) ? numOfversion : sortedInstances.length;
-                var engineId;
+                var max = sortedInstances.length;
+                var engine;
+
                 while(i < max){
-                    engineId=sortedInstances[i].id
-                    if (parseInt(engineId.substring(engineId.lastIndexOf('__')+2,engineId.lastIndexOf('__')+3)).toString()=='NaN'&&i+1<sortedInstances.length){
-                        versions.push(sortedInstances[i+1].id);
-                        i=i+2;
+                    engine=sortedInstances[i];
+                    console.log(engine,engine.configuration.length!=0);
+                    if (engine.configuration.length!=0){
+                        i++;
+                        console.log(max);
                     }else {
-                        versions.push(engineId);
-                        i++
+                        versions.push(engine.id);
+                        i=max;
                     }
-
-
+                }
+                if (versions.length==0&&max>0){
+                    versions.push(sortedInstances[0].id);
                 }
                 return versions;
         }).value();
@@ -331,7 +334,7 @@
         } else if(dataFilters[type].length == 0 && type == 'features'){
            currentDataFilter = getAllFeaturesName();   
         } else if(dataFilters[type].length == 0 && type == 'engines'){
-           currentDataFilter = getLatestEngineVersions(1);   
+           currentDataFilter = getLatestEngineVersions();
         } else {
           currentDataFilter =  dataFilters[type]; 
         }
