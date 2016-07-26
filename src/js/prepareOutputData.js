@@ -46,13 +46,12 @@
                 construct.isFirstEntry = true;
             }  
             htmlData.constructs.push(construct);
-            console.log(htmlData);
 
         });
 
-        if(dataFilters.portability_status !== '1' && dataFilters.portability_status !== '2'&&dataFilters.portability_status !== '3'){
-            return;
-        }
+        if(dataFilters.portability_status !== '1' && dataFilters.portability_status !== '2' &&
+        dataFilters.portability_status !== '3'){ return; }
+
         filteredData.engines.forEach(function(engine){
             if(engine === undefined){ return; }
             if(dataFilters.portability_status == '1'){
@@ -157,33 +156,33 @@
         return showConstruct;
     }
     function isMatchingPortabilityStatusFeature(construct,feature){
-            var showFeature=false;
-            var supportPrevious='notSet';
-            filteredData.engines.forEach(function(engine){
+        var showFeature=false;
+        var supportPrevious='notSet';
+        filteredData.engines.forEach(function(engine){
 
-                if(engine === undefined){return;}
+            if(engine === undefined){return;}
 
-                // If any test for this engine exists or support same
-                if(feature.results.hasOwnProperty(engine.id) ){
+            // If any test for this engine exists or support same
+            if(feature.results.hasOwnProperty(engine.id) ){
 
-                    if (supportPrevious=='notSet'){
-                        supportPrevious=feature.results[engine.id].testResult;
-                    }
-                    if (supportPrevious!==feature.results[engine.id].testResult){
-                        supportPrevious='different';
-                        return;
-                    }
-                }else{
+                if (supportPrevious=='notSet'){
+                    supportPrevious=feature.results[engine.id].testResult;
+                }
+                if (supportPrevious!==feature.results[engine.id].testResult){
+                    supportPrevious='different';
+                    return;
+                }
+            }else{
                  supportPrevious='different';
                  return;
-                }
-            });
-
-            if(supportPrevious==='different'){
-                showFeature = true;
             }
+        });
 
-            return showFeature;
+        if(supportPrevious==='different'){
+            showFeature = true;
+        }
+
+        return showFeature;
     }
 
     function addPerformanceTestData(construct){
@@ -245,7 +244,7 @@
          var emptyRow=[];
          var indexOfEngine=0;
          for(var group in feature.metricTree){
-                var metricTreeGroup=feature.metricTree[group];
+             var metricTreeGroup=feature.metricTree[group];
              for (var name in metricTreeGroup.metrics){
                 value=false;
                 var metricGroup=metricTreeGroup.category;
