@@ -328,21 +328,14 @@
     }
 
     function prepareHtmlEngineTestPerformance (featureTest,engineID){
-    console.log(featureTest);
         var additional = featureTest.additionalData;
         var values=[];
         var treeOfKey=[];
         getChild("",additional,treeOfKey);
-        var bpmnModels=createLinkFromPaths(featureTest.engineDependentFiles);
-        for (var model in bpmnModels){
-        
-            bpmnModels[model].url=bpmnModels[model].url.concat('.png');
-        }
         var inclModels={
             'treeOfKey': treeOfKey,
-            'models': bpmnModels
+            'models': createLinkFromPaths(featureTest.engineDependentFiles)
         };
-        console.log(inclModels);
         return inclModels;
     }
     function getChild(name,father,treeOfKey){

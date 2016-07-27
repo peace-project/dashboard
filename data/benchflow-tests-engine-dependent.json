@@ -58,11 +58,11 @@
     },
     "engineID": "camunda__7_4_0",
     "engineDependentFiles": [
-      "files/engineDependent/benchflow/camunda/arbitaryCyclesPattern.bpmn",
-      "files/engineDependent/benchflow/camunda/exclusiveChoicePattern.bpmn",
-      "files/engineDependent/benchflow/camunda/implicitTerminationPattern.bpmn",
-      "files/engineDependent/benchflow/camunda/parallelSplitPattern.bpmn",
-      "files/engineDependent/benchflow/camunda/sequencePattern.bpmn"
+      "files/engineDependent/benchflow/camunda/arbitaryCyclesPattern.bpmn.png",
+      "files/engineDependent/benchflow/camunda/exclusiveChoicePattern.bpmn.png",
+      "files/engineDependent/benchflow/camunda/implicitTerminationPattern.bpmn.png",
+      "files/engineDependent/benchflow/camunda/parallelSplitPattern.bpmn.png",
+      "files/engineDependent/benchflow/camunda/sequencePattern.bpmn.png"
     ],
     "additionalData": [
       {
@@ -163,11 +163,11 @@
     },
     "engineID": "engine_a__N_NN_N",
     "engineDependentFiles": [
-      "files/engineDependent/benchflow/engine_a/ArbitaryCyclePattern.bpmn",
-      "files/engineDependent/benchflow/engine_a/ExclusiveChoicePattern.bpmn",
-      "files/engineDependent/benchflow/engine_a/ImplicitTerminationPattern.bpmn",
-      "files/engineDependent/benchflow/engine_a/ParallelSplitPattern.bpmn",
-      "files/engineDependent/benchflow/engine_a/SequencePattern.bpmn"
+      "files/engineDependent/benchflow/engine_a/ArbitaryCyclePattern.bpmn.png",
+      "files/engineDependent/benchflow/engine_a/ExclusiveChoicePattern.bpmn.png",
+      "files/engineDependent/benchflow/engine_a/ImplicitTerminationPattern.bpmn.png",
+      "files/engineDependent/benchflow/engine_a/ParallelSplitPattern.bpmn.png",
+      "files/engineDependent/benchflow/engine_a/SequencePattern.bpmn.png"
     ],
     "additionalData": [
       {
@@ -268,11 +268,11 @@
     },
     "engineID": "engine_b__N_NN_N",
     "engineDependentFiles": [
-      "files/engineDependent/benchflow/engine_b/arbitaryCyclesPattern2.bpmn",
-      "files/engineDependent/benchflow/engine_b/exclusiveChoicePattern.bpmn",
-      "files/engineDependent/benchflow/engine_b/implicitTerminationPattern.bpmn",
-      "files/engineDependent/benchflow/engine_b/parallelSplitPattern.bpmn",
-      "files/engineDependent/benchflow/engine_b/sequencePattern.bpmn"
+      "files/engineDependent/benchflow/engine_b/arbitaryCyclesPattern2.bpmn.png",
+      "files/engineDependent/benchflow/engine_b/exclusiveChoicePattern.bpmn.png",
+      "files/engineDependent/benchflow/engine_b/implicitTerminationPattern.bpmn.png",
+      "files/engineDependent/benchflow/engine_b/parallelSplitPattern.bpmn.png",
+      "files/engineDependent/benchflow/engine_b/sequencePattern.bpmn.png"
     ],
     "additionalData": [
       {
