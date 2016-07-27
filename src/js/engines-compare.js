@@ -79,6 +79,14 @@ function setCompareTable() {
     htmlData['table'] = htmlData['table'] || $('#table-compare');
     htmlData.table.empty();
     addGeneralInfo();
+    var langA = getLanguageOfEngine(dataFilters.engineA);
+    var langB = getLanguageOfEngine(dataFilters.engineB);
+    if (langA == langB) {
+        $('#error-different-languages').hide();
+    } else {
+        $('#error-different-languages').show();
+        return;
+    }
     addSeparatorRow();
     getCapabilities().forEach(function (capId) {
         if (hasTests(capId) && (htmlData.rowsDisplayed.indexOf(capId) != -1)) {
@@ -110,13 +118,7 @@ function setCompareTable() {
         }
     });
 
-    var langA = getLanguageOfEngine(dataFilters.engineA);
-    var langB = getLanguageOfEngine(dataFilters.engineB);
-    if (langA == langB) {
-        $('#error-different-languages').hide();
-    } else {
-        $('#error-different-languages').show();
-    }
+
 }
 
 function listen() {
