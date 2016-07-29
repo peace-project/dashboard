@@ -70,7 +70,7 @@
                     <tr class="collapse-row collapse in row-feat-{{@../../index}}" aria-expanded="true">
                         <td  colspan="2" class="collapse-feature-cell {{../category}}">
                             <div class="collapse-cell-border">
-                                <p>{{metricName}} {{#if metricUnit}} in {{metricUnit}}{{/if}}
+                                <p>{{metricName}} {{#if metricUnit}}{{#if_eq metricUnit "absolute metric"}} as {{else}} in {{/if_eq}}{{metricUnit}}{{/if}}
                                 </p>
                             </div>
                         </td>
