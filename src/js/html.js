@@ -434,21 +434,30 @@
     function buildFeaturePopoverContent(featureIndex){
         var featureTestInfo =  getTestIndependentInfo(filteredData.features[featureIndex].id)
         var loadFunction=[];
+        var image;
         if (capability === 'performance'){
             getChild("LoadFunction",featureTestInfo.loadFunction,loadFunction);
+        }
 
+
+        if (featureTestInfo.engineIndependentFiles!=undefined&&featureTestInfo.engineIndependentFiles!==''){
+            featureTestInfo.engineIndependentFiles.forEach (function(file){
+                if (file.substring(file.lastIndexOf('.')+1)==='png'){
+                    image=file;
+                    return;
+                }
+            });
         }
         var outputData = { 
             featureTestInfo:  featureTestInfo,
             loadFunction:loadFunction,
             engineIndependentFiles :  createLinkFromPaths(featureTestInfo.engineIndependentFiles),
-            img : {alt:'image', src:'images/bpmn_processes/sequence_flow.png'},
+            img : {alt:'image', src: image},
             feature : filteredData.features[featureIndex]
         }
         return renderFeaturePopover(outputData);
     }
 
-//TODO here
     function buildTestIndependentPopoverContent(featureIndex,  engineID){
 
         var featureTest = getFeatureTestByEngine(filteredData.features[featureIndex], engineID);
