@@ -76,7 +76,6 @@
                         htmlData['summaryRow'][engine.id] += 1;
                     }
                     //for each construct
-                    console.log(obj['supportStatus']);
                     if(obj['supportStatus'][engine.id]!=null){
                         obj['supportStatus'][engine.id]['supportedFeature']=0;
                         obj.features.forEach(function(feature){
