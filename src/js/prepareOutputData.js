@@ -76,16 +76,18 @@
                         htmlData['summaryRow'][engine.id] += 1;
                     }
                     //for each construct
-                    obj['supportStatus'][engine.id]['supportedFeature']=0;
-                    obj.features.forEach(function(feature){
-                        if (feature.results.hasOwnProperty(engine.id)){
-                            if (feature.results[engine.id]['testResult']==='+'){
-                                obj['supportStatus'][engine.id]['supportedFeature']+=1;
+                    console.log(obj['supportStatus']);
+                    if(obj['supportStatus'][engine.id]!=null){
+                        obj['supportStatus'][engine.id]['supportedFeature']=0;
+                        obj.features.forEach(function(feature){
+                            if (feature.results.hasOwnProperty(engine.id)){
+                                if (feature.results[engine.id]['testResult']==='+'){
+                                    obj['supportStatus'][engine.id]['supportedFeature']+=1;
+                                }
                             }
-                        }
-                    });
+                        });
 
-
+                    }
 
                 });
             }
