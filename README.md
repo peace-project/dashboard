@@ -1,4 +1,4 @@
-# PEACE Dashboard
+# PEACE Dashboard [![Build Status](https://travis-ci.org/peace-project/dashboard.svg?branch=master)](https://travis-ci.org/peace-project/dashboard)
 
 *Web-based interactive dashboard for process engine benchmarks*
 
