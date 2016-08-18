@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://activiti.org/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_kUyj0Bf6EeWoKJ3RB8EibQ" exporter="camunda modeler" exporterVersion="2.7.0">
+  <process id="sequence-pattern" name="SequencePattern" isExecutable="true">
+    <scriptTask id="ScriptTask_1" name="scriptTask_1" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>;</script>
+    </scriptTask>
+    <startEvent id="StartEvent_3"></startEvent>
+    <sequenceFlow id="SequenceFlow_1" sourceRef="StartEvent_3" targetRef="ScriptTask_1"></sequenceFlow>
+    <endEvent id="EndEvent_1" name="end"></endEvent>
+    <scriptTask id="ScriptTask_2" name="scriptTask_2" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>;
+      
+      </script>
+    </scriptTask>
+    <sequenceFlow id="SequenceFlow_2" sourceRef="ScriptTask_1" targetRef="ScriptTask_2"></sequenceFlow>
+    <sequenceFlow id="flow1" sourceRef="ScriptTask_2" targetRef="EndEvent_1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_sequence-pattern">
+    <bpmndi:BPMNPlane bpmnElement="sequence-pattern" id="BPMNPlane_sequence-pattern">
+      <bpmndi:BPMNShape bpmnElement="ScriptTask_1" id="BPMNShape_ScriptTask_1">
+        <omgdc:Bounds height="80.0" width="100.0" x="121.0" y="136.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="StartEvent_3" id="BPMNShape_StartEvent_3">
+        <omgdc:Bounds height="36.0" width="36.0" x="32.0" y="162.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_1" id="BPMNShape_EndEvent_1">
+        <omgdc:Bounds height="36.0" width="36.0" x="430.0" y="158.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ScriptTask_2" id="BPMNShape_ScriptTask_2">
+        <omgdc:Bounds height="80.0" width="100.0" x="280.0" y="136.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1" id="BPMNEdge_SequenceFlow_1">
+        <omgdi:waypoint x="68.0" y="180.0"></omgdi:waypoint>
+        <omgdi:waypoint x="121.0" y="176.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_2" id="BPMNEdge_SequenceFlow_2">
+        <omgdi:waypoint x="221.0" y="176.0"></omgdi:waypoint>
+        <omgdi:waypoint x="227.0" y="180.0"></omgdi:waypoint>
+        <omgdi:waypoint x="227.0" y="176.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="176.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="380.0" y="176.0"></omgdi:waypoint>
+        <omgdi:waypoint x="430.0" y="176.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

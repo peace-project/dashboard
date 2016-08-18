@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://activiti.org/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_favjcEABEeWEqeVmcY6foA" exporter="camunda modeler" exporterVersion="2.7.0">
+  <process id="arbitary-cycles" name="arbitaryCyclesPattern" isExecutable="true">
+    <startEvent id="StartEvent_1"></startEvent>
+    <scriptTask id="ScriptTask_1" name="generate 1 or 2" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>import java.util.Random;
+Random random  = new Random ()
+int result = random.nextInt(2) + 1
+int i = 0
+execution.setVariable('i',i)
+execution.setVariable('result',result )</script>
+    </scriptTask>
+    <exclusiveGateway id="ExclusiveGateway_1"></exclusiveGateway>
+    <scriptTask id="ScriptTask_2" name="ScriptTask_1" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>;</script>
+    </scriptTask>
+    <sequenceFlow id="SequenceFlow_1" sourceRef="StartEvent_1" targetRef="ScriptTask_1"></sequenceFlow>
+    <sequenceFlow id="SequenceFlow_2" sourceRef="ScriptTask_1" targetRef="ExclusiveGateway_1"></sequenceFlow>
+    <sequenceFlow id="SequenceFlow_3" name="resultIs1" sourceRef="ExclusiveGateway_1" targetRef="ScriptTask_2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result  == "1"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_6" sourceRef="ScriptTask_2" targetRef="ExclusiveGateway_2"></sequenceFlow>
+    <exclusiveGateway id="ExclusiveGateway_6"></exclusiveGateway>
+    <exclusiveGateway id="ExclusiveGateway_2"></exclusiveGateway>
+    <sequenceFlow id="SequenceFlow_17" sourceRef="ExclusiveGateway_2" targetRef="ScriptTask_4"></sequenceFlow>
+    <scriptTask id="ScriptTask_4" name="increase i" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>execution.getVariable('i')
+int i2 = (int) i + 1;
+execution.setVariable('i',i2)</script>
+    </scriptTask>
+    <sequenceFlow id="SequenceFlow_9" sourceRef="ScriptTask_4" targetRef="ExclusiveGateway_6"></sequenceFlow>
+    <sequenceFlow id="SequenceFlow_7" name="resultIs2" sourceRef="ExclusiveGateway_1" targetRef="ScriptTask_3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result == "2"}]]></conditionExpression>
+    </sequenceFlow>
+    <scriptTask id="ScriptTask_3" name="new i" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>execution.getVariable('i')
+int i2  = 5;
+execution.setVariable('i',i2)
+</script>
+    </scriptTask>
+    <sequenceFlow id="SequenceFlow_10" sourceRef="ScriptTask_3" targetRef="ExclusiveGateway_6"></sequenceFlow>
+    <sequenceFlow id="SequenceFlow_14" name="iLE10" sourceRef="ExclusiveGateway_4" targetRef="ExclusiveGateway_2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${i <10}]]></conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="ExclusiveGateway_4"></exclusiveGateway>
+    <sequenceFlow id="SequenceFlow_12" name="iGT10" sourceRef="ExclusiveGateway_4" targetRef="EndEvent_1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${i >= 10}]]></conditionExpression>
+    </sequenceFlow>
+    <endEvent id="EndEvent_1"></endEvent>
+    <sequenceFlow id="flow1" sourceRef="ExclusiveGateway_6" targetRef="ExclusiveGateway_4"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_arbitary-cycles">
+    <bpmndi:BPMNPlane bpmnElement="arbitary-cycles" id="BPMNPlane_arbitary-cycles">
+      <bpmndi:BPMNShape bpmnElement="StartEvent_1" id="BPMNShape_StartEvent_1">
+        <omgdc:Bounds height="36.0" width="36.0" x="12.0" y="184.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ScriptTask_1" id="BPMNShape_ScriptTask_1">
+        <omgdc:Bounds height="80.0" width="100.0" x="84.0" y="162.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_1" id="BPMNShape_ExclusiveGateway_1">
+        <omgdc:Bounds height="40.0" width="40.0" x="216.0" y="176.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ScriptTask_2" id="BPMNShape_ScriptTask_2">
+        <omgdc:Bounds height="80.0" width="100.0" x="276.0" y="45.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_6" id="BPMNShape_ExclusiveGateway_6">
+        <omgdc:Bounds height="40.0" width="40.0" x="701.0" y="59.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_2" id="BPMNShape_ExclusiveGateway_2">
+        <omgdc:Bounds height="40.0" width="40.0" x="428.0" y="59.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ScriptTask_4" id="BPMNShape_ScriptTask_4">
+        <omgdc:Bounds height="80.0" width="100.0" x="528.0" y="45.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ScriptTask_3" id="BPMNShape_ScriptTask_3">
+        <omgdc:Bounds height="80.0" width="100.0" x="276.0" y="272.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_4" id="BPMNShape_ExclusiveGateway_4">
+        <omgdc:Bounds height="40.0" width="40.0" x="996.0" y="59.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_1" id="BPMNShape_EndEvent_1">
+        <omgdc:Bounds height="36.0" width="36.0" x="1130.0" y="62.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1" id="BPMNEdge_SequenceFlow_1">
+        <omgdi:waypoint x="48.0" y="202.0"></omgdi:waypoint>
+        <omgdi:waypoint x="84.0" y="202.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_2" id="BPMNEdge_SequenceFlow_2">
+        <omgdi:waypoint x="184.0" y="202.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="202.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="201.0"></omgdi:waypoint>
+        <omgdi:waypoint x="216.0" y="196.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_3" id="BPMNEdge_SequenceFlow_3">
+        <omgdi:waypoint x="236.0" y="176.0"></omgdi:waypoint>
+        <omgdi:waypoint x="241.0" y="85.0"></omgdi:waypoint>
+        <omgdi:waypoint x="276.0" y="85.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="13.0" width="100.0" x="236.0" y="176.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_6" id="BPMNEdge_SequenceFlow_6">
+        <omgdi:waypoint x="376.0" y="85.0"></omgdi:waypoint>
+        <omgdi:waypoint x="402.0" y="85.0"></omgdi:waypoint>
+        <omgdi:waypoint x="402.0" y="84.0"></omgdi:waypoint>
+        <omgdi:waypoint x="428.0" y="79.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_17" id="BPMNEdge_SequenceFlow_17">
+        <omgdi:waypoint x="468.0" y="79.0"></omgdi:waypoint>
+        <omgdi:waypoint x="495.0" y="84.0"></omgdi:waypoint>
+        <omgdi:waypoint x="495.0" y="85.0"></omgdi:waypoint>
+        <omgdi:waypoint x="528.0" y="85.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_9" id="BPMNEdge_SequenceFlow_9">
+        <omgdi:waypoint x="628.0" y="85.0"></omgdi:waypoint>
+        <omgdi:waypoint x="664.0" y="85.0"></omgdi:waypoint>
+        <omgdi:waypoint x="664.0" y="84.0"></omgdi:waypoint>
+        <omgdi:waypoint x="701.0" y="79.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_7" id="BPMNEdge_SequenceFlow_7">
+        <omgdi:waypoint x="236.0" y="216.0"></omgdi:waypoint>
+        <omgdi:waypoint x="240.0" y="312.0"></omgdi:waypoint>
+        <omgdi:waypoint x="276.0" y="312.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="13.0" width="100.0" x="238.0" y="269.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_10" id="BPMNEdge_SequenceFlow_10">
+        <omgdi:waypoint x="376.0" y="312.0"></omgdi:waypoint>
+        <omgdi:waypoint x="538.0" y="312.0"></omgdi:waypoint>
+        <omgdi:waypoint x="724.0" y="312.0"></omgdi:waypoint>
+        <omgdi:waypoint x="721.0" y="99.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_14" id="BPMNEdge_SequenceFlow_14">
+        <omgdi:waypoint x="1016.0" y="59.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1024.0" y="0.0"></omgdi:waypoint>
+        <omgdi:waypoint x="452.0" y="2.0"></omgdi:waypoint>
+        <omgdi:waypoint x="448.0" y="59.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="13.0" width="100.0" x="893.0" y="8.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_12" id="BPMNEdge_SequenceFlow_12">
+        <omgdi:waypoint x="1036.0" y="79.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1062.0" y="84.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1062.0" y="85.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1130.0" y="80.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="13.0" width="100.0" x="1077.0" y="85.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="741.0" y="79.0"></omgdi:waypoint>
+        <omgdi:waypoint x="996.0" y="79.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
