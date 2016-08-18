@@ -36,16 +36,18 @@
             <td colspan=2 class="popup-tb-val">
                 <ul class="list-files">
                 {{#each engineIndependentFiles}}
-                    <li><span class="entypo-doc-text"></span><a href="{{url}}">{{title}}</a></li>
+                    <li><span class="entypo-doc-text"></span><a href="data/{{url}}">{{title}}</a></li>
                 {{/each}}
                 </ul>
             </td>
         </tr>
+        {{#if img.src}}
         <tr>
             <td class="popup-tb-title">Process Image</td>
             <td colspan=2 class="popup-tb-val">
-                <img alt="{{img.alt}}" src="{{img.src}}" >
+                <img alt="{{img.alt}}" src="data/{{img.src}}" >
             </td>
         </tr>
+        {{/if}}
     </tbody>
 </table>
