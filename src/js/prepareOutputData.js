@@ -20,13 +20,23 @@
         });
 
         var lastGroupIndex = undefined;
-  
         _.each(filteredData.constructs, function(construct){
             if(construct === undefined){ return; }
             addFeatureAndTestData(construct);
 
-            if(construct.features.length < 1){ return } 
-            if(!isMatchingPortabilityStatus(construct)){ return }
+            if(construct.features.length < 1){ return }
+            var supported=isMatchingPortabilityStatus(construct);
+
+            //if !isMatchingPortability
+            if(!supported[0]){ return }
+            //just those Features differ -> should be shown for option 3
+            else if (supported.length>1){
+                supported.splice(0,1);
+                construct.features=supported;
+                if (construct.features.length<2){
+                    construct.moreThanTwoFeatures=false;
+                }construct.features[construct.features.length-1]['lastFeature']=true;
+            }
       
             // Reset old vlaue of isFirstEntry to avoid duplicate group marking
             // Marks construct as the first row of a group
@@ -35,13 +45,12 @@
                 lastGroupIndex = construct.groupIndex;
                 construct.isFirstEntry = true;
             }  
-
             htmlData.constructs.push(construct);
+
         });
 
-        if(dataFilters.portability_status !== '1' && dataFilters.portability_status !== '2'){
-            return;
-        }
+        if(dataFilters.portability_status !== '1' && dataFilters.portability_status !== '2' &&
+        dataFilters.portability_status !== '3'){ return; }
 
         filteredData.engines.forEach(function(engine){
             if(engine === undefined){ return; }
@@ -52,13 +61,37 @@
             if(dataFilters.portability_status == '2'){
                 htmlData['summaryRow'][engine.id] = 0;
                 htmlData.constructs.forEach(function(obj){
-                    if(obj['supportStatus'].hasOwnProperty(engine.id) && 
+                    if(obj['supportStatus'].hasOwnProperty(engine.id) &&
                         obj['supportStatus'][engine.id].fullSupport){
                         htmlData['summaryRow'][engine.id] += 1;
                     }
                 });
             }
+
+            if(dataFilters.portability_status == '3'){
+                //for each engine
+                htmlData['summaryRow'][engine.id] = 0;
+                htmlData.constructs.forEach(function(obj){
+                    if(obj['supportStatus'].hasOwnProperty(engine.id) &&obj['supportStatus'][engine.id].fullSupport){
+                        htmlData['summaryRow'][engine.id] += 1;
+                    }
+                    //for each construct
+                    if(obj['supportStatus'][engine.id]!=null){
+                        obj['supportStatus'][engine.id]['supportedFeature']=0;
+                        obj.features.forEach(function(feature){
+                            if (feature.results.hasOwnProperty(engine.id)){
+                                if (feature.results[engine.id]['testResult']==='+'){
+                                    obj['supportStatus'][engine.id]['supportedFeature']+=1;
+                                }
+                            }
+                        });
+
+                    }
+
+                });
+            }
         });
+
     }
 
     //TODO duplicate code
@@ -79,26 +112,78 @@
     }
 
     function isMatchingPortabilityStatus(construct){
-        if(dataFilters.portability_status === '0'){ return true; }
+        var showConstruct;
+        if(dataFilters.portability_status === '0'){ return showConstruct=[true]; }
 
-        var count = filteredData.engines.length; 
+        if (dataFilters.portability_status==='3'){
+            construct.features.forEach(function(feature){
+
+                if (isMatchingPortabilityStatusFeature(construct,feature)){
+                    if (showConstruct==undefined){
+                        showConstruct=[true];
+                        showConstruct.push(feature);
+                    }else{
+                        showConstruct.push(feature);
+                    }
+                }
+            });
+            if (showConstruct==undefined){
+                return [false];
+            }else {
+                return showConstruct;
+            }
+
+
+        }
+        var count = filteredData.engines.length;
         filteredData.engines.forEach(function(engine){
-            if(engine === undefined){return}
+            if(engine === undefined){return;}
             // If any test for this engine exists or fullSupport is false
             if(!construct['supportStatus'].hasOwnProperty(engine.id) || 
                 !construct['supportStatus'][engine.id].fullSupport){
                 count -= 1;
+
             }
         });
 
-        var showConstruct = true;
+
         if(dataFilters.portability_status === '1' && count != filteredData.engines.length){ 
-            showConstruct = false; 
+            showConstruct=[false];
+        }else if(dataFilters.portability_status === '2' && (count === filteredData.engines.length)){
+            showConstruct=[false];
+        }else if (showConstruct==null){
+            showConstruct=[true];
         }
-        if(dataFilters.portability_status === '2' && (count === filteredData.engines.length)){ 
-            showConstruct = false; 
+        return showConstruct;
+    }
+    function isMatchingPortabilityStatusFeature(construct,feature){
+        var showFeature=false;
+        var supportPrevious='notSet';
+        filteredData.engines.forEach(function(engine){
+
+            if(engine === undefined){return;}
+
+            // If any test for this engine exists or support same
+            if(feature.results.hasOwnProperty(engine.id) ){
+
+                if (supportPrevious=='notSet'){
+                    supportPrevious=feature.results[engine.id].testResult;
+                }
+                if (supportPrevious!==feature.results[engine.id].testResult){
+                    supportPrevious='different';
+                    return;
+                }
+            }else{
+                 supportPrevious='different';
+                 return;
+            }
+        });
+
+        if(supportPrevious==='different'){
+            showFeature = true;
         }
-        return showConstruct; 
+
+        return showFeature;
     }
 
     function addPerformanceTestData(construct){
@@ -160,7 +245,7 @@
          var emptyRow=[];
          var indexOfEngine=0;
          for(var group in feature.metricTree){
-                var metricTreeGroup=feature.metricTree[group];
+             var metricTreeGroup=feature.metricTree[group];
              for (var name in metricTreeGroup.metrics){
                 value=false;
                 var metricGroup=metricTreeGroup.category;
@@ -317,6 +402,10 @@
                     construct['supportStatus'][engineID].fullSupport = true;
                     htmlData['summaryRow'][engineID] += 1; 
                  } 
+
+            }else if (capability === 'conformance'&& construct['supportStatus'][engineID].supportedFeature > 0){
+                             construct['supportStatus'][engineID].html = '+/-' ;
+                             construct['supportStatus'][engineID].fullSupport = false;
 
             }
 
