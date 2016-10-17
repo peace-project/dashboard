@@ -26,17 +26,20 @@
 
             if(construct.features.length < 1){ return }
 
-            var supported = isMatchingPortabilityStatus(construct);
-
-            //if !isMatchingPortability
-            if(!supported[0]){ return }
-            //just those Features differ -> should be shown for option 3
-            else if (supported.length>1){
-                supported.splice(0,1);
-                construct.features=supported;
-                if (construct.features.length<2){
-                    construct.moreThanTwoFeatures=false;
-                }construct.features[construct.features.length-1]['lastFeature']=true;
+            if(dataFilters.portability_status === '3'){
+                var showFeatures = filterFeaturesByNotSameStatus(construct);
+                if(showFeatures.length < 1){
+                    return;
+                }
+                construct.features = showFeatures;
+                if (construct.features < 2){
+                    construct.moreThanTwoFeatures = false;
+                }
+                construct.features[construct.features.length-1]['lastFeature'] = true;
+            } else {
+                if(!isConstructMatchingPortabilityStatus(construct)){
+                    return;
+                }
             }
 
             // Reset old vlaue of isFirstEntry to avoid duplicate group marking
@@ -70,6 +73,7 @@
             }
 
             if(dataFilters.portability_status == '3'){
+
                 //for each engine
                 htmlData['summaryRow'][engine.id] = 0;
                 htmlData.constructs.forEach(function(obj){
@@ -112,31 +116,28 @@
 
     }
 
-    function isMatchingPortabilityStatus(construct){
-        var showConstruct;
-        if(dataFilters.portability_status === '0'){ return showConstruct=[true]; }
 
-        if (dataFilters.portability_status==='3'){
-            construct.features.forEach(function(feature){
-
-                if (isMatchingPortabilityStatusFeature(feature)){
-                    if (showConstruct==undefined){
-                        showConstruct=[true];
-                        showConstruct.push(feature);
-                    }else{
-                        showConstruct.push(feature);
-                    }
-                }
-            });
-            if (showConstruct==undefined){
-                return [false];
-            }else {
-                return showConstruct;
-            }
-
-
+    function filterFeaturesByNotSameStatus(construct){
+        if (dataFilters.portability_status !== '3'){
+            return;
         }
 
+        var showFeatures = [];
+        construct.features.forEach(function(feature){
+            if (isMatchingPortabilityStatusFeature(feature)){
+                showFeatures.push(feature);
+            }
+        });
+
+        return showFeatures;
+    }
+
+    function isConstructMatchingPortabilityStatus(construct){
+        if(dataFilters.portability_status === '0'){
+            return true;
+        }
+
+        var showConstruct = true;
         var count = filteredData.engines.length;
         filteredData.engines.forEach(function(engine){
             if(engine === undefined){return;}
@@ -144,18 +145,15 @@
             if(!construct['supportStatus'].hasOwnProperty(engine.id) ||
                 !construct['supportStatus'][engine.id].fullSupport){
                 count -= 1;
-
             }
         });
 
-
         if(dataFilters.portability_status === '1' && count != filteredData.engines.length){
-            showConstruct=[false];
-        }else if(dataFilters.portability_status === '2' && (count === filteredData.engines.length)){
-            showConstruct=[false];
-        }else if (showConstruct==null){
-            showConstruct=[true];
+            showConstruct = false;
+        } else if(dataFilters.portability_status === '2' && (count === filteredData.engines.length)){
+            showConstruct = false;
         }
+
         return showConstruct;
     }
 
