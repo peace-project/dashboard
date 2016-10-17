@@ -12,14 +12,12 @@
 
 <h3 class="performance-add-data-title">Dependent Files</h3>
 
-<table class="table performance-add-data-tb" width="100%">
-    <tbody>
-    {{#each test.models}}
-    <tr>
-        <td><a href="../data/{{this.url}}">{{this.title}}</a></td>
-    </tr>
-    {{/each}}
-
-    </tbody>
-</table>
-
+{{#if test.models.length}}
+<ul class="list-files">
+{{#each test.models}}
+    <li><span class="entypo-doc-text"></span><a target="_blank" href="data/{{this.url}}">{{this.title}}</a></li>
+{{/each}}
+</ul>
+{{else}}
+    <p class="empty-message">No files </p>
+{{/if}}
