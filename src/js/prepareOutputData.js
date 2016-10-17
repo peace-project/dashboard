@@ -160,32 +160,28 @@
     }
 
     function isMatchingPortabilityStatusFeature(feature){
-        var showFeature=false;
-        var supportPrevious='notSet';
-        filteredData.engines.forEach(function(engine){
+        var showFeature = false;
+        var firstResult = undefined;
 
+        filteredData.engines.forEach(function(engine){
             if(engine === undefined){return;}
 
             // If any test for this engine exists or support same
-            if(feature.results.hasOwnProperty(engine.id) ){
-
-                if (supportPrevious=='notSet'){
-                    supportPrevious=feature.results[engine.id].testResult;
-                    console.log(supportPrevious);
-                }
-                if (supportPrevious!==feature.results[engine.id].testResult){
-                    supportPrevious='different';
-                    return;
-                }
-            }else{
-                 supportPrevious='different';
-                 return;
+            if(!feature.results.hasOwnProperty(engine.id) ) {
+                showFeature = true;
+                return;
             }
-        });
 
-        if(supportPrevious==='different'){
-            showFeature = true;
-        }
+            if(firstResult == undefined){
+                firstResult = feature.results[engine.id].testResult
+            }
+
+            if (firstResult !== feature.results[engine.id].testResult){
+                showFeature = true;
+                return;
+            }
+
+        });
 
         return showFeature;
     }
