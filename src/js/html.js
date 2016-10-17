@@ -349,11 +349,13 @@
             container: '.content-wrapper',
             content:    function() { return buildFeaturePopoverContent($(this).attr('data-feature-info'))}, 
             title:      function() { return '<span>Feature</span> ' + getTestIndependentFeatureName($(this).attr('data-feature-info'));}
-        });   
+        });
+
         $('[data-test-info].info-feature,[data-feature-info].info-exp-feature').on('click', function (e) {
            e.preventDefault();
           e.stopPropagation();
         });
+
         $('body').on('click', function (e) {
             $('[data-feature-info].info-feature, [data-feature-info].info-exp-feature').each(function () {
                 if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
@@ -364,7 +366,8 @@
        
     }
 
-    //TODO here
+
+
     function buildTestIndependentPopover(){
 
         $('[data-test-info].info-engine-test').popover({
@@ -376,10 +379,6 @@
             title: function() {
               return '<span>Feature-Test</span> '  + getTestIndependentFeatureName($(this).attr('data-test-info'));
             }
-        });
-        $('[data-test-info].info-engine-test').on('click', function (e) {
-           e.preventDefault();
-          e.stopPropagation();
         });
 
         $('body').on('click', function (e) {

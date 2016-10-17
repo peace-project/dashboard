@@ -28,8 +28,6 @@
             onCollapseFilterGroupTitle();
             initializeTooltip();
             buildFeaturePopover();
-                        
-
             buildTestIndependentPopover();
 
     }    

@@ -255,10 +255,8 @@
 
                 while(i < max){
                     engine=sortedInstances[i];
-                    console.log(engine,engine.configuration.length!=0);
                     if (engine.configuration.length!=0){
                         i++;
-                        console.log(max);
                     }else {
                         versions.push(engine.id);
                         i=max;
