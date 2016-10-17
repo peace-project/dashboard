@@ -16,7 +16,7 @@ var del = require('del');
 
 var paths = {
     scripts: [
-        'src/js/start.js','src/js/capfilters.js', 'src/js/init.js', 'src/js/filters.js', 'src/js/prepareOutputData.js', 
+        'src/js/start.js','src/js/init.js', 'src/js/filters.js', 'src/js/prepareOutputData.js',
         'src/js/render.js', 'src/js/html.js', 'src/js/json.js',  'src/js/engines.js', 'src/js/engines-overview.js', 
         'src/js/engines-compare.js', 'src/js/utils.js', 'src/js/end.js'
         ],
