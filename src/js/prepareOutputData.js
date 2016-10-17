@@ -1,4 +1,4 @@
- 
+
     function prepareHtmlData(){
         if(capability === 'performance'){
             preparePerformanceHtmlData();
@@ -10,12 +10,12 @@
         numOfselectedEngines = filteredData.engines.length || 0;
         htmlData.engines['count'] = filteredData.engines.length || 0;
 
-        htmlData.constructs.length = 0; 
+        htmlData.constructs.length = 0;
 
         htmlData.summaryRow = {};
         filteredData.engines.forEach(function(obj){
             if(obj !== undefined){
-                htmlData.summaryRow[obj.id] = htmlData.summaryRow[obj.id]||0;            
+                htmlData.summaryRow[obj.id] = htmlData.summaryRow[obj.id]||0;
             }
         });
 
@@ -25,7 +25,8 @@
             addFeatureAndTestData(construct);
 
             if(construct.features.length < 1){ return }
-            var supported=isMatchingPortabilityStatus(construct);
+
+            var supported = isMatchingPortabilityStatus(construct);
 
             //if !isMatchingPortability
             if(!supported[0]){ return }
@@ -37,14 +38,14 @@
                     construct.moreThanTwoFeatures=false;
                 }construct.features[construct.features.length-1]['lastFeature']=true;
             }
-      
+
             // Reset old vlaue of isFirstEntry to avoid duplicate group marking
             // Marks construct as the first row of a group
             construct.isFirstEntry = false;
             if(construct.groupIndex !== lastGroupIndex){
                 lastGroupIndex = construct.groupIndex;
                 construct.isFirstEntry = true;
-            }  
+            }
             htmlData.constructs.push(construct);
 
         });
@@ -99,13 +100,13 @@
         var numOfselectedEngines;
         htmlData.engines  = groupEngineByName(filteredData.engines);
         numOfselectedEngines = filteredData.engines.length || 0;
-        htmlData.engines['count'] = filteredData.engines.length || 0; 
-        htmlData.constructs.length = 0; 
-      
+        htmlData.engines['count'] = filteredData.engines.length || 0;
+        htmlData.constructs.length = 0;
+
         var lastGroupIndex = undefined;
         _.each(filteredData.constructs, function(construct){
             if(construct === undefined){ return; }
-            addPerformanceTestData(construct);   
+            addPerformanceTestData(construct);
             htmlData.constructs.push(construct);
         });
 
@@ -118,7 +119,7 @@
         if (dataFilters.portability_status==='3'){
             construct.features.forEach(function(feature){
 
-                if (isMatchingPortabilityStatusFeature(construct,feature)){
+                if (isMatchingPortabilityStatusFeature(feature)){
                     if (showConstruct==undefined){
                         showConstruct=[true];
                         showConstruct.push(feature);
@@ -135,11 +136,12 @@
 
 
         }
+
         var count = filteredData.engines.length;
         filteredData.engines.forEach(function(engine){
             if(engine === undefined){return;}
             // If any test for this engine exists or fullSupport is false
-            if(!construct['supportStatus'].hasOwnProperty(engine.id) || 
+            if(!construct['supportStatus'].hasOwnProperty(engine.id) ||
                 !construct['supportStatus'][engine.id].fullSupport){
                 count -= 1;
 
@@ -147,7 +149,7 @@
         });
 
 
-        if(dataFilters.portability_status === '1' && count != filteredData.engines.length){ 
+        if(dataFilters.portability_status === '1' && count != filteredData.engines.length){
             showConstruct=[false];
         }else if(dataFilters.portability_status === '2' && (count === filteredData.engines.length)){
             showConstruct=[false];
@@ -156,7 +158,8 @@
         }
         return showConstruct;
     }
-    function isMatchingPortabilityStatusFeature(construct,feature){
+
+    function isMatchingPortabilityStatusFeature(feature){
         var showFeature=false;
         var supportPrevious='notSet';
         filteredData.engines.forEach(function(engine){
@@ -168,6 +171,7 @@
 
                 if (supportPrevious=='notSet'){
                     supportPrevious=feature.results[engine.id].testResult;
+                    console.log(supportPrevious);
                 }
                 if (supportPrevious!==feature.results[engine.id].testResult){
                     supportPrevious='different';
@@ -191,13 +195,13 @@
         var lastFeatureIndex ;
 
         if (construct.featureIndexes.length < 1){ return; }
-        
+
         var feature = filteredData.features[construct.featureIndexes[0]];
         if (!feature || feature.testIndexes.length < 1){ return; }
 
             construct['features'].push(feature);
             feature['metricTree'] = [];
-            feature['results'] = feature['results'] || {}; 
+            feature['results'] = feature['results'] || {};
 
 
             feature.testIndexes.forEach( function(testIndex){
@@ -209,21 +213,21 @@
                         if (test.result.hasOwnProperty(key)) {
 
                             if(feature['metricTree'].find(function(o){ return o.category === key})){ return;}
-                      
+
                             var category = {
-                                'category': key , 
-                                'categoryName': key.replaceAll('_', ' '), 
+                                'category': key ,
+                                'categoryName': key.replaceAll('_', ' '),
                                 'metrics': [],
                                 'isFirstEntry' : isFirstEntry
                             }
 
 
-                            for (var metric in test.result[key]) {     
+                            for (var metric in test.result[key]) {
                                 if(data.metrics.hasOwnProperty(metric)){
 
                                     category.metrics.push({
-                                        'metric':metric, 
-                                        'metricName': data.metrics[metric].name, 
+                                        'metric':metric,
+                                        'metricName': data.metrics[metric].name,
                                         'description': data.metrics[metric].description,
                                         'metricUnit': data.metrics[metric].unit
 
@@ -296,10 +300,10 @@
         construct['moreThanTwoFeatures'] = construct.featureIndexes.length > 1;
         construct['upperBound'] = '-';
 
-        
+
         var lastFeatureIndex ;
         _.each(construct.featureIndexes, function(index){
-    
+
 
             var feature = filteredData.features[index];
             if (!feature || feature.testIndexes.length < 1){ return; }
@@ -308,22 +312,22 @@
             feature.lastFeature = false;
             //store last feature Index
             lastFeatureIndex = index;
-            
+
 
             if(construct['upperBound'] !== '+') {
                 construct['upperBound'] = feature.upperBound;
             }
 
-            if(construct['upperBound'] === '+/-'){ 
+            if(construct['upperBound'] === '+/-'){
                 construct['html_standard_class'] = 'standard-col-partial';
             } else {
                 construct['html_standard_class'] = 'standard-col-res';
             }
 
             construct['features'].push(feature);
-            feature['results'] = feature['results'] || {}; 
+            feature['results'] = feature['results'] || {};
 
-            if(feature.upperBound === '+/-'){ 
+            if(feature.upperBound === '+/-'){
                 feature['html_standard_class'] = 'standard-col-partial';
             } else {
                 feature['html_standard_class'] = 'standard-col-res';
@@ -332,11 +336,11 @@
                 var test = data.tests[testIndex];
                 // TODO hasEngineID obsolete?
                 if (test !== undefined && hasEngineID(test)){
-                    addTestResult(test, feature);  
-                    addSupportStatus(construct, test); 
+                    addTestResult(test, feature);
+                    addSupportStatus(construct, test);
                 }
             });
-        });  
+        });
           updateSupportStatus(construct);
                // set lastFeature true
         if(lastFeatureIndex !==  undefined){
@@ -355,7 +359,7 @@
 
     function getResultClass(result, resultHtml, upperBound){
         // add result class
-        if(resultHtml !== '+/-'){ 
+        if(resultHtml !== '+/-'){
             return 'support-'+result;
         } else if(upperBound !== undefined && resultHtml == '+/-' && upperBound === resultHtml  ) {
             return 'support-partial-true';
@@ -381,7 +385,7 @@
 
     function updateSupportStatus(construct){
         for(var engineID  in construct['supportStatus']){
-            construct['supportStatus'][engineID]['supportedFeaturePercent'] = 
+            construct['supportStatus'][engineID]['supportedFeaturePercent'] =
             (construct['supportStatus'][engineID].supportedFeature/construct.featureIndexes.length) * 100;
 
             if(construct.featureIndexes.length === construct['supportStatus'][engineID].supportedFeature){
@@ -398,10 +402,10 @@
                 htmlData['summaryRow'][engineID] += 1;
             } else if(capability === 'expressiveness' && construct['supportStatus'][engineID].supportedFeature > 0){
                  if(construct.upperBound === '+'){
-                    construct['supportStatus'][engineID].html = '+'; 
+                    construct['supportStatus'][engineID].html = '+';
                     construct['supportStatus'][engineID].fullSupport = true;
-                    htmlData['summaryRow'][engineID] += 1; 
-                 } 
+                    htmlData['summaryRow'][engineID] += 1;
+                 }
 
             }else if (capability === 'conformance'&& construct['supportStatus'][engineID].supportedFeature > 0){
                              construct['supportStatus'][engineID].html = '+/-' ;
@@ -411,8 +415,8 @@
 
             construct['supportStatus'][engineID]['html_class'] = getResultClass(construct['supportStatus'][engineID].fullSupport,
             construct['supportStatus'][engineID].html, construct.upperBound);
-        } 
-    } 
+        }
+    }
 
     function getHtmTestResult(result, upperBound){
         if(result === '+'){
@@ -511,8 +515,8 @@
         }
 
          return {
-            number:obj.number, 
-            name: obj.name, 
+            number:obj.number,
+            name: obj.name,
             message: message,
             resultType: resultType
         }
@@ -526,9 +530,9 @@
 
     function getTitleFromPath(path){
         //TODO add constant for line_separator
-        var pathSegqments = path.split('/');
-        if (pathSegqments.length > 0){
-            return pathSegqments[pathSegqments.length-1];
+        var pathSegments = path.split('/');
+        if (pathSegments.length > 0){
+            return pathSegments[pathSegments.length-1];
         }
 
         return undefined;
