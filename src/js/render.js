@@ -25,11 +25,17 @@
 
             buildEngineInfoPopover();
             onCollapseFeatureTable();
+            consumeTableCollapse();
             onCollapseFilterGroupTitle();
             initializeTooltip();
             buildFeaturePopover();
-            buildTestIndependentPopover();
 
+            if (capability==='performance'){
+                buildPerformanceTestPopover();
+            } else {
+
+                buildTestIndependentPopover();
+            }
     }    
 
 

@@ -464,10 +464,10 @@
 
     function prepareHtmlEngineTestPerformance (featureTest,engineID){
         var additional = featureTest.additionalData;
-        var values=[];
-        var treeOfKey=[];
-        getChild("",additional,treeOfKey);
-        var inclModels={
+        var values = [];
+        var treeOfKey = [];
+        getChild("", additional, treeOfKey);
+        var inclModels = {
             'treeOfKey': treeOfKey,
             'models': createLinkFromPaths(featureTest.engineDependentFiles)
         };

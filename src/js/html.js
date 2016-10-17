@@ -351,10 +351,6 @@
             title:      function() { return '<span>Feature</span> ' + getTestIndependentFeatureName($(this).attr('data-feature-info'));}
         });
 
-        $('[data-test-info].info-feature,[data-feature-info].info-exp-feature').on('click', function (e) {
-           e.preventDefault();
-          e.stopPropagation();
-        });
 
         $('body').on('click', function (e) {
             $('[data-feature-info].info-feature, [data-feature-info].info-exp-feature').each(function () {
@@ -367,6 +363,28 @@
     }
 
 
+    function buildPerformanceTestPopover(){
+        $('[data-test-info].info-performance-test').popover({
+            html : true,
+            placement: 'auto right',
+            container: '.content-wrapper',
+            content: function() { return buildTestIndependentPopoverContent($(this).attr('data-test-info'), $(this).attr('data-test-engine'))},
+            title: function() {
+                return '<span>Performance-Test</span> '  + getTestIndependentFeatureName($(this).attr('data-test-info'));
+            }
+        });
+
+
+        $('body').on('click', function (e) {
+            $('[data-test-info].info-performance-test').each(function () {
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                    $(this).popover('hide');
+                }
+            });
+
+
+        });
+    }
 
     function buildTestIndependentPopover(){
 
@@ -457,19 +475,17 @@
         return renderFeaturePopover(outputData);
     }
 
-    function buildTestIndependentPopoverContent(featureIndex,  engineID){
 
+    function buildTestIndependentPopoverContent(featureIndex,  engineID){
         var featureTest = getFeatureTestByEngine(filteredData.features[featureIndex], engineID);
         if(featureTest == undefined){ return;}
 
-      if (capability==='performance'){
+        if (capability==='performance'){
+            var output = prepareHtmlEngineTestPerformance(featureTest, engineID);
+        } else {
+            var  output=prepareHtmlEngineTest(featureTest, engineID);
+        }
 
-           var output = prepareHtmlEngineTestPerformance(featureTest,engineID);
-
-        }else {
-          var  output=prepareHtmlEngineTest(featureTest, engineID);
-
-       }
         return renderFeatureTestPopover(output);
     }
 
@@ -495,6 +511,47 @@
                     icon.addClass('entypo-right-open'); 
                 }
         });
+    }
+
+    function consumeTableCollapse(){
+        if(capability == 'performance'){
+            $('.info-exp-feature').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            $('[data-test-info].info-performance-test').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            $('.collapse-parent-row').on('click', function (e) {
+                // we check if popover is visible by looking for the class .popover-content
+                if($('.popover-content').is(':visible')){
+                    $('[data-test-info].info-performance-test').popover('hide');
+                    $('[data-feature-info].info-exp-feature').popover('hide');
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            });
+
+
+        } else {
+            $('.construct-info').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            $('.collapse-parent-row').on('click', function (e) {
+                if($('.popover-content').is(':visible')){
+                    $('[data-test-info].info-engine-test').popover('hide');
+                    $('[data-feature-info].info-feature').popover('hide');
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+
+            });
+        }
     }
 
     function onCollapseFeatureTable(){
