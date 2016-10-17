@@ -525,12 +525,12 @@
     }
 
     function getTitleFromPath(path){
-        if (!path.contains('\\')){
-            var pathSegqments = path.split('/');
-        }else{
-            var pathSegqments = path.split('\\');
+        //TODO add constant for line_separator
+        var pathSegqments = path.split('/');
+        if (pathSegqments.length > 0){
+            return pathSegqments[pathSegqments.length-1];
         }
-        if (pathSegqments.length > 0){ return pathSegqments[pathSegqments.length-1] }
+
         return undefined;
     }
 
