@@ -1,19 +1,23 @@
-<h3 class="additionalData-table-title">Additional Data</h3>
-<table class="additionalData-table" width="100%">
+<h3 class="benchmark-add-data-title">Additional Data</h3>
+<table class="table benchmark-add-data-tb" width="100%">
     <tbody>
         {{#each test.treeOfKey}}
             <tr>
-                <td>{{name}}</td>
-                <td>{{value}}</td>
+                <td class="popup-tb-title">{{name}}</td>
+                <td class="popup-tb-val">{{value}}</td>
             </tr>
         {{/each}}
     </tbody>
 </table>
-<h3 class="additionalData-table-title">Dependent Files</h3>
-<table class="additionalData-table" width="100%">
+
+<h3 class="additional-data-title">Dependent Files</h3>
+
+<table class="table benchmark-add-data-tb" width="100%">
     <tbody>
     {{#each test.models}}
-    <tr><td><a href= ../data/{{this.url}}>{{this.title}}</a></td></tr>
+    <tr>
+        <td><a href="../data/{{this.url}}">{{this.title}}</a></td>
+    </tr>
     {{/each}}
 
     </tbody>

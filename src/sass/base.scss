@@ -959,14 +959,7 @@ a:hover.pbility-info {
   min-width: 300px;
   text-align: center;
 }
-.additionalData-table{
 
-    font-size: 12px;
-}
-
-.additionalData-table tr{
-border-bottom:1px solid #ddd;
-}
 
 .tooltip.bottom .tooltip-arrow {
   border-bottom-color: #5B6475;
@@ -986,10 +979,6 @@ border-bottom:1px solid #ddd;
 .feature-desc {
   max-width: 780px;
   font-size: 12px;
-}
-
-.feature-desc test {
-
 }
 
 .feature-test-desc,
@@ -1055,9 +1044,19 @@ border-bottom:1px solid #ddd;
   width: 176px;
   padding-right: 20px !important;
 }
-.additionalData-table-title,
+.benchmark-add-data-title,
 .feat-desc-title {
   font-size: 18px;
+}
+
+.benchmark-add-data-tb {
+  font-size: 12px;
+  max-width: 741px;
+}
+
+.benchmark-add-data-tb tbody tr td {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .popup-tb-val {
