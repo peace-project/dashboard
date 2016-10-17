@@ -57,7 +57,7 @@
     function renderFeatureTestPopover(test){
 
         if (capability==='performance'){
-           var template = Peace.templates['additionalData_table'];
+           var template = Peace.templates['performance_additional_data'];
            var context = {test:test}
         }else{
             var template = Peace.templates['feature_test_description'];
