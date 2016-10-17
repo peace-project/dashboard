@@ -1061,7 +1061,11 @@ a:hover.pbility-info {
 
 .popup-tb-val {
   min-width: 341px;
+  max-width: 600px;
   word-wrap: break-word;
+}
+.process-image {
+  max-width: 541px;
 }
 
 .list-files {
