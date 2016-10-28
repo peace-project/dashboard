@@ -10,6 +10,7 @@
     "del": "^2.2.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
     "gulp-declare": "^0.3.0",
     "gulp-eslint": "^2.0.0",
@@ -19,5 +20,14 @@
     "gulp-util": "^3.0.7",
     "gulp-wrap": "^0.12.0",
     "run-sequence": "^1.2.1"
+  },
+  "babel": {
+    "presets": [
+      "latest"
+    ],
+    "ignore": [
+      "dist/*.js",
+      "lib/**/*.js"
+    ]
   }
 }
