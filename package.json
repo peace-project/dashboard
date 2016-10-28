@@ -20,14 +20,5 @@
     "gulp-util": "^3.0.7",
     "gulp-wrap": "^0.12.0",
     "run-sequence": "^1.2.1"
-  },
-  "babel": {
-    "presets": [
-      "latest"
-    ],
-    "ignore": [
-      "dist/*.js",
-      "lib/**/*.js"
-    ]
   }
 }
