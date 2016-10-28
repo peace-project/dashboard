@@ -12,6 +12,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 var runSequence = require('run-sequence');
 var del = require('del');
+var babel = require("gulp-babel");
 
 
 var paths = {
@@ -29,12 +30,13 @@ var paths = {
 var uncompressedJs  = 'peace.js';
 var compressedJs    = 'peace.min.js';
 
+
 gulp.task('default', function(cb) {
     runSequence('build', 'test', cb);
 });
 
 gulp.task('build', function(cb) {
-    runSequence('clean', 'copy:data', 'pages', 'images', 'libs', ['styles', 'templates','scripts'], cb);
+    runSequence('clean', /*'copy:data' ,*/ 'pages', 'images', 'libs', ['styles', 'templates','scripts'], cb);
 }); 
 
 gulp.task('pages', function() {
@@ -51,6 +53,7 @@ gulp.task('libs', function(cb) {
     return gulp.src('lib/**')
     .pipe(gulp.dest(paths.dist));
 });
+
 
 gulp.task('copy:data', function(cb) {
     return gulp.src('data/**')
@@ -87,12 +90,16 @@ gulp.task('templates', function(){
     .pipe(gulp.dest(paths.dist+'/js'));
 });
 
+
 gulp.task('scripts', function() {
-    gulp.src(paths.scripts)
-        .pipe(concat(uncompressedJs))
+    gulp.src("src/**/*.js")
         .pipe(sourcemaps.init())
+        .pipe(babel())
+        .pipe(concat(uncompressedJs))
+        .pipe(sourcemaps.write("."))
         .pipe(gulp.dest(paths.dist+'/js'));
 });
+
 
 function watch() {
     gulp.watch('src/**/*.html', ['pages', browserSync.reload]);
