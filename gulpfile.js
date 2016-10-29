@@ -79,7 +79,7 @@ gulp.task('clean', function() {
     // return the stream as the completion hint
     // '!'+paths.dist --> ignore parent dir
 
-    return del([paths.dist+'/**', '!'+paths.dist, '!'+paths.dist+ '/data/']);
+    return del([paths.dist+'/**', '!'+paths.dist, '!'+paths.dist+ '/data/**']);
 });
 
 
