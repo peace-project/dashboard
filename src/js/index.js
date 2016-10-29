@@ -1,8 +1,3 @@
-import { init } from './init';
-
-function Peace(page){
-    this.page = page;
-    init(this);
-}
+import { Peace } from './peace';
 
 export default Peace;

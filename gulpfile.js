@@ -12,8 +12,9 @@ var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 var runSequence = require('run-sequence');
 var del = require('del');
-var babel = require("gulp-babel");
+//var babel = require("gulp-babel");
 var babelrc = require('babelrc-rollup');
+var babel = require('rollup-plugin-babel');
 var rollup = require('rollup-stream');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -22,7 +23,8 @@ var nodeResolve = require('rollup-plugin-node-resolve');
 var commonjs = require('rollup-plugin-commonjs');
 
 var paths = {
-    startScript: 'src/js/init.js',
+    startScript: 'src/js/peace.js',
+    src: 'src/',
     lib: 'lib/',
     templates: 'src/templates/*.hbs',
     dist: 'dist'
@@ -96,12 +98,19 @@ gulp.task('scripts', function() {
     return rollup({
         entry: './src/js/index.js',
         sourceMap: true,
+        format: 'iife',
+        moduleName: 'Peace',
         plugins: [
+            babel({
+                runtimeHelpers: true,
+                exclude: 'node_modules/**'
+            }),
             nodeResolve({
                 jsnext: true,  // Default: false
                 main: true,  // Default: true
+                preferBuiltins: false,
+                browser: true,
             }),
-            babel(babelrc.default),
             commonjs({
                 include: './node_modules/jquery/**',
                 namedExports: {
@@ -112,7 +121,7 @@ gulp.task('scripts', function() {
     ).on('error', e => {
             console.error(`${e.stack}`);
     })
-    .pipe(source('index.js', './src/js'))
+    .pipe(source('index.js', './src/js/'))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(rename(uncompressedJs))

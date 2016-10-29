@@ -1,6 +1,7 @@
 export default {
     entry: 'src/js/index.js',
-    dest: 'build/js/main.min.js',
+    dest: 'dist/js/peace.js',
     format: 'iife',
+    plugins: [ babel() ],
     sourceMap: 'inline',
 };

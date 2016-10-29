@@ -1,12 +1,13 @@
 {
   "presets": [
-    "es2015",
-    // modules = true --> preventing Rollup from working.
-    // https://github.com/rollup/rollup-plugin-babel
-    {"modules" : true}
+    ["es2015", { "loose": true, "modules": false }]
   ],
-  "ignore": [
-    "dist/*.js",
-    "lib/**/*.js"
-  ]
+  "sourceMaps": true,
+  "plugins": ["external-helpers"]
+  //"ignore": ["dist/*.js", "lib/**/*.js"]
+  //"exclude": "node_modules/**"
 }
+/*
+{
+  "plugins": ["external-helpers"]
+}*/
