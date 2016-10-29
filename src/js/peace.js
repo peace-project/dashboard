@@ -6,27 +6,28 @@ import { prepareHtmlData } from './prepareOutputData'
 import { buildFilterItems } from './html'
 import { renderCapabilityTable } from './render'*/
 
- var page, data, capability, filteredData, htmlData, dataFilters, numberOfreceivedData,  normalizedData;
+var page, data, capability, filteredData, htmlData, dataFilters, numberOfreceivedData,  normalizedData;
 
-   export function init(benchmarkType) {
-       if (benchmarkType === undefined) {
-           console.error('page is undefined');
-           return false;
-       }
-
-       let peace = this;
-       initData(peace);
-
+export function Peace(page) {
+   if (page === undefined) {
+       console.error('page is undefined');
+       return false;
    }
 
+   initData();
+}
 
- function initData(peace){
-     peace.data = { tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
-     peace.filteredData = {groups: [], engines: [], constructs: [], features: []};
-     peace.normalizedData = [];
-     peace.htmlData = {constructs:[], summaryRow: {'totalConstructs' : 0} };
-     peace.dataFilters = { language:   'BPMN', groups: undefined, constructs: undefined, features: undefined, portability_status: 0}
+
+function initData(){
+
+     data = { tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
+     filteredData = {groups: [], engines: [], constructs: [], features: []};
+     normalizedData = [];
+     htmlData = {constructs:[], summaryRow: {'totalConstructs' : 0} };
+     dataFilters = { language:   'BPMN', groups: undefined, constructs: undefined, features: undefined, portability_status: 0}
      loadData();
+
+    console.log(data);
  }
 
  function loadData() {
