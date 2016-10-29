@@ -21,6 +21,7 @@ var buffer = require('vinyl-buffer');
 var rename = require('gulp-rename');
 var nodeResolve = require('rollup-plugin-node-resolve');
 var commonjs = require('rollup-plugin-commonjs');
+var fs = require('fs-extra');
 
 var paths = {
     startScript: 'src/js/peace.js',
@@ -39,7 +40,7 @@ gulp.task('default', function(cb) {
 });
 
 gulp.task('build', function(cb) {
-    runSequence('clean', /*'copy:data' ,*/ 'pages', 'images', 'libs', ['styles', 'templates','scripts'], cb);
+    runSequence('clean', 'pages', 'images', 'libs', ['styles', 'templates','scripts'], cb);
 }); 
 
 gulp.task('pages', function() {
@@ -58,15 +59,27 @@ gulp.task('libs', function(cb) {
 });
 
 
-gulp.task('copy:data', function(cb) {
+gulp.task('copy_data', function(cb) {
+    //create dist-folder if it does not exist
+    fs.mkdirsSync(paths.dist, {clobber : false});
+     fs.copy('data', paths.dist+'/data', {clobber : false}, function(err){
+         if (err) {
+             console.error(err);
+             return cb(err);
+         }
+        cb();
+    });
+    /*
     return gulp.src('data/**')
-    .pipe(gulp.dest(paths.dist+'/data'));
+    .pipe(gulp.dest(paths.dist+'/data', {overwrite:false}));  */
 });
 
 
 gulp.task('clean', function() {
     // return the stream as the completion hint
-    return del([paths.dist]);
+    // '!'+paths.dist --> ignore parent dir
+
+    return del([paths.dist+'/**', '!'+paths.dist, '!'+paths.dist+ '/data/']);
 });
 
 
