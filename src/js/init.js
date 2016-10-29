@@ -1,32 +1,67 @@
 
-    var page, data, capability, filteredData, htmlData, dataFilters, numberOfreceivedData,  normalizedData;
+import { fetchBetsyData } from './fetch'
+import { fetchBenflowData } from './fetch'
+/*import { initFilter } from './filters'
+import { prepareHtmlData } from './prepareOutputData'
+import { buildFilterItems } from './html'
+import { renderCapabilityTable } from './render'*/
 
-    function init(benchmarkType){
+ var page, data, capability, filteredData, htmlData, dataFilters, numberOfreceivedData,  normalizedData;
 
-        if(benchmarkType === undefined) { 
-            console.error('page is undefined'); 
-            return false; 
-        };
+   export function init(benchmarkType) {
+       if (benchmarkType === undefined) {
+           console.error('page is undefined');
+           return false;
+       }
 
-        page = benchmarkType;
+       let peace = this;
+       initData(peace);
+
+   }
+
+
+ function initData(peace){
+     peace.data = { tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
+     peace.filteredData = {groups: [], engines: [], constructs: [], features: []};
+     peace.normalizedData = [];
+     peace.htmlData = {constructs:[], summaryRow: {'totalConstructs' : 0} };
+     peace.dataFilters = { language:   'BPMN', groups: undefined, constructs: undefined, features: undefined, portability_status: 0}
+     loadData();
+ }
+
+ function loadData() {
+     if(page === 'conformance' || page === 'expressiveness' || page === 'engines-overview'
+         || page === 'engines-compare'){
+         fetchBetsyData().then(setData);
+     } else if(page === 'performance'){
+        fetchBenflowData()
+     }
+ }
+
+ function setData(results){
+    console.log(results);
+ }
+
+/*
+       page = benchmarkType;
         capability = benchmarkType;
 
         data = {tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
         filteredData = {groups: [], engines: [], constructs: [], features: []};
         normalizedData = [];
-        htmlData = {constructs:[], summaryRow: {'totalConstructs' : 0} }; 
+        htmlData = {constructs:[], summaryRow: {'totalConstructs' : 0} };
         dataFilters = { language:   'BPMN', groups: undefined, constructs: undefined, features: undefined, portability_status: 0}
 
 
         numberOfreceivedData = 0;
         var totalJSONFiles = (page === 'performance') ? 5 : 4;
 
-        if(page === 'conformance' || page === 'expressiveness' || page === 'engines-overview' 
+        if(page === 'conformance' || page === 'expressiveness' || page === 'engines-overview'
             || page === 'engines-compare'){
             getJSON("../data/tests-engine-dependent.json", setDataCallback('tests', totalJSONFiles));
             getJSON("../data/feature-tree.json", setDataCallback('featureTree', totalJSONFiles));
             getJSON("../data/engines.json", setDataCallback('engines', totalJSONFiles));
-            getJSON("../data/tests-engine-independent.json", setDataCallback('independentTests', totalJSONFiles));        
+            getJSON("../data/tests-engine-independent.json", setDataCallback('independentTests', totalJSONFiles));
         } else if(page === 'performance'){
             getJSON("../data/benchflow-tests-engine-dependent.json", setDataCallback('tests', totalJSONFiles));
             getJSON("../data/benchflow-feature-tree.json", setDataCallback('featureTree', totalJSONFiles));
@@ -58,7 +93,7 @@
 
             numberOfreceivedData++;
              if(numberOfreceivedData === totalJSONFiles){
-                if(data.featureTree === undefined) { 
+                if(data.featureTree === undefined) {
                     console.error('Capability not found in the dataset')
                     return false;
                 }
@@ -67,7 +102,7 @@
             }
         }
     }
-    
+
     function process(){
         if(page === 'conformance' || page === 'expressiveness' || page === 'performance'){
             initFilter();
@@ -82,10 +117,10 @@
 
     }
 
-    function udpateFeatureTreeByCapability(cap){ 
+    function udpateFeatureTreeByCapability(cap){
         if(cap !== undefined) { capability = cap }
 
-        data.featureTree = _.find(data.featureTree, function(feature){ 
+        data.featureTree = _.find(data.featureTree, function(feature){
             return feature.id.toLowerCase() == capability.toLowerCase();
-        }); 
-    }
+        });
+    } */

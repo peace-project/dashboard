@@ -1,7 +1,7 @@
-import $ from "jquery"
+import {jquery} from "jquery"
 
 
- function getJSON(url, callback){
+function getJSON(url, callback){
     $.ajax({
         type: 'GET',
         url: url,
@@ -33,9 +33,8 @@ export function fetchBetsyData(){
         fetchData(urls.betsy.tests),
         fetchData(urls.betsy.featureTree),
         fetchData(urls.betsy.engines),
-        fetchData(urls.betsy.independentTests),
+        fetchData(urls.betsy.independentTests)
     );
-
 }
 
 export function fetchBenflowData(){
@@ -66,6 +65,5 @@ function fetchData(url){
             }.bind(this)
         });
     });
-
 
 }
