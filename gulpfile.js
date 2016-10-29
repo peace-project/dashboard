@@ -13,14 +13,15 @@ var browserSync = require('browser-sync').create();
 var runSequence = require('run-sequence');
 var del = require('del');
 var babel = require("gulp-babel");
-
+var babelrc = require('babelrc-rollup');
+var rollup = require('rollup-stream');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var rename = require('gulp-rename');
+var nodeResolve = require('rollup-plugin-node-resolve');
+var commonjs = require('rollup-plugin-commonjs');
 
 var paths = {
-    scripts: [
-        'src/js/start.js','src/js/init.js', 'src/js/filters.js', 'src/js/prepareOutputData.js',
-        'src/js/render.js', 'src/js/html.js', 'src/js/json.js',  'src/js/engines.js', 'src/js/engines-overview.js', 
-        'src/js/engines-compare.js', 'src/js/utils.js', 'src/js/end.js'
-        ],
     startScript: 'src/js/init.js',
     lib: 'lib/',
     templates: 'src/templates/*.hbs',
@@ -92,12 +93,38 @@ gulp.task('templates', function(){
 
 
 gulp.task('scripts', function() {
-    gulp.src("src/**/*.js")
-        .pipe(sourcemaps.init())
+    return rollup({
+        entry: './src/js/index.js',
+        sourceMap: true,
+        plugins: [
+            nodeResolve({
+                jsnext: true,  // Default: false
+                main: true,  // Default: true
+            }),
+            babel(babelrc.default),
+            commonjs({
+                include: './node_modules/jquery/**',
+                namedExports: {
+                    './node_modules/jquery/dist/jquery.min.js':['jquery']
+                }
+            })
+        ]}
+    ).on('error', e => {
+            console.error(`${e.stack}`);
+    })
+    .pipe(source('index.js', './src/js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(rename(uncompressedJs))
+    .pipe(sourcemaps.write("."))
+    .pipe(gulp.dest(paths.dist + '/js'));
+
+  //  gulp.src("src/**/*.js")
+/*        .pipe(sourcemaps.init())
         .pipe(babel())
         .pipe(concat(uncompressedJs))
         .pipe(sourcemaps.write("."))
-        .pipe(gulp.dest(paths.dist+'/js'));
+        .pipe(gulp.dest(paths.dist+'/js')); */
 });
 
 
