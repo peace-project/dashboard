@@ -1,16 +1,17 @@
 import {jquery} from "jquery"
 
 
-function getJSON(url, callback){
-    $.ajax({
-        type: 'GET',
-        url: url,
-        async: true,
-        cache: false,
-        dataType: 'json',
-        success: callback
-    });
-}
+/*
+ function getJSON(url, callback){
+ $.ajax({
+ type: 'GET',
+ url: url,
+ async: true,
+ cache: false,
+ dataType: 'json',
+ success: callback
+ });
+ } */
 
 let urls = {
     betsy: {
@@ -28,36 +29,36 @@ let urls = {
     }
 };
 
-export function fetchBetsyData(){
-    return Promise.all(
-        fetchData(urls.betsy.tests),
-        fetchData(urls.betsy.featureTree),
-        fetchData(urls.betsy.engines),
-        fetchData(urls.betsy.independentTests)
+export function fetchBetsyData() {
+    return Promise.all([fetchNamedData(urls.betsy.tests, 'tests'), fetchNamedData(urls.betsy.featureTree, 'featureTree'),
+        fetchNamedData(urls.betsy.engines, 'engines'), fetchNamedData(urls.betsy.independentTests, 'independentTests')]
+    )
+}
+
+export function fetchBenFlowData() {
+   return Promise.all([fetchData(urls.benchFlow.tests), fetchData(urls.benchFlow.featureTree),
+        fetchData(urls.benchFlow.engines), fetchData(urls.benchFlow.independentTests), fetchData(urls.benchFlow.metrics)]
     );
 }
 
-export function fetchBenflowData(){
-    return Promise.all(
-        fetchData(urls.benchFlow.tests),
-        fetchData(urls.benchFlow.featureTree),
-        fetchData(urls.benchFlow.engines),
-        fetchData(urls.benchFlow.independentTests),
-        fetchData(urls.benchFlow.metrics)
-    );
+function fetchNamedData(url, name) {
+   return fetchData(url).then(function (result) {
+        let newResult = {'name': name, 'result': result};
+        return newResult;
+    })
 }
 
-function fetchData(url){
-
-    return new Promise(function (fullfill, reject) {
+function fetchData(url) {
+    return new Promise(function (fulfill, reject) {
         $.ajax({
             type: 'GET',
             url: url,
             async: true,
             cache: false,
             dataType: 'json',
-            success: function(data){
-                resolve(data);
+            success: function (data) {
+
+                fulfill(data);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(err.toString());
