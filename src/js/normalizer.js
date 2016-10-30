@@ -1,23 +1,31 @@
 import {sortDataAlphabetic, capitalizeFirstLetter} from './utils';
 import NormalizedData from "./model/normalized_data";
+import CapabilityData from "./model/capability_data";
 
 //used for engines-overview page
-export function normalizeAll(featureTree, engines) {
-    throw new Error("Unsupported operation");
+
+export function normalizeAll(dataModel) {
+    //throw new Error("Unsupported operation");
+    //TODO
+    let normalizedData = new NormalizedData();
+    dataModel.getFeatureTree().forEach(function (obj) {
+        normalizedData.add(normalizeCapability(dataModel, obj.id));
+    });
+    return normalizedData;
 }
 
 export function normalizeCapability(dataModel, capability) {
     var data = {};
 
     data.featureTree = dataModel.getFeatureTreeByCapability(capability);
-    let normalizedData = new NormalizedData();
+    let capabilityData = new CapabilityData(capability);
     data.featureTree.languages.forEach(function (treeByLang) {
         let normalizedTree = normalizeFeatureTree(treeByLang, dataModel.getTests());
         normalizedTree['engines'] = normalizeEngines(dataModel.getEngines(), treeByLang.name);
-        normalizedData.add(capability, normalizedTree);
+        capabilityData.add(normalizedTree);
     });
 
-    return normalizedData;
+    return capabilityData;
 }
 
 function normalizeEngines(engines, lang) {

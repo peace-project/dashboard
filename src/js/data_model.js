@@ -12,7 +12,7 @@ export default class DataModel {
         return this.tests
     }
 
-    getAllFeatureTree() {
+    getFeatureTree() {
         return this.featureTree;
     }
 

@@ -1,8 +1,15 @@
 import {fetchBetsyData} from './fetch'
 import {fetchBenFlowData} from './fetch'
 import DataModel from './data_model'
-import { initFilter } from './filters'
 import {normalizeCapability} from "./normalizer";
+import FilterManager from "./filter_manager";
+import GroupFilter from "./filters/group_filter";
+import LanguageFilter from "./filters/language_filter";
+import EngineFilter from "./filters/engine_filter";
+import ConstructFilter from "./filters/construct_filter";
+import FeatureFilter from "./filters/feature_filter";
+import PortabilityFilter from "./filters/portability_status";
+import {PORTABILITY_STATUS} from "./filters/portability_status";
 /* import { prepareHtmlData } from './prepareOutputData'
  import { buildFilterItems } from './html'
  import { renderCapabilityTable } from './render'*/
@@ -18,10 +25,12 @@ export function Peace(page) {
 
     loadData(page)
         .then(res => {
-            data = getData(res);
+            data = createDataModel(res);
             console.log(data);
             process(page);
-        });
+        }).catch(function (err) {
+        console.error(err);
+    });
 
 
     //console.log(data);
@@ -38,7 +47,7 @@ function loadData(page) {
     }
 }
 
-function getData(results) {
+function createDataModel(results) {
     var objResults = {};
     results.forEach(function (row) {
         objResults[row.name] = row.result;
@@ -69,16 +78,34 @@ function process(page) {
     }
     if (page === 'conformance' || page === 'expressiveness' || page === 'performance') {
         let capability = page;
-        let normalizedData = normalizeCapability(data, capability);
+        let normalizedCapability = normalizeCapability(data, capability);
 
         console.log("Normalized data");
-        console.log(normalizedData.getAllByCapability(capability));
-        console.log(normalizedData.getEnginesByLanguage(capability));
+        console.log(normalizedCapability.getAll());
+
+
+        let defaultLang = 'BPMN';
+        if(!normalizedCapability.hasLanguage(defaultLang)){
+            console.warn(defaultLang + " does not exist")
+        }
+
+        let filterManager = new FilterManager();
+        filterManager.addFilter(new LanguageFilter(), defaultLang);
+        filterManager.addFilter(new GroupFilter());
+        filterManager.addFilter(new EngineFilter(), normalizedCapability.getLatestEngineVersions(defaultLang));
+        filterManager.addFilter(new ConstructFilter());
+        filterManager.addFilter(new FeatureFilter());
+        filterManager.addFilter(new PortabilityFilter(), PORTABILITY_STATUS.ALL);
+
+        filteredData = {groups: [], engines: [], constructs: [], features: []};
+        filteredData['independentTests'] = _.where(data.independentTests, {language: dataFilters.language});
+
+        filterManager.applyAllFilters(filteredData);
 
         /*initFilter();
-        prepareHtmlData();
-        buildFilterItems();
-        renderCapabilityTable();*/
+         prepareHtmlData();
+         buildFilterItems();
+         renderCapabilityTable();*/
     } else if (page === 'engines-overview') {
         engineOverview();
     } else if (page === 'engines-compare') {
