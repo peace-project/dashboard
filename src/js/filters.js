@@ -1,6 +1,6 @@
 
 
-    function initFilter(callback){
+export function initFilter(){
       
        data.featureTree.languages.forEach(function(obj){
             normalizedData[obj.name]               = normalizeFeatureTree(obj);
@@ -42,77 +42,8 @@
         filteredData.independentTests.length = 0;
     }
     
-    function addIndexToEngines(engines){
-       engines.forEach(function(engine, index){engine['engineIndex'] = index})
-    }
 
-    function normalizeFeatureTree(featureTree){
-        var cTotalLength = 0;
-        var fTotalLength = 0;
-        var currentConstructIndex = 0; 
-        var currentFeatureIndex = 0; 
 
-        var data = {groups: [], engines: [], constructs: [], features: []};
-
-        var sortedGroups = sortDataAlphabetic(featureTree.groups, 'name');
-        data.groups = sortedGroups.map(function(group, gIndex){
-
-            var sortedConstructs =  sortDataAlphabetic(group.constructs, 'name');
-            sortedConstructs.forEach(function(construct, cIndex){
-
-                var sortedFeatures =  sortDataAlphabetic(construct.features, 'name'); 
-                sortedFeatures.forEach(function(feature, fIndex){
-                    var _features =  {
-                        name: feature.name.replaceAll('_', ' '),
-                        description: feature.description,
-                        id: feature.id,
-                        upperBound: feature.upperBound,
-                        lastFeature: false,
-                        groupId: group.id,
-                        groupName: capitalizeFirstLetter(group.name.replaceAll('_', ' ')),
-                        groupIndex: gIndex,
-                        constructIndex: currentConstructIndex,
-                        featureIndex: currentFeatureIndex,
-                        testIndexes: getTestIndexesByFeatureID(feature.id)
-                    }
-                    data.features.push(_features);
-                    currentFeatureIndex++;
-                });
-
-      
-                var start = fTotalLength;
-                fTotalLength += construct.features.length;
-                var end = fTotalLength;
-
-                var _constructs =  {
-                        name: construct.name.replaceAll('_', ' '),
-                        description: construct.description,
-                        id: construct.id,
-                        groupId: group.id,
-                        groupName: capitalizeFirstLetter(group.name.replaceAll('_', ' ')),
-                        groupDesc: group.description,
-                        isFirstEntry: false,
-                        groupIndex: gIndex,
-                        featureIndexes:_.range(start, end)
-                }
-
-                data.constructs.push(_constructs);  
-                currentConstructIndex++;
-            });
-
-            var start = cTotalLength;
-            cTotalLength += group.constructs.length;
-            var end = cTotalLength;
-            return {
-                name: capitalizeFirstLetter(group.name.replaceAll('_', ' ')),
-                description: group.description,
-                id: group.id,
-                constructIndexes: _.range(start, end)
-            }
-        });
-
-        return data;
-    }
 
     function filterByLanguage(){ 
         if(dataFilters.language == undefined){ dataFilters.language = 'BPMN'}
@@ -384,16 +315,6 @@
         return undefined;
     }
 
-    function getTestIndexesByFeatureID(featureID){
-        var index = [];
-        data.tests.forEach(function(test, key){
-            if (test.featureID == featureID){
-                index.push(key);
-            }
-        });
-        return index;
-    }
-
     function findTestByFeatureID(featureID){
         return data.tests.filter(function(test){
             return (test.featureID == featureID);
@@ -456,31 +377,7 @@
 
 
     
- function copyEngines(engines){
-    var copy = [];
-    for (var index in engines){
-        var idParts = engines[index].id.split('__');
-        var versionLong = engines[index].version;
-        if(idParts.length > 2){
-            versionLong = engines[index].version+' '+idParts[2];
-        }
-        copy[index] = {
-            configuration: shallowCopy(engines[index].configuration),
-            id: engines[index].id,
-            language: engines[index].language,
-            name: engines[index].name,
-            version: engines[index].version,
-            url: engines[index].url,
-            license: engines[index].license,
-            licenseURL: engines[index].licenseURL,
-            releaseDate: engines[index].releaseDate,
-            programmingLanguage: engines[index].programmingLanguage,
-            versionLong: versionLong,
-            indexEngine: index
-        }
-    }
-    return copy;
- }
+
 
   function shallowCopy(array){
     var copy = [];

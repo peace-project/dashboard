@@ -1,8 +1,9 @@
 import {fetchBetsyData} from './fetch'
 import {fetchBenFlowData} from './fetch'
 import DataModel from './data_model'
-/*import { initFilter } from './filters'
- import { prepareHtmlData } from './prepareOutputData'
+import { initFilter } from './filters'
+import { normalizeFeatureTree } from './normalizer'
+/* import { prepareHtmlData } from './prepareOutputData'
  import { buildFilterItems } from './html'
  import { renderCapabilityTable } from './render'*/
 
@@ -31,20 +32,10 @@ function loadData(page) {
     if (page === 'conformance' || page === 'expressiveness' || page === 'engines-overview' || page === 'engines-compare') {
         console.log("Start loading betsy data");
         return fetchBetsyData();
-        /*fetchBetsyData()
-         .then(results => setData(results))
-         .catch(function (e) {
-         console.log(e);
-         });*/
     } else if (page === 'performance') {
         console.log("Start loading benchFlow data");
         return fetchBenFlowData();
-        /*then(results => setData(results))
-         .catch(function (e) {
-         console.log(e);
-         });*/
     } else {
-        console.log("Unsupported page");
         throw Error("Unsupported page");
     }
 }
@@ -74,13 +65,15 @@ function getData(results) {
 
 
 function process() {
-    console.log(data instanceof DataModel);
     if (!(data instanceof DataModel)) {
         console.log('Failed to initialize JSON data');
         return;
     }
 
     if (page === 'conformance' || page === 'expressiveness' || page === 'performance') {
+        //TODO normalizedData
+        let normalizedData = normalizeFeatureTree(data.getFeatureTree());
+
         initFilter();
         prepareHtmlData();
         buildFilterItems();
