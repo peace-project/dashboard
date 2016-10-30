@@ -2,7 +2,7 @@ import {fetchBetsyData} from './fetch'
 import {fetchBenFlowData} from './fetch'
 import DataModel from './data_model'
 import { initFilter } from './filters'
-import { normalizeFeatureTree } from './normalizer'
+import {normalizeCapability} from "./normalizer";
 /* import { prepareHtmlData } from './prepareOutputData'
  import { buildFilterItems } from './html'
  import { renderCapabilityTable } from './render'*/
@@ -20,7 +20,7 @@ export function Peace(page) {
         .then(res => {
             data = getData(res);
             console.log(data);
-            process();
+            process(page);
         });
 
 
@@ -30,10 +30,8 @@ export function Peace(page) {
 
 function loadData(page) {
     if (page === 'conformance' || page === 'expressiveness' || page === 'engines-overview' || page === 'engines-compare') {
-        console.log("Start loading betsy data");
         return fetchBetsyData();
     } else if (page === 'performance') {
-        console.log("Start loading benchFlow data");
         return fetchBenFlowData();
     } else {
         throw Error("Unsupported page");
@@ -64,20 +62,23 @@ function getData(results) {
 }
 
 
-function process() {
+function process(page) {
     if (!(data instanceof DataModel)) {
         console.log('Failed to initialize JSON data');
         return;
     }
-
     if (page === 'conformance' || page === 'expressiveness' || page === 'performance') {
-        //TODO normalizedData
-        let normalizedData = normalizeFeatureTree(data.getFeatureTree());
+        let capability = page;
+        let normalizedData = normalizeCapability(data, capability);
 
-        initFilter();
+        console.log("Normalized data");
+        console.log(normalizedData.getAllByCapability(capability));
+        console.log(normalizedData.getEnginesByLanguage(capability));
+
+        /*initFilter();
         prepareHtmlData();
         buildFilterItems();
-        renderCapabilityTable();
+        renderCapabilityTable();*/
     } else if (page === 'engines-overview') {
         engineOverview();
     } else if (page === 'engines-compare') {

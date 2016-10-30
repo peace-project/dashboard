@@ -12,8 +12,14 @@ export default class DataModel {
         return this.tests
     }
 
-    getFeatureTree() {
+    getAllFeatureTree() {
         return this.featureTree;
+    }
+
+    getFeatureTreeByCapability(capability) {
+        return _.find(this.featureTree, function(feature){
+            return feature.id.toLowerCase() == capability.toLowerCase();
+        });
     }
 
     getEngines() {

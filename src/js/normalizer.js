@@ -1,15 +1,44 @@
 import {sortDataAlphabetic, capitalizeFirstLetter} from './utils';
 import NormalizedData from "./model/normalized_data";
-import NormalizedFeature from "./model/normalized_feature";
-import NormalizedConstruct from "./model/nomalized_construct";
 
-export function normalizeFeatureTree(featureTree, engines) {
+//used for engines-overview page
+export function normalizeAll(featureTree, engines) {
+    throw new Error("Unsupported operation");
+}
+
+export function normalizeCapability(dataModel, capability) {
+    var data = {};
+
+    data.featureTree = dataModel.getFeatureTreeByCapability(capability);
+    let normalizedData = new NormalizedData();
+    data.featureTree.languages.forEach(function (treeByLang) {
+        let normalizedTree = normalizeFeatureTree(treeByLang, dataModel.getTests());
+        normalizedTree['engines'] = normalizeEngines(dataModel.getEngines(), treeByLang.name);
+        normalizedData.add(capability, normalizedTree);
+    });
+
+    return normalizedData;
+}
+
+function normalizeEngines(engines, lang) {
+    let copyEngines_ = copyEngines(_.where(engines, {language: lang}));
+    let sortedEngines = sortDataAlphabetic(copyEngines_, 'name');
+    //TODO check why needed?
+    sortedEngines.forEach(function (engine, index) {
+        engine['engineIndex'] = index
+    });
+    return sortedEngines;
+    //addIndexToEngines(normalizedData[obj.name]['engines']);
+}
+
+function normalizeFeatureTree(featureTree, tests) {
     var cTotalLength = 0;
     var fTotalLength = 0;
     var currentConstructIndex = 0;
     var currentFeatureIndex = 0;
 
-    var data = {groups: [], engines: [], constructs: [], features: []};
+    var data = {language: undefined, groups: [], engines: [], constructs: [], features: []};
+    data.language = featureTree.name;
 
     var sortedGroups = sortDataAlphabetic(featureTree.groups, 'name');
 
@@ -20,7 +49,7 @@ export function normalizeFeatureTree(featureTree, engines) {
 
             var sortedFeatures = sortDataAlphabetic(construct.features, 'name');
             sortedFeatures.forEach(function (feature, fIndex) {
-                var _features = createNormalizedFeature(feature , group, currentConstructIndex, currentFeatureIndex);
+                var _features = createNormalizedFeature(feature, group, tests, gIndex, currentConstructIndex, currentFeatureIndex);
                 data.features.push(_features);
                 currentFeatureIndex++;
             });
@@ -44,24 +73,20 @@ export function normalizeFeatureTree(featureTree, engines) {
     });
 
 
-    data.engines =  sortDataAlphabetic(
-        copyEngines(_.where(engines, {language:obj.name})), 'name');
-    addIndexToEngines(normalizedData[obj.name]['engines']);
-
-    return new NormalizedData(data);
+    return data;
 }
 
 function createNormalizedGroup(group, start, end) {
-   return new NormalizedConstruct({
-       name: capitalizeFirstLetter(group.name.replaceAll('_', ' ')),
-       description: group.description,
-       id: group.id,
-       constructIndexes: _.range(start, end)
-   }) ;
+    return {
+        name: capitalizeFirstLetter(group.name.replaceAll('_', ' ')),
+        description: group.description,
+        id: group.id,
+        constructIndexes: _.range(start, end)
+    };
 }
 
-function createNormalizedFeature(feature, group, currentConstructIndex, currentFeatureIndex){
-    return new NormalizedFeature({
+function createNormalizedFeature(feature, group, tests, gIndex, currentConstructIndex, currentFeatureIndex) {
+    return {
         name: feature.name.replaceAll('_', ' '),
         description: feature.description,
         id: feature.id,
@@ -72,12 +97,12 @@ function createNormalizedFeature(feature, group, currentConstructIndex, currentF
         groupIndex: gIndex,
         constructIndex: currentConstructIndex,
         featureIndex: currentFeatureIndex,
-        testIndexes: getTestIndexesByFeatureID(feature.id)
-    });
+        testIndexes: getTestIndexesByFeatureID(tests, feature.id)
+    };
 }
 
-function createNormalizedConstruct(construct, group, gIndex, start, end){
-  return  new NormalizedConstruct({
+function createNormalizedConstruct(construct, group, gIndex, start, end) {
+    return {
         name: construct.name.replaceAll('_', ' '),
         description: construct.description,
         id: construct.id,
@@ -87,27 +112,27 @@ function createNormalizedConstruct(construct, group, gIndex, start, end){
         isFirstEntry: false,
         groupIndex: gIndex,
         featureIndexes: _.range(start, end)
-    });
+    };
 }
 
 
-function getTestIndexesByFeatureID(featureID){
+function getTestIndexesByFeatureID(tests, featureID) {
     var index = [];
-    data.tests.forEach(function(test, key){
-        if (test.featureID == featureID){
+    tests.forEach(function (test, key) {
+        if (test.featureID == featureID) {
             index.push(key);
         }
     });
     return index;
 }
 
-function copyEngines(engines){
+function copyEngines(engines) {
     var copy = [];
-    for (var index in engines){
+    for (var index in engines) {
         var idParts = engines[index].id.split('__');
         var versionLong = engines[index].version;
-        if(idParts.length > 2){
-            versionLong = engines[index].version+' '+idParts[2];
+        if (idParts.length > 2) {
+            versionLong = engines[index].version + ' ' + idParts[2];
         }
         copy[index] = {
             configuration: shallowCopy(engines[index].configuration),
@@ -127,7 +152,10 @@ function copyEngines(engines){
     return copy;
 }
 
-function addIndexToEngines(engines){
-    engines.forEach(function(engine, index){engine['engineIndex'] = index})
+function shallowCopy(array){
+    var copy = [];
+    for (var index in array) {
+        copy[index] = array[index];
+    }
+    return copy;
 }
-
