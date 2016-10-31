@@ -11,11 +11,6 @@ export default class FilterManager {
     constructor() {
         this.filters = [];
         this.dataFilters = {};
-
-        filterByGroup();
-        filterByEngines();
-        filterByConstruct();
-        filterByFeature();
     }
 
 
@@ -24,25 +19,32 @@ export default class FilterManager {
     }
 
     addFilter(filter, defaultValue) {
+
         if (!this.dataFilters.hasOwnProperty(filter)) {
             this.dataFilters[filter.getName()] = defaultValue;
             this.filters.push(filter);
         }
     }
 
+    getFilterValue(filterName){
+       return Object.keys(this.dataFilters).find(key => key == filterName);
+    }
+
     applyFilterBy(filterName, filteredData) {
         let filter = this.filters.find(f => f.getName() == filterName);
+        let that =  this;
         if(filter !== undefined){
-            filter.apply(filteredData, this.dataFilters);
+            filter.apply(filteredData, that.dataFilters);
         }
     }
 
     applyAllFilters(filteredData){
-        this.filters.forEach(filter =>  filter.apply(filteredData, this.dataFilters));
+        let that =  this;
+        this.filters.forEach(filter =>  filter.apply(filteredData, that.dataFilters));
     }
 
     resetFilters() {
-        dataFilters.groups.length = 0;
+      /*  dataFilters.groups.length = 0;
         dataFilters.engines.length = 0;
         dataFilters.constructs.length = 0;
         dataFilters.features.length = 0;
@@ -53,7 +55,7 @@ export default class FilterManager {
         filteredData.groups.length = 0;
         filteredData.constructs.length = 0;
         filteredData.features.length = 0;
-        filteredData.independentTests.length = 0;
+        filteredData.independentTests.length = 0; */
     }
 
 }
