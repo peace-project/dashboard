@@ -97,7 +97,8 @@ function process(page) {
         filterManager.addFilter(new FeatureFilter());
         filterManager.addFilter(new PortabilityFilter(), PortabilityStatus.ALL);
 
-        let filterValueLang = filterManager.getFilterValue(LanguageFilter.Name);
+        let filterValueLang = filterManager.getFilterValue(LanguageFilter.Name());
+        console.log(LanguageFilter.Name());
 
         let filteredData = {groups: [], engines: [], constructs: [], features: []};
         filteredData['independentTests'] = _.where(data.independentTests, {language: filterValueLang});

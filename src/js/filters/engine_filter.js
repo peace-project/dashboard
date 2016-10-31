@@ -2,7 +2,7 @@ import Filter from "./filter";
 
 export default class EngineFilter extends Filter {
     constructor() {
-        super(EngineFilter.Name);
+        super(EngineFilter.Name());
     }
 
     static Name() {return 'engines'};

@@ -9,7 +9,7 @@ export const PortabilityStatus = {
 
 export default class PortabilityFilter extends Filter{
     constructor() {
-        super(PortabilityFilter.Name);
+        super(PortabilityFilter.Name());
     }
 
     static Name(){ return 'portability_status'};

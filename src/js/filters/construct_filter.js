@@ -4,7 +4,7 @@ import Filter from "./filter";
 export default class ConstructFilter extends Filter{
 
     constructor() {
-        super(ConstructFilter.Name);
+        super(ConstructFilter.Name());
     }
 
     static Name(){ return 'constructs'};

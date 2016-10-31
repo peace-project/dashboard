@@ -4,7 +4,7 @@ import Filter from "./filter";
 
 export default class GroupFilter extends Filter{
     constructor() {
-        super(GroupFilter.Name);
+        super(GroupFilter.Name());
     }
 
     static Name(){ return 'groups' };
