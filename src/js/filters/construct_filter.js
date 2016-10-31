@@ -1,10 +1,13 @@
 import Filter from "./filter";
 
+
 export default class ConstructFilter extends Filter{
 
     constructor() {
-        super('constructs');
+        super(ConstructFilter.Name);
     }
+
+    static Name(){ return 'constructs'};
 
     apply(data, filteredData, filterValues){
 

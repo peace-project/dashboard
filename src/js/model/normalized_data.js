@@ -80,6 +80,3 @@ export default class NormalizedData {
     }
 }
 
-var sortVersionAscending = function (a, b) {
-    return a.id.localeCompare(b.id);
-}

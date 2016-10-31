@@ -1,4 +1,5 @@
 import NormalizedDataContainer from "./normalized_data_container";
+import {DataDimension} from "./normalized_data_container";
 const _data = Symbol('data');
 
 export default class CapabilityData {
@@ -18,10 +19,10 @@ export default class CapabilityData {
         }
 
         this[_data][data.language] = {
-            groups: new NormalizedDataContainer(data.groups, 'groups'),
-            constructs: new NormalizedDataContainer(data.constructs, 'constructs'),
-            features: new NormalizedDataContainer(data.features, 'features'),
-            engines: new NormalizedDataContainer(data.engines, 'engines')
+            groups: new NormalizedDataContainer(data.groups, DataDimension.GROUPS),
+            constructs: new NormalizedDataContainer(data.constructs, DataDimension.CONSTRUCTS),
+            features: new NormalizedDataContainer(data.features, DataDimension.FEATURES),
+            engines: new NormalizedDataContainer(data.engines, DataDimension.ENGINES)
         }
     }
 
@@ -35,8 +36,10 @@ export default class CapabilityData {
         // otherwise we'll have to load JSON files again
         let data = this[_data];
         var clone = {};
-        data.forEach(function (obj, key) {
-            this.cloneByLang(key, clone[key]);
+        let that = this;
+        Object.keys(data).forEach(key => {
+            clone[key] = {};
+            that.cloneByLang(key, clone[key])
         });
         return clone;
     }
@@ -48,9 +51,7 @@ export default class CapabilityData {
         }
 
         var clone = {};
-        data[language].forEach(function (obj) {
-            this.cloneByLang(obj, language);
-        });
+        this.cloneByLang(data[language], clone);
         return clone;
     }
 
@@ -86,6 +87,11 @@ export default class CapabilityData {
     }
 
     getLatestEngineVersions(language) {
+
+        var sortVersionAscending = function (a, b) {
+            return a.id.localeCompare(b.id);
+        }
+
         var latestVersions = _.chain(this.getEnginesByLanguage(language))
             .groupBy('name')
             .map(function (val, key) {
@@ -113,13 +119,12 @@ export default class CapabilityData {
         return _.flatten(latestVersions, true);
     }
 
-    cloneByLang(lang, target) {
 
-        if (this[_data].hasOwnProperty(lang)) {
+    cloneByLang(lang, target) {
+        if (!this[_data].hasOwnProperty(lang)) {
             console.error('lang ' + lang + ' not found');
             return;
         }
-
         if (target === undefined) {
             console.error('target is undefined');
             return;
@@ -128,16 +133,16 @@ export default class CapabilityData {
         //We cannot clear the target variable by assigning to a new object e.g., target = {groups:[], engines: [], ...}
         // as javascript is passed-by-value with access to the properties the target object
         for (var dimension in target) {
+            console.log(dimension);
             delete target[dimension];
         }
 
-        var normalizedData = this[_data][lang];
-
-        target['groups'] = normalizedData.groups.clone();
-        target['engines'] = normalizedData.engines.clone();
-        target['constructs'] = normalizedData.constructs.clone();
-        target['features'] = normalizedData.features.clone();
-        target['engines'] = normalizedData.engines.clone();
+        var data = this[_data][lang];
+        target['groups'] = data.groups.clone();
+        target['engines'] = data.engines.clone();
+        target['constructs'] = data.constructs.clone();
+        target['features'] = data.features.clone();
+        target['engines'] = data.engines.clone();
 
         //cloneEngines(normalizedData['engines']);
 

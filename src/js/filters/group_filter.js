@@ -1,10 +1,13 @@
 import Filter from "./filter";
 
+
+
 export default class GroupFilter extends Filter{
     constructor() {
-        super('groups');
+        super(GroupFilter.Name);
     }
 
+    static Name(){ return 'groups' };
 
     apply(filteredData, filterValues){
         // should we preserve filteredData ?

@@ -9,7 +9,7 @@ import EngineFilter from "./filters/engine_filter";
 import ConstructFilter from "./filters/construct_filter";
 import FeatureFilter from "./filters/feature_filter";
 import PortabilityFilter from "./filters/portability_status";
-import {PORTABILITY_STATUS} from "./filters/portability_status";
+import {PortabilityStatus} from "./filters/portability_status";
 /* import { prepareHtmlData } from './prepareOutputData'
  import { buildFilterItems } from './html'
  import { renderCapabilityTable } from './render'*/
@@ -85,7 +85,7 @@ function process(page) {
 
 
         let defaultLang = 'BPMN';
-        if(!normalizedCapability.hasLanguage(defaultLang)){
+        if (!normalizedCapability.hasLanguage(defaultLang)) {
             console.warn(defaultLang + " does not exist")
         }
 
@@ -95,12 +95,14 @@ function process(page) {
         filterManager.addFilter(new EngineFilter(), normalizedCapability.getLatestEngineVersions(defaultLang));
         filterManager.addFilter(new ConstructFilter());
         filterManager.addFilter(new FeatureFilter());
-        filterManager.addFilter(new PortabilityFilter(), PORTABILITY_STATUS.ALL);
+        filterManager.addFilter(new PortabilityFilter(), PortabilityStatus.ALL);
 
-        filteredData = {groups: [], engines: [], constructs: [], features: []};
-        filteredData['independentTests'] = _.where(data.independentTests, {language: dataFilters.language});
+        let filterValueLang = filterManager.getFilterValue(LanguageFilter.Name);
 
-        filterManager.applyAllFilters(filteredData);
+        let filteredData = {groups: [], engines: [], constructs: [], features: []};
+        filteredData['independentTests'] = _.where(data.independentTests, {language: filterValueLang});
+
+        //  filterManager.applyAllFilters(filteredData);
 
         /*initFilter();
          prepareHtmlData();

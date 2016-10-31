@@ -1,6 +1,6 @@
 import Filter from "./filter";
 
-export const PORTABILITY_STATUS = {
+export const PortabilityStatus = {
     ALL : 0,
     ONLY : 1,
     WITH : 2,
@@ -8,8 +8,9 @@ export const PORTABILITY_STATUS = {
 }
 
 export default class PortabilityFilter extends Filter{
-
     constructor() {
-        super(portability_status);
+        super(PortabilityFilter.Name);
     }
+
+    static Name(){ return 'portability_status'};
 }

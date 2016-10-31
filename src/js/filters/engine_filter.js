@@ -2,8 +2,10 @@ import Filter from "./filter";
 
 export default class EngineFilter extends Filter {
     constructor() {
-        super('engines');
+        super(EngineFilter.Name);
     }
+
+    static Name() {return 'engines'};
 
     apply(data, filteredData, filterValues) {
         var missingKeys = this.isFilteredDataEnough(filteredData, filterValues);
