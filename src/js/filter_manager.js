@@ -8,18 +8,35 @@ var dataFilters = {
 }
 
 export default class FilterManager {
-    constructor() {
+    constructor(normalizedData) {
         this.filters = [];
         this.dataFilters = {};
+        this.normalizedData = normalizedData;
+        this.filteredData =  {};
+
+        // Initialize filteredData
+        console.log("----------")
+        this.filteredData = {groups: {},
+            engines: {},
+            constructs: {},
+            features: {},
+            tests: {},
+            independentTests: {}
+        };
+
+        console.log("/// INIT");
+        console.log(this.filteredData);
     }
 
+    getFilteredData(){
+       return this.filteredData;
+    }
 
     addFilter(filter) {
         this.addFilter(filter, []);
     }
 
     addFilter(filter, defaultValue) {
-
         if (!this.dataFilters.hasOwnProperty(filter)) {
             this.dataFilters[filter.getName()] = defaultValue;
             this.filters.push(filter);
@@ -33,17 +50,17 @@ export default class FilterManager {
        return undefined;
     }
 
-    applyFilterBy(filterName, filteredData) {
+    applyFilterBy(filterName) {
         let filter = this.filters.find(f => f.getName() == filterName);
         let that =  this;
         if(filter !== undefined){
-            filter.apply(filteredData, that.dataFilters);
+            filter.applyFilter(that.normalizedData, that.filteredData, that.dataFilters);
         }
     }
 
-    applyAllFilters(data, filteredData){
+    applyAllFilters(){
         let that =  this;
-        this.filters.forEach(filter => filter.applyFilter(data, filteredData, that.dataFilters));
+        this.filters.forEach(filter => filter.applyFilter(that.normalizedData, that.filteredData, that.dataFilters));
     }
 
     resetFilters() {

@@ -16,7 +16,7 @@ export default class LanguageFilter extends Filter{
             filterValues.language = 'BPMN'
         }
         console.log('Apply language filter');
-        data.cloneByLang(filterValues.language, filteredData);
-    }
+        data.copyByLang(filterValues.language, filteredData);
 
+    }
 }

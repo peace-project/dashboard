@@ -9,6 +9,6 @@ export default class Filter {
     }
 
     applyFilter(data, filteredData, filterValues){
-        throw Error("Unsupported operation");
+        throw Error("Unsupported operation in Filter "+ this.name);
     }
 }

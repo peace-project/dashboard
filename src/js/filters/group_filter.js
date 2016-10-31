@@ -1,27 +1,26 @@
 import Filter from "./filter";
 
 
-
-export default class GroupFilter extends Filter{
+export default class GroupFilter extends Filter {
     constructor() {
         super(GroupFilter.Name());
     }
 
-    static Name(){ return 'groups' };
+    static Name() {
+        return 'groups'
+    };
 
-    applyFilter(filteredData, filterValues){
+    applyFilter(data, filteredData, filterValues) {
+        console.log('Apply Group filter');
         // should we preserve filteredData ?
-      /*  var missingKeys = isFilteredDataEnough('groups');
-        if (missingKeys.length > 0) {
-            missingKeys.forEach(function (groupName) {
-                var index = _.findIndex(getNormalizedDataByLang().groups, function (group) {
-                    return group.name == groupName
-                });
-                //TODO use own deep copy method
-                filteredData.groups[index] = $.extend(true, {}, getNormalizedDataByLang().groups[index]);
-                addNewGroupsToFilters(filteredData.groups[index].constructIndexes);
-            });
-        }
+        var missingKeys = this.isFilteredDataEnough();
+
+        missingKeys.forEach(function (index) {
+            //TODO use own deep copy method
+            filteredData.groups[index] = data.getGroupByIndex(filterValues.language, index);
+            this.addNewGroupsToFilters(filteredData.groups[index].constructIndexes, data, filterValues);
+        });
+
 
         filteredData.groups.forEach(function (group, index) {
             if (group !== undefined) {
@@ -31,7 +30,25 @@ export default class GroupFilter extends Filter{
                     filteredData.groups[index] = undefined;
                 }
             }
-        }); */
+        });
+    }
+
+    isFilteredDataEnough(filteredFeatureData, filterValues) {
+
+    }
+
+
+    //If any construct filter option is turned on, then checks constructs of this newly added group
+    // if none filter option is checked (i.e. == 'all') every constructs we be shown anyway
+    addNewGroupsToFilters(constructIndexes, data, filterValues) {
+        if (filterValues.constructs.length > 0) {
+            constructIndexes.forEach(function (constructID) {
+                let construct = data.getConstructByIndex(constructID);
+                if (filterValues.constructs.indexOf(construct.name) == -1) {
+                    filterValues.constructs.push(construct.name);
+                }
+            });
+        }
     }
 
 

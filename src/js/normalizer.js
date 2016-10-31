@@ -9,12 +9,12 @@ export function normalizeAll(dataModel) {
     //TODO
     let normalizedData = new NormalizedData();
     dataModel.getFeatureTree().forEach(function (obj) {
-        normalizedData.add(normalizeCapability(dataModel, obj.id));
+        normalizedData.add(normalizeByCapability(dataModel, obj.id));
     });
     return normalizedData;
 }
 
-export function normalizeCapability(dataModel, capability) {
+export function normalizeByCapability(dataModel, capability) {
     var data = {};
 
     data.featureTree = dataModel.getFeatureTreeByCapability(capability);
@@ -24,6 +24,8 @@ export function normalizeCapability(dataModel, capability) {
         normalizedTree['engines'] = normalizeEngines(dataModel.getEngines(), treeByLang.name);
         capabilityData.add(normalizedTree);
     });
+
+    data.tests = dataModel.getTestsByCapability(capability);
 
     return capabilityData;
 }

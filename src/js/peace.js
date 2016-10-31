@@ -1,7 +1,7 @@
 import {fetchBetsyData} from './fetch'
 import {fetchBenFlowData} from './fetch'
 import DataModel from './data_model'
-import {normalizeCapability} from "./normalizer";
+import {normalizeByCapability} from "./normalizer";
 import FilterManager from "./filter_manager";
 import GroupFilter from "./filters/group_filter";
 import LanguageFilter from "./filters/language_filter";
@@ -67,7 +67,6 @@ function createDataModel(results) {
      portability_status: 0
      } */
 
-    //new DataModel();
 }
 
 
@@ -78,21 +77,23 @@ function process(page) {
     }
     if (page === 'conformance' || page === 'expressiveness' || page === 'performance') {
         let capability = page;
-        let normalizedCapability = normalizeCapability(data, capability);
+        let normalizedCapabilityData = normalizeByCapability(data, capability);
 
-        console.log("Normalized data");
-        console.log(normalizedCapability.getAll());
-
+        var normalizedData = normalizedCapabilityData.getAll();
+        console.log("normalizedData");
+        console.log(normalizedData);
 
         let defaultLang = 'BPMN';
-        if (!normalizedCapability.hasLanguage(defaultLang)) {
+        if (!normalizedData.hasLanguage(defaultLang)) {
             console.warn(defaultLang + " does not exist")
         }
 
-        let filterManager = new FilterManager();
+
+        let filterManager = new FilterManager(normalizedData);
+        // Adding order represents the calling order. It must be adhered to
         filterManager.addFilter(new LanguageFilter(), defaultLang);
+        filterManager.addFilter(new EngineFilter(), normalizedData.getLatestEngineVersions(defaultLang));
         filterManager.addFilter(new GroupFilter());
-        filterManager.addFilter(new EngineFilter(), normalizedCapability.getLatestEngineVersions(defaultLang));
         filterManager.addFilter(new ConstructFilter());
         filterManager.addFilter(new FeatureFilter());
         filterManager.addFilter(new PortabilityFilter(), PortabilityStatus.ALL);
@@ -103,10 +104,8 @@ function process(page) {
             console.error('Filter values of Filter: '+LanguageFilter.Name() + ' is undefined');
         }
 
-        let filteredData = {groups: [], engines: [], constructs: [], features: []};
-        filteredData['independentTests'] = _.where(data.independentTests, {language: langFilterValue});
-
-         filterManager.applyAllFilters(normalizedCapability, filteredData);
+        //filteredData['independentTests'] = _.where(data.independentTests, {language: langFilterValue});
+         filterManager.applyAllFilters();
 
         /*initFilter();
          prepareHtmlData();

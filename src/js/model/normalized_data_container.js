@@ -5,81 +5,86 @@ export const DataDimension = {
     ENGINES : 'engines'
 }
 
+// NormalizedDataContainer add some convenient methods such as for cloning this object
 export default class NormalizedDataContainer {
     constructor(data, dimension) {
         this.data = data;
         this.dimension = dimension;
+        /*var that = this;
+        Object.keys(data).forEach(function (key) {
+            that[key] = data[key];
+        })*/
     }
 
     clone() {
-        var target = {};
+        var target = [];
         if (this.dimension === DataDimension.GROUPS) {
-            Object.keys(this.data).forEach(key => {
-                target[key] = {
-                    name: this.data[key].name,
-                    description: this.data[key].description,
-                    id: this.data[key].id,
-                    constructIndexes: shallowCopy(this.data[key].constructIndexes)
-                }
+            this.data.forEach((val, index) => {
+                target[index] = {
+                    name: val.name,
+                    description: val.description,
+                    id: val.id,
+                    constructIndexes: shallowCopy(val.constructIndexes)
+                };
             });
         } else if (this.dimension === DataDimension.CONSTRUCTS) {
-            Object.keys(this.data).forEach(key => {
-                target[key] = {
-                    name: this.data[key].name,
-                    description: this.data[key].description,
-                    id: this.data[key].id,
-                    groupId: this.data[key].groupId,
-                    groupName: this.data[key].groupName,
-                    groupDesc: this.data[key].groupDesc,
-                    isFirstEntry: this.data[key].isFirstEntry,
-                    groupIndex: this.data[key].groupIndex,
-                    featureIndexes: this.data[key].featureIndexes
-                }
+            this.data.forEach((val, index) => {
+                target[index] = {
+                    name: val.name,
+                    description: val.description,
+                    id: this.data[index].id,
+                    groupId: val.groupId,
+                    groupName: val.groupName,
+                    groupDesc: val.groupDesc,
+                    isFirstEntry: val.isFirstEntry,
+                    groupIndex: val.groupIndex,
+                    featureIndexes: val.featureIndexes
+                };
             });
 
         } else if (this.dimension === DataDimension.FEATURES) {
-            Object.keys(this.data).forEach(key => {
-                target[key] = {
-                    name: this.data[key].name,
-                    description: this.data[key].description,
-                    id: this.data[key].id,
-                    upperBound: this.data[key].upperBound,
-                    lastFeature: this.data[key].lastFeature,
-                    groupId: this.data[key].groupId,
-                    groupName: this.data[key].name,
-                    groupIndex: this.data[key].groupIndex,
-                    constructIndex: this.data[key].constructIndex,
-                    testIndexes: this.data[key].testIndexes
-                }
+            this.data.forEach((val, index) => {
+                target[index] = {
+                    name: val.name,
+                    description: val.description,
+                    id: val.id,
+                    upperBound: val.upperBound,
+                    lastFeature: val.lastFeature,
+                    groupId: val.groupId,
+                    groupName: val.name,
+                    groupIndex: val.groupIndex,
+                    constructIndex: val.constructIndex,
+                    testIndexes: val.testIndexes
+                };
             });
         } else if (this.dimension === DataDimension.ENGINES) {
-            Object.keys(this.data).forEach(index => {
-                var idParts = this.data[index].id.split('__');
-                var versionLong = this.data[index].version;
+            this.data.forEach((val, index) => {
+                var idParts = val.id.split('__');
+                var versionLong = val.version;
                 if (idParts.length > 2) {
-                    versionLong = this.data[index].version + ' ' + idParts[2];
+                    versionLong = val.version + ' ' + idParts[2];
                 }
 
                 target[index] = {
                     configuration: shallowCopy(this.data[index].configuration),
-                    id: this.data[index].id,
-                    language: this.data[index].language,
-                    name: this.data[index].name,
-                    version: this.data[index].version,
-                    url: this.data[index].url,
-                    license: this.data[index].license,
-                    licenseURL: this.data[index].licenseURL,
-                    releaseDate: this.data[index].releaseDate,
-                    programmingLanguage: this.data[index].programmingLanguage,
+                    id: val.id,
+                    language: val.language,
+                    name: val.name,
+                    version: val.version,
+                    url: val.url,
+                    license: val.license,
+                    licenseURL: val.licenseURL,
+                    releaseDate: val.releaseDate,
+                    programmingLanguage: val.programmingLanguage,
                     versionLong: versionLong,
                     indexEngine: index
-                }
+                };
             });
         } else {
             console.error('Failed to clone normalized data. Dimension ' + dimension + ' is unknown.');
         }
 
-        return target;
+        return new NormalizedDataContainer(target, this.dimension);
 
     }
 }
