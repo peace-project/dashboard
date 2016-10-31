@@ -11,11 +11,11 @@ export default class LanguageFilter extends Filter{
 
     static  Name(){ return 'language'};
 
-    apply(data, filteredData, filterValues){
+    applyFilter(data, filteredData, filterValues){
         if (filterValues.language == undefined) {
             filterValues.language = 'BPMN'
         }
-
+        console.log('Apply language filter');
         data.cloneByLang(filterValues.language, filteredData);
     }
 

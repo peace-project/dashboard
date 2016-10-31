@@ -9,9 +9,9 @@ export default class GroupFilter extends Filter{
 
     static Name(){ return 'groups' };
 
-    apply(filteredData, filterValues){
+    applyFilter(filteredData, filterValues){
         // should we preserve filteredData ?
-        var missingKeys = isFilteredDataEnough('groups');
+      /*  var missingKeys = isFilteredDataEnough('groups');
         if (missingKeys.length > 0) {
             missingKeys.forEach(function (groupName) {
                 var index = _.findIndex(getNormalizedDataByLang().groups, function (group) {
@@ -31,7 +31,7 @@ export default class GroupFilter extends Filter{
                     filteredData.groups[index] = undefined;
                 }
             }
-        });
+        }); */
     }
 
 

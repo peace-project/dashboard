@@ -97,13 +97,16 @@ function process(page) {
         filterManager.addFilter(new FeatureFilter());
         filterManager.addFilter(new PortabilityFilter(), PortabilityStatus.ALL);
 
-        let filterValueLang = filterManager.getFilterValue(LanguageFilter.Name());
-        console.log(LanguageFilter.Name());
+        let langFilterValue = filterManager.getFilterValue(LanguageFilter.Name());
+
+        if(langFilterValue == undefined){
+            console.error('Filter values of Filter: '+LanguageFilter.Name() + ' is undefined');
+        }
 
         let filteredData = {groups: [], engines: [], constructs: [], features: []};
-        filteredData['independentTests'] = _.where(data.independentTests, {language: filterValueLang});
+        filteredData['independentTests'] = _.where(data.independentTests, {language: langFilterValue});
 
-        //  filterManager.applyAllFilters(filteredData);
+         filterManager.applyAllFilters(normalizedCapability, filteredData);
 
         /*initFilter();
          prepareHtmlData();

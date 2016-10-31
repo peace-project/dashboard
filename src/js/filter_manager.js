@@ -27,7 +27,10 @@ export default class FilterManager {
     }
 
     getFilterValue(filterName){
-       return Object.keys(this.dataFilters).find(key => key == filterName);
+        if(this.dataFilters.hasOwnProperty(filterName)){
+            return this.dataFilters[filterName];
+        }
+       return undefined;
     }
 
     applyFilterBy(filterName, filteredData) {
@@ -38,9 +41,9 @@ export default class FilterManager {
         }
     }
 
-    applyAllFilters(filteredData){
+    applyAllFilters(data, filteredData){
         let that =  this;
-        this.filters.forEach(filter =>  filter.apply(filteredData, that.dataFilters));
+        this.filters.forEach(filter => filter.applyFilter(data, filteredData, that.dataFilters));
     }
 
     resetFilters() {

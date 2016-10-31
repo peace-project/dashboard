@@ -8,7 +8,7 @@ export default class Filter {
         return this.name;
     }
 
-    apply(filteredData, filterValues){
+    applyFilter(data, filteredData, filterValues){
         throw Error("Unsupported operation");
     }
 }

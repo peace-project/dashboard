@@ -9,15 +9,12 @@ export default class ConstructFilter extends Filter{
 
     static Name(){ return 'constructs'};
 
-    apply(data, filteredData, filterValues){
-
+    applyFilter(data, filteredData, filterValues){
+    /*
         var missingKeys = this.isFilteredDataEnough(filteredData, filterValues.constructs);
         if (missingKeys.length > 0) {
             missingKeys.forEach(function (constructName) {
-                /*
-                var index = _.findIndex(data.constructs, function (construct) {
-                    return construct.name == constructName
-                }); */
+
                 let construct = data.getConstructByName(filterValues.language, constructName);
                 filteredData.constructs[construct.constructor.name] =  data.getConstructByName(filterValues.language, constructName);
             });
@@ -30,7 +27,7 @@ export default class ConstructFilter extends Filter{
                     filteredData.constructs[index] = undefined;
                 }
             }
-        });
+        });*/
     }
 
     //TODO should return boolean

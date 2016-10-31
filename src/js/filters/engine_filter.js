@@ -7,12 +7,12 @@ export default class EngineFilter extends Filter {
 
     static Name() {return 'engines'};
 
-    apply(data, filteredData, filterValues) {
+    applyFilter(data, filteredData, filterValues) {
+        console.log('Apply engine filter');
         var missingKeys = this.isFilteredDataEnough(filteredData, filterValues);
 
         if (missingKeys.length > 0) {
             filteredData.engines = data.getAll(filterValues.language);
-           // copyEngines(normalizedData[filterValues.language].engines);
         }
 
         /*
