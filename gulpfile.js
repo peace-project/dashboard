@@ -99,7 +99,7 @@ gulp.task('templates', function(){
     .pipe(handlebars())
     .pipe(wrap('Handlebars.template(<%= contents %>)'))
     .pipe(declare({
-      namespace: 'Peace.templates',
+      namespace: 'PeaceTemp.templates',
       noRedeclare: true, // Avoid duplicate declarations 
     }))
     .pipe(concat('peacetpl.js'))
