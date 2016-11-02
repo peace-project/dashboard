@@ -1,4 +1,4 @@
-import {groupEngineByName} from "./html/helpers";
+import {groupEngineByName} from "./viewmodels/helpers";
 
 
 export function prepareHtmlData(capability, filteredData, dataFilters, tests){

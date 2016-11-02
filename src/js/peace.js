@@ -12,12 +12,12 @@ import PortabilityFilter from "./filters/portability_status";
 import {PortabilityStatus} from "./filters/portability_status";
 import {prepareHtmlData} from "./prepareOutputData";
 import {buildFilterItems} from "./html";
-import {renderCapabilityTable} from "./render";
+import {renderCapabilityTable} from "./render/render";
 import ViewModelConverter from "./filters/view_model_converter";
 import TestDataModel from "./model/test_data";
 import TestsFilter from "./filters/tests_filter";
 /* import { prepareHtmlData } from './prepareOutputData'
- import { buildFilterItems } from './html'
+ import { buildFilterItems } from './viewmodels'
  import { renderCapabilityTable } from './render'*/
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;

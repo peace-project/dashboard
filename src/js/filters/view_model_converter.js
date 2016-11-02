@@ -1,4 +1,4 @@
-import ViewModel from "../html/view_model";
+import ViewModel from "../viewmodels/view_model";
 
 
 export default class ViewModelConverter{

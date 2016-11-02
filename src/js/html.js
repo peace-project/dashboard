@@ -1,11 +1,11 @@
-import {renderEngineInfoPopover} from "./render";
+import {renderEngineInfoPopover} from "./render/render";
 import {getTestIndependentInfo} from "./filter_manager";
 import {createLinkFromPaths} from "./prepareOutputData";
 import {getFeatureTestByEngine} from "./filter_manager";
 import {prepareHtmlEngineTestPerformance} from "./prepareOutputData";
-import {renderFeatureTestPopover} from "./render";
+import {renderFeatureTestPopover} from "./render/render";
 import {prepareHtmlEngineTest} from "./prepareOutputData";
-import {renderFeaturePopover} from "./render";
+import {renderFeaturePopover} from "./render/render";
     
     function addOnetimeEventHandlers(capability){
         addLanguageFilterEventHandler(); 
