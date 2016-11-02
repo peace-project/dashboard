@@ -3,24 +3,55 @@ import Filter from "./filter";
 export default class FeatureFilter extends Filter{
     constructor() {
         super(FeatureFilter.Name());
+        this.requiredFilteredValues = ['language', 'features'];
     }
 
     static Name(){ return 'features'};
 
+    createFilterValues(feature) {
+        var values = {};
+        feature.data.forEach((obj) => {
+            values[obj.name] = { index: obj.index}
+        });
+        return values;
+    }
+
+    getRealFilterValues(filterValues, data){
+        let realFilterValues = filterValues;
+        if (filterValues.constructs.length == 0) {
+            realFilterValues['constructs'] = this.createFilterValues(data.getAllConstructsByLanguage(filterValues.language));
+        }
+        return realFilterValues;
+    }
+
     applyFilter(data, filteredData, filterValues) {
         console.log('Apply ' + this.getName() + ' filter');
-        let filteredFeatureData = filteredData.engines.data;
-        var missingKeys = this.isFilteredDataEnough(filteredFeatureData, filterValues);
+
+        if(!this.hasRequiredFilterValues(filterValues)){
+            return;
+        }
+        if(filteredData.features.data === undefined ){
+            console.error('No features data to filter');
+            return;
+        }
+
+        let realFilterValues = this.getRealFilterValues(filterValues, data);
+        var missingKeys = this.isFilteredDataEnough(filteredData.features.data, realFilterValues);
 
         missingKeys.forEach(function (index) {
-            filteredData.engines[index] = data.getFeatureByIndex(filterValues.language, index);
+            filteredData.features[index] = data.getFeatureByIndex(filterValues.language, index);
         });
 
-        filteredFeatureData.forEach(function (feature, index) {
+
+
+        filteredData.engines.data.forEach(function (feature, index) {
+
             if (feature !== undefined) {
-                var filterPredicate = (filterValues.features.length == 0) ? false : (filterValues.features.indexOf(feature.name) == -1);
+
+                var filterPredicate = (filterValues.features.length == 0) ? false : !filterValues.features.hasOwnProperty(feature.name);
+
                 if (feature !== undefined && (filterPredicate || (filteredData.constructs.data[feature.constructIndex] == undefined))) {
-                    filteredFeatureData.features[index] = undefined;
+                    filteredData.features.data[index] = undefined;
                 }
             }
         });
@@ -29,8 +60,6 @@ export default class FeatureFilter extends Filter{
 
     isFilteredDataEnough(filteredFeatureData, filterValues) {
         var missingKeys = [];
-        console.log("///");
-        console.log(filterValues);
         Object.keys(filterValues.features).forEach(function(key){
             let index = filterValues.features[key].index;
             let name = filterValues.features[key].name;
@@ -42,7 +71,6 @@ export default class FeatureFilter extends Filter{
             }
         });
         return missingKeys;
-
 
     }
 

@@ -1,3 +1,6 @@
+'use strict'
+
+
 import {DataDimension} from "./normalized_data_container";
 import NormalizedDataContainer from "./normalized_data_container";
 
@@ -57,6 +60,43 @@ export default class CapabilityDataContainer  {
     }
 
 
+    getAllGroupsByLanguage(language){
+        return this.data[language].groups;
+    }
+
+    getGroupByIndex(language, index){
+        return this.data[language].groups.data[index];
+    }
+
+    getAllConstructsByLanguage(language){
+        return this.data[language].constructs;
+    }
+    getConstructByIndex(language, index){
+        return this.data[language].constructs.data[index];
+    }
+
+    getFeatureByIndex(language, index){
+        return this.data[language].features.data[index];
+    }
+
+    getAllFeaturesByLanguage(language){
+        return this.data[language].features;
+    }
+
+    getEngineByIndex(language, index){
+        return this.data[language].engines.data[index];
+    }
+
+
+
+     getAllConstructsName() {
+        return this.data[language].constructs.map(obj => obj.name);
+    }
+
+    getAllFeaturesName() {
+        return this.data[language].features.map(obj => obj.name);
+    }
+
     hasLanguage(language) {
         return this.data.hasOwnProperty(language);
     }
@@ -73,22 +113,26 @@ export default class CapabilityDataContainer  {
 
         var data = this.data[lang];
 
+
         target['groups'] = data.groups.clone();
-        target['engines'] = data.engines.clone();
         target['constructs'] = data.constructs.clone();
         target['features'] = data.features.clone();
         target['engines'] = data.engines.clone();
+
+        //target['engines'].length = 0;
+        //target['engines'] = data.engines.clone();
+        //console.error("-------------------DEEEP COPY");
+        //console.log(target['engines']);
     }
 
     getLatestEngineVersions(language) {
+        if(language == undefined){
+            console.error('language is undefined');
+        }
 
         var sortVersionAscending = function (a, b) {
             return a.id.localeCompare(b.id);
         }
-
-        //console.log('this.getEnginesByLanguage(language)');
-        //console.log(this.getEnginesByLanguage(language));
-
 
         let engines = this.getEnginesByLanguage(language).data;
         var latestVersions = _.chain(engines)
@@ -105,17 +149,16 @@ export default class CapabilityDataContainer  {
                     if (engine.configuration.length != 0) {
                         i++;
                     } else {
-                        versions.push({index: engine.indexEngine, id: engine.id});
+                        versions.push(engine);
                         i = max;
                     }
                 }
 
                 if (versions.length == 0 && max > 0) {
-                    versions.push({index: sortedInstances[0].indexEngine, id: sortedInstances[0].id});
+                    versions.push(sortedInstances[0]);
                 }
                 return versions;
             }).value();
-
         return _.flatten(latestVersions, true);
     }
 }

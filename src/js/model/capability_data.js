@@ -34,14 +34,6 @@ export default class CapabilityData {
             engines: new NormalizedDataContainer(data.engines, DataDimension.ENGINES)
         };
 
-        /*
-         this[_data][data.language] = {
-         groups: new NormalizedDataContainer(data.groups, DataDimension.GROUPS),
-         constructs: new NormalizedDataContainer(data.constructs, DataDimension.CONSTRUCTS),
-         features: new NormalizedDataContainer(data.features, DataDimension.FEATURES),
-         engines: new NormalizedDataContainer(data.engines, DataDimension.ENGINES)
-         }; */
-
     }
 
     hasLanguage(langName) {
@@ -54,14 +46,13 @@ export default class CapabilityData {
         var clone = {};
         let that = this;
 
-
         Object.keys(this[_data].data).forEach(key => {
             clone[key] = {};
             clone[key]['language'] = key;
             that.copyByLang(key, clone[key])
         });
 
-        //CapabilityDataContainer add some convenient methods for users
+        // CapabilityDataContainer add some convenient methods for users
         // and its data can be modified
         return new CapabilityDataContainer(clone, this.capability);
     }
@@ -123,7 +114,7 @@ export default class CapabilityData {
         if (!data.hasOwnProperty(language)) {
             return undefined;
         }
-        return data.constructs[index];
+        return this[_data].getConstructByIndex(language, index);
     }
 
     getConstructByName(language, name) {

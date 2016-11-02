@@ -1,33 +1,41 @@
+import {groupEngineByName} from "./html/helpers";
 
-    function prepareHtmlData(){
+
+export function prepareHtmlData(capability, filteredData, dataFilters, tests){
         if(capability === 'performance'){
             preparePerformanceHtmlData();
             return;
         }
 
+
+
+        let htmlData = {constructs:[], summaryRow: {'totalConstructs' : 0} };
         var numOfselectedEngines;
-        htmlData.engines  = groupEngineByName(filteredData.engines);
-        numOfselectedEngines = filteredData.engines.length || 0;
-        htmlData.engines['count'] = filteredData.engines.length || 0;
+        htmlData.engines  = groupEngineByName(filteredData.engines.data);
+        numOfselectedEngines = filteredData.engines.data.length || 0;
+        htmlData.engines['count'] = filteredData.engines.data.length || 0;
 
         htmlData.constructs.length = 0;
 
         htmlData.summaryRow = {};
-        filteredData.engines.forEach(function(obj){
+
+        filteredData.engines.data.forEach(function(obj){
             if(obj !== undefined){
                 htmlData.summaryRow[obj.id] = htmlData.summaryRow[obj.id]||0;
             }
         });
 
         var lastGroupIndex = undefined;
-        _.each(filteredData.constructs, function(construct){
+
+    _.each(filteredData.constructs.data, function(construct){
             if(construct === undefined){ return; }
-            addFeatureAndTestData(construct);
+
+            addFeatureAndTestData(construct, filteredData, tests);
 
             if(construct.features.length < 1){ return }
 
             if(dataFilters.portability_status === '3'){
-                var showFeatures = filterFeaturesByNotSameStatus(construct);
+                var showFeatures = filterFeaturesByNotSameStatus(construct, filteredData);
                 if(showFeatures.length < 1){
                     return;
                 }
@@ -37,12 +45,12 @@
                 }
                 construct.features[construct.features.length-1]['lastFeature'] = true;
             } else {
-                if(!isConstructMatchingPortabilityStatus(construct)){
+                if(!isConstructMatchingPortabilityStatus(construct, filteredData, dataFilters)){
                     return;
                 }
             }
 
-            // Reset old vlaue of isFirstEntry to avoid duplicate group marking
+            // Reset old value of isFirstEntry to avoid duplicate group marking
             // Marks construct as the first row of a group
             construct.isFirstEntry = false;
             if(construct.groupIndex !== lastGroupIndex){
@@ -53,10 +61,14 @@
 
         });
 
-        if(dataFilters.portability_status !== '1' && dataFilters.portability_status !== '2' &&
-        dataFilters.portability_status !== '3'){ return; }
 
-        filteredData.engines.forEach(function(engine){
+    if(dataFilters.portability_status !== '1' && dataFilters.portability_status !== '2' &&
+        dataFilters.portability_status !== '3'){
+
+        return;
+    }
+
+        filteredData.engines.data.forEach(function(engine){
             if(engine === undefined){ return; }
             if(dataFilters.portability_status == '1'){
                 htmlData['summaryRow'][engine.id] = htmlData.constructs.length;
@@ -97,14 +109,17 @@
             }
         });
 
+        console.log('htmlData');
+        console.log(htmlData);
+        return htmlData;
     }
 
     //TODO duplicate code
     function preparePerformanceHtmlData(){
         var numOfselectedEngines;
-        htmlData.engines  = groupEngineByName(filteredData.engines);
-        numOfselectedEngines = filteredData.engines.length || 0;
-        htmlData.engines['count'] = filteredData.engines.length || 0;
+        htmlData.engines  = groupEngineByName(filteredData.engines.data);
+        numOfselectedEngines = filteredData.engines.data.length || 0;
+        htmlData.engines['count'] = filteredData.engines.data.length || 0;
         htmlData.constructs.length = 0;
 
         var lastGroupIndex = undefined;
@@ -117,14 +132,14 @@
     }
 
 
-    function filterFeaturesByNotSameStatus(construct){
-        if (dataFilters.portability_status !== '3'){
+    function filterFeaturesByNotSameStatus(construct, filteredData){
+        i/*f (dataFilters.portability_status !== '3'){
             return;
-        }
+        }*/
 
         var showFeatures = [];
         construct.features.forEach(function(feature){
-            if (isMatchingPortabilityStatusFeature(feature)){
+            if (isMatchingPortabilityStatusFeature(feature, filteredData)){
                 showFeatures.push(feature);
             }
         });
@@ -132,14 +147,14 @@
         return showFeatures;
     }
 
-    function isConstructMatchingPortabilityStatus(construct){
+    function isConstructMatchingPortabilityStatus(construct, filteredData, dataFilters){
         if(dataFilters.portability_status === '0'){
             return true;
         }
 
         var showConstruct = true;
-        var count = filteredData.engines.length;
-        filteredData.engines.forEach(function(engine){
+        var count = filteredData.engines.data.length;
+        filteredData.engines.data.forEach(function(engine){
             if(engine === undefined){return;}
             // If any test for this engine exists or fullSupport is false
             if(!construct['supportStatus'].hasOwnProperty(engine.id) ||
@@ -148,20 +163,20 @@
             }
         });
 
-        if(dataFilters.portability_status === '1' && count != filteredData.engines.length){
+        if(dataFilters.portability_status === '1' && count != filteredData.engines.data.length){
             showConstruct = false;
-        } else if(dataFilters.portability_status === '2' && (count === filteredData.engines.length)){
+        } else if(dataFilters.portability_status === '2' && (count === filteredData.engines.data.length)){
             showConstruct = false;
         }
 
         return showConstruct;
     }
 
-    function isMatchingPortabilityStatusFeature(feature){
+    function isMatchingPortabilityStatusFeature(feature, filteredData){
         var showFeature = false;
         var firstResult = undefined;
 
-        filteredData.engines.forEach(function(engine){
+        filteredData.engines.data.forEach(function(engine){
             if(engine === undefined){return;}
 
             // If any test for this engine exists or support same
@@ -190,7 +205,7 @@
 
         if (construct.featureIndexes.length < 1){ return; }
 
-        var feature = filteredData.features[construct.featureIndexes[0]];
+        var feature = filteredData.features.data[construct.featureIndexes[0]];
         if (!feature || feature.testIndexes.length < 1){ return; }
 
             construct['features'].push(feature);
@@ -288,7 +303,8 @@
              metricsInTree.splice(indexOfMetric,1);
          }
     }
-    function addFeatureAndTestData(construct){
+
+    function addFeatureAndTestData(construct, filteredData, tests){
         construct['features'] = [];
         construct['supportStatus'] = {};
         construct['moreThanTwoFeatures'] = construct.featureIndexes.length > 1;
@@ -298,8 +314,7 @@
         var lastFeatureIndex ;
         _.each(construct.featureIndexes, function(index){
 
-
-            var feature = filteredData.features[index];
+            var feature = filteredData.features.data[index];
             if (!feature || feature.testIndexes.length < 1){ return; }
 
             // reset lastFeature
@@ -327,7 +342,7 @@
                 feature['html_standard_class'] = 'standard-col-res';
             }
             feature.testIndexes.forEach( function(testIndex){
-                var test = data.tests[testIndex];
+                var test = tests[testIndex];
                 // TODO hasEngineID obsolete?
                 if (test !== undefined && hasEngineID(test)){
                     addTestResult(test, feature);
@@ -338,7 +353,7 @@
           updateSupportStatus(construct);
                // set lastFeature true
         if(lastFeatureIndex !==  undefined){
-            filteredData.features[lastFeatureIndex].lastFeature = true;
+            filteredData.features.data[lastFeatureIndex].lastFeature = true;
         }
     }
 
@@ -444,7 +459,7 @@
         return result;
     }
 
-    function prepareHtmlEngineTest(test, engineID){
+    export function prepareHtmlEngineTest(test, engineID){
         var deployableHtml = getHtmTestResult(test.result.testDeployable);
         return {
             testDeployable: test.result.testDeployable,
@@ -462,7 +477,7 @@
         };
     }
 
-    function prepareHtmlEngineTestPerformance (featureTest,engineID){
+    export function prepareHtmlEngineTestPerformance (featureTest,engineID){
         var additional = featureTest.additionalData;
         var values = [];
         var treeOfKey = [];
@@ -517,7 +532,7 @@
     }
 
 
-    function createLinkFromPaths(paths){
+    export function createLinkFromPaths(paths){
         if(!$.isArray(paths)) { return undefined;}
         return paths.map(function(file){ return {title: getTitleFromPath(file), url: file}});
     }

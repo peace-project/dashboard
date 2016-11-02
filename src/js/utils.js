@@ -11,3 +11,11 @@ export function capitalizeFirstLetter(string) {
 export function sortDataAlphabetic(arr, key){
         return _.sortBy(arr, function (obj) {return obj[key]});
     }
+
+export function shallowCopy(array){
+    var copy = [];
+    for (var index in array) {
+        copy[index] = array[index];
+    }
+    return copy;
+}

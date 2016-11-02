@@ -13,8 +13,10 @@ export default class DataModel {
     }
 
     getTestsByCapability(capability){
-        return _.find(this.tests, function(test){
+        //console.log(this.tests);
+        return this.tests.filter(function(test){
             let cap = test.featureID.split('__')[0];
+            //console.log(cap.toLowerCase() + '===' +capability.toLowerCase());
             return cap.toLowerCase() === capability.toLowerCase();
         });
     }

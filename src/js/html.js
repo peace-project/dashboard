@@ -1,6 +1,13 @@
-
+import {renderEngineInfoPopover} from "./render";
+import {getTestIndependentInfo} from "./filter_manager";
+import {createLinkFromPaths} from "./prepareOutputData";
+import {getFeatureTestByEngine} from "./filter_manager";
+import {prepareHtmlEngineTestPerformance} from "./prepareOutputData";
+import {renderFeatureTestPopover} from "./render";
+import {prepareHtmlEngineTest} from "./prepareOutputData";
+import {renderFeaturePopover} from "./render";
     
-    function addOnetimeEventHandlers(){
+    function addOnetimeEventHandlers(capability){
         addLanguageFilterEventHandler(); 
         if(capability !== 'performance'){
             addPortabilityStatusEventHandler();
@@ -8,8 +15,8 @@
 
     }
 
-    function buildFilterItems(){
-        addOnetimeEventHandlers();
+   export function buildFilterItems(capability){
+        addOnetimeEventHandlers(capability);
         buildEnginesFilter();
         buildConstructsFilter();     
         
@@ -21,7 +28,7 @@
     }
 
 
-    function reBuildFilterItems(){
+    function reBuildFilterItems(capability){
         buildEnginesFilter();
         buildConstructsFilter();
 
@@ -98,19 +105,7 @@
 
     
 
-    function groupEngineByName(engineArray){
-       return _.chain(engineArray)
-            .filter(function(eng){return eng !== undefined})
-            .groupBy('name')
-            .map(function(val, key){ 
-                var instances = val.sort(sortVersionAscending).reverse();
-                instances[0]['latestVersion'] = true;
-                return { 
-                    name: key, 
-                    instances: instances
-                    }
-            }).value();
-    }
+
 
 
 
@@ -231,7 +226,7 @@
 
             var checkedAll =  $('input[data-dimension="'+ dimension +'"]:checked').length == 0;
             $(allFilterID).prop('checked', checkedAll);  
-            handleFilterRequest(dimension);
+            handleFilterRequest(dimension, dataFilters);
         });
   
     }
@@ -262,7 +257,7 @@
 
     }
 
-    function handleFilterRequest(dimension, all){
+    function handleFilterRequest(dimension, all, dataFilters){
         if(dimension !== 'engines' && all == true){
             dataFilters[dimension].length = 0;   
         }
@@ -281,7 +276,7 @@
                     var dimInputs = $('input[data-engine~="'+engine+'"]');
                     var checkedInputs = $('input[data-engine~="'+engine+'"]:checked');
 
-                    updateFilterDimensions(dimension, dimInputs, checkedInputs, newDataFilters);
+                    updateFilterDimensions(dimension, dimInputs, checkedInputs, dataFilters, newDataFilters);
                 }
            });
 
@@ -292,7 +287,7 @@
             var dimInputs = $("input[data-dimension~='"+dimension+"']");
             var checkedInputs = $("input[data-dimension~='"+dimension+"']:checked");
 
-            updateFilterDimensions(dimension, dimInputs, checkedInputs, newDataFilters);
+            updateFilterDimensions(dimension, dimInputs, checkedInputs, dataFilters, newDataFilters);
 
             // Clears filtered constructs when changing group==all to group==x since 
             // current filtered constructs might not belong to the selected group 
@@ -314,7 +309,7 @@
     }
 
 
-    function updateFilterDimensions(dimension, dimInputs, checkedInputs, newDataFilters){
+    function updateFilterDimensions(dimension, dimInputs, checkedInputs, dataFilters, newDataFilters){
         //Is every option of this dimension selected?
         if(dimInputs.length === checkedInputs.length && dimension !== 'engines'){
             dataFilters[dimension].length = 0;
@@ -412,7 +407,7 @@
 
     }      
 
-    function buildEngineInfoPopover(){
+  export function buildEngineInfoPopover(){
         $('[data-engine-info].engine-info').popover({
             trigger: 'hover',
             html : true, 
@@ -436,19 +431,19 @@
 
     }
 
-   function buildEngineInfoPopoverContent(engineIndex){
+  export function buildEngineInfoPopoverContent(engineIndex, filteredData){
         return renderEngineInfoPopover(filteredData.engines[engineIndex]);
     }
 
-    function getEngineNameID(engineIndex){
+    function getEngineNameID(engineIndex, filteredData){
         return filteredData.engines[engineIndex].name + ' '  + filteredData.engines[engineIndex].version;
     }
 
-    function getTestIndependentFeatureName(featureIndex){
+    function getTestIndependentFeatureName(featureIndex, filteredData){
         return filteredData.features[featureIndex].name;
     }
 
-    function buildFeaturePopoverContent(featureIndex){
+    function buildFeaturePopoverContent(featureIndex, filteredData, capability){
         var featureTestInfo =  getTestIndependentInfo(filteredData.features[featureIndex].id)
         var loadFunction=[];
         var image;

@@ -1,6 +1,6 @@
 import {fetchBetsyData} from './fetch'
 import {fetchBenFlowData} from './fetch'
-import DataModel from './data_model'
+import DataModel from './model/data_model'
 import {normalizeByCapability} from "./normalizer";
 import FilterManager from "./filter_manager";
 import GroupFilter from "./filters/group_filter";
@@ -10,12 +10,18 @@ import ConstructFilter from "./filters/construct_filter";
 import FeatureFilter from "./filters/feature_filter";
 import PortabilityFilter from "./filters/portability_status";
 import {PortabilityStatus} from "./filters/portability_status";
+import {prepareHtmlData} from "./prepareOutputData";
+import {buildFilterItems} from "./html";
+import {renderCapabilityTable} from "./render";
+import ViewModelConverter from "./filters/view_model_converter";
+import TestDataModel from "./model/test_data";
+import TestsFilter from "./filters/tests_filter";
 /* import { prepareHtmlData } from './prepareOutputData'
  import { buildFilterItems } from './html'
  import { renderCapabilityTable } from './render'*/
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
-var data;
+var rawData;
 
 export function Peace(page) {
     if (page === undefined || page == null) {
@@ -25,15 +31,14 @@ export function Peace(page) {
 
     loadData(page)
         .then(res => {
-            data = createDataModel(res);
-            console.log(data);
+            rawData = createDataModel(res);
             process(page);
         }).catch(function (err) {
         console.error(err);
     });
 
 
-    //console.log(data);
+    //console.log(rawData);
 }
 
 
@@ -55,7 +60,7 @@ function createDataModel(results) {
 
     return new DataModel(objResults);
 
-    /*data = {tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
+    /*rawData = {tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
      filteredData = {groups: [], engines: [], constructs: [], features: []};
      normalizedData = [];
      htmlData = {constructs: [], summaryRow: {'totalConstructs': 0}};
@@ -71,43 +76,67 @@ function createDataModel(results) {
 
 
 function process(page) {
-    if (!(data instanceof DataModel)) {
-        console.log('Failed to initialize JSON data');
+    if (!(rawData instanceof DataModel)) {
+        console.log('Failed to initialize JSON rawData');
         return;
     }
     if (page === 'conformance' || page === 'expressiveness' || page === 'performance') {
         let capability = page;
-        let normalizedCapabilityData = normalizeByCapability(data, capability);
+        let testData = new TestDataModel(rawData.getTestsByCapability(capability));
+        let normalizedCapabilityData = normalizeByCapability(rawData, capability, testData.tests);
 
         var normalizedData = normalizedCapabilityData.getAll();
-        console.log("normalizedData");
-        console.log(normalizedData);
 
         let defaultLang = 'BPMN';
         if (!normalizedData.hasLanguage(defaultLang)) {
             console.warn(defaultLang + " does not exist")
         }
 
+        let filteredData = {
+            capability: capability,
+            groups: {},
+            engines: {},
+            constructs: {},
+            features: {},
+            tests: testData.tests,
+            independentTests: {}
+        };
 
-        let filterManager = new FilterManager(normalizedData);
+        //TODO Rename to ProcessPipeline
+        let filterManager = new FilterManager(normalizedData, filteredData);
         // Adding order represents the calling order. It must be adhered to
         filterManager.addFilter(new LanguageFilter(), defaultLang);
-        filterManager.addFilter(new EngineFilter(), normalizedData.getLatestEngineVersions(defaultLang));
-        filterManager.addFilter(new GroupFilter());
-        filterManager.addFilter(new ConstructFilter());
-        filterManager.addFilter(new FeatureFilter());
-        filterManager.addFilter(new PortabilityFilter(), PortabilityStatus.ALL);
+        filterManager.addFilter(new EngineFilter(), []);
+        filterManager.addFilter(new GroupFilter(), []);
+        filterManager.addFilter(new ConstructFilter(), []);
+        filterManager.addFilter(new FeatureFilter(), []);
+        filterManager.addFilter(new TestsFilter(), []);
+        //TODO add test file filter
 
         let langFilterValue = filterManager.getFilterValue(LanguageFilter.Name());
-
         if(langFilterValue == undefined){
             console.error('Filter values of Filter: '+LanguageFilter.Name() + ' is undefined');
         }
 
-        //filteredData['independentTests'] = _.where(data.independentTests, {language: langFilterValue});
-         filterManager.applyAllFilters();
+        filterManager.applyAllFilters();
 
-        /*initFilter();
+        let viewConverter = new ViewModelConverter();
+        let viewModel = viewConverter.convert(filterManager.getFilteredData());
+
+        let portabilityFilter = new PortabilityFilter();
+        portabilityFilter.applyFilter(null, viewModel, filterManager.getFilterValues());
+
+        console.log('----------------------------- ViewModel -------------------------------------');
+        console.log(viewModel);
+
+
+        //filteredData['independentTests'] = _.where(rawData.independentTests, {language: langFilterValue});
+
+
+       // let htmlData = prepareHtmlData(capability, filteredData, filterManager.getFilterValues(), testData);
+       // buildFilterItems(capability);
+        //renderCapabilityTable(capability, htmlData, filterManager.getFilterValues());
+        /*
          prepareHtmlData();
          buildFilterItems();
          renderCapabilityTable();*/
@@ -122,7 +151,7 @@ function process(page) {
  page = benchmarkType;
  capability = benchmarkType;
 
- data = {tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
+ rawData = {tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
  filteredData = {groups: [], engines: [], constructs: [], features: []};
  normalizedData = [];
  htmlData = {constructs:[], summaryRow: {'totalConstructs' : 0} };
@@ -134,16 +163,16 @@ function process(page) {
 
  if(page === 'conformance' || page === 'expressiveness' || page === 'engines-overview'
  || page === 'engines-compare'){
- getJSON("../data/tests-engine-dependent.json", setDataCallback('tests', totalJSONFiles));
- getJSON("../data/feature-tree.json", setDataCallback('featureTree', totalJSONFiles));
- getJSON("../data/engines.json", setDataCallback('engines', totalJSONFiles));
- getJSON("../data/tests-engine-independent.json", setDataCallback('independentTests', totalJSONFiles));
+ getJSON("../rawData/tests-engine-dependent.json", setDataCallback('tests', totalJSONFiles));
+ getJSON("../rawData/feature-tree.json", setDataCallback('featureTree', totalJSONFiles));
+ getJSON("../rawData/engines.json", setDataCallback('engines', totalJSONFiles));
+ getJSON("../rawData/tests-engine-independent.json", setDataCallback('independentTests', totalJSONFiles));
  } else if(page === 'performance'){
- getJSON("../data/benchflow-tests-engine-dependent.json", setDataCallback('tests', totalJSONFiles));
- getJSON("../data/benchflow-feature-tree.json", setDataCallback('featureTree', totalJSONFiles));
- getJSON("../data/benchflow-tests-engine-independent.json", setDataCallback('independentTests', totalJSONFiles));
- getJSON("../data/benchflow-engines.json", setDataCallback('engines', totalJSONFiles));
- getJSON("../data/metrics.json", setDataCallback('metrics', totalJSONFiles));
+ getJSON("../rawData/benchflow-tests-engine-dependent.json", setDataCallback('tests', totalJSONFiles));
+ getJSON("../rawData/benchflow-feature-tree.json", setDataCallback('featureTree', totalJSONFiles));
+ getJSON("../rawData/benchflow-tests-engine-independent.json", setDataCallback('independentTests', totalJSONFiles));
+ getJSON("../rawData/benchflow-engines.json", setDataCallback('engines', totalJSONFiles));
+ getJSON("../rawData/metrics.json", setDataCallback('metrics', totalJSONFiles));
  }
 
 
@@ -153,23 +182,23 @@ function process(page) {
  function setDataCallback(dataType, totalJSONFiles){
  return function(jsonData, textStatus, jqXHR) {
  if(dataType === 'tests'){
- data.tests = jsonData;
+ rawData.tests = jsonData;
  } else if(dataType === 'featureTree'){
- data.featureTree = jsonData;
+ rawData.featureTree = jsonData;
  if(page !== 'engines-overview' && page !== 'engines-compare'){
  udpateFeatureTreeByCapability();
  }
  } else if(dataType === 'engines'){
- data.engines = jsonData;
+ rawData.engines = jsonData;
  } else if(dataType === 'independentTests'){
- data.independentTests = jsonData;
+ rawData.independentTests = jsonData;
  } else if(dataType === 'metrics'){
- data.metrics = jsonData[0];
+ rawData.metrics = jsonData[0];
  }
 
  numberOfreceivedData++;
  if(numberOfreceivedData === totalJSONFiles){
- if(data.featureTree === undefined) {
+ if(rawData.featureTree === undefined) {
  console.error('Capability not found in the dataset')
  return false;
  }
@@ -186,7 +215,7 @@ function process(page) {
  function udpateFeatureTreeByCapability(cap){
  if(cap !== undefined) { capability = cap }
 
- data.featureTree = _.find(data.featureTree, function(feature){
+ rawData.featureTree = _.find(rawData.featureTree, function(feature){
  return feature.id.toLowerCase() == capability.toLowerCase();
  });
  } */

@@ -8,44 +8,34 @@ var dataFilters = {
 }
 
 export default class FilterManager {
-    constructor(normalizedData) {
+    constructor(rawData, filteredData) {
         this.filters = [];
-        this.dataFilters = {};
-        this.normalizedData = normalizedData;
-        this.filteredData =  {};
+        this.filterValues = {};
+        this.rawData = rawData;
+        this.filteredData =  filteredData;
 
-        // Initialize filteredData
-        console.log("----------")
-        this.filteredData = {groups: {},
-            engines: {},
-            constructs: {},
-            features: {},
-            tests: {},
-            independentTests: {}
-        };
-
-        console.log("/// INIT");
-        console.log(this.filteredData);
+        // Initialize filterValues
     }
 
     getFilteredData(){
        return this.filteredData;
     }
 
-    addFilter(filter) {
-        this.addFilter(filter, []);
-    }
-
     addFilter(filter, defaultValue) {
-        if (!this.dataFilters.hasOwnProperty(filter)) {
-            this.dataFilters[filter.getName()] = defaultValue;
+        if (!this.filterValues.hasOwnProperty(filter)) {
+            this.filterValues[filter.getName()] = defaultValue;
             this.filters.push(filter);
         }
     }
 
+    getFilterValues(){
+        return this.filterValues;
+    }
+
+
     getFilterValue(filterName){
-        if(this.dataFilters.hasOwnProperty(filterName)){
-            return this.dataFilters[filterName];
+        if(this.filterValues.hasOwnProperty(filterName)){
+            return this.filterValues[filterName];
         }
        return undefined;
     }
@@ -54,13 +44,19 @@ export default class FilterManager {
         let filter = this.filters.find(f => f.getName() == filterName);
         let that =  this;
         if(filter !== undefined){
-            filter.applyFilter(that.normalizedData, that.filteredData, that.dataFilters);
+            filter.applyFilter(that.rawData, that.filteredData, that.filterValues);
         }
     }
 
     applyAllFilters(){
-        let that =  this;
-        this.filters.forEach(filter => filter.applyFilter(that.normalizedData, that.filteredData, that.dataFilters));
+        var that =  this;
+        this.filters.forEach(filter => {
+            filter.applyFilter(that.rawData, that.filteredData, that.filterValues)
+            console.log("-----------------------------------------------------");
+            console.log(that.filteredData);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        });
+
     }
 
     resetFilters() {
@@ -360,11 +356,11 @@ function hasEngineID(test) {
 }
 
 
-function getTestIndependentInfo(featureId) {
+export function getTestIndependentInfo(featureId) {
     return _.findWhere(filteredData.independentTests, {featureID: featureId});
 }
 
-function getFeatureTestByEngine(feature, engineID) {
+export function getFeatureTestByEngine(feature, engineID) {
     var result;
     for (var i = 0, length = feature.testIndexes.length; i < length; i++) {
         var testIndex = feature.testIndexes[i];

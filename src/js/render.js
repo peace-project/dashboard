@@ -1,5 +1,5 @@
 
-    function renderCapabilityTable(){
+   export function renderCapabilityTable(capability, htmlData, dataFilters){
         var containerID = '#cap-table-div';
         var templateID = capability+'_table';
 
@@ -50,7 +50,7 @@
         $(containerID).html(html);  
     }
 
-    function renderFeaturePopover(outputData){
+    export function renderFeaturePopover(outputData){
         
         var template = Peace.templates['feature_description'];
         var html  = template(outputData);
@@ -58,7 +58,7 @@
     }
 
 //TODO here
-    function renderFeatureTestPopover(test){
+   export function renderFeatureTestPopover(test){
 
         if (capability==='performance'){
            var template = Peace.templates['performance_additional_data'];
@@ -73,7 +73,7 @@
         return html;
     }
     
-    function renderEngineInfoPopover(engineInfo){
+   export function renderEngineInfoPopover(engineInfo){
         var template = Peace.templates['engine_info'];
         var context = {
             engine: engineInfo

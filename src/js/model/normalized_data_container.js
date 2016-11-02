@@ -6,6 +6,7 @@ export const DataDimension = {
 }
 
 // NormalizedDataContainer add some convenient methods such as for cloning this object
+// Rename it to Capability
 export default class NormalizedDataContainer {
     constructor(data, dimension) {
         this.data = data;
@@ -21,6 +22,7 @@ export default class NormalizedDataContainer {
         if (this.dimension === DataDimension.GROUPS) {
             this.data.forEach((val, index) => {
                 target[index] = {
+                    'index': index,
                     name: val.name,
                     description: val.description,
                     id: val.id,
@@ -30,9 +32,10 @@ export default class NormalizedDataContainer {
         } else if (this.dimension === DataDimension.CONSTRUCTS) {
             this.data.forEach((val, index) => {
                 target[index] = {
+                    'index': index,
                     name: val.name,
                     description: val.description,
-                    id: this.data[index].id,
+                    id: val.id,
                     groupId: val.groupId,
                     groupName: val.groupName,
                     groupDesc: val.groupDesc,
@@ -45,6 +48,7 @@ export default class NormalizedDataContainer {
         } else if (this.dimension === DataDimension.FEATURES) {
             this.data.forEach((val, index) => {
                 target[index] = {
+                    'index': index,
                     name: val.name,
                     description: val.description,
                     id: val.id,
@@ -66,7 +70,7 @@ export default class NormalizedDataContainer {
                 }
 
                 target[index] = {
-                    configuration: shallowCopy(this.data[index].configuration),
+                    'index': index,
                     id: val.id,
                     language: val.language,
                     name: val.name,
@@ -77,15 +81,14 @@ export default class NormalizedDataContainer {
                     releaseDate: val.releaseDate,
                     programmingLanguage: val.programmingLanguage,
                     versionLong: versionLong,
-                    indexEngine: index
+                    //indexEngine: index,
+                    configuration: shallowCopy(val.configuration)
                 };
             });
         } else {
             console.error('Failed to clone normalized data. Dimension ' + dimension + ' is unknown.');
         }
-
         return new NormalizedDataContainer(target, this.dimension);
-
     }
 }
 
