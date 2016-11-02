@@ -5,8 +5,8 @@ export default class ViewModelConverter{
     constructor() {
     }
 
-    convert(filteredData) {
-        return new ViewModel(filteredData);
+    convert(filteredData, capability, language) {
+        return new ViewModel(filteredData, capability, language);
     }
 
 

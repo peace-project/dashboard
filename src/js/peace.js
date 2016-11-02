@@ -16,6 +16,7 @@ import {renderCapabilityTable} from "./render/render";
 import ViewModelConverter from "./filters/view_model_converter";
 import TestDataModel from "./model/test_data";
 import TestsFilter from "./filters/tests_filter";
+import {CapabilityTableRender} from "./render/capability_table_render";
 /* import { prepareHtmlData } from './prepareOutputData'
  import { buildFilterItems } from './viewmodels'
  import { renderCapabilityTable } from './render'*/
@@ -121,13 +122,15 @@ function process(page) {
         filterManager.applyAllFilters();
 
         let viewConverter = new ViewModelConverter();
-        let viewModel = viewConverter.convert(filterManager.getFilteredData());
+        let viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
 
         let portabilityFilter = new PortabilityFilter();
         portabilityFilter.applyFilter(null, viewModel, filterManager.getFilterValues());
 
         console.log('----------------------------- ViewModel -------------------------------------');
         console.log(viewModel);
+
+        new CapabilityTableRender(viewModel);
 
 
         //filteredData['independentTests'] = _.where(rawData.independentTests, {language: langFilterValue});

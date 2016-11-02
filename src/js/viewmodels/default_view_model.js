@@ -1,7 +1,9 @@
 import {groupEngineByName} from "./helpers";
 
 export default class ViewModel {
-    constructor(data) {
+    constructor(data, capability, language) {
+        this.capability = capability;
+        this.language = language;
         this.engines = {};
         this.constructs = [];
         //['summaryRow'][engine.id]
