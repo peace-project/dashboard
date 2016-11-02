@@ -1,4 +1,4 @@
-import {math} from "helpers/math";
+import {math} from "./helpers/math";
 import {getProperty} from "./helpers/get_property";
 import {breaklines} from "./helpers/breaklines";
 import capitalize from "./helpers/capitalize";
