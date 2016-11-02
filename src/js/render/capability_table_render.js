@@ -1,10 +1,8 @@
-import {capitalizeFirstLetter} from "../utils";
-export class CapabilityTableRender   {
+import RenderComponent from "./render_component";
 
+export class CapabilityTableRender extends RenderComponent {
     constructor(viewModel) {
-        this.elementId = '#cap-table-div';
-        this.templateId = viewModel.capability + '_table';
-        this.context = viewModel;
+        super('#cap-table-div', viewModel.capability + '_table', viewModel);
 
         //registerTemplateHelper();
 
@@ -15,10 +13,7 @@ export class CapabilityTableRender   {
             featureTitleColspan = featureTitleColspan * 4
         }
 
-        this.context['featureTitleColspan']  = featureTitleColspan;
-
-        new Renderer(this.templateId, this.elementId, this.context);
-
+        this.context['featureTitleColspan'] = featureTitleColspan;
         /*
          var context = {
          tests : htmlData.constructs,
@@ -29,33 +24,8 @@ export class CapabilityTableRender   {
          }; */
 
 
-
         //var html = PeaceTemp.templates[templateId](context);
-       // $(elementId).html(html);
+        // $(elementId).html(html);
     }
 }
 
-export class Renderer {
-    constructor(templateId, containerId, context) {
-        this._helpers = [];
-        this._initHelpers();
-
-        let tpl = PeaceTemp.templates[templateId];
-        let html = tpl(context);
-        $(containerId).html(html);
-
-
-    }
-
-    _initHelpers(){
-        Handlebars.registerHelper('capitalize', function(object, property) {
-            console.log(property);
-            if(object !== undefined){
-                return capitalizeFirstLetter(object.toString());
-            }
-        });
-    }
-    _registerTemplateHelper(){
-
-    }
-}

@@ -1,5 +1,5 @@
 
-   export function renderCapabilityTable(capability, htmlData, dataFilters){
+export function renderCapabilityTable(capability, htmlData, dataFilters){
         var containerID = '#cap-table-div';
         var templateID = capability+'_table';
 
@@ -19,8 +19,9 @@
             language: dataFilters.language
         };
         
-        var tpl = Peace.templates[templateID];
+        var tpl = PeaceTemp.templates[templateID];
         var html  = tpl(context);
+
         $(containerID).html(html);  
 
             buildEngineInfoPopover();
@@ -45,14 +46,14 @@
         var containerID = '#filter-items-engine';
         var templateID = 'engine_sidebar_filters';
         var context = { engines: _engines};
-        var tpl = Peace.templates[templateID];
+        var tpl = PeaceTemp.templates[templateID];
         var html  = tpl(context);
         $(containerID).html(html);  
     }
 
     export function renderFeaturePopover(outputData){
         
-        var template = Peace.templates['feature_description'];
+        var template = PeaceTemp.templates['feature_description'];
         var html  = template(outputData);
         return html;
     }
@@ -61,10 +62,10 @@
    export function renderFeatureTestPopover(test){
 
         if (capability==='performance'){
-           var template = Peace.templates['performance_additional_data'];
+           var template = PeaceTemp.templates['performance_additional_data'];
            var context = {test:test}
         }else{
-            var template = Peace.templates['feature_test_description'];
+            var template = PeaceTemp.templates['feature_test_description'];
             var context = { test: test };
         }
 
@@ -74,7 +75,7 @@
     }
     
    export function renderEngineInfoPopover(engineInfo){
-        var template = Peace.templates['engine_info'];
+        var template = PeaceTemp.templates['engine_info'];
         var context = {
             engine: engineInfo
         };
