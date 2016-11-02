@@ -1,5 +1,5 @@
 import Filter from "./filter";
-import ViewModel from "../viewmodels/view_model";
+import ViewModel from "../viewmodels/default_view_model";
 
 export const PortabilityStatus = {
     ALL : 0,
