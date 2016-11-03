@@ -13,7 +13,7 @@ export default class LanguageFilter extends Filter{
 
     static  Name(){ return 'language'};
 
-    applyFilter(data, filteredData, filterValues){
+    applyFilter(capabilityData, testData, filteredData, filterValues){
         if (filterValues.language == undefined) {
             filterValues.language = 'BPMN';
         }
@@ -23,6 +23,6 @@ export default class LanguageFilter extends Filter{
         }
 
         console.log('Apply language filter');
-        data.copyByLang(filterValues.language, filteredData);
+        capabilityData.copyByLang(filterValues.language, filteredData);
     }
 }

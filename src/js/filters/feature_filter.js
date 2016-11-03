@@ -24,20 +24,20 @@ export default class FeatureFilter extends Filter{
         return realFilterValues;
     }
 
-    applyFilter(data, filteredData, filterValues) {
+    applyFilter(capabilityData, testData, filteredData, filterValues) {
         console.log('Apply ' + this.getName() + ' filter');
         if(!this.hasRequiredFilterValues(filterValues)){
             return;
         }
         if(filteredData.features.data === undefined ){
-            console.error('No features data to filter');
+            console.error('No features capabilityData to filter');
             return;
         }
 
-        let realFilterValues = this.getRealFilterValues(filterValues, data);
+        let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
         var missingKeys = this.isFilteredDataEnough(filteredData.features.data, realFilterValues);
         missingKeys.forEach(function (index) {
-            filteredData.features[index] = data.getFeatureByIndex(filterValues.language, index);
+            filteredData.features.data[index] = capabilityData.getFeatureByIndex(filterValues.language, index);
         });
 
         filteredData.features.data.forEach(function (feature, index) {
@@ -57,10 +57,9 @@ export default class FeatureFilter extends Filter{
         var missingKeys = [];
         Object.keys(filterValues.features).forEach(function(key){
             let index = filterValues.features[key].index;
-            let name = filterValues.features[key].name;
-
             let feature = filteredFeatureData[index];
-            let isMissing = feature.name === name && feature.name === undefined;
+
+            let isMissing = feature === undefined;
             if(isMissing){
                 missingKeys.push(index);
             }

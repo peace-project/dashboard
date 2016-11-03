@@ -25,38 +25,41 @@ export default class EngineFilter extends Filter {
     }
 
 
-    applyFilter(data, filteredData, filterValues) {
+    applyFilter(capabilityData, testData, filteredData, filterValues) {
         console.log('Apply engine filter');
 
         if(!this.hasRequiredFilterValues(filterValues)){
             return false;
         }
         if(filteredData.engines.data === undefined ){
-            console.log('No engine data to filter');
+            console.log('No engine capabilityData to filter');
             return false;
         }
 
-        let filteredEngineData = filteredData.engines.data;
-        let realFilterValues = this.getRealFilterValues(filterValues, data);
-        var missingKeys = this.isFilteredDataEnough(filteredEngineData, realFilterValues);
 
+        let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
+        var missingKeys = this.isFilteredDataEnough(filteredData.engines.data, realFilterValues);
+
+        console.log("missingKeys="+missingKeys);
         missingKeys.forEach(function (index) {
-            filteredData.engines[index] = data.getEngineByIndex(filterValues.language, index);
+            console.log(filteredData.engines);
+            filteredData.engines.data[index] = capabilityData.getEngineByIndex(filterValues.language, index);
         });
 
         //TODO Comment why this block is needed
         if (filterValues.engines.length === 0) {
-            filterValues.engines = this.createFilterValues(data.getLatestEngineVersions(filterValues.language));
+            filterValues.engines = this.createFilterValues(capabilityData.getLatestEngineVersions(filterValues.language));
         }
 
 
-        filteredEngineData.forEach(function (engine, index) {
+        filteredData.engines.data.forEach(function (engine, index) {
             if (engine !== undefined) {
                 if (!filterValues.engines.hasOwnProperty(engine.id)) {
-                    filteredEngineData[index] = undefined;
+                    filteredData.engines.data[index] = undefined;
                 }
             }
         });
+
     }
 
     isFilteredDataEnough(filteredEngineData, filterValues) {
@@ -64,10 +67,9 @@ export default class EngineFilter extends Filter {
         var missingKeys = [];
         for (var key in filterValues.engines) {
             let engineIndex = filterValues.engines[key].index;
-            let engineId = filterValues.engines[key].id;
             let engine = filteredEngineData[engineIndex];
 
-            let isMissing = engine.id === engineId && engine.id === undefined;
+            let isMissing = engine === undefined;
             if(isMissing){
                 missingKeys.push(engineIndex);
             }

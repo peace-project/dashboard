@@ -1,172 +1,149 @@
 import RenderComponent from "../render/render_component";
 import {jquery} from "jquery";
 import {groupEngineByName} from "../viewmodels/helpers";
+import {FilterCheckboxes} from "./filter_checkboxes";
+import FilterCheckboxesEnginesAll from "./filter_checkboxes_engines_all";
 
 export class EnginesFilterComponent extends RenderComponent {
-    constructor(engines, filteredEngines, filterValues) {
+    constructor(viewModel, onFilter) {
         super('#filter-items-engine', 'engine_sidebar_filters');
-        this.filterValues = filterValues;
-        this.engines = engines;
-        this.filteredEngines = filteredEngines;
-        console.log(engines);
-        var enginesByName = groupEngineByName(engines);
+
+        console.log('***********context***********');
+        console.log(this.context);
+        this.updateModel(viewModel, true);
+        this.onFilter = onFilter;
+
+        //Add sub-components
+        this.engineCheckBoxes = new FilterCheckboxes('engines',  this.engines,this.filterValues,
+            this.filteredEngines, false, this);
+
+        this.engineCheckBoxesAll = new FilterCheckboxesEnginesAll(this.engines, this.engines, this.filterValues,
+            this.filteredEngines, this);
+
+        super.render();
+    }
+
+    updateModel(viewModel, preventRendering) {
+        this.filterValues = viewModel.filterValues;
+        this.engines = viewModel.engines;
+        this.filteredEngines = viewModel.filteredEngines;
 
         this.context = {
-            engines: enginesByName
+            engines: groupEngineByName(this.engines)
         }
-
-        // renderEngineFilters(enginesByName);
-        let that = this;
-        enginesByName.forEach(function (engine) {
-            that.addCheckBoxAllFilterEventHandler('engines', '#all_engine_' + engine.name, 'input[data-engine="' + engine.name + '"]');
+/*
+        this.engineCheckBoxes.updateModel({
+            dimensionItems: this.engines,
+            filterValues: this.filterValues,
+            filteredData: this.filteredEngines
         });
 
-        that.updateEngineCheckboxes();
-        that.addCheckBoxFilterEventHandler('engines');
+        this.engineCheckBoxesAll.updateModel({
+            engines: this.engines,
+            filterValues: this.filterValues,
+            filteredData: this.filteredEngines
+        }); */
 
+        if(!preventRendering){
+            super.render();
+        }
+    }
+
+    onRenderingStarted() {
+        let that = this;
         //Latest version checkbox event handler
         $('#cbox-lversions').on('click', function (event) {
             $(this).prop('checked', true);
             $('input[data-engine-all]').prop('checked', false);
             if ($(this).is(':checked')) {
-                filterValues.engines = [];
+                // that.filterValues.engines = [];
                 setTimeout(function () {
-                    filter('engines', that.updateEngineCheckboxes);
+                    that.filter([], that.engineCheckBoxes.updateEngineCheckboxes);
                 }, 100);
             }
         });
+
+        this.engineCheckBoxes.onRenderingStarted();
+        this.engineCheckBoxesAll.onRenderingStarted();
     }
 
-    updateEngineCheckboxes() {
-        let that = this;
-        this.engines.forEach(function (engine) {
-            var checked = (_.findWhere(that.filteredEngines, {id: engine.id})) ? true : false;
-            $('input[data-dimension~="engines"][value~="' + engine.id + '"]').prop("checked", checked);
-        });
-    }
-
-
-    addCheckBoxAllFilterEventHandler(dimension, elemID, filterID) {
-        var elem = (elemID) ? $(elemID) : $('#all_' + dimension);
-        var checked = !!(this.filterValues[dimension].length == 0 && dimension != 'engines');
-        elem.prop("checked", checked);
-
-        let that = this;
-        $(elem).on('click', function (event) {
-            that.checkFilterAll(dimension, elemID, filterID);
-            var checkedAll = (dimension == 'engines') ? $(elem).is(':checked') : true;
-            that.handleFilterRequest(dimension, checkedAll);
-
-        });
-    }
-
-    checkFilterAll(dimension, elemID, filterElems) {
-        var elem = (elemID) ? $(elemID) : $('#all_' + dimension);
-        var _filterElems = (filterElems) ? filterElems : '#filter-items-' + dimension + ' :checkbox';
-        $(_filterElems).prop('checked', false);
-
-        if (dimension === 'engines') {
-            $('#cbox-lversions').prop('checked', false);
-        } else {
-            elem.prop("checked", true);
-        }
-
-    }
-
-    addCheckBoxFilterEventHandler(dimension) {
-        var elem = $('input[data-dimension="' + dimension + '"]');
-        let that = this;
-        $(elem).on('change', function (event) {
-            var allFilterID = '#all_' + dimension;
-            if (dimension == 'engines') {
-                allFilterID = 'input[data-engine-all~="' + $(this).attr('data-engine') + '"]';
-                $('#cbox-lversions').prop('checked', false);
-            }
-
-            var checkedAll = $('input[data-dimension="' + dimension + '"]:checked').length == 0;
-            $(allFilterID).prop('checked', checkedAll);
-            that.handleFilterRequest(dimension, that.filterValues);
-        });
-
-    }
 
     handleFilterRequest(dimension, all) {
-        if (dimension !== 'engines' && all == true) {
-            this.filterValues[dimension].length = 0;
-        }
-
-        var newDataFilters = [];
-        newDataFilters[dimension] = [];
+        var newFilterValues = {};
+        // newFilterValues[dimension] = [];
 
         let that = this;
-        if (dimension == 'engines') {
-            $('input[data-engine-all]').each(function (index, val) {
-                var engine = $(this).attr('data-engine-all');
-                if ($(this).is(':checked')) {
-                    $('input[data-engine~="' + engine + '"]').each(function (index, val) {
-                        newDataFilters[dimension].push($(this).attr('value'));
-                    });
-                } else {
-                    var dimInputs = $('input[data-engine~="' + engine + '"]');
-                    var checkedInputs = $('input[data-engine~="' + engine + '"]:checked');
 
-                    that.updateFilterDimensions(dimension, dimInputs, checkedInputs, newDataFilters);
+        $('input[data-engine-all]').each(function (index, val) {
+            var engine = $(this).attr('data-engine-all');
+            if ($(this).is(':checked')) {
+                $('input[data-engine~="' + engine + '"]').each(function (index, val) {
+                    newFilterValues[$(this).attr('value')] = {
+                        index: $(this).attr('value-index')
+                    }
+                });
+            } else {
+                var dimInputs = $('input[data-engine~="' + engine + '"]');
+                var checkedInputs = $('input[data-engine~="' + engine + '"]:checked');
+
+                $(dimInputs).each(function (index, val) {
+                    //var filterDimension = $(this).attr('data-dimension');
+                    //newFilterValues = newFilterValues[filterDimension] || [];
+                    if ($(this).is(':checked')) {
+                        newFilterValues[$(this).attr('value')] = {
+                            index: $(this).attr('value-index')
+                        }
+                    }
+                });
+
+                // Update checkbox ALL
+                if (dimInputs.length === checkedInputs.length) {
+                    var engineName = dimInputs.attr('data-engine');
+                    var elemID = '#all_engine_' + engineName;
+                    var filterID = '#filter-items-engine-' + engineName;
+                    this.engineCheckBoxesAll.checkFilterAll(elemID, filterID);
                 }
-            });
 
-
-        } else if (all == undefined || all === false) {
-
-            var dimInputs = $("input[data-dimension~='" + dimension + "']");
-            var checkedInputs = $("input[data-dimension~='" + dimension + "']:checked");
-
-            this.updateFilterDimensions(dimension, dimInputs, checkedInputs, newDataFilters);
-
-            // Clears filtered constructs when changing group==all to group==x since
-            // current filtered constructs might not belong to the selected group
-            // which will result in no matches being shown
-            if (dimension == 'groups' && this.filterValues[dimension].length == 1) {
-                this.filterValues['constructs'].length = 0;
-                this.checkFilterAll('constructs');
+                //that.createCewFilterValues(dimInputs, checkedInputs);
             }
+        });
 
-            if (dimension == 'constructs' && this.filterValues[dimension].length == 1) {
-                this.filterValues['features'].length = 0;
-                this.checkFilterAll('features');
-            }
-        }
-
-        this.filterValues[dimension] = newDataFilters[dimension];
+        // this.filterValues[dimension] = newDataFilters[dimension];
         setTimeout(function () {
-            filter(dimension)
+            that.filter(newFilterValues)
         }, 100);
 
     }
 
-    updateFilterDimensions(dimension, dimInputs, checkedInputs, newDataFilters) {
+    createCewFilterValues(dimInputs, checkedInputs) {
         //Is every option of this dimension selected?
-        if (dimInputs.length === checkedInputs.length && dimension !== 'engines') {
-            this.filterValues[dimension].length = 0;
-            this.checkFilterAll(dimension);
-            return;
-        }
+        /*
+         $(dimInputs).each(function (index, val) {
+         var filterDimension = $(this).attr('data-dimension');
+         newFilterValues[filterDimension] = newFilterValues[filterDimension] || [];
+         if ($(this).is(':checked')) {
+         newFilterValues[filterDimension].push($(this).attr('value'));
+         }
+         }); */
 
-        $(dimInputs).each(function (index, val) {
-            var filterDimension = $(this).attr('data-dimension');
-            newDataFilters[filterDimension] = newDataFilters[filterDimension] || [];
-            if ($(this).is(':checked')) {
-                newDataFilters[filterDimension].push($(this).attr('value'));
-            }
-        });
-
-        if (dimension == 'engines' && dimInputs.length === checkedInputs.length) {
+        if (dimInputs.length === checkedInputs.length) {
             var engineName = dimInputs.attr('data-engine');
-            var elemID = '#all_engine_' + engineName
+            var elemID = '#all_engine_' + engineName;
             var filterID = '#filter-items-engine-' + engineName;
-            this.checkFilterAll(dimension, elemID, filterID);
+            this.engineCheckBoxesAll.checkFilterAll(elemID, filterID);
         }
 
-        return newDataFilters;
+    }
+
+    filter(newFilterValues, callAfterFiltering) {
+        //filter order: engines#2
+        // filterByEngines();
+        this.onFilter(newFilterValues);
+        if (callAfterFiltering !== undefined) {
+            callAfterFiltering();
+        }
+        // prepareHtmlData();
+        // renderCapabilityTable();
     }
 
 

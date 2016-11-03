@@ -29,21 +29,21 @@ export default class ConstructFilter extends Filter {
     }
 
 
-    applyFilter(data, filteredData, filterValues) {
+    applyFilter(capabilityData, testData, filteredData, filterValues) {
         console.log('Apply Construct filter');
 
         if(!this.hasRequiredFilterValues(filterValues)){
             return;
         }
         if(filteredData.constructs.data === undefined ){
-            console.log('No constructs data to filter');
+            console.log('No constructs capabilityData to filter');
             return;
         }
 
-        let realFilterValues = this.getRealFilterValues(filterValues, data);
+        let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
         var missingKeys = this.isFilteredDataEnough(filteredData.constructs.data, realFilterValues);
         missingKeys.forEach(function (index) {
-            filteredData.constructs[index] = data.getConstructByIndex(filterValues.language, index);
+            filteredData.data.constructs[index] = capabilityData.getConstructByIndex(filterValues.language, index);
         });
 
         filteredData.constructs.data.forEach(function (construct, index) {
@@ -62,15 +62,16 @@ export default class ConstructFilter extends Filter {
         let missingKeys = [];
         Object.keys(filterValues.constructs).forEach(function (key) {
             let index = filterValues.constructs[key].index;
-            let name = filterValues.constructs[key].name;
             let construct = filteredData[index];
 
-            let isMissing = construct.name === name && construct.name === undefined;
+
+            let isMissing = construct === undefined;
             if (isMissing) {
                 missingKeys.push(index);
             }
         });
         return missingKeys;
     }
+
 
 }

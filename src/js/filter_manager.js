@@ -8,10 +8,11 @@ var dataFilters = {
 }
 
 export default class FilterManager {
-    constructor(rawData, filteredData) {
+    constructor(capabilityData, testData, filteredData) {
         this.filters = [];
         this.filterValues = {};
-        this.rawData = rawData;
+        this.capabilityData = capabilityData;
+        this.testData =  testData;
         this.filteredData =  filteredData;
 
         // Initialize filterValues
@@ -40,18 +41,21 @@ export default class FilterManager {
        return undefined;
     }
 
-    applyFilterBy(filterName) {
+    applyFilter(filterName, newFilterValues) {
         let filter = this.filters.find(f => f.getName() == filterName);
         let that =  this;
         if(filter !== undefined){
-            filter.applyFilter(that.rawData, that.filteredData, that.filterValues);
+            if(newFilterValues !== undefined && newFilterValues !== null){
+                that.filterValues[filterName] = newFilterValues;
+            }
+            filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues);
         }
     }
 
     applyAllFilters(){
         var that =  this;
         this.filters.forEach(filter => {
-            filter.applyFilter(that.rawData, that.filteredData, that.filterValues)
+            filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues)
         });
 
     }

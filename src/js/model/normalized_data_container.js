@@ -17,7 +17,7 @@ export default class NormalizedDataContainer {
         })*/
     }
 
-    clone() {
+     clone() {
         var target = [];
         if (this.dimension === DataDimension.GROUPS) {
             this.data.forEach((val, index) => {

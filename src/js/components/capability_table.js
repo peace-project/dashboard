@@ -3,10 +3,10 @@ import RenderComponent from "../render/render_component";
 export class CapabilityTableComponent extends RenderComponent {
     constructor(viewModel) {
         super('#cap-table-div', viewModel.capability + '_table');
-
+        this.updateModel(viewModel);
         //registerTemplateHelper();
 
-        var featureTitleColspan = viewModel.engines.length + 1;
+      /*  var featureTitleColspan = viewModel.engines.length + 1;
         if (viewModel.capability === 'expressiveness') {
             featureTitleColspan = featureTitleColspan + 1;
         } else if (viewModel.capability === 'performance') {
@@ -15,6 +15,8 @@ export class CapabilityTableComponent extends RenderComponent {
 
         this.context = viewModel;
         this.context['featureTitleColspan'] = featureTitleColspan;
+
+        super.render(); */
         /*
          var context = {
          tests : htmlData.constructs,
@@ -27,6 +29,23 @@ export class CapabilityTableComponent extends RenderComponent {
 
         //var html = PeaceTemp.templates[templateId](context);
         // $(elementId).html(html);
+    }
+
+    updateModel(viewModel, preventRendering){
+        var featureTitleColspan = viewModel.engines.length + 1;
+        if (viewModel.capability === 'expressiveness') {
+            featureTitleColspan = featureTitleColspan + 1;
+        } else if (viewModel.capability === 'performance') {
+            featureTitleColspan = featureTitleColspan * 4
+        }
+
+        this.context = viewModel;
+        this.context['featureTitleColspan'] = featureTitleColspan;
+        console.log('UPDATE------------------------------------');
+        console.log(this.context);
+        if(!preventRendering || preventRendering == undefined){
+            super.render();
+        }
     }
 }
 

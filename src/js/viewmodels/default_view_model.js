@@ -8,6 +8,10 @@ export default class ViewModel {
         this.summaryRow = {};
         this.engines = groupEngineByName(data.engines.data); //createEngines(data.engines.data);
 
+        this.enginesCount = this._countEngines();
+         console.log("++++++++++++++++++++++++++")
+         console.log(this.enginesCount)
+
         let that = this;
         // Init summaryRow
         data.engines.data.forEach(function (engine) {
@@ -17,6 +21,10 @@ export default class ViewModel {
         });
 
         this._addConstructs(data.constructs.data, data.features.data, data.tests);
+    }
+
+    _countEngines(){
+        return this.engines.map(eng => eng.instances.length).reduce((a, b) => a +b, 0);
     }
 
     _addConstructs(constructs, features, tests) {

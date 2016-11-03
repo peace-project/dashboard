@@ -23,7 +23,7 @@ export default class Filter {
         return true;
     }
 
-    applyFilter(data, filteredData, filterValues){
+    applyFilter(capabilityData, testData, filteredData, filterValues){
         throw Error("Unsupported operation in Filter "+ this.name);
     }
 }

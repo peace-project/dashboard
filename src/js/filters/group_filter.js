@@ -29,24 +29,24 @@ export default class GroupFilter extends Filter {
     }
 
 
-    applyFilter(data, filteredData, filterValues) {
+    applyFilter(capabilityData, testData, filteredData, filterValues) {
         console.log('Apply Group filter');
 
         if(!this.hasRequiredFilterValues(filterValues)){
             return;
         }
         if(filteredData.groups.data === undefined ){
-            console.error('No features data to filter');
+            console.error('No features capabilityData to filter');
             return;
         }
 
-        let realFilterValues = this.getRealFilterValues(filterValues, data);
+        let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
         var missingKeys = this.isFilteredDataEnough(filteredData.groups.data, realFilterValues);
         missingKeys.forEach(function (index) {
             //TODO use own deep copy method
-            filteredData.groups[index] = data.getGroupByIndex(filterValues.language, index);
+            filteredData.groups[index] = capabilityData.getGroupByIndex(filterValues.language, index);
             //TODO can we move this to ConstructFilter
-            this.addNewGroupsToFilters(filteredData.groups[index].constructIndexes, data, filterValues);
+            this.addNewGroupsToFilters(filteredData.groups[index].constructIndexes, capabilityData, filterValues);
         });
 
         filteredData.groups.data.forEach(function (group, index) {
@@ -60,14 +60,12 @@ export default class GroupFilter extends Filter {
     }
 
     isFilteredDataEnough(filteredGroupData, filterValues) {
-
         let missingKeys = [];
         Object.keys(filterValues.groups).forEach(function (key) {
             let index = filterValues.groups[key].index;
-            let name = filterValues.groups[key].name;
             let group = filteredGroupData[index];
 
-            let isMissing = group.name === name && group.name === undefined;
+            let isMissing = group === undefined;
             if (isMissing) {
                 missingKeys.push(index);
             }

@@ -88,10 +88,10 @@ function process(page) {
         let testData = new TestDataModel(rawData.getTestsByCapability(capability));
         let normalizedCapabilityData = normalizeByCapability(rawData, capability, testData.tests);
 
-        var normalizedData = normalizedCapabilityData.getAll();
+        var capabilityData = normalizedCapabilityData.getAll();
 
         let defaultLang = 'BPMN';
-        if (!normalizedData.hasLanguage(defaultLang)) {
+        if (!capabilityData.hasLanguage(defaultLang)) {
             console.warn(defaultLang + " does not exist")
         }
 
@@ -101,12 +101,12 @@ function process(page) {
             engines: {},
             constructs: {},
             features: {},
-            tests: testData.tests,
+            tests: {},
             independentTests: {}
         };
 
         //TODO Rename to ProcessPipeline
-        let filterManager = new FilterManager(normalizedData, filteredData);
+        let filterManager = new FilterManager(capabilityData, testData, filteredData);
         // Adding order represents the calling order. It must be adhered to
         filterManager.addFilter(new LanguageFilter(), defaultLang);
         filterManager.addFilter(new EngineFilter(), []);
@@ -117,34 +117,48 @@ function process(page) {
         //TODO add test file filter
 
         let langFilterValue = filterManager.getFilterValue(LanguageFilter.Name());
-        if(langFilterValue == undefined){
-            console.error('Filter values of Filter: '+LanguageFilter.Name() + ' is undefined');
+        if (langFilterValue == undefined) {
+            console.error('Filter values of Filter: ' + LanguageFilter.Name() + ' is undefined');
         }
 
         filterManager.applyAllFilters();
 
         let viewConverter = new ViewModelConverter();
-        let viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
+        var viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
 
         let portabilityFilter = new PortabilityFilter();
-        portabilityFilter.applyFilter(null, viewModel, filterManager.getFilterValues());
+        portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
 
         console.log('----------------------------- ViewModel -------------------------------------');
         console.log(viewModel);
-        let renderer = new Renderer();
 
-        renderer.render(new CapabilityTableComponent(viewModel));
+        let capabilityTableComponent = new CapabilityTableComponent(viewModel);
 
-        let allEngines = normalizedData.getEnginesByLanguage(filterManager.getFilterValues().language);
+        let allEngines = capabilityData.getEnginesByLanguage(filterManager.getFilterValues().language);
         //TODO check if allEngines is undefined
-        renderer.render(new EnginesFilterComponent(allEngines.data, viewModel.engines, filterManager.getFilterValues()));
 
+
+        let filterComponent = new EnginesFilterComponent({
+                engines: allEngines.data,
+                filteredEngines: viewModel.engines,
+                filterValues: filterManager.getFilterValues(),
+            }, function (newFilterValues) {
+                filterManager.applyFilter(EngineFilter.Name(), newFilterValues);
+                filterManager.applyFilter(TestsFilter.Name());
+
+                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
+              //  portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
+
+                capabilityTableComponent.updateModel(viewModel);
+                //capabilityTableComponent.render();
+            }
+        );
 
         //filteredData['independentTests'] = _.where(rawData.independentTests, {language: langFilterValue});
 
 
-       // let htmlData = prepareHtmlData(capability, filteredData, filterManager.getFilterValues(), testData);
-       // buildFilterItems(capability);
+        // let htmlData = prepareHtmlData(capability, filteredData, filterManager.getFilterValues(), testData);
+        // buildFilterItems(capability);
         //renderCapabilityTable(capability, htmlData, filterManager.getFilterValues());
         /*
          prepareHtmlData();

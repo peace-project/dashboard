@@ -15,7 +15,7 @@ export default class PortabilityFilter extends Filter{
 
     static Name(){ return 'portability_status'};
 
-    applyFilter(data, viewModel, filterValues) {
+    applyFilter(capabilityData, testData, viewModel, filterValues) {
         console.log('Apply ' + this.getName() + ' filter');
 
        if(!(viewModel instanceof ViewModel)){

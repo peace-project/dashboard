@@ -12,6 +12,15 @@ export default class TestDataModel  {
         });
     }
 
+    getAll(){
+        let that = this;
+        return this.tests.map((test, index) => {
+            let copiedTest = that._copy(test);
+            copiedTest['index'] = index;
+            return copiedTest;
+        });
+    }
+
     _copy(test){
 
         return {
