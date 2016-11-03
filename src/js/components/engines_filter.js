@@ -4,7 +4,7 @@ import {groupEngineByName} from "../viewmodels/helpers";
 
 export class EnginesFilterComponent extends RenderComponent {
     constructor(engines, filteredEngines, filterValues) {
-        super('#filter-items-engine', 'engine_sidebar_filter');
+        super('#filter-items-engine', 'engine_sidebar_filters');
         this.filterValues = filterValues;
         this.engines = engines;
         this.filteredEngines = filteredEngines;
