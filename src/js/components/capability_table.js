@@ -2,7 +2,7 @@ import RenderComponent from "../render/render_component";
 
 export class CapabilityTableComponent extends RenderComponent {
     constructor(viewModel) {
-        super('#cap-table-div', viewModel.capability + '_table', viewModel);
+        super('#cap-table-div', viewModel.capability + '_table');
 
         //registerTemplateHelper();
 
@@ -13,6 +13,7 @@ export class CapabilityTableComponent extends RenderComponent {
             featureTitleColspan = featureTitleColspan * 4
         }
 
+        this.context = viewModel;
         this.context['featureTitleColspan'] = featureTitleColspan;
         /*
          var context = {

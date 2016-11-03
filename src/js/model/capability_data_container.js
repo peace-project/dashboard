@@ -1,53 +1,11 @@
 'use strict'
 
-
-import {DataDimension} from "./normalized_data_container";
-import NormalizedDataContainer from "./normalized_data_container";
-
 export default class CapabilityDataContainer  {
     constructor(data, capability) {
         this.capability = capability;
         this.data = data;
 
-
-        /*
-        var that = this;
-        Object.keys(data).forEach(function (key) {
-            that[key] = data[key];
-        });*/
-
-        /*
-        this.data[data.language] = {
-            groups: new NormalizedDataContainer(data.groups, DataDimension.GROUPS),
-            constructs: new NormalizedDataContainer(data.constructs, DataDimension.CONSTRUCTS),
-            features: new NormalizedDataContainer(data.features, DataDimension.FEATURES),
-            engines: new NormalizedDataContainer(data.engines, DataDimension.ENGINES)
-        } */
-
     }
-
-    /*
-    add(data){
-
-        //Object.create(data.language, this);
-
-        this.data[data.language] = {
-            groups: new NormalizedDataContainer(data.groups, DataDimension.GROUPS),
-            constructs: new NormalizedDataContainer(data.constructs, DataDimension.CONSTRUCTS),
-            features: new NormalizedDataContainer(data.features, DataDimension.FEATURES),
-            engines: new NormalizedDataContainer(data.engines, DataDimension.ENGINES)
-        };
-    } */
-
-
-    /*
-    getAll(){
-        console.log("/////Alll");
-        console.log(this);
-        return this;
-    } */
-
-
     getEnginesByLanguage(language) {
         //TODO return copy ?
         if (!(this.data.hasOwnProperty(language) && this.data[language].hasOwnProperty('engines'))) {
@@ -118,11 +76,6 @@ export default class CapabilityDataContainer  {
         target['constructs'] = data.constructs.clone();
         target['features'] = data.features.clone();
         target['engines'] = data.engines.clone();
-
-        //target['engines'].length = 0;
-        //target['engines'] = data.engines.clone();
-        //console.error("-------------------DEEEP COPY");
-        //console.log(target['engines']);
     }
 
     getLatestEngineVersions(language) {

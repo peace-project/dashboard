@@ -16,8 +16,9 @@ import {renderCapabilityTable} from "./render/render";
 import ViewModelConverter from "./filters/view_model_converter";
 import TestDataModel from "./model/test_data";
 import TestsFilter from "./filters/tests_filter";
-import {CapabilityTableComponent} from "./components/capability_table_component";
+import {CapabilityTableComponent} from "./components/capability_table";
 import Renderer from "./render/renderer";
+import {EnginesFilterComponent} from "./components/engines_filter";
 /* import { prepareHtmlData } from './prepareOutputData'
  import { buildFilterItems } from './viewmodels'
  import { renderCapabilityTable } from './render'*/
@@ -133,7 +134,10 @@ function process(page) {
         let renderer = new Renderer();
 
         renderer.render(new CapabilityTableComponent(viewModel));
-        renderer.render(new CapabilityTableComponent(viewModel));
+
+        let allEngines = normalizedData.getEnginesByLanguage(filterManager.getFilterValues().language);
+        //TODO check if allEngines is undefined
+        renderer.render(new EnginesFilterComponent(allEngines.data, viewModel.engines, filterManager.getFilterValues()));
 
 
         //filteredData['independentTests'] = _.where(rawData.independentTests, {language: langFilterValue});

@@ -12,6 +12,10 @@ export default class Renderer {
     render(renderComponent) {
         this._checkComponent(renderComponent);
         let tpl = PeaceTemp.templates[renderComponent.templateId];
+        if(tpl == undefined){
+            console.error("Could not find template "+ renderComponent.templateId);
+            return;
+        }
         let html = tpl(renderComponent.context);
         $(renderComponent.elementId).html(html);
     }
