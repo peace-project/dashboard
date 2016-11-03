@@ -52,9 +52,6 @@ export default class FilterManager {
         var that =  this;
         this.filters.forEach(filter => {
             filter.applyFilter(that.rawData, that.filteredData, that.filterValues)
-            console.log("-----------------------------------------------------");
-            console.log(that.filteredData);
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         });
 
     }

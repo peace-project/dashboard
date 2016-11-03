@@ -6,7 +6,7 @@ export class CapabilityTableRender extends RenderComponent {
 
         //registerTemplateHelper();
 
-        var featureTitleColspan = viewModel.engines.count + 1;
+        var featureTitleColspan = viewModel.engines.length + 1;
         if (viewModel.capability === 'expressiveness') {
             featureTitleColspan = featureTitleColspan + 1;
         } else if (viewModel.capability === 'performance') {

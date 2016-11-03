@@ -26,7 +26,6 @@ export default class FeatureFilter extends Filter{
 
     applyFilter(data, filteredData, filterValues) {
         console.log('Apply ' + this.getName() + ' filter');
-
         if(!this.hasRequiredFilterValues(filterValues)){
             return;
         }
@@ -37,24 +36,20 @@ export default class FeatureFilter extends Filter{
 
         let realFilterValues = this.getRealFilterValues(filterValues, data);
         var missingKeys = this.isFilteredDataEnough(filteredData.features.data, realFilterValues);
-
         missingKeys.forEach(function (index) {
             filteredData.features[index] = data.getFeatureByIndex(filterValues.language, index);
         });
 
-
-
-        filteredData.engines.data.forEach(function (feature, index) {
-
+        filteredData.features.data.forEach(function (feature, index) {
             if (feature !== undefined) {
-
                 var filterPredicate = (filterValues.features.length == 0) ? false : !filterValues.features.hasOwnProperty(feature.name);
-
-                if (feature !== undefined && (filterPredicate || (filteredData.constructs.data[feature.constructIndex] == undefined))) {
+                let constructIsFilteredOut = (filteredData.constructs.data[feature.constructIndex] === undefined);
+                if (feature !== undefined && (filterPredicate || constructIsFilteredOut)) {
                     filteredData.features.data[index] = undefined;
                 }
             }
         });
+
 
     }
 

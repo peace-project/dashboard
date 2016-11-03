@@ -49,7 +49,7 @@ export default class ConstructFilter extends Filter {
         filteredData.constructs.data.forEach(function (construct, index) {
             if (construct !== undefined) {
                 var filterPredicate = (filterValues.constructs.length == 0) ? false : !filterValues.constructs.hasOwnProperty(construct.name);
-                if ((filterPredicate || filteredData.groups.data[construct.groupIndex] == undefined)) {
+                if (filterPredicate || filteredData.groups.data[construct.groupIndex] == undefined) {
                     filteredData.constructs.data[index] = undefined;
                 }
             }

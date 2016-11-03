@@ -22,7 +22,6 @@ export default class PortabilityFilter extends Filter{
            throw Error('filteredData is not of type ViewModel. filteredData='+ viewModel.constructor.name);
        }
         let that = this;
-        console.log(viewModel);
 
         viewModel.constructs.forEach((construct, key) => {
             if(filterValues.portability_status === PortabilityStatus.NOT_SAME){
