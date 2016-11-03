@@ -4,7 +4,7 @@
         <tr>
             <th rowspan="3" class="group-col th-last-child">Group</th>
             <th rowspan="3" class="construct-col th-last-child">Construct</th>
-            <th class="text-center engine-col" colspan="{{engines.count}}">Engine</th> 
+            <th class="text-center engine-col" colspan="{{engines.length}}">Engine</th>
         </tr>
         <tr>
              {{#each engines}}
@@ -15,7 +15,7 @@
             {{#each engines}}
                 {{#each instances}}
                     <th class="cell-version engine-col-{{@../index}}">
-                         <a role="button" tabindex="0" data-engine-info="{{indexEngine}}" class="engine-info" >
+                         <a role="button" tabindex="0" data-engine-info="{{index}}" class="engine-info" >
                      {{versionLong}}</a></th>
                 {{/each}}
             {{/each}}
@@ -25,7 +25,7 @@
     <tbody>
         <tr>
             <td class="border-top">∑</td>
-            <td class="construct-col">{{tests.length}}</td>
+            <td class="construct-col">{{constructs.length}}</td>
               {{#each engines}}
                 {{#each instances}}
                     <td>{{#getProperty ../../summaryRow id}} {{this}} {{/getProperty}}</td>
@@ -34,7 +34,7 @@
         </tr>
 
 
-        {{#each tests}} 
+        {{#each constructs}}
                 <tr {{# if features.length}} class="collapse-parent-row" data-toggle="collapse" data-target=".row-feat-{{@../index}}{{@index}}" {{/if}} >
 
                     <td {{#if isFirstEntry}}class="border-top"{{/if}}>

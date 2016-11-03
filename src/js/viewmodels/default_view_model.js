@@ -4,17 +4,11 @@ export default class ViewModel {
     constructor(data, capability, language) {
         this.capability = capability;
         this.language = language;
-        this.engines = {};
         this.constructs = [];
-        //['summaryRow'][engine.id]
         this.summaryRow = {};
-
-        this.engines = new Engines(data.engines.data);
-
-        this.summaryRow = {};
+        this.engines = groupEngineByName(data.engines.data); //createEngines(data.engines.data);
 
         let that = this;
-
         // Init summaryRow
         data.engines.data.forEach(function (engine) {
             if (engine !== undefined) {
@@ -28,7 +22,6 @@ export default class ViewModel {
     _addConstructs(constructs, features, tests) {
         // clear constructs
         this.constructs.length = 0;
-
         let that = this;
         var lastGroupIndex = undefined;
         constructs.forEach(function (construct) {
@@ -51,15 +44,20 @@ export default class ViewModel {
                 viewConstruct.isFirstEntry = true;
             }
 
-            let capability = getCapabilityFromId(viewConstruct.id);
-            if (typeof capability !== 'string') {
-                return;
-            }
+            /*this.capability = getCapabilityFromId(viewConstruct.id);
+             if (typeof capability !== 'string') {
+             return;
+             }*/
 
-            for (var engineID in that.supportStatus) {
-                that.supportStatus[engineID].updateSupportStatus(viewConstruct, capability);
-                that.updateSummaryRow(engineID, viewConstruct, capability);
-            }
+            //console.log('***************updateSummaryRow**************');
+            //console.log(viewConstruct.supportStatus);
+            // Update support status and summary_row accordingly
+            that.updateSummaryRow(viewConstruct);
+            /*
+             for (var engineID in viewConstruct.supportStatus) {
+             //viewConstruct.supportStatus[engineID].updateSupportStatus(viewConstruct, capability);
+             that.updateSummaryRow(engineID, viewConstruct, capability);
+             }*/
 
             that.constructs.push(viewConstruct);
 
@@ -67,29 +65,20 @@ export default class ViewModel {
 
     }
 
-    updateSummaryRow(engineID, _construct, capability) {
-        if (_construct.featureIndexes.length === this.supportedFeature) {
-            this.summaryRow[engineID] += 1;
-        } else if (capability === 'expressiveness' && this.supportedFeature > 0) {
-            if (_construct.upperBound === '+') {
-                this.summaryRow[engineID] += 1;
+    updateSummaryRow(construct) {
+        let that = this;
+        Object.keys(construct.supportStatus).forEach(engineID => {
+            if (construct.featureIndexes.length === construct.supportStatus[engineID].supportedFeature) {
+                that.summaryRow[engineID] += 1;
+            } else if (that.capability === 'expressiveness' && construct.supportStatus[engineID].supportedFeature > 0) {
+                if (construct.upperBound === '+') {
+                    that.summaryRow[engineID] += 1;
+                }
             }
-        }
-    }
-}
-
-//TODO rename to ViewEngines
-class Engines {
-    constructor(engineData) {
-        var that = this;
-        let groupeData = groupEngineByName(engineData);
-        Object.keys(groupeData).forEach(key => {
-            that[key] = groupeData[key];
         });
-
-        this.count = engineData.length || 0;
     }
 }
+
 
 //TODO rename to ViewConstruct
 class Construct {
@@ -107,22 +96,21 @@ class Construct {
         this.html_standard_class = 'standard-col-partial';
         this.supportStatus = {};
         this.features = [];
+        this.capability = getCapabilityFromId(this.id);
     }
 
 
     addFeatures(features, tests) {
         var capability = undefined;
         let that = this;
-        features.forEach(feature => {
 
+        this.featureIndexes.forEach(index => {
+            let feature = features[index];
             if (feature === undefined || feature.testIndexes.length < 1) {
                 return;
             }
 
             let viewFeature = new Feature(feature, tests);
-
-            //console.log(viewFeature);
-
             that.moreThanTwoFeatures = that.featureIndexes.length > 1;
 
             if (that.upperBound !== '+') {
@@ -140,31 +128,40 @@ class Construct {
                 return;
             }
 
-
             //let that = this;
+
             Object.keys(viewFeature.results).forEach(function (engineId) {
                 let testResult = viewFeature.results[engineId];
-                that._addSupportStatus(testResult, capability);
+                that._updateSupportStatus(testResult, capability);
             });
 
             that.features.push(viewFeature);
-
         });
 
+        this._updateFullSupportStatus();
 
     }
 
-    _addSupportStatus(testResult, capability) {
+    _updateSupportStatus(testResult, capability) {
         //TODO needed?
-        /*if (this.supportStatus[testResult.engineID]) {
-         this.supportStatus[testResult.engineID].update(testResult);
-         } else { */
-        this.supportStatus[testResult.engineID] = new SupportStatus({
-            'engineID': testResult.engineID,
-            'supportedFeature': testResult.result.testSuccessful ? 1 : 0,
-            'fullSupport': false,
-            'html': (capability === 'conformance') ? '✖' : '━',
-            'supportedFeaturePercent': undefined
+        if (this.supportStatus[testResult.engineID]) {
+            this.supportStatus[testResult.engineID].supportedFeature += testResult.result.testSuccessful ? 1 : 0;
+        } else {
+            this.supportStatus[testResult.engineID] = new SupportStatus({
+                'engineID': testResult.engineID,
+                'supportedFeature': testResult.result.testSuccessful ? 1 : 0,
+                'fullSupport': false,
+                'html': (capability === 'conformance') ? '✖' : '━',
+                'supportedFeaturePercent': undefined
+            });
+        }
+
+    }
+
+    _updateFullSupportStatus(){
+        let that = this;
+        Object.keys(this.supportStatus).forEach(engineID => {
+            that.supportStatus[engineID].updateSupportStatus(this, that.capability);
         });
     }
 
@@ -185,6 +182,7 @@ class SupportStatus {
     }
 
     updateSupportStatus(construct, capability) {
+
         this['supportedFeaturePercent'] = (this.supportedFeature / construct.featureIndexes.length) * 100;
 
         if (construct.featureIndexes.length === this.supportedFeature) {
@@ -198,12 +196,12 @@ class SupportStatus {
                     this.html = '+/-';
                 }
             }
-            htmlData['summaryRow'][engineID] += 1;
+            //htmlData['summaryRow'][engineID] += 1;
         } else if (capability === 'expressiveness' && this.supportedFeature > 0) {
             if (construct.upperBound === '+') {
                 this.html = '+';
                 this.fullSupport = true;
-                htmlData['summaryRow'][engineID] += 1;
+                // htmlData['summaryRow'][engineID] += 1;
             }
 
         } else if (capability === 'conformance' && this.supportedFeature > 0) {
