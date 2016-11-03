@@ -16,7 +16,7 @@ import {renderCapabilityTable} from "./render/render";
 import ViewModelConverter from "./filters/view_model_converter";
 import TestDataModel from "./model/test_data";
 import TestsFilter from "./filters/tests_filter";
-import {CapabilityTableRender} from "./render/capability_table_render";
+import {CapabilityTableComponent} from "./components/capability_table_component";
 import Renderer from "./render/renderer";
 /* import { prepareHtmlData } from './prepareOutputData'
  import { buildFilterItems } from './viewmodels'
@@ -131,7 +131,9 @@ function process(page) {
         console.log('----------------------------- ViewModel -------------------------------------');
         console.log(viewModel);
         let renderer = new Renderer();
-        renderer.render(new CapabilityTableRender(viewModel));
+
+        renderer.render(new CapabilityTableComponent(viewModel));
+        renderer.render(new CapabilityTableComponent(viewModel));
 
 
         //filteredData['independentTests'] = _.where(rawData.independentTests, {language: langFilterValue});

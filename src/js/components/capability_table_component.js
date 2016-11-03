@@ -1,6 +1,6 @@
-import RenderComponent from "./render_component";
+import RenderComponent from "../render/render_component";
 
-export class CapabilityTableRender extends RenderComponent {
+export class CapabilityTableComponent extends RenderComponent {
     constructor(viewModel) {
         super('#cap-table-div', viewModel.capability + '_table', viewModel);
 

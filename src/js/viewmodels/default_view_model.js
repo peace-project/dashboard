@@ -140,9 +140,6 @@ class Construct {
 
         this._updateFullSupportStatus();
 
-        console.log("************");
-       // console.log(this.features);
-
         if(that.features.length > 0){
             let lastFeatureIndex = that.features.length-1;
             this.features[lastFeatureIndex].lastFeature = true;
