@@ -9,8 +9,6 @@ export default class ViewModel {
         this.engines = groupEngineByName(data.engines.data); //createEngines(data.engines.data);
 
         this.enginesCount = this._countEngines();
-         console.log("++++++++++++++++++++++++++")
-         console.log(this.enginesCount)
 
         let that = this;
         // Init summaryRow

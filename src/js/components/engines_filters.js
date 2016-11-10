@@ -15,7 +15,6 @@ export class EnginesFilterComponent extends RenderComponent {
         this.checkBoxLastestVersion;
 
         this.updateModel(options.viewModel);
-
         this._init();
         super.render();
     }
@@ -67,7 +66,6 @@ export class EnginesFilterComponent extends RenderComponent {
         var enginesByName = groupEngineByName(this.engines);
         enginesByName.forEach(function (engine) {
             let elem = '#all_engine_' + engine.name;
-
             let checkBoxAll = new CheckBoxAll(this, {
                     dimensionName: 'engines',
                     elem: elem,
@@ -122,11 +120,7 @@ export class EnginesFilterComponent extends RenderComponent {
                     box.setChecked(false);
                 }
             });
-        } else {
-            //let doCheckAll = this._findEngineCheckBoxes(engine.name, box => box.isChecked()) === undefined;
-            //checkBoxAll.setChecked(doCheckAll);
         }
-
 
         if (checkbox.isChecked()) {
             that.filterValues.engines[checkbox.getValue()] = {index: checkbox.getAttribute('value-index')};
@@ -211,17 +205,26 @@ export class EnginesFilterComponent extends RenderComponent {
         });
     }
 
-
     _allInstancesSelected(engineName) {
-        var dimInputs = $('input[data-engine~="' + engineName + '"]');
-        var checkedInputs = $('input[data-engine~="' + engineName + '"]:checked');
-        return dimInputs.length === checkedInputs.length;
+        let that = this;
+        let countCheckedBoxes = 0;
+        let countSelectedBoxes = 0;
+        Object.keys(that.allCheckBoxes).forEach(key => {
+            let box = that.allCheckBoxes[key];
+            if(box.options.is === 'engine-instance' && box.options.engineName === engineName){
+                countCheckedBoxes++;
+                if(box.isChecked()){
+                    countSelectedBoxes++;
+                }
+            }
+        });
+        return countCheckedBoxes === countSelectedBoxes;
     }
 
     _doFilter() {
         let that = this;
         setTimeout(function () {
-            that.onFilter(that.filterValues.engines);
+            that.onFilter(that.filterValues);
         }, 100);
     }
 

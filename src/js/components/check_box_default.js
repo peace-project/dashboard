@@ -26,13 +26,16 @@ export default class CheckBoxDefault extends RenderComponent {
     }
 
     _createCheckbox() {
-        if(this.options.html !== undefined && this.options.html.content !== undefined && this.options.html.containerElem !== undefined){
+        if(this.options.html !== undefined && this.options.html.content !== undefined && this.options.html.container !== undefined){
             //var div = '#filter-items-' + this.dimensionName;
             //TODO can we use vanilla javascript here
-            $(this.options.html.containerElem).empty().append(this.options.html.content);
+            $(this.options.html.container).append(this.options.html.content);
         }
 
         this.inputElement = $(this.options.elem)[0];
+        if(this.inputElement === undefined){
+            console.error('Could note find or create element: ' + this.options.elem);
+        }
 
         // Only now we can access the DOM-element and thus apply the checked option
         this.setChecked(this.options.checked);

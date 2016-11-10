@@ -50,10 +50,13 @@ export default class ConstructFilter extends Filter {
             if (construct !== undefined) {
                 var filterPredicate = (filterValues.constructs.length == 0) ? false : !filterValues.constructs.hasOwnProperty(construct.name);
                 if (filterPredicate || filteredData.groups.data[construct.groupIndex] == undefined) {
+                    console.log('########UNdefined');
                     filteredData.constructs.data[index] = undefined;
                 }
             }
         });
+
+
     }
 
     //TODO should return boolean

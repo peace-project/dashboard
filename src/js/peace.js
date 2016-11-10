@@ -9,19 +9,13 @@ import EngineFilter from "./filters/engine_filter";
 import ConstructFilter from "./filters/construct_filter";
 import FeatureFilter from "./filters/feature_filter";
 import PortabilityFilter from "./filters/portability_status";
-import {PortabilityStatus} from "./filters/portability_status";
-import {prepareHtmlData} from "./prepareOutputData";
-import {buildFilterItems} from "./html";
-import {renderCapabilityTable} from "./render/render";
 import ViewModelConverter from "./filters/view_model_converter";
 import TestDataModel from "./model/test_data";
 import TestsFilter from "./filters/tests_filter";
 import {CapabilityTableComponent} from "./components/capability_table";
-import Renderer from "./render/renderer";
 import {EnginesFilterComponent} from "./components/engines_filters";
-/* import { prepareHtmlData } from './prepareOutputData'
- import { buildFilterItems } from './viewmodels'
- import { renderCapabilityTable } from './render'*/
+import {GroupsFilterComponent} from "./components/groups_filters";
+
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
 var rawData;
@@ -132,10 +126,9 @@ function process(page) {
 
         let capabilityTableComponent = new CapabilityTableComponent(viewModel);
 
+        //TODO check if allEngines is undefined
         let allEngines = capabilityData.getEnginesByLanguage(filterManager.getFilterValues().language);
         let latestVersionValues = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(filterManager.getFilterValues().language));
-        //TODO check if allEngines is undefined
-
 
         let filterComponent = new EnginesFilterComponent({
             viewModel: {
@@ -144,13 +137,31 @@ function process(page) {
                 filterValues: filterManager.getFilterValues()
             },
             onFilter: function (newFilterValues) {
-                filterManager.applyFilter(EngineFilter.Name(), newFilterValues);
+                filterManager.applyFilter(EngineFilter.Name(), newFilterValues.engines);
                 filterManager.applyFilter(TestsFilter.Name());
 
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
                 //  portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
                 capabilityTableComponent.updateModel(viewModel);
-                  //capabilityTableComponent.render();
+            }
+        });
+
+        new GroupsFilterComponent({
+            viewModel: {
+                groups: capabilityData.getAllGroupsByLanguage(filterManager.getFilterValues().language).data,
+                filterValues: filterManager.getFilterValues()
+            },
+            onFilter: function (newFilterValues) {
+                console.log('##################DO_FILTER');
+                console.log(newFilterValues);
+
+                filterManager.applyFilter(GroupFilter.Name(), newFilterValues.groups);
+                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
+                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
+                filterManager.applyFilter(TestsFilter.Name());
+
+                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
+                capabilityTableComponent.updateModel(viewModel);
             }
         });
 
