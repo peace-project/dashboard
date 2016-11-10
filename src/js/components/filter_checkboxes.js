@@ -15,7 +15,7 @@ export class FilterCheckboxes extends RenderComponent {
         this.addCheckBoxFilterEventHandler();
     }
 
-    //TODO rename to initCheckboxes
+    //TODO rename to init
     updateCheckboxes() {
         let that = this;
         this.dimensionItems.forEach(function (dimensionItem) {

@@ -8,7 +8,7 @@ export default class EngineFilter extends Filter {
 
     static Name() {return 'engines'};
 
-    createFilterValues(engines) {
+    static createFilterValues(engines) {
         var values = {};
         engines.forEach((obj) => {
             values[obj.id] = { index: obj.index}
@@ -19,7 +19,7 @@ export default class EngineFilter extends Filter {
     getRealFilterValues(filterValues, data){
         let realFilterValues = filterValues;
         if (filterValues.engines.length == 0) {
-            realFilterValues['engines'] = this.createFilterValues(data.getLatestEngineVersions(filterValues.language));
+            realFilterValues['engines'] = EngineFilter.createFilterValues(data.getLatestEngineVersions(filterValues.language));
         }
         return realFilterValues;
     }
@@ -65,6 +65,7 @@ export default class EngineFilter extends Filter {
     isFilteredDataEnough(filteredEngineData, filterValues) {
 
         var missingKeys = [];
+
         for (var key in filterValues.engines) {
             let engineIndex = filterValues.engines[key].index;
             let engine = filteredEngineData[engineIndex];

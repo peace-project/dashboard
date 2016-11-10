@@ -17,6 +17,7 @@ export default class RenderComponent {
 
     onRendering(){}
     onRenderingStarted(){}
+
     updateModel(viewModel, preventRendering){
         this.context = viewModel;
         if(!preventRendering){

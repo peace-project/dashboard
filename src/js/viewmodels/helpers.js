@@ -9,7 +9,7 @@ export function groupEngineByName(engineArray){
         .filter(function(eng){return eng !== undefined})
         .groupBy('name')
         .map(function(val, key){
-            var instances = val.sort(sortVersionAscending).reverse();
+            let instances = val.sort(sortVersionAscending).reverse();
             instances[0]['latestVersion'] = true;
             return {
                 name: key,

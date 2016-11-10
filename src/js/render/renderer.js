@@ -13,7 +13,6 @@ export default class Renderer {
     render(renderComponent) {
         console.log(renderComponent);
 
-
         this._checkComponent(renderComponent);
         let tpl = PeaceTemp.templates[renderComponent.templateId];
         if (tpl === undefined) {

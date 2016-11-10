@@ -129,30 +129,30 @@ function process(page) {
         let portabilityFilter = new PortabilityFilter();
         portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
 
-        console.log('----------------------------- ViewModel -------------------------------------');
-        console.log(viewModel);
 
         let capabilityTableComponent = new CapabilityTableComponent(viewModel);
 
         let allEngines = capabilityData.getEnginesByLanguage(filterManager.getFilterValues().language);
+        let latestVersionValues = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(filterManager.getFilterValues().language));
         //TODO check if allEngines is undefined
 
 
         let filterComponent = new EnginesFilterComponent({
+            viewModel: {
                 engines: allEngines.data,
-                filteredEngines: viewModel.engines,
-                filterValues: filterManager.getFilterValues(),
-            }, function (newFilterValues) {
+                latestVersionValues: latestVersionValues,
+                filterValues: filterManager.getFilterValues()
+            },
+            onFilter: function (newFilterValues) {
                 filterManager.applyFilter(EngineFilter.Name(), newFilterValues);
                 filterManager.applyFilter(TestsFilter.Name());
 
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
-              //  portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
-
+                //  portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
                 capabilityTableComponent.updateModel(viewModel);
-                //capabilityTableComponent.render();
+                  //capabilityTableComponent.render();
             }
-        );
+        });
 
         //filteredData['independentTests'] = _.where(rawData.independentTests, {language: langFilterValue});
 
