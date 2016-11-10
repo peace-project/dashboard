@@ -1,7 +1,6 @@
+'use strict';
+
 import Filter from "./filter";
-
-
-
 
 export default class LanguageFilter extends Filter{
 

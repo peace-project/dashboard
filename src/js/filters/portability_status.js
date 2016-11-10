@@ -1,3 +1,5 @@
+'use strict';
+
 import Filter from "./filter";
 import ViewModel from "../viewmodels/default_view_model";
 

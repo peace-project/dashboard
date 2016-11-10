@@ -1,3 +1,5 @@
+'use strict';
+
 import RenderComponent from "../render/render_component";
 
 export default class CheckBoxDefault extends RenderComponent {

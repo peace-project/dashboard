@@ -1,3 +1,5 @@
+'use strict';
+
 import RenderComponent from "../render/render_component";
 import {jquery} from "jquery";
 import {groupEngineByName} from "../viewmodels/helpers";

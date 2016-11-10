@@ -1,3 +1,5 @@
+'use strict';
+
 import Filter from "./filter";
 
 export default class EngineFilter extends Filter {
@@ -18,7 +20,7 @@ export default class EngineFilter extends Filter {
 
     getRealFilterValues(filterValues, data){
         let realFilterValues = filterValues;
-        if (filterValues.engines.length == 0) {
+        if (this.countFilterEngines === 0) {
             realFilterValues['engines'] = EngineFilter.createFilterValues(data.getLatestEngineVersions(filterValues.language));
         }
         return realFilterValues;
@@ -36,6 +38,7 @@ export default class EngineFilter extends Filter {
             return false;
         }
 
+        this.countFilterEngines = Object.keys(filterValues.engines).length;
 
         let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
         var missingKeys = this.isFilteredDataEnough(filteredData.engines.data, realFilterValues);
@@ -47,9 +50,9 @@ export default class EngineFilter extends Filter {
         });
 
         //TODO Comment why this block is needed
-        if (filterValues.engines.length === 0) {
-            filterValues.engines = this.createFilterValues(capabilityData.getLatestEngineVersions(filterValues.language));
-        }
+        /*if (this.countFilterEngines === 0) {
+            filterValues.engines = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(filterValues.language));
+        }*/
 
 
         filteredData.engines.data.forEach(function (engine, index) {

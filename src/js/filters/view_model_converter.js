@@ -1,6 +1,5 @@
 import ViewModel from "../viewmodels/default_view_model";
 
-
 export default class ViewModelConverter{
     constructor() {
     }

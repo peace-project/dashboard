@@ -1,3 +1,5 @@
+'use strict';
+
 import RenderComponent from "../render/render_component";
 import CheckBoxDefault from "./check_box_default";
 

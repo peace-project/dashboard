@@ -1,3 +1,5 @@
+'use strict';
+
 import Filter from "./filter";
 
 export default class FeatureFilter extends Filter{
@@ -18,14 +20,15 @@ export default class FeatureFilter extends Filter{
 
     getRealFilterValues(filterValues, data){
         let realFilterValues = filterValues;
-        if (filterValues.constructs.length == 0) {
-            realFilterValues['constructs'] = this.createFilterValues(data.getAllConstructsByLanguage(filterValues.language));
+        if (this.countFilterFeatures === 0) {
+            realFilterValues['features'] = this.createFilterValues(data.getAllFeaturesByLanguage(filterValues.language));
         }
         return realFilterValues;
     }
 
     applyFilter(capabilityData, testData, filteredData, filterValues) {
         console.log('Apply ' + this.getName() + ' filter');
+
         if(!this.hasRequiredFilterValues(filterValues)){
             return;
         }
@@ -34,15 +37,18 @@ export default class FeatureFilter extends Filter{
             return;
         }
 
+        this.countFilterFeatures = Object.keys(filterValues.features).length;
+
         let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
         var missingKeys = this.isFilteredDataEnough(filteredData.features.data, realFilterValues);
         missingKeys.forEach(function (index) {
             filteredData.features.data[index] = capabilityData.getFeatureByIndex(filterValues.language, index);
         });
 
+        let that = this;
         filteredData.features.data.forEach(function (feature, index) {
             if (feature !== undefined) {
-                var filterPredicate = (filterValues.features.length == 0) ? false : !filterValues.features.hasOwnProperty(feature.name);
+                var filterPredicate = (that.countFilterFeatures === 0) ? false : !filterValues.features.hasOwnProperty(feature.name);
                 let constructIsFilteredOut = (filteredData.constructs.data[feature.constructIndex] === undefined);
                 if (feature !== undefined && (filterPredicate || constructIsFilteredOut)) {
                     filteredData.features.data[index] = undefined;
