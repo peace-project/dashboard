@@ -49,14 +49,6 @@ export default class CheckBoxDefault extends RenderComponent {
     }
 
 
-    addClickEventHandler(eventHandler){
-        if(this.inputElement){
-            this.inputElement.addEventListener('click',  eventHandler);
-            this.inputElement.checked = checked;
-        }
-    }
-
-
     setChecked(checked){
         this.inputElement.checked = checked;
         //$(this.options.elem).prop("checked", checked);
@@ -67,11 +59,11 @@ export default class CheckBoxDefault extends RenderComponent {
     }
 
     getValue(){
-        return $(this.inputElement).attr('value');
+        return this.inputElement.getAttribute('value');
     }
 
     getAttribute(attr){
-        return $(this.inputElement).attr(attr);
+        return this.inputElement.getAttribute(attr);
     }
 
 

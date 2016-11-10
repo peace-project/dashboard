@@ -18,7 +18,7 @@ import TestDataModel from "./model/test_data";
 import TestsFilter from "./filters/tests_filter";
 import {CapabilityTableComponent} from "./components/capability_table";
 import Renderer from "./render/renderer";
-import {EnginesFilterComponent} from "./components/engines_filter";
+import {EnginesFilterComponent} from "./components/engines_filters";
 /* import { prepareHtmlData } from './prepareOutputData'
  import { buildFilterItems } from './viewmodels'
  import { renderCapabilityTable } from './render'*/

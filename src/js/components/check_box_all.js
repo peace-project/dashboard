@@ -44,7 +44,10 @@ export default class CheckBoxAll extends RenderComponent {
 
         // Register event handler
         if(this.options.eventHandler !== undefined){
-            this.inputElement.addEventListener('click', this.options.eventHandler(this));
+            let that = this;
+            that.inputElement.addEventListener('click', function(event){
+                that.options.eventHandler(event, that);
+            });
         }
     }
 
@@ -58,6 +61,13 @@ export default class CheckBoxAll extends RenderComponent {
         return this.inputElement.checked;
     }
 
+    getValue(){
+        return this.inputElement.getAttribute('value');
+    }
+
+    getAttribute(attr){
+        return this.inputElement.getAttribute(attr);
+    }
     /*
     addClickEventHandler(eventHandler) {
         this.options.eventHandler = eventHandler;
