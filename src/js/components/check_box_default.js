@@ -48,7 +48,6 @@ export default class CheckBoxDefault extends RenderComponent {
         }
     }
 
-
     setChecked(checked){
         this.inputElement.checked = checked;
         //$(this.options.elem).prop("checked", checked);
