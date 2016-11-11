@@ -2,7 +2,6 @@
 
 import CheckBoxDefault from "./check_box_default";
 
-//Rename to FCG group
 export class FCGFiltersComponent {
     constructor(options) {
         this.onFilter = options.onFilter;
