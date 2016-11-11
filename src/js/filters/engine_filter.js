@@ -8,50 +8,50 @@ export default class EngineFilter extends Filter {
         this.requiredFilteredValues = ['language', 'engines'];
     }
 
-    static Name() {return 'engines'};
+    static Name() {
+        return 'engines'
+    };
 
     static createFilterValues(engines) {
         var values = {};
         engines.forEach((obj) => {
-            values[obj.id] = { index: obj.index}
+            values[obj.id] = {index: obj.index}
         });
         return values;
     }
 
-    getRealFilterValues(filterValues, data){
-        let realFilterValues = filterValues;
-        if (this.countFilterEngines === 0) {
-            realFilterValues['engines'] = EngineFilter.createFilterValues(data.getLatestEngineVersions(filterValues.language));
-        }
-        return realFilterValues;
+    getDefaultFilterValues(language, data) {
+        return EngineFilter.createFilterValues(data.getLatestEngineVersions(language));
     }
-
 
     applyFilter(capabilityData, testData, filteredData, filterValues) {
         console.log('Apply engine filter');
 
-        if(!this.hasRequiredFilterValues(filterValues)){
+        if (!this.hasRequiredFilterValues(filterValues)) {
             return false;
         }
-        if(filteredData.engines.data === undefined ){
+        if (filteredData.engines.data === undefined) {
             console.log('No engine capabilityData to filter');
             return false;
         }
 
         this.countFilterEngines = Object.keys(filterValues.engines).length;
+        let _filterValues = filterValues;
+        if(this.countFilterEngines === 0){
+            console.log('IS_____________NULL');
+            _filterValues['engines'] = this.getDefaultFilterValues(filterValues.language, capabilityData);
+        }
 
-        let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
-        var missingKeys = this.isFilteredDataEnough(filteredData.engines.data, realFilterValues);
+        var missingKeys = this.isFilteredDataEnough(filteredData.engines.data, _filterValues);
 
-        console.log("missingKeys="+missingKeys);
         missingKeys.forEach(function (index) {
             filteredData.engines.data[index] = capabilityData.getEngineByIndex(filterValues.language, index);
         });
 
         //TODO Comment why this block is needed
         /*if (this.countFilterEngines === 0) {
-            filterValues.engines = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(filterValues.language));
-        }*/
+         filterValues.engines = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(filterValues.language));
+         }*/
 
 
         filteredData.engines.data.forEach(function (engine, index) {
@@ -73,7 +73,7 @@ export default class EngineFilter extends Filter {
             let engine = filteredEngineData[engineIndex];
 
             let isMissing = engine === undefined;
-            if(isMissing){
+            if (isMissing) {
                 missingKeys.push(engineIndex);
             }
         }

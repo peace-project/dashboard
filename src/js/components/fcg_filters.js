@@ -59,7 +59,6 @@ export class FCGFiltersComponent {
 
     _createCheckboxForInstances() {
         let that = this;
-        console.log(this.dimensionData)
         this.dimensionData.forEach(function (dimData) {
             that.allCheckBoxes[dimData.id] = that._createCheckboxInstance(dimData);
         });

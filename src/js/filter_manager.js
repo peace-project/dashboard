@@ -1,4 +1,3 @@
-
 var dataFilters = {
     language: 'BPMN',
     groups: undefined,
@@ -12,67 +11,105 @@ export default class FilterManager {
         this.filters = [];
         this.filterValues = {};
         this.capabilityData = capabilityData;
-        this.testData =  testData;
-        this.filteredData =  filteredData;
+        this.testData = testData;
+        this.filteredData = filteredData;
 
         // Initialize filterValues
     }
 
-    getFilteredData(){
-       return this.filteredData;
+    getFilteredData() {
+        return this.filteredData;
     }
 
     addFilter(filter, defaultValue) {
         if (!this.filterValues.hasOwnProperty(filter)) {
+
+            if(defaultValue === undefined || (Array.isArray(defaultValue) && defaultValue.length === 0)){
+               throw new Error('Filter must  have defaultValues');
+            }
+
             this.filterValues[filter.getName()] = defaultValue;
             this.filters.push(filter);
         }
     }
 
-    getFilterValues(){
+    getFilterValues() {
         return this.filterValues;
     }
 
 
-    getFilterValue(filterName){
-        if(this.filterValues.hasOwnProperty(filterName)){
+    getFilterValue(filterName) {
+        if (this.filterValues.hasOwnProperty(filterName)) {
             return this.filterValues[filterName];
         }
-       return undefined;
+        return undefined;
     }
 
     applyFilter(filterName, newFilterValues) {
         let filter = this.filters.find(f => f.getName() == filterName);
-        let that =  this;
-        if(filter !== undefined){
-            if(newFilterValues !== undefined && newFilterValues !== null){
+        let that = this;
+
+        if (filter !== undefined) {
+            let filterValuesChanges = {addedValues: [], removedValues: []}
+
+            if (newFilterValues !== undefined && newFilterValues !== null) {
+
+
+                // We must copy the filterValues to manipulate them without any side-effects
+                let diffFilterValues = this._copyFilterValues(that.filterValues[filterName]);
+                let diffNewFilterValues = this._copyFilterValues(newFilterValues);
+                Object.keys(that.filterValues[filterName]).forEach(key => {
+                    if (newFilterValues.hasOwnProperty(key)) {
+                        delete diffFilterValues[key];
+                        delete diffNewFilterValues[key];
+                    }
+                })
+
+                filterValuesChanges['addedValues'] = diffNewFilterValues;
+                filterValuesChanges['removedValues'] = diffFilterValues;
+
+
+                console.log('############ filterValuesChanges##########')
+                console.log(filterValuesChanges);
+                console.log(newFilterValues);
+                console.log(that.filterValues[filterName]);
+
                 that.filterValues[filterName] = newFilterValues;
             }
+
             filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues);
         }
     }
 
-    applyAllFilters(){
-        var that =  this;
+    applyAllFilters() {
+        var that = this;
         this.filters.forEach(filter => {
             filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues)
         });
 
     }
 
+    _copyFilterValues(_filterValues) {
+        var values = {};
+        Object.keys(_filterValues).forEach(key => {
+            values[key] = {index: _filterValues[key].index}
+        });
+        return values;
+    }
+
     resetFilters() {
-      /*  dataFilters.groups.length = 0;
-        dataFilters.engines.length = 0;
-        dataFilters.constructs.length = 0;
-        dataFilters.features.length = 0;
+        /*  dataFilters.groups.length = 0;
+         dataFilters.engines.length = 0;
+         dataFilters.constructs.length = 0;
+         dataFilters.features.length = 0;
 
-        htmlData.constructs.length = 0;
-        htmlData.summaryRow = {totalConstructs: 0};
+         htmlData.constructs.length = 0;
+         htmlData.summaryRow = {totalConstructs: 0};
 
-        filteredData.groups.length = 0;
-        filteredData.constructs.length = 0;
-        filteredData.features.length = 0;
-        filteredData.independentTests.length = 0; */
+         filteredData.groups.length = 0;
+         filteredData.constructs.length = 0;
+         filteredData.features.length = 0;
+         filteredData.independentTests.length = 0; */
     }
 
 }

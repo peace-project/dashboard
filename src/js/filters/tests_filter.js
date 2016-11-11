@@ -20,7 +20,6 @@ export default class TestsFilter extends Filter{
         }
 
         if(filteredData.tests.length === undefined){
-            console.log(testData.getAll());
             filteredData.tests = testData.getAll();
         }
 

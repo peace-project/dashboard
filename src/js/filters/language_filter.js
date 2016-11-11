@@ -12,9 +12,14 @@ export default class LanguageFilter extends Filter{
 
     static  Name(){ return 'language'};
 
+    getDefaultFilterValues(){
+        //TODO make it conifigurable
+        return 'BPMN';
+    }
+
     applyFilter(capabilityData, testData, filteredData, filterValues){
         if (filterValues.language == undefined) {
-            filterValues.language = 'BPMN';
+            filterValues.language = this.getDefaultFilterValues();
         }
 
         if(!this.hasRequiredFilterValues(filterValues)){

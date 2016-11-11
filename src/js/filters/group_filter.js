@@ -21,17 +21,13 @@ export default class GroupFilter extends Filter {
         return values;
     }
 
-    getRealFilterValues(filterValues, data) {
-        let realFilterValues = filterValues;
-        if (this.countFilterGroups === 0) {
-            realFilterValues['groups'] = this.createFilterValues(data.getAllGroupsByLanguage(filterValues.language));
-        }
-        return realFilterValues;
+
+    getDefaultFilterValues(language, data) {
+        return this.createFilterValues(data.getAllGroupsByLanguage(language));
     }
 
     applyFilter(capabilityData, testData, filteredData, filterValues) {
         console.log('Apply Group filter');
-        console.log(filterValues.groups);
 
         if (!this.hasRequiredFilterValues(filterValues)) {
             return;
@@ -44,10 +40,14 @@ export default class GroupFilter extends Filter {
 
         this.countFilterGroups = Object.keys(filterValues.groups).length;
 
-        let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
-        var missingKeys = this.isFilteredDataEnough(filteredData.groups.data, realFilterValues);
-        let that = this;
+        let _filterValues = filterValues;
+        if (this.countFilterGroups === 0) {
+            console.log('IS_____________NULL');
+            _filterValues['groups'] = this.getDefaultFilterValues(filterValues.language, capabilityData);
+        }
 
+        var missingKeys = this.isFilteredDataEnough(filteredData.groups.data, _filterValues);
+        let that = this;
 
         missingKeys.forEach(function (index) {
             filteredData.groups.data[index] = capabilityData.getGroupByIndex(filterValues.language, index);
@@ -89,13 +89,10 @@ export default class GroupFilter extends Filter {
 
 
     addConstructsByGroup(constructIndexes, data, filterValues) {
-        console.log('########### addConstructsByGroup');
-
         if (Object.keys(filterValues.constructs).length === 0) {
             return;
         }
         constructIndexes.forEach(function (constructID) {
-            console.log(data);
             let construct = data.getConstructByIndex(filterValues.language, constructID);
             if (!filterValues.constructs.hasOwnProperty(construct.name)) {
                 filterValues.constructs[construct.name] = {index: construct.index};

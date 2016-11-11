@@ -104,12 +104,18 @@ function process(page) {
         //TODO Rename to ProcessPipeline
         let filterManager = new FilterManager(capabilityData, testData, filteredData);
         // Adding order represents the calling order. It must be adhered to
+
+        let engineFilter = new EngineFilter();
+        let groupFilter = new GroupFilter();
+        let constructFilter = new ConstructFilter();
+        let featureFilter = new FeatureFilter();
+
         filterManager.addFilter(new LanguageFilter(), defaultLang);
-        filterManager.addFilter(new EngineFilter(), []);
-        filterManager.addFilter(new GroupFilter(), []);
-        filterManager.addFilter(new ConstructFilter(), []);
-        filterManager.addFilter(new FeatureFilter(), []);
-        filterManager.addFilter(new TestsFilter(), []);
+        filterManager.addFilter(engineFilter, engineFilter.getDefaultFilterValues(defaultLang, capabilityData));
+        filterManager.addFilter(groupFilter, groupFilter.getDefaultFilterValues(defaultLang, capabilityData));
+        filterManager.addFilter(constructFilter, constructFilter.getDefaultFilterValues(defaultLang, capabilityData));
+        filterManager.addFilter(featureFilter, featureFilter.getDefaultFilterValues(defaultLang, capabilityData));
+        filterManager.addFilter(new TestsFilter(), testData.getAll());
         //TODO add test file filter
 
         let langFilterValue = filterManager.getFilterValue(LanguageFilter.Name());

@@ -7,7 +7,6 @@ export default class ConstructFilter extends Filter {
     constructor() {
         super(ConstructFilter.Name());
         this.requiredFilteredValues = ['constructs', 'groups'];
-
     }
 
     static Name() {
@@ -22,12 +21,8 @@ export default class ConstructFilter extends Filter {
         return values;
     }
 
-    getRealFilterValues(filterValues, data){
-        let realFilterValues = filterValues;
-        if (this.countFilterConstructs === 0) {
-            realFilterValues['constructs'] = this.createFilterValues(data.getAllConstructsByLanguage(filterValues.language));
-        }
-        return realFilterValues;
+    getDefaultFilterValues(language, data){
+        return this.createFilterValues(data.getAllConstructsByLanguage(language));
     }
 
 
@@ -38,20 +33,22 @@ export default class ConstructFilter extends Filter {
             return;
         }
         if(filteredData.constructs.data === undefined ){
-            console.log('No constructs capabilityData to filter');
+            console.error('No constructs capabilityData to filter');
             return;
         }
 
         this.countFilterConstructs = Object.keys(filterValues.constructs).length;
+        let _filterValues = filterValues;
+        if(this.countFilterConstructs === 0){
+            _filterValues['constructs'] = this.getDefaultFilterValues(filterValues.language, capabilityData);
+        }
 
-        let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
-        var missingKeys = this.isFilteredDataEnough(filteredData.constructs.data, realFilterValues);
+        var missingKeys = this.isFilteredDataEnough(filteredData.constructs.data, _filterValues);
         missingKeys.forEach(function (index) {
             filteredData.constructs.data[index] = capabilityData.getConstructByIndex(filterValues.language, index);
         });
 
         let that = this;
-
         filteredData.constructs.data.forEach(function (construct, index) {
             if (construct !== undefined) {
                 var filterPredicate = (that.countFilterConstructs === 0) ? false : !filterValues.constructs.hasOwnProperty(construct.name);
@@ -60,7 +57,6 @@ export default class ConstructFilter extends Filter {
                 }
             }
         });
-
 
     }
 

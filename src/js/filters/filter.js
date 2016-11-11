@@ -10,6 +10,10 @@ export default class Filter {
         return this.name;
     }
 
+    getDefaultFilterValues(language, data){
+        throw Error("Unsupported operation in Filter "+ this.name);
+    }
+
     hasRequiredFilterValues(filterValues) {
         let hasMissingValue = this.requiredFilteredValues.some((val, index, array) => {
             return !filterValues.hasOwnProperty(val)

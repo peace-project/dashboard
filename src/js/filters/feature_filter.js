@@ -2,45 +2,48 @@
 
 import Filter from "./filter";
 
-export default class FeatureFilter extends Filter{
+export default class FeatureFilter extends Filter {
     constructor() {
         super(FeatureFilter.Name());
         this.requiredFilteredValues = ['language', 'features'];
     }
 
-    static Name(){ return 'features'};
+    static Name() {
+        return 'features'
+    };
 
     createFilterValues(feature) {
         var values = {};
         feature.data.forEach((obj) => {
-            values[obj.name] = { index: obj.index}
+            values[obj.name] = {index: obj.index}
         });
         return values;
     }
 
-    getRealFilterValues(filterValues, data){
-        let realFilterValues = filterValues;
-        if (this.countFilterFeatures === 0) {
-            realFilterValues['features'] = this.createFilterValues(data.getAllFeaturesByLanguage(filterValues.language));
-        }
-        return realFilterValues;
+    getDefaultFilterValues(language, data) {
+        return this.createFilterValues(data.getAllFeaturesByLanguage(language));
     }
 
     applyFilter(capabilityData, testData, filteredData, filterValues) {
         console.log('Apply ' + this.getName() + ' filter');
 
-        if(!this.hasRequiredFilterValues(filterValues)){
+        if (!this.hasRequiredFilterValues(filterValues)) {
             return;
         }
-        if(filteredData.features.data === undefined ){
+        if (filteredData.features.data === undefined) {
             console.error('No features capabilityData to filter');
             return;
         }
 
         this.countFilterFeatures = Object.keys(filterValues.features).length;
 
-        let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
-        var missingKeys = this.isFilteredDataEnough(filteredData.features.data, realFilterValues);
+        let _filterValues = filterValues;
+        if (this.countFilterFeatures === 0) {
+            console.log('IS_____________NULL');
+            _filterValues['features'] = this.getDefaultFilterValues(filterValues.language, capabilityData);
+        }
+
+        var missingKeys = this.isFilteredDataEnough(filteredData.features.data, _filterValues);
         missingKeys.forEach(function (index) {
             filteredData.features.data[index] = capabilityData.getFeatureByIndex(filterValues.language, index);
         });
@@ -61,12 +64,12 @@ export default class FeatureFilter extends Filter{
 
     isFilteredDataEnough(filteredFeatureData, filterValues) {
         var missingKeys = [];
-        Object.keys(filterValues.features).forEach(function(key){
+        Object.keys(filterValues.features).forEach(function (key) {
             let index = filterValues.features[key].index;
             let feature = filteredFeatureData[index];
 
             let isMissing = feature === undefined;
-            if(isMissing){
+            if (isMissing) {
                 missingKeys.push(index);
             }
         });
