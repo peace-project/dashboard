@@ -14,7 +14,7 @@ import TestDataModel from "./model/test_data";
 import TestsFilter from "./filters/tests_filter";
 import {CapabilityTableComponent} from "./components/capability_table";
 import {EnginesFilterComponent} from "./components/engines_filters";
-import {GroupsFilterComponent} from "./components/groups_filters";
+import {FCGFiltersComponent} from "./components/groups_filters";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -146,7 +146,7 @@ function process(page) {
             }
         });
 
-        new GroupsFilterComponent({
+        new FCGFiltersComponent({
             dimension: 'groups',
             dimensionData: capabilityData.getAllGroupsByLanguage(filterManager.getFilterValues().language).data,
             filterValues: filterManager.getFilterValues(),
@@ -163,7 +163,7 @@ function process(page) {
         });
 
 
-        new GroupsFilterComponent({
+        new FCGFiltersComponent({
             dimension: 'constructs',
             dimensionData: capabilityData.getAllGroupsByLanguage(filterManager.getFilterValues().language).data,
             filterValues: filterManager.getFilterValues(),
