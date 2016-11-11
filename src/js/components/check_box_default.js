@@ -35,6 +35,7 @@ export default class CheckBoxDefault extends RenderComponent {
         }
 
         this.inputElement = $(this.options.elem)[0];
+
         if(this.inputElement === undefined){
             console.error('Could note find or create element: ' + this.options.elem);
         }
@@ -43,7 +44,6 @@ export default class CheckBoxDefault extends RenderComponent {
         this.setChecked(this.options.checked);
 
         // Register event handler
-
         if(this.options.eventHandler !== undefined){
             //let eventHandler = this.options.eventHandler.bind(this.parentComp);
             let that = this;

@@ -50,7 +50,7 @@ export class FCGFiltersComponent {
         //let dimension = 'groups';
 
         this.dimensionData.forEach(function (dimData) {
-            let elem = 'input[data-dimension~="' + that.dimension + '"][value~="' + dimData.name + '"]';
+            let elem = 'input[data-dimension~="' + that.dimension + '"][value="' + dimData.name + '"]';
 
             let checkBox = new CheckBoxDefault(this, {
                     dimensionName: that.dimension,

@@ -1,3 +1,5 @@
+'use strict';
+
 import {fetchBetsyData} from './fetch'
 import {fetchBenFlowData} from './fetch'
 import DataModel from './model/data_model'
@@ -14,7 +16,7 @@ import TestDataModel from "./model/test_data";
 import TestsFilter from "./filters/tests_filter";
 import {CapabilityTableComponent} from "./components/capability_table";
 import {EnginesFilterComponent} from "./components/engines_filters";
-import {FCGFiltersComponent} from "./components/groups_filters";
+import {FCGFiltersComponent} from "./components/fcg_filters";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -151,7 +153,6 @@ function process(page) {
             dimensionData: capabilityData.getAllGroupsByLanguage(filterManager.getFilterValues().language).data,
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
-
                 filterManager.applyFilter(GroupFilter.Name(), newFilterValues.groups);
                 filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
                 filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
@@ -165,11 +166,9 @@ function process(page) {
 
         new FCGFiltersComponent({
             dimension: 'constructs',
-            dimensionData: capabilityData.getAllGroupsByLanguage(filterManager.getFilterValues().language).data,
+            dimensionData: capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).data,
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
-
-                filterManager.applyFilter(GroupFilter.Name(), newFilterValues.groups);
                 filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
                 filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
                 filterManager.applyFilter(TestsFilter.Name());
