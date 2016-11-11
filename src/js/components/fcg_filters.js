@@ -75,6 +75,12 @@ export class FCGFiltersComponent {
     _selectAll(checkbox) {
         let that = this;
 
+        // The All checkbox is already selected
+        if (!checkbox.isChecked() && that.filterValues[that.dimension].length === this._findSelectedBoxes()) {
+            checkbox.setChecked(true);
+            return;
+        }
+
         if (checkbox.isChecked()) {
             Object.keys(that.allCheckBoxes).forEach(key => {
                 // Uncheck all engine instance checkboxes
@@ -83,7 +89,6 @@ export class FCGFiltersComponent {
                 box.setChecked(false);
             });
         } else {
-            checkbox.setChecked(true);
 
             Object.keys(that.allCheckBoxes).forEach(key => {
                 let box = that.allCheckBoxes[key];
