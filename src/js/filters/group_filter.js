@@ -29,7 +29,6 @@ export default class GroupFilter extends Filter {
         return realFilterValues;
     }
 
-
     applyFilter(capabilityData, testData, filteredData, filterValues) {
         console.log('Apply Group filter');
 
@@ -50,9 +49,9 @@ export default class GroupFilter extends Filter {
 
         missingKeys.forEach(function (index) {
             //TODO use own deep copy method
-            filteredData.groups[index] = capabilityData.getGroupByIndex(filterValues.language, index);
+            filteredData.groups.data[index] = capabilityData.getGroupByIndex(filterValues.language, index);
             //TODO can we move this to ConstructFilter
-            that.addNewGroupsToFilters(filteredData.groups[index].constructIndexes, capabilityData, filterValues);
+            //that.addNewGroupsToFilters(filteredData.groups.data[index].constructIndexes, capabilityData, filterValues);
         });
 
         filteredData.groups.data.forEach(function (group, index) {
@@ -81,10 +80,11 @@ export default class GroupFilter extends Filter {
 
 
     //If any construct filter option is turned on, then checks constructs of this newly added group
-    // if none filter option is checked (i.e. == 'all') every constructs we be shown anyway
+    // if none of the filter options are checked (i.e. == 'all') every construct should be shown anyway
     addNewGroupsToFilters(constructIndexes, data, filterValues) {
         if (Object.keys(filterValues.constructs).length > 0) {
             constructIndexes.forEach(function (constructID) {
+                console.log(data);
                 let construct = data.getConstructByIndex(constructID);
                 if (filterValues.constructs.indexOf(construct.name) == -1) {
                     filterValues.constructs.push(construct.name);

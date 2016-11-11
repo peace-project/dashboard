@@ -14,6 +14,7 @@ export default class TestsFilter extends Filter{
 
     applyFilter(capabilityData, testData, filteredData, filterValues){
 
+
         if(!this.hasRequiredFilterValues(filterValues)){
             return;
         }
@@ -29,7 +30,7 @@ export default class TestsFilter extends Filter{
         testData.tests.forEach(function (test, index) {
             if (test !== undefined) {
                 if (!filterValues.engines.hasOwnProperty(test.engineID)) {
-                  //filteredData.tests[index] = undefined;
+                  filteredData.tests[index] = undefined;
                 }
             }
         });

@@ -47,7 +47,7 @@ export default class ConstructFilter extends Filter {
         let realFilterValues = this.getRealFilterValues(filterValues, capabilityData);
         var missingKeys = this.isFilteredDataEnough(filteredData.constructs.data, realFilterValues);
         missingKeys.forEach(function (index) {
-            filteredData.data.constructs[index] = capabilityData.getConstructByIndex(filterValues.language, index);
+            filteredData.constructs.data[index] = capabilityData.getConstructByIndex(filterValues.language, index);
         });
 
         let that = this;
