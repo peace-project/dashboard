@@ -33,7 +33,7 @@ export class FCGFiltersComponent {
                 is: that.dimension+'-all',
                 checked: true,
                 eventHandler: function (event, checkbox) {
-                    that._selectGroupAll(checkbox);
+                    that._selectAll(checkbox);
                 },
                 html: {
                     container: '#filter-items-' + that.dimension,
@@ -47,7 +47,6 @@ export class FCGFiltersComponent {
 
     _createCheckboxForInstances() {
         let that = this;
-        //let dimension = 'groups';
 
         this.dimensionData.forEach(function (dimData) {
             let elem = 'input[data-dimension~="' + that.dimension + '"][value="' + dimData.name + '"]';
@@ -57,7 +56,7 @@ export class FCGFiltersComponent {
                     elem: elem,
                     is: that.dimension+'-instance',
                     eventHandler: function (event, checkbox) {
-                        that._selectGroup(checkbox);
+                        that._select(checkbox);
                     },
                     html: {
                         container: '#filter-items-' + that.dimension,
@@ -73,7 +72,7 @@ export class FCGFiltersComponent {
         });
     }
 
-    _selectGroupAll(checkbox) {
+    _selectAll(checkbox) {
         let that = this;
         if (checkbox.isChecked()) {
             Object.keys(that.allCheckBoxes).forEach(key => {
@@ -93,7 +92,7 @@ export class FCGFiltersComponent {
         this._doFilter();
     }
 
-    _selectGroup(checkbox) {
+    _select(checkbox) {
         if (this.checkBoxAll.isChecked()) {
             this.checkBoxAll.setChecked(false);
 
@@ -114,7 +113,7 @@ export class FCGFiltersComponent {
             delete this.filterValues[this.dimension][checkbox.getValue()];
         }
 
-        if (this._allGroupsSelected()) {
+        if (this._isAllSelected()) {
             this.checkBoxAll.setChecked(true);
             // Uncheck all engine instance checkboxes
             Object.keys(this.allCheckBoxes).forEach(key => this.allCheckBoxes[key].setChecked(false));
@@ -123,7 +122,7 @@ export class FCGFiltersComponent {
         this._doFilter();
     }
 
-    _allGroupsSelected() {
+    _isAllSelected() {
         let that = this;
         let countBoxes = 0;
         let countSelectedBoxes = 0;
