@@ -74,14 +74,17 @@ export class FCGFiltersComponent {
 
     _selectAll(checkbox) {
         let that = this;
+
         if (checkbox.isChecked()) {
             Object.keys(that.allCheckBoxes).forEach(key => {
+                // Uncheck all engine instance checkboxes
                 let box = that.allCheckBoxes[key];
                 that.filterValues[that.dimension][box.getValue()] = {index: box.getAttribute('value-index')};
-                // Uncheck all engine instance checkboxes
                 box.setChecked(false);
             });
         } else {
+            checkbox.setChecked(true);
+
             Object.keys(that.allCheckBoxes).forEach(key => {
                 let box = that.allCheckBoxes[key];
                 delete that.filterValues[that.dimension][box.getValue()];
@@ -113,10 +116,17 @@ export class FCGFiltersComponent {
             delete this.filterValues[this.dimension][checkbox.getValue()];
         }
 
+        let that = this;
         if (this._isAllSelected()) {
             this.checkBoxAll.setChecked(true);
-            // Uncheck all engine instance checkboxes
-            Object.keys(this.allCheckBoxes).forEach(key => this.allCheckBoxes[key].setChecked(false));
+            Object.keys(this.allCheckBoxes).forEach(key => that.allCheckBoxes[key].setChecked(false));
+        } else if(this._findSelectedBoxes() === undefined){
+            // Uses has de-selected every option, thus we select the checkbox all
+            this.checkBoxAll.setChecked(true);
+            Object.keys(this.allCheckBoxes).forEach(key => {
+                let box = that.allCheckBoxes[key];
+                delete that.filterValues[that.dimension][box.getValue()];
+            });
         }
 
         this._doFilter();
@@ -134,6 +144,11 @@ export class FCGFiltersComponent {
             countBoxes++;
         });
         return countBoxes === countSelectedBoxes;
+    }
+
+    _findSelectedBoxes(){
+        let that = this;
+        return Object.keys(this.allCheckBoxes).find(key => that.allCheckBoxes[key].isChecked());
     }
 
     _doFilter() {
