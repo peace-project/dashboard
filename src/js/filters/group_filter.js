@@ -48,11 +48,16 @@ export default class GroupFilter extends Filter {
         var missingKeys = this.isFilteredDataEnough(filteredData.groups.data, realFilterValues);
         let that = this;
 
+
         missingKeys.forEach(function (index) {
-            //TODO use own deep copy method
             filteredData.groups.data[index] = capabilityData.getGroupByIndex(filterValues.language, index);
-            //TODO can we move this to ConstructFilter
-            //that.addNewGroupsToFilters(filteredData.groups.data[index].constructIndexes, capabilityData, filterValues);
+
+            // So a new group has been added now.
+            // But if some constructs were selected (i.e. anything else than All) before selecting this group,
+            // all constructs of the newly selected group wont showing up because the 'filterValues.constructs'
+            // only contains constructs of the old groups. Thus, we must update the filterValues.constructs before
+            // applying  {@link ConstructFilter} filter
+            that.addConstructsByGroup(filteredData.groups.data[index].constructIndexes, capabilityData, filterValues);
         });
 
         filteredData.groups.data.forEach(function (group, index) {
@@ -65,9 +70,7 @@ export default class GroupFilter extends Filter {
                 }
             }
         });
-        console.log(that.countFilterGroups);
 
-        console.log(filteredData);
     }
 
     isFilteredDataEnough(filteredGroupData, filterValues) {
@@ -85,17 +88,17 @@ export default class GroupFilter extends Filter {
     }
 
 
-    //If any construct filter is turned on, then we select all constructs of the added group
-    // if none of the construct filters are checked (i.e. == 'all') every construct should be shown anyway
-    addNewGroupsToFilters(constructIndexes, data, filterValues) {
-        if (Object.keys(filterValues.constructs).length < 0) {
+    addConstructsByGroup(constructIndexes, data, filterValues) {
+        console.log('########### addConstructsByGroup');
+
+        if (Object.keys(filterValues.constructs).length === 0) {
             return;
         }
         constructIndexes.forEach(function (constructID) {
             console.log(data);
             let construct = data.getConstructByIndex(filterValues.language, constructID);
-            if (filterValues.constructs.hasOwnProperty(construct.name)) {
-                filterValues.constructs.push(construct.name);
+            if (!filterValues.constructs.hasOwnProperty(construct.name)) {
+                filterValues.constructs[construct.name] = {index: construct.index};
             }
         });
     }
