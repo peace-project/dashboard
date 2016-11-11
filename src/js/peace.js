@@ -147,13 +147,10 @@ function process(page) {
         });
 
         new GroupsFilterComponent({
-            viewModel: {
-                groups: capabilityData.getAllGroupsByLanguage(filterManager.getFilterValues().language).data,
-                filterValues: filterManager.getFilterValues()
-            },
+            dimension: 'groups',
+            dimensionData: capabilityData.getAllGroupsByLanguage(filterManager.getFilterValues().language).data,
+            filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
-                console.log('##################DO_FILTER');
-                console.log(newFilterValues);
 
                 filterManager.applyFilter(GroupFilter.Name(), newFilterValues.groups);
                 filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
@@ -164,6 +161,24 @@ function process(page) {
                 capabilityTableComponent.updateModel(viewModel);
             }
         });
+
+
+        new GroupsFilterComponent({
+            dimension: 'constructs',
+            dimensionData: capabilityData.getAllGroupsByLanguage(filterManager.getFilterValues().language).data,
+            filterValues: filterManager.getFilterValues(),
+            onFilter: function (newFilterValues) {
+
+                filterManager.applyFilter(GroupFilter.Name(), newFilterValues.groups);
+                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
+                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
+                filterManager.applyFilter(TestsFilter.Name());
+
+                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
+                capabilityTableComponent.updateModel(viewModel);
+            }
+        });
+
 
         //filteredData['independentTests'] = _.where(rawData.independentTests, {language: langFilterValue});
 

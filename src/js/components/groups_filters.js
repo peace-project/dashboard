@@ -1,33 +1,23 @@
 'use strict';
 
-import RenderComponent from "../render/render_component";
 import CheckBoxDefault from "./check_box_default";
 
 //Rename to FCG group
-export class GroupsFilterComponent extends RenderComponent {
+export class GroupsFilterComponent {
     constructor(options) {
-        super('#filter-items-groups', 'groups_sidebar_filters');
         this.onFilter = options.onFilter;
         this.allCheckBoxes = {};
 
-        this.updateModel(options.viewModel);
+        this.filterValues = options.filterValues;
+        this.dimension = options.dimension;
+        this.dimensionData = options.dimensionData;
         this._init();
-        super.render();
-
     }
 
     _init() {
         this._createCheckboxForAll();
         this._createCheckboxForInstances();
-    }
 
-    updateModel(viewModel) {
-        this.filterValues = viewModel.filterValues;
-        this.groups = viewModel.groups;
-        //this.context['groups'] = groupEngineByName(this.engines);
-    }
-
-    onRenderingStarted() {
         let that = this;
         this.checkBoxAll.onRenderingStarted();
         Object.keys(this.allCheckBoxes).forEach(elemId => {
@@ -38,19 +28,18 @@ export class GroupsFilterComponent extends RenderComponent {
     _createCheckboxForAll() {
         let that = this;
 
-        let dimension = 'groups';
         this.checkBoxAll = new CheckBoxDefault(this, {
-                dimensionName: dimension,
-                elem: '#all_groups',
-                is: 'groups-all',
+                dimensionName: that.dimension,
+                elem: '#all_'+that.dimension,
+                is: that.dimension+'-all',
                 checked: true,
                 eventHandler: function (event, checkbox) {
                     that._selectGroupAll(checkbox);
                 },
                 html: {
-                    container: '#filter-items-' + dimension,
+                    container: '#filter-items-' + that.dimension,
                     content: '<li><label class="filter-item"><input type="checkbox" '
-                    + 'class="checkbox-filter" id="all_' + dimension + '">'
+                    + 'class="checkbox-filter" id="all_' + that.dimension + '">'
                     + '<span class="checkbox-icon"></span>All</label></li>'
                 }
             }
@@ -59,29 +48,29 @@ export class GroupsFilterComponent extends RenderComponent {
 
     _createCheckboxForInstances() {
         let that = this;
-        let dimension = 'groups';
+        //let dimension = 'groups';
 
-        this.groups.forEach(function (group) {
-            let elem = 'input[data-dimension~="groups"][value~="' + group.name + '"]';
+        this.dimensionData.forEach(function (dimData) {
+            let elem = 'input[data-dimension~="' + that.dimension + '"][value~="' + dimData.name + '"]';
 
             let checkBox = new CheckBoxDefault(this, {
-                    dimensionName: dimension,
+                    dimensionName: that.dimension,
                     elem: elem,
-                    is: 'groups-instance',
+                    is: that.dimension+'-instance',
                     eventHandler: function (event, checkbox) {
                         that._selectGroup(checkbox);
                     },
                     html: {
-                        container: '#filter-items-' + dimension,
+                        container: '#filter-items-' + that.dimension,
                         content: '<li><label class="filter-item"><input type="checkbox" '
-                        + 'class="checkbox-filter" data-dimension="' + dimension + '" value="' + group.name + '"'
-                        + 'value-index="' + group.index + '">'
-                        + '<span class="checkbox-icon"></span>' + group.name + '</label></li>'
+                        + 'class="checkbox-filter" data-dimension="' + that.dimension + '" value="' + dimData.name + '"'
+                        + 'value-index="' + dimData.index + '">'
+                        + '<span class="checkbox-icon"></span>' + dimData.name + '</label></li>'
                     }
                 }
             );
 
-            that.allCheckBoxes[group.id] = checkBox;
+            that.allCheckBoxes[dimData.id] = checkBox;
         });
     }
 
@@ -90,14 +79,14 @@ export class GroupsFilterComponent extends RenderComponent {
         if (checkbox.isChecked()) {
             Object.keys(that.allCheckBoxes).forEach(key => {
                 let box = that.allCheckBoxes[key];
-                that.filterValues.groups[box.getValue()] = {index: box.getAttribute('value-index')};
+                that.filterValues[that.dimension][box.getValue()] = {index: box.getAttribute('value-index')};
                 // Uncheck all engine instance checkboxes
                 box.setChecked(false);
             });
         } else {
             Object.keys(that.allCheckBoxes).forEach(key => {
                 let box = that.allCheckBoxes[key];
-                delete that.filterValues.groups[box.getValue()];
+                delete that.filterValues[that.dimension][box.getValue()];
                 box.setChecked(false);
             });
         }
@@ -113,7 +102,7 @@ export class GroupsFilterComponent extends RenderComponent {
             // By de-selecting the all filter we must also remove each single group filter
             Object.keys(this.allCheckBoxes).forEach(key => {
                 let box = that.allCheckBoxes[key];
-                delete that.filterValues.groups[box.getValue()];
+                delete that.filterValues[that.dimension][box.getValue()];
                 if (box.options.elem !== checkbox.options.elem) {
                     box.setChecked(false);
                 }
@@ -121,9 +110,9 @@ export class GroupsFilterComponent extends RenderComponent {
         }
 
         if (checkbox.isChecked()) {
-            this.filterValues.groups[checkbox.getValue()] = {index: checkbox.getAttribute('value-index')};
+            this.filterValues[this.dimension][checkbox.getValue()] = {index: checkbox.getAttribute('value-index')};
         } else {
-            delete this.filterValues.groups[checkbox.getValue()];
+            delete this.filterValues[this.dimension][checkbox.getValue()];
         }
 
         if (this._allGroupsSelected()) {
