@@ -70,6 +70,14 @@ export default class CheckBoxDefault extends RenderComponent {
         return this.inputElement.getAttribute(attr);
     }
 
+    remove(){
+        if(this.inputElement !== undefined && this.options.html.contentClass !== undefined){
+            $(this.inputElement).closest(this.options.html.contentClass).remove();
+            //console.log('#############REMOVE');
+            //console.log($(this.inputElement).closest(this.options.html.contentClass));
+        }
+    }
+
 
 
 }
