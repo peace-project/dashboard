@@ -45,7 +45,6 @@ export default class EngineFilter extends Filter {
 
         console.log("missingKeys="+missingKeys);
         missingKeys.forEach(function (index) {
-            console.log(filteredData.engines);
             filteredData.engines.data[index] = capabilityData.getEngineByIndex(filterValues.language, index);
         });
 
