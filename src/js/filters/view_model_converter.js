@@ -9,4 +9,27 @@ export default class ViewModelConverter{
     }
 
 
+    convertFilteredData(dimension, filteredDimensionData, capabilityData, language) {
+        let toRemove = [];
+
+        let dataFn;
+        if(dimension === 'constructs'){
+            dataFn = 'getConstructByIndex';
+        } else if(dimension === 'features'){
+            dataFn = 'getFeatureByIndex';
+
+        }
+
+        filteredDimensionData.forEach((data, index) => {
+            if(data === undefined){
+                toRemove.push(capabilityData[dataFn](language, index));
+            }
+        });
+
+        let cleanedData = filteredDimensionData.filter(obj => obj !== undefined);
+        return  {
+            dimensionData: cleanedData,
+            toRemove: toRemove
+        }
+    }
 }

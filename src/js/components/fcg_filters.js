@@ -13,15 +13,26 @@ export class FCGFiltersComponent {
         this._init();
     }
 
+
     _init() {
         this._createCheckboxForAll();
         this._createCheckboxForInstances();
 
-        let that = this;
         this.checkBoxAll.onRenderingStarted();
+        this._renderAllCheckBoxes();
+    }
+
+    _renderAllCheckBoxes() {
+        let that = this;
         Object.keys(this.allCheckBoxes).forEach(elemId => {
             that.allCheckBoxes[elemId].onRenderingStarted();
         });
+    }
+
+    updateDimensionData(dimensionData, removedData) {
+        this.dimensionData = dimensionData;
+        this._updateCheckboxForInstances(removedData);
+        this._renderAllCheckBoxes();
     }
 
     _createCheckboxForAll() {
@@ -29,15 +40,16 @@ export class FCGFiltersComponent {
 
         this.checkBoxAll = new CheckBoxDefault(this, {
                 dimensionName: that.dimension,
-                elem: '#all_'+that.dimension,
-                is: that.dimension+'-all',
+                elem: '#all_' + that.dimension,
+                is: that.dimension + '-all',
                 checked: true,
                 eventHandler: function (event, checkbox) {
                     that._selectAll(checkbox);
                 },
                 html: {
                     container: '#filter-items-' + that.dimension,
-                    content: '<li><label class="filter-item"><input type="checkbox" '
+                    contentClass: '.filter-content',
+                    content: '<li class="filter-content"><label class="filter-item"><input type="checkbox" '
                     + 'class="checkbox-filter" id="all_' + that.dimension + '">'
                     + '<span class="checkbox-icon"></span>All</label></li>'
                 }
@@ -47,35 +59,64 @@ export class FCGFiltersComponent {
 
     _createCheckboxForInstances() {
         let that = this;
+        console.log(this.dimensionData)
+        this.dimensionData.forEach(function (dimData) {
+            that.allCheckBoxes[dimData.id] = that._createCheckboxInstance(dimData);
+        });
+    }
+
+    _updateCheckboxForInstances(removedData) {
+        let that = this;
+        let newCheckBoxes = {};
 
         this.dimensionData.forEach(function (dimData) {
-            let elem = 'input[data-dimension~="' + that.dimension + '"][value="' + dimData.name + '"]';
-
-            let checkBox = new CheckBoxDefault(this, {
-                    dimensionName: that.dimension,
-                    elem: elem,
-                    is: that.dimension+'-instance',
-                    eventHandler: function (event, checkbox) {
-                        that._select(checkbox);
-                    },
-                    html: {
-                        container: '#filter-items-' + that.dimension,
-                        content: '<li><label class="filter-item"><input type="checkbox" '
-                        + 'class="checkbox-filter" data-dimension="' + that.dimension + '" value="' + dimData.name + '"'
-                        + 'value-index="' + dimData.index + '">'
-                        + '<span class="checkbox-icon"></span>' + dimData.name + '</label></li>'
-                    }
-                }
-            );
-
-            that.allCheckBoxes[dimData.id] = checkBox;
+            // Create new checkboxes or reuse existing ones
+            if (that.allCheckBoxes[dimData.id] === undefined) {
+                newCheckBoxes[dimData.id] = that._createCheckboxInstance(dimData);
+            } else {
+                newCheckBoxes[dimData.id] = that.allCheckBoxes[dimData.id];
+            }
         });
+
+        removedData.forEach(data => {
+            let toRemove = that.allCheckBoxes[data.id];
+            if(toRemove !== undefined) toRemove.remove();
+        })
+
+
+        // 1. add new checkboxes
+        //2. remove
+
+
+        that.allCheckBoxes = newCheckBoxes;
+    }
+
+    _createCheckboxInstance(_dimensionData) {
+        let that = this;
+        let elem = 'input[data-dimension~="' + that.dimension + '"][value="' + _dimensionData.name + '"]';
+        return new CheckBoxDefault(this, {
+                dimensionName: that.dimension,
+                elem: elem,
+                is: that.dimension + '-instance',
+                eventHandler: function (event, checkbox) {
+                    that._select(checkbox);
+                },
+                html: {
+                    container: '#filter-items-' + that.dimension,
+                    contentClass: '.filter-content',
+                    content: '<li class="filter-content"><label class="filter-item"><input type="checkbox" '
+                    + 'class="checkbox-filter" data-dimension="' + that.dimension + '" value="' + _dimensionData.name + '"'
+                    + 'value-index="' + _dimensionData.index + '">'
+                    + '<span class="checkbox-icon"></span>' + _dimensionData.name + '</label></li>'
+                }
+            }
+        );
     }
 
     _selectAll(checkbox) {
         let that = this;
 
-        // The All checkbox is already selected
+        // The all checkbox is already selected
         if (!checkbox.isChecked() && that.filterValues[that.dimension].length === this._findSelectedBoxes()) {
             checkbox.setChecked(true);
             return;
@@ -125,7 +166,7 @@ export class FCGFiltersComponent {
         if (this._isAllSelected()) {
             this.checkBoxAll.setChecked(true);
             Object.keys(this.allCheckBoxes).forEach(key => that.allCheckBoxes[key].setChecked(false));
-        } else if(this._findSelectedBoxes() === undefined){
+        } else if (this._findSelectedBoxes() === undefined) {
             // Uses has de-selected every option, thus we select the checkbox all
             this.checkBoxAll.setChecked(true);
             Object.keys(this.allCheckBoxes).forEach(key => {
@@ -151,7 +192,7 @@ export class FCGFiltersComponent {
         return countBoxes === countSelectedBoxes;
     }
 
-    _findSelectedBoxes(){
+    _findSelectedBoxes() {
         let that = this;
         return Object.keys(this.allCheckBoxes).find(key => that.allCheckBoxes[key].isChecked());
     }

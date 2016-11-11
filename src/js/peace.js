@@ -150,7 +150,7 @@ function process(page) {
 
         new FCGFiltersComponent({
             dimension: 'groups',
-            dimensionData: capabilityData.getAllGroupsByLanguage(filterManager.getFilterValues().language).data,
+            dimensionData: filterManager.getFilteredData().groups.data,
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
                 filterManager.applyFilter(GroupFilter.Name(), newFilterValues.groups);
@@ -158,18 +158,48 @@ function process(page) {
                 filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
                 filterManager.applyFilter(TestsFilter.Name());
 
+                let filteredConstructs = viewConverter.convertFilteredData('constructs', filterManager.getFilteredData().constructs.data,
+                    capabilityData, langFilterValue);
+                let filteredFeatures = viewConverter.convertFilteredData('features', filterManager.getFilteredData().features.data,
+                    capabilityData, langFilterValue);
+
+                constructFilters.updateDimensionData(filteredConstructs.dimensionData, filteredConstructs.toRemove);
+                featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
+                console.log('############ filterManager.getFilteredData() ########');
+                console.log(filterManager.getFilteredData());
+
+                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
+                capabilityTableComponent.updateModel(viewModel);
+
+            }
+        });
+
+
+        var constructFilters = new FCGFiltersComponent({
+            dimension: 'constructs',
+            dimensionData: filterManager.getFilteredData().constructs.data,
+            filterValues: filterManager.getFilterValues(),
+            onFilter: function (newFilterValues) {
+                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
+                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
+                filterManager.applyFilter(TestsFilter.Name());
+
+                let filteredFeatures = viewConverter.convertFilteredData('features', filterManager.getFilteredData().features.data,
+                    capabilityData, langFilterValue);
+
+                featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
+
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
                 capabilityTableComponent.updateModel(viewModel);
             }
         });
 
 
-        new FCGFiltersComponent({
-            dimension: 'constructs',
-            dimensionData: capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).data,
+        var featuresFilters = new FCGFiltersComponent({
+            dimension: 'features',
+            dimensionData: filterManager.getFilteredData().features.data,
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
-                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
                 filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
                 filterManager.applyFilter(TestsFilter.Name());
 
