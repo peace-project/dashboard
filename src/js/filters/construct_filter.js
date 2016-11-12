@@ -15,18 +15,20 @@ export default class ConstructFilter extends Filter {
 
     createFilterValues(construct) {
         var values = {};
-        construct.data.forEach((obj) => {
+        construct.forEach((obj) => {
             values[obj.name] = { index: obj.index}
         });
         return values;
     }
 
+
+
     getDefaultFilterValues(language, data){
-        return this.createFilterValues(data.getAllConstructsByLanguage(language));
+        return this.createFilterValues(data.getAllConstructsByLanguage(language).data);
     }
 
 
-    applyFilter(capabilityData, testData, filteredData, filterValues) {
+    applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges) {
         console.log('Apply Construct filter');
 
         if(!this.hasRequiredFilterValues(filterValues)){
@@ -37,43 +39,21 @@ export default class ConstructFilter extends Filter {
             return;
         }
 
-        this.countFilterConstructs = Object.keys(filterValues.constructs).length;
-        let _filterValues = filterValues;
-        if(this.countFilterConstructs === 0){
-            _filterValues['constructs'] = this.getDefaultFilterValues(filterValues.language, capabilityData);
-        }
-
-        var missingKeys = this.isFilteredDataEnough(filteredData.constructs.data, _filterValues);
-        missingKeys.forEach(function (index) {
-            filteredData.constructs.data[index] = capabilityData.getConstructByIndex(filterValues.language, index);
+        Object.keys(filterValuesChanges.addedValues).forEach(key => {
+            let filterValue = filterValuesChanges.addedValues[key];
+            filteredData.constructs.data[filterValue.index] = capabilityData.getConstructByIndex(filterValues.language, filterValue.index);
         });
 
-        let that = this;
+        let countFilterConstructs = Object.keys(filterValues.constructs).length;
         filteredData.constructs.data.forEach(function (construct, index) {
             if (construct !== undefined) {
-                var filterPredicate = (that.countFilterConstructs === 0) ? false : !filterValues.constructs.hasOwnProperty(construct.name);
+                var filterPredicate = (countFilterConstructs === 0) ? false : !filterValues.constructs.hasOwnProperty(construct.name);
                 if (filterPredicate || filteredData.groups.data[construct.groupIndex] === undefined) {
                     filteredData.constructs.data[index] = undefined;
                 }
             }
         });
 
-    }
-
-    //TODO should return boolean
-    isFilteredDataEnough(filteredData, filterValues) {
-
-        let missingKeys = [];
-        Object.keys(filterValues.constructs).forEach(function (key) {
-            let index = filterValues.constructs[key].index;
-            let construct = filteredData[index];
-
-            let isMissing = construct === undefined;
-            if (isMissing) {
-                missingKeys.push(index);
-            }
-        });
-        return missingKeys;
     }
 
 

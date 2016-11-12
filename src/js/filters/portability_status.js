@@ -19,7 +19,7 @@ export default class PortabilityFilter extends Filter {
         return 'portability_status'
     };
 
-    applyFilter(capabilityData, testData, viewModel, filterValues) {
+    applyFilter(capabilityData, testData, viewModel, filterValues, filterValuesChanges) {
         console.log('Apply ' + this.getName() + ' filter');
 
         if (!(viewModel instanceof ViewModel)) {

@@ -24,7 +24,7 @@ export default class FilterManager {
     addFilter(filter, defaultValue) {
         if (!this.filterValues.hasOwnProperty(filter)) {
 
-            if(defaultValue === undefined || (Array.isArray(defaultValue) && defaultValue.length === 0)){
+            if(defaultValue === undefined){
                throw new Error('Filter must  have defaultValues');
             }
 
@@ -34,13 +34,14 @@ export default class FilterManager {
     }
 
     getFilterValues() {
-        return this.filterValues;
+        return this._copyFiltersValues();
     }
 
 
     getFilterValue(filterName) {
         if (this.filterValues.hasOwnProperty(filterName)) {
-            return this.filterValues[filterName];
+            let filter = this.filters.find(f => f.getName() == filterName);
+            return filter.copyFilterValues(this.filterValues[filter.getName()]);
         }
         return undefined;
     }
@@ -50,14 +51,14 @@ export default class FilterManager {
         let that = this;
 
         if (filter !== undefined) {
-            let filterValuesChanges = {addedValues: [], removedValues: []}
+            let filterValuesChanges = {addedValues: [], removedValues: []};
+
 
             if (newFilterValues !== undefined && newFilterValues !== null) {
-
-
                 // We must copy the filterValues to manipulate them without any side-effects
-                let diffFilterValues = this._copyFilterValues(that.filterValues[filterName]);
-                let diffNewFilterValues = this._copyFilterValues(newFilterValues);
+                let diffFilterValues = filter.copyFilterValues(that.filterValues[filterName]);
+                let diffNewFilterValues = filter.copyFilterValues(newFilterValues);
+
                 Object.keys(that.filterValues[filterName]).forEach(key => {
                     if (newFilterValues.hasOwnProperty(key)) {
                         delete diffFilterValues[key];
@@ -65,28 +66,35 @@ export default class FilterManager {
                     }
                 })
 
+
                 filterValuesChanges['addedValues'] = diffNewFilterValues;
                 filterValuesChanges['removedValues'] = diffFilterValues;
 
-
-                console.log('############ filterValuesChanges##########')
-                console.log(filterValuesChanges);
-                console.log(newFilterValues);
-                console.log(that.filterValues[filterName]);
-
-                that.filterValues[filterName] = newFilterValues;
+                 that.filterValues[filterName] = filter.copyFilterValues(newFilterValues);
             }
 
-            filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues);
+            filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues, filterValuesChanges);
         }
     }
 
     applyAllFilters() {
         var that = this;
+        let filterValuesChanges = {addedValues: [], removedValues: []};
         this.filters.forEach(filter => {
-            filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues)
+            filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues, filterValuesChanges);
         });
 
+    }
+
+    _copyFiltersValues() {
+        let that = this;
+        var values = {};
+
+        this.filters.forEach(filter => {
+            values[filter.getName()] = filter.copyFilterValues(that.filterValues[filter.getName()]);
+        });
+
+        return values;
     }
 
     _copyFilterValues(_filterValues) {

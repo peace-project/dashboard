@@ -7,17 +7,16 @@ export default class LanguageFilter extends Filter{
     constructor() {
         super(LanguageFilter.Name());
         this.requiredFilteredValues = ['language', 'groups'];
-
     }
 
-    static  Name(){ return 'language'};
+    static Name(){ return 'language'};
 
     getDefaultFilterValues(){
-        //TODO make it conifigurable
+        //TODO make it configurable
         return 'BPMN';
     }
 
-    applyFilter(capabilityData, testData, filteredData, filterValues){
+    applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges){
         if (filterValues.language == undefined) {
             filterValues.language = this.getDefaultFilterValues();
         }
@@ -28,5 +27,9 @@ export default class LanguageFilter extends Filter{
 
         console.log('Apply language filter');
         capabilityData.copyByLang(filterValues.language, filteredData);
+    }
+
+    copyFilterValues(filterValues){
+        return filterValues;
     }
 }

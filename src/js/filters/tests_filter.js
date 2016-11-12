@@ -12,7 +12,7 @@ export default class TestsFilter extends Filter{
 
     static  Name(){ return 'tests'};
 
-    applyFilter(capabilityData, testData, filteredData, filterValues){
+    applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges){
 
 
         if(!this.hasRequiredFilterValues(filterValues)){
@@ -33,7 +33,9 @@ export default class TestsFilter extends Filter{
                 }
             }
         });
+    }
 
-
+    copyFilterValues(filterValues){
+        return [];
     }
 }
