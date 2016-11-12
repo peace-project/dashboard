@@ -12,6 +12,7 @@ export default class FeatureFilter extends Filter {
         return 'features'
     };
 
+    //TODO move to filter class
     createFilterValues(feature) {
         var values = {};
         feature.data.forEach((obj) => {
@@ -54,20 +55,4 @@ export default class FeatureFilter extends Filter {
 
 
     }
-
-    isFilteredDataEnough(filteredFeatureData, filterValues) {
-        var missingKeys = [];
-        Object.keys(filterValues.features).forEach(function (key) {
-            let index = filterValues.features[key].index;
-            let feature = filteredFeatureData[index];
-
-            let isMissing = feature === undefined;
-            if (isMissing) {
-                missingKeys.push(index);
-            }
-        });
-        return missingKeys;
-
-    }
-
 }

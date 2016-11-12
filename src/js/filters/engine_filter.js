@@ -41,6 +41,8 @@ export default class EngineFilter extends Filter {
             filteredData.engines.data[filterValue.index] = capabilityData.getEngineByIndex(filterValues.language, filterValue.index);
         });
 
+
+
         //TODO Comment why this block is needed
         /*if (this.countFilterEngines === 0) {
          filterValues.engines = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(filterValues.language));
@@ -53,6 +55,9 @@ export default class EngineFilter extends Filter {
                 }
             }
         });
+
+
+
 
     }
 }

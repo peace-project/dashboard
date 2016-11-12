@@ -109,14 +109,14 @@ function process(page) {
         let groupFilter = new GroupFilter();
         let constructFilter = new ConstructFilter();
         let featureFilter = new FeatureFilter();
+        let testsFilter = new TestsFilter();
 
         filterManager.addFilter(new LanguageFilter(), defaultLang);
         filterManager.addFilter(engineFilter, engineFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(groupFilter, groupFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(constructFilter, constructFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(featureFilter, featureFilter.getDefaultFilterValues(defaultLang, capabilityData));
-        filterManager.addFilter(new TestsFilter(), testData.getAll());
-        //TODO add test file filter
+        filterManager.addFilter(testsFilter, testData.getAll());
 
         let langFilterValue = filterManager.getFilterValue(LanguageFilter.Name());
         if (langFilterValue == undefined) {
