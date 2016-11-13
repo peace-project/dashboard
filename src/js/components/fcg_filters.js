@@ -206,7 +206,7 @@ export class FCGFiltersComponent {
             console.log('_____DO_FILTER');
             console.log(that.filterValues);
 
-            that.onFilter(that.filterValues);
+            that.onFilter(that.filterValues[that.dimension]);
         }, 100);
     }
 

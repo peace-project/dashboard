@@ -119,6 +119,9 @@ function process(page) {
         filterManager.addFilter(featureFilter, featureFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(testsFilter, testData.getAll());
 
+        let portabilityFilter = new PortabilityFilter();
+        filterManager.addViewModelFilter(portabilityFilter, portabilityFilter.getDefaultFilterValues());
+
         let langFilterValue = filterManager.getFilterValue(LanguageFilter.Name());
         if (langFilterValue == undefined) {
             console.error('Filter values of Filter: ' + LanguageFilter.Name() + ' is undefined');
@@ -129,9 +132,7 @@ function process(page) {
         let viewConverter = new ViewModelConverter();
         var viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
 
-        let portabilityFilter = new PortabilityFilter();
-        portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
-
+        filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
 
         let capabilityTableComponent = new CapabilityTableComponent(viewModel);
 
@@ -147,12 +148,12 @@ function process(page) {
             },
             onFilter: function (newFilterValues) {
                 //Filters
-                filterManager.applyFilter(EngineFilter.Name(), newFilterValues.engines);
+                filterManager.applyFilter(EngineFilter.Name(), newFilterValues);
                 filterManager.applyFilter(TestsFilter.Name());
 
                 // ViewModel
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
-                portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
+                filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
                 capabilityTableComponent.updateModel(viewModel);
             }
         });
@@ -163,9 +164,9 @@ function process(page) {
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
 
-                filterManager.applyFilter(GroupFilter.Name(), newFilterValues.groups);
-                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
-                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
+                filterManager.applyFilter(GroupFilter.Name(), newFilterValues);
+                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues);
+                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues);
                 filterManager.applyFilter(TestsFilter.Name());
 
                 let filteredConstructs = viewConverter.convertFilteredData('constructs', filterManager.getFilteredData().constructs.data,
@@ -178,7 +179,7 @@ function process(page) {
 
                 //ViewModels
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
-                portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
+                filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel)
                 capabilityTableComponent.updateModel(viewModel);
 
             }
@@ -190,8 +191,8 @@ function process(page) {
             dimensionData: filterManager.getFilteredData().constructs.data,
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
-                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
-                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
+                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues);
+                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues);
                 filterManager.applyFilter(TestsFilter.Name());
 
                 let filteredFeatures = viewConverter.convertFilteredData('features', filterManager.getFilteredData().features.data,
@@ -201,7 +202,7 @@ function process(page) {
 
                 //ViewModels
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
-                portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
+                filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel)
                 capabilityTableComponent.updateModel(viewModel);
             }
         });
@@ -212,12 +213,12 @@ function process(page) {
             dimensionData: filterManager.getFilteredData().features.data,
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
-                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
+                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues);
                 filterManager.applyFilter(TestsFilter.Name());
 
                 //ViewModel
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
-                portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
+                filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
                 capabilityTableComponent.updateModel(viewModel);
             }
         });
@@ -227,9 +228,11 @@ function process(page) {
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
 
+
+                filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel, newFilterValues);
+                //portabilityFilter.applyFilter(null, null, viewModel, newFilterValues);
                 //ViewModel
-                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
-                portabilityFilter.applyFilter(null, null, viewModel, newFilterValues);
+                //viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
                 capabilityTableComponent.updateModel(viewModel);
 
             }

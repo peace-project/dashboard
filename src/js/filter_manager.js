@@ -9,6 +9,7 @@ var dataFilters = {
 export default class FilterManager {
     constructor(capabilityData, testData, filteredData) {
         this.filters = [];
+        this.viewFilters = [];
         this.filterValues = {};
         this.oldFilterValues = {};
         this.capabilityData = capabilityData;
@@ -32,6 +33,16 @@ export default class FilterManager {
             this.filterValues[filter.getName()] = defaultValue;
             this.oldFilterValues[filter.getName()] = filter.copyFilterValues(defaultValue);
             this.filters.push(filter);
+        }
+    }
+
+    addViewModelFilter(filter, defaultValue) {
+        if (!this.filterValues.hasOwnProperty(filter)) {
+            if (defaultValue === undefined) {
+                throw new Error('Filter must  have defaultValues');
+            }
+            this.filterValues[filter.getName()] = defaultValue;
+            this.viewFilters.push(filter);
         }
     }
 
@@ -76,6 +87,24 @@ export default class FilterManager {
             that.oldFilterValues[filterName] = filter.copyFilterValues(that.filterValues[filterName]);
             filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues, filterValuesChanges);
         }
+    }
+
+    applyViewModelFilter(filterName, viewModel, newFilterValues) {
+        let filter = this.viewFilters.find(f => f.getName() == filterName);
+        let that = this;
+
+        if (filter === undefined) {
+            console.log('Could not find filter: ' + filterName);
+            return;
+        }
+
+        let filterValuesChanges = {addedValues: [], removedValues: []};
+
+        if(newFilterValues){
+            that.filterValues[filterName] = newFilterValues;
+        }
+
+        filter.applyFilter(that.capabilityData, that.testData, viewModel, that.filterValues, filterValuesChanges);
     }
 
     applyAllFilters() {

@@ -16,8 +16,13 @@ export default class PortabilityFilter extends Filter {
     }
 
     static Name() {
-        return 'portability_status'
+        return 'portability_status';
     };
+
+    getDefaultFilterValues(language, data) {
+        return PortabilityStatus.ALL;
+    }
+
 
     applyFilter(capabilityData, testData, viewModel, filterValues, filterValuesChanges) {
         console.log('Apply ' + this.getName() + ' filter');
@@ -27,14 +32,21 @@ export default class PortabilityFilter extends Filter {
         }
         let that = this;
 
-        viewModel.constructs.forEach((construct, key) => {
+        if(filterValues.portability_status === undefined){
+            console.error('portability_status is undefined');
+            return;
+        }
+
+        for(var i=0; i < viewModel.constructs.length; i++){
+            let construct = viewModel.constructs[i];
+
             if (filterValues.portability_status === PortabilityStatus.NOT_SAME) {
                 var showFeatures = that._filterFeaturesByNotSameStatus(construct, viewModel);
                 if (showFeatures.length < 1) {
                     //remove construct
-                    viewModel.constructs.splice(key, 1);
+                    viewModel.constructs.splice(i, 1);
                     //toRemoved.push(key);
-                    return;
+                    continue;
                 }
                 construct.features = showFeatures;
                 if (construct.features < 2) {
@@ -43,12 +55,15 @@ export default class PortabilityFilter extends Filter {
                 construct.features[construct.features.length - 1]['lastFeature'] = true;
             } else {
                 if (!that._isConstructMatchingPortabilityStatus(construct, viewModel, filterValues)) {
-                    console.log(key);
-                    viewModel.constructs.splice(key, 1);
-                    return;
+                    console.log(i);
+                    viewModel.constructs.splice(i, 1);
+                    continue;
                 }
             }
-        });
+        }
+
+        console.log('viewModel.constructs_______');
+        console.log(viewModel.constructs);
 
     }
 

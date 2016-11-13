@@ -9,8 +9,6 @@ export default class PortabilityFilterComponent {
         let that = this;
 
         var elem = $('input[data-filter~="portability_status"]');
-        console.log('ELEM_');
-        console.log(elem);
 
         $(elem).each(function (index) {
             $(this).on('change', function (event) {
@@ -29,7 +27,7 @@ export default class PortabilityFilterComponent {
         setTimeout(function () {
             console.log('_____DO_FILTER');
             console.log(that.filterValues);
-            that.onFilter(that.filterValues);
+            that.onFilter(that.filterValues[that.dimension]);
         }, 100);
     }
 }
