@@ -21,8 +21,8 @@ export default class ViewModel {
         this._addConstructs(data.constructs.data, data.features.data, data.tests);
     }
 
-    _countEngines(){
-        return this.engines.map(eng => eng.instances.length).reduce((a, b) => a +b, 0);
+    _countEngines() {
+        return this.engines.map(eng => eng.instances.length).reduce((a, b) => a + b, 0);
     }
 
     _addConstructs(constructs, features, tests) {
@@ -58,7 +58,7 @@ export default class ViewModel {
             //console.log('***************updateSummaryRow**************');
             //console.log(viewConstruct.supportStatus);
             // Update support status and summary_row accordingly
-            that.updateSummaryRow(viewConstruct);
+            that._updateSummaryRow(viewConstruct);
             /*
              for (var engineID in viewConstruct.supportStatus) {
              //viewConstruct.supportStatus[engineID].updateSupportStatus(viewConstruct, capability);
@@ -71,7 +71,16 @@ export default class ViewModel {
 
     }
 
-    updateSummaryRow(construct) {
+    updateSummaryRow() {
+        let that = this;
+        //that.summaryRow[engine.id] = 0;
+        Object.keys(that.summaryRow).forEach(key => that.summaryRow[key] = 0);
+        this.constructs.forEach(function (construct) {
+            that._updateSummaryRow(construct);
+        });
+    }
+
+    _updateSummaryRow(construct) {
         let that = this;
         Object.keys(construct.supportStatus).forEach(engineID => {
             if (construct.featureIndexes.length === construct.supportStatus[engineID].supportedFeature) {
@@ -146,8 +155,8 @@ class Construct {
 
         this._updateFullSupportStatus();
 
-        if(that.features.length > 0){
-            let lastFeatureIndex = that.features.length-1;
+        if (that.features.length > 0) {
+            let lastFeatureIndex = that.features.length - 1;
             this.features[lastFeatureIndex].lastFeature = true;
         }
     }
@@ -168,7 +177,7 @@ class Construct {
 
     }
 
-    _updateFullSupportStatus(){
+    _updateFullSupportStatus() {
         let that = this;
         Object.keys(this.supportStatus).forEach(engineID => {
             that.supportStatus[engineID].updateSupportStatus(this, that.capability);
@@ -206,12 +215,10 @@ class SupportStatus {
                     this.html = '+/-';
                 }
             }
-            //htmlData['summaryRow'][engineID] += 1;
         } else if (capability === 'expressiveness' && this.supportedFeature > 0) {
             if (construct.upperBound === '+') {
                 this.html = '+';
                 this.fullSupport = true;
-                // htmlData['summaryRow'][engineID] += 1;
             }
 
         } else if (capability === 'conformance' && this.supportedFeature > 0) {
@@ -254,10 +261,8 @@ class Feature {
 
     _addTests(tests) {
         let that = this;
-
         this.testIndexes.forEach(function (testIndex) {
             var test = tests[testIndex];
-
             if (test !== undefined) {
                 if (test.result !== undefined && test.result.testResult !== undefined) {
                     that.results[test.engineID] = new TestResult(test, that); // test.result;

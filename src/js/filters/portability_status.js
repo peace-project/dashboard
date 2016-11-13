@@ -37,15 +37,19 @@ export default class PortabilityFilter extends ViewFilter {
             return;
         }
 
+        let engines = Object.keys(filterValues.engines);
+        let summaryOutdated = true;
+
         // Use reserve loop to iterate und mutating an array
         for(var i=viewModel.constructs.length -1; i >= 0; i -=1){
             let construct = viewModel.constructs[i];
 
             if (filterValues.portability_status === PortabilityStatus.NOT_SAME) {
 
-                var showFeatures = that._filterFeaturesByNotSameStatus(construct, viewModel);
+                var showFeatures = that._filterFeaturesByNotSameStatus(construct, engines);
                 if (showFeatures.length < 1) {
                    viewModel.constructs.splice(i, 1);
+                    summaryOutdated = true;
                     continue;
                 }
                 construct.features = showFeatures;
@@ -56,23 +60,25 @@ export default class PortabilityFilter extends ViewFilter {
             } else {
                 if (!that._isConstructMatchingPortabilityStatus(construct, filterValues)) {
                     viewModel.constructs.splice(i, 1);
+                    summaryOutdated = true;
                     continue;
                 }
             }
         }
 
+        if(summaryOutdated){
+            viewModel.updateSummaryRow();
+        }
         console.log(viewModel);
     }
 
 
-    _filterFeaturesByNotSameStatus(construct, filteredData) {
-        /*if (dataFilters.portability_status !== '3'){
-         return;
-         }*/
-
+    _filterFeaturesByNotSameStatus(construct, engines) {
         var showFeatures = [];
+
+        let that = this;
         construct.features.forEach(function (feature) {
-            if (this._isMatchingPortabilityStatusFeature(feature, filteredData)) {
+            if (that._isMatchingPortabilityStatusFeature(feature, engines)) {
                 showFeatures.push(feature);
             }
         });
@@ -111,26 +117,23 @@ export default class PortabilityFilter extends ViewFilter {
         return count;
     }
 
-    _isMatchingPortabilityStatusFeature(feature, filteredData) {
-        var showFeature = false;
-        var firstResult = undefined;
+    _isMatchingPortabilityStatusFeature(feature, engines) {
+        let showFeature = false;
+        let firstResult = undefined;
 
-        filteredData.engines.data.forEach(function (engine) {
-            if (engine === undefined) {
-                return;
-            }
+        engines.forEach(function (engineId) {
 
             // If any test for this engine exists or support same
-            if (!feature.results.hasOwnProperty(engine.id)) {
+            if (!feature.results.hasOwnProperty(engineId)) {
                 showFeature = true;
                 return;
             }
 
-            if (firstResult == undefined) {
-                firstResult = feature.results[engine.id].testResult
+            if (firstResult === undefined) {
+                firstResult = feature.results[engineId].result.testResult
             }
 
-            if (firstResult !== feature.results[engine.id].testResult) {
+            if (firstResult !== feature.results[engineId].result.testResult) {
                 showFeature = true;
                 return;
             }

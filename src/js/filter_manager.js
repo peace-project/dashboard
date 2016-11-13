@@ -65,8 +65,6 @@ export default class FilterManager {
 
         if (filter !== undefined) {
             let filterValuesChanges = {addedValues: [], removedValues: []};
-            console.log('______________');
-            console.log(newFilterValues);
 
             if (newFilterValues !== undefined && newFilterValues !== null) {
                 // We must copy the filterValues to manipulate them without any side-effects
