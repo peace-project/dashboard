@@ -32,7 +32,7 @@ export default class PortabilityFilter extends Filter {
                 var showFeatures = that._filterFeaturesByNotSameStatus(construct, viewModel);
                 if (showFeatures.length < 1) {
                     //remove construct
-                    construct.splice(key, 1);
+                    viewModel.constructs.splice(key, 1);
                     //toRemoved.push(key);
                     return;
                 }
@@ -43,7 +43,8 @@ export default class PortabilityFilter extends Filter {
                 construct.features[construct.features.length - 1]['lastFeature'] = true;
             } else {
                 if (!that._isConstructMatchingPortabilityStatus(construct, viewModel, filterValues)) {
-                    construct.splice(key, 1);
+                    console.log(key);
+                    viewModel.constructs.splice(key, 1);
                     return;
                 }
             }
@@ -67,8 +68,8 @@ export default class PortabilityFilter extends Filter {
         return showFeatures;
     }
 
-    _isConstructMatchingPortabilityStatus(construct, viewModel, dataFilters) {
-        if (dataFilters.portability_status === '0') {
+    _isConstructMatchingPortabilityStatus(construct, viewModel, filterValues) {
+        if (filterValues.portability_status === '0') {
             return true;
         }
 
@@ -81,9 +82,9 @@ export default class PortabilityFilter extends Filter {
             }
         });
 
-        if (dataFilters.portability_status === '1' && count != viewModel.engines.data.length) {
+        if (filterValues.portability_status === '1' && count != viewModel.engines.length) {
             showConstruct = false;
-        } else if (dataFilters.portability_status === '2' && (count === viewModel.engines.data.length)) {
+        } else if (filterValues.portability_status === '2' && (count === viewModel.engines.length)) {
             showConstruct = false;
         }
 
