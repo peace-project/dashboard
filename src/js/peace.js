@@ -17,6 +17,7 @@ import TestsFilter from "./filters/tests_filter";
 import {CapabilityTableComponent} from "./components/capability_table";
 import {EnginesFilterComponent} from "./components/engines_filters";
 import {FCGFiltersComponent} from "./components/fcg_filters";
+import PortabilityFilterComponent from "./components/portability_filter";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -145,11 +146,13 @@ function process(page) {
                 filterValues: filterManager.getFilterValues()
             },
             onFilter: function (newFilterValues) {
+                //Filters
                 filterManager.applyFilter(EngineFilter.Name(), newFilterValues.engines);
                 filterManager.applyFilter(TestsFilter.Name());
 
+                // ViewModel
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
-                //  portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
+                portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
                 capabilityTableComponent.updateModel(viewModel);
             }
         });
@@ -161,9 +164,9 @@ function process(page) {
             onFilter: function (newFilterValues) {
 
                 filterManager.applyFilter(GroupFilter.Name(), newFilterValues.groups);
-               filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
+                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
                 filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
-               filterManager.applyFilter(TestsFilter.Name());
+                filterManager.applyFilter(TestsFilter.Name());
 
                 let filteredConstructs = viewConverter.convertFilteredData('constructs', filterManager.getFilteredData().constructs.data,
                     capabilityData, langFilterValue);
@@ -173,8 +176,9 @@ function process(page) {
                 constructFilters.updateDimensionData(filteredConstructs.dimensionData, filteredConstructs.toRemove);
                 featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
 
-
+                //ViewModels
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
+                portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
                 capabilityTableComponent.updateModel(viewModel);
 
             }
@@ -195,7 +199,9 @@ function process(page) {
 
                 featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
 
+                //ViewModels
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
+                portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
                 capabilityTableComponent.updateModel(viewModel);
             }
         });
@@ -209,9 +215,25 @@ function process(page) {
                 filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
                 filterManager.applyFilter(TestsFilter.Name());
 
+                //ViewModel
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
+                portabilityFilter.applyFilter(null, null, viewModel, filterManager.getFilterValues());
                 capabilityTableComponent.updateModel(viewModel);
             }
+        });
+
+
+        var portabilityFilterComp = new PortabilityFilterComponent({
+            filterValues: filterManager.getFilterValues(),
+            onFilter: function (newFilterValues) {
+
+                //ViewModel
+                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
+                portabilityFilter.applyFilter(null, null, viewModel, newFilterValues);
+                capabilityTableComponent.updateModel(viewModel);
+
+            }
+
         });
 
 
