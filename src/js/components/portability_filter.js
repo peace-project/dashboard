@@ -25,8 +25,6 @@ export default class PortabilityFilterComponent {
     _doFilter() {
         let that = this;
         setTimeout(function () {
-            console.log('_____DO_FILTER');
-            console.log(that.filterValues);
             that.onFilter(that.filterValues['portability_status']);
         }, 100);
     }

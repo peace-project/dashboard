@@ -226,7 +226,7 @@ export class EnginesFilterComponent extends RenderComponent {
     _doFilter() {
         let that = this;
         setTimeout(function () {
-            that.onFilter(that.filterValues[that.dimension]);
+            that.onFilter(that.filterValues['engines']);
         }, 100);
     }
 

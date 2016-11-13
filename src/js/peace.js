@@ -148,9 +148,10 @@ function process(page) {
                 filterValues: filterManager.getFilterValues()
             },
             onFilter: function (newFilterValues) {
-                //Filters
+                // Filters
                 filterManager.applyFilter(EngineFilter.Name(), newFilterValues);
                 filterManager.applyFilter(TestsFilter.Name());
+
 
                 // ViewModel
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
@@ -166,8 +167,8 @@ function process(page) {
             onFilter: function (newFilterValues) {
 
                 filterManager.applyFilter(GroupFilter.Name(), newFilterValues);
-                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues);
-                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues);
+                filterManager.applyFilter(ConstructFilter.Name());
+                filterManager.applyFilter(FeatureFilter.Name());
                 filterManager.applyFilter(TestsFilter.Name());
 
                 let filteredConstructs = viewConverter.convertFilteredData('constructs', filterManager.getFilteredData().constructs.data,
@@ -178,9 +179,9 @@ function process(page) {
                 constructFilters.updateDimensionData(filteredConstructs.dimensionData, filteredConstructs.toRemove);
                 featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
 
-                //ViewModels
+                // ViewModels
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
-                filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel)
+                filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
                 capabilityTableComponent.updateModel(viewModel);
 
             }
@@ -193,7 +194,7 @@ function process(page) {
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
                 filterManager.applyFilter(ConstructFilter.Name(), newFilterValues);
-                filterManager.applyFilter(FeatureFilter.Name(), newFilterValues);
+                filterManager.applyFilter(FeatureFilter.Name());
                 filterManager.applyFilter(TestsFilter.Name());
 
                 let filteredFeatures = viewConverter.convertFilteredData('features', filterManager.getFilteredData().features.data,
@@ -201,7 +202,7 @@ function process(page) {
 
                 featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
 
-                //ViewModels
+                // ViewModels
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
                 filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel)
                 capabilityTableComponent.updateModel(viewModel);
@@ -217,7 +218,7 @@ function process(page) {
                 filterManager.applyFilter(FeatureFilter.Name(), newFilterValues);
                 filterManager.applyFilter(TestsFilter.Name());
 
-                //ViewModel
+                // ViewModel
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
                 filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
                 capabilityTableComponent.updateModel(viewModel);

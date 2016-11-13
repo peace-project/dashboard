@@ -65,6 +65,8 @@ export default class FilterManager {
 
         if (filter !== undefined) {
             let filterValuesChanges = {addedValues: [], removedValues: []};
+            console.log('______________');
+            console.log(newFilterValues);
 
             if (newFilterValues !== undefined && newFilterValues !== null) {
                 // We must copy the filterValues to manipulate them without any side-effects
@@ -82,6 +84,10 @@ export default class FilterManager {
                 filterValuesChanges['removedValues'] = diffFilterValues;
 
                 that.filterValues[filterName] = newFilterValues;
+
+                console.log('____ADDED');
+                console.log(newFilterValues);
+                console.log(filterValuesChanges);
             }
 
             that.oldFilterValues[filterName] = filter.copyFilterValues(that.filterValues[filterName]);
@@ -98,13 +104,11 @@ export default class FilterManager {
             return;
         }
 
-        let filterValuesChanges = {addedValues: [], removedValues: []};
-
         if(newFilterValues !== undefined){
             that.filterValues[filterName] = newFilterValues;
         }
 
-        filter.applyFilter(that.capabilityData, that.testData, viewModel, that.filterValues, filterValuesChanges);
+        filter.applyFilter(viewModel, that.filterValues);
     }
 
     applyAllFilters() {
