@@ -68,7 +68,7 @@ export class EnginesFilterComponent extends RenderComponent {
         var enginesByName = groupEngineByName(this.engines);
         enginesByName.forEach(function (engine) {
             let elem = '#all_engine_' + engine.name;
-            let checkBoxAll = new CheckBoxAll(this, {
+            let checkBoxAll = new CheckBoxDefault(this, {
                     dimensionName: 'engines',
                     elem: elem,
                     is: 'engine-all',
