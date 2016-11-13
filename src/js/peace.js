@@ -18,6 +18,7 @@ import {CapabilityTableComponent} from "./components/capability_table";
 import {EnginesFilterComponent} from "./components/engines_filters";
 import {FCGFiltersComponent} from "./components/fcg_filters";
 import PortabilityFilterComponent from "./components/portability_filter";
+import {PortabilityStatus} from "./filters/portability_status";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -224,17 +225,21 @@ function process(page) {
         });
 
 
+        let reBuildViewModel = false;
         var portabilityFilterComp = new PortabilityFilterComponent({
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
 
+                if(reBuildViewModel){
+                    // We have applied a different PortabilityStatus than ALL which has reduced the items of the viewModel
+                    // Hence, build a complete viewModel again
+                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
+                }
 
                 filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel, newFilterValues);
-                //portabilityFilter.applyFilter(null, null, viewModel, newFilterValues);
-                //ViewModel
-                //viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
                 capabilityTableComponent.updateModel(viewModel);
 
+                reBuildViewModel =  newFilterValues !== PortabilityStatus.ALL;
             }
 
         });

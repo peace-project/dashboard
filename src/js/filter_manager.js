@@ -100,7 +100,7 @@ export default class FilterManager {
 
         let filterValuesChanges = {addedValues: [], removedValues: []};
 
-        if(newFilterValues){
+        if(newFilterValues !== undefined){
             that.filterValues[filterName] = newFilterValues;
         }
 

@@ -58,8 +58,6 @@ export default class PortabilityFilter extends Filter {
             } else {
                 if (!that._isConstructMatchingPortabilityStatus(construct, viewModel, filterValues)) {
                     viewModel.constructs.splice(i, 1);
-                    console.log(viewModel.constructs);
-
                     continue;
                 }
             }
