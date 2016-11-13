@@ -4,10 +4,10 @@ import Filter from "./filter";
 import ViewModel from "../viewmodels/default_view_model";
 
 export const PortabilityStatus = {
-    ALL: 0,
-    ONLY: 1,
-    WITH: 2,
-    NOT_SAME: 3
+    ALL: '0',
+    ONLY: '1',
+    WITH: '2',
+    NOT_SAME: '3'
 }
 
 export default class PortabilityFilter extends Filter {
@@ -37,14 +37,16 @@ export default class PortabilityFilter extends Filter {
             return;
         }
 
-        for(var i=0; i < viewModel.constructs.length; i++){
+        // Use reserve loop to iterate und mutating an array
+        for(var i=viewModel.constructs.length -1; i >= 0; i -=1){
             let construct = viewModel.constructs[i];
 
             if (filterValues.portability_status === PortabilityStatus.NOT_SAME) {
+
                 var showFeatures = that._filterFeaturesByNotSameStatus(construct, viewModel);
                 if (showFeatures.length < 1) {
                     //remove construct
-                    viewModel.constructs.splice(i, 1);
+                   viewModel.constructs.splice(i, 1);
                     //toRemoved.push(key);
                     continue;
                 }
@@ -55,16 +57,13 @@ export default class PortabilityFilter extends Filter {
                 construct.features[construct.features.length - 1]['lastFeature'] = true;
             } else {
                 if (!that._isConstructMatchingPortabilityStatus(construct, viewModel, filterValues)) {
-                    console.log(i);
                     viewModel.constructs.splice(i, 1);
+                    console.log(viewModel.constructs);
+
                     continue;
                 }
             }
         }
-
-        console.log('viewModel.constructs_______');
-        console.log(viewModel.constructs);
-
     }
 
 
@@ -84,11 +83,11 @@ export default class PortabilityFilter extends Filter {
     }
 
     _isConstructMatchingPortabilityStatus(construct, viewModel, filterValues) {
-        if (filterValues.portability_status === '0') {
+
+        if (filterValues.portability_status === PortabilityStatus.ALL) {
             return true;
         }
 
-        var showConstruct = true;
         var count = viewModel.engines.length;
         Object.keys(viewModel.engines).forEach(function (engine) {
             // If any test for this engine exists or fullSupport is false
@@ -97,13 +96,16 @@ export default class PortabilityFilter extends Filter {
             }
         });
 
-        if (filterValues.portability_status === '1' && count != viewModel.engines.length) {
-            showConstruct = false;
-        } else if (filterValues.portability_status === '2' && (count === viewModel.engines.length)) {
-            showConstruct = false;
+
+
+        if (filterValues.portability_status === PortabilityStatus.ONLY && count != viewModel.engines.length) {
+            return false;
+        } else if (filterValues.portability_status === PortabilityStatus.WITH && (count === viewModel.engines.length)) {
+            return false;
         }
 
-        return showConstruct;
+
+        return true;
     }
 
     _isMatchingPortabilityStatusFeature(feature, filteredData) {
