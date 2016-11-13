@@ -34,26 +34,47 @@ export default class ConstructFilter extends Filter {
         if(!this.hasRequiredFilterValues(filterValues)){
             return;
         }
+
         if(filteredData.constructs.data === undefined ){
             console.error('No constructs capabilityData to filter');
             return;
         }
 
+
         Object.keys(filterValuesChanges.addedValues).forEach(key => {
             let filterValue = filterValuesChanges.addedValues[key];
             filteredData.constructs.data[filterValue.index] = capabilityData.getConstructByIndex(filterValues.language, filterValue.index);
+
+            let featureIndexes = filteredData.constructs.data[filterValue.index].featureIndexes;
+            featureIndexes.forEach(function (index) {
+                filteredData.features.data[index] =  capabilityData.getFeatureByIndex(filterValues.language, index);
+            });
         });
 
+
         let countFilterConstructs = Object.keys(filterValues.constructs).length;
+        let that = this;
         filteredData.constructs.data.forEach(function (construct, index) {
             if (construct !== undefined) {
                 var filterPredicate = (countFilterConstructs === 0) ? false : !filterValues.constructs.hasOwnProperty(construct.name);
                 if (filterPredicate || filteredData.groups.data[construct.groupIndex] === undefined) {
+                    // filter out unselected data
                     filteredData.constructs.data[index] = undefined;
+                    delete filterValues.constructs[construct.name];
+                } else if(Object.keys(filterValuesChanges.addedValues).length > 0) {
+                    that._updateFeaturesFilterValues(construct, capabilityData, filterValues);
                 }
             }
         });
 
+    }
+
+    _updateFeaturesFilterValues(construct, capabilityData, filterValues) {
+        // If a construct has been added, return to default setting by selecting all features
+        construct.featureIndexes.forEach(function (index) {
+            let feature = capabilityData.getFeatureByIndex(filterValues.language, index);
+            filterValues.features[feature.name] = {index: index};
+        });
     }
 
 

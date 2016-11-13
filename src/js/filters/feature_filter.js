@@ -49,10 +49,9 @@ export default class FeatureFilter extends Filter {
                 let constructIsFilteredOut = (filteredData.constructs.data[feature.constructIndex] === undefined);
                 if (feature !== undefined && (filterPredicate || constructIsFilteredOut)) {
                     filteredData.features.data[index] = undefined;
+                    delete filterValues.features[feature.name];
                 }
             }
         });
-
-
     }
 }

@@ -32,7 +32,6 @@ export class FCGFiltersComponent {
     updateDimensionData(dimensionData, removedData) {
         this.dimensionData = dimensionData;
         this._updateCheckboxForInstances(removedData);
-        this._renderAllCheckBoxes();
     }
 
     _createCheckboxForAll() {
@@ -69,25 +68,30 @@ export class FCGFiltersComponent {
         let newCheckBoxes = {};
 
         this.dimensionData.forEach(function (dimData) {
-            // Create new checkboxes or reuse existing ones
+            // Create new checkboxes or...
             if (that.allCheckBoxes[dimData.id] === undefined) {
                 newCheckBoxes[dimData.id] = that._createCheckboxInstance(dimData);
+                newCheckBoxes[dimData.id].onRenderingStarted();
             } else {
+                // ...use existing one
                 newCheckBoxes[dimData.id] = that.allCheckBoxes[dimData.id];
             }
+
+            newCheckBoxes[dimData.id].setChecked(false);
         });
+
+        // Return to default setting where only the checkbox 'ALL' is selected
+        this.checkBoxAll.setChecked(true);
 
         removedData.forEach(data => {
             let toRemove = that.allCheckBoxes[data.id];
-            if(toRemove !== undefined) toRemove.remove();
-        })
+            if(toRemove !== undefined){
+                toRemove.remove();
+            }
+            //delete that.filterValues[data.name];
+        });
 
-
-        // 1. add new checkboxes
-        //2. remove
-
-
-        that.allCheckBoxes = newCheckBoxes;
+        this.allCheckBoxes = newCheckBoxes;
     }
 
     _createCheckboxInstance(_dimensionData) {
@@ -128,14 +132,14 @@ export class FCGFiltersComponent {
                 that.filterValues[that.dimension][box.getValue()] = {index: box.getAttribute('value-index')};
                 box.setChecked(false);
             });
-        } else {
-
+        }  /*else {
+            console.log('_UNCHECK_____________');
             Object.keys(that.allCheckBoxes).forEach(key => {
                 let box = that.allCheckBoxes[key];
                 delete that.filterValues[that.dimension][box.getValue()];
                 box.setChecked(false);
             });
-        }
+        } */
 
         this._doFilter();
     }
@@ -199,6 +203,9 @@ export class FCGFiltersComponent {
     _doFilter() {
         let that = this;
         setTimeout(function () {
+            console.log('_____DO_FILTER');
+            console.log(that.filterValues);
+
             that.onFilter(that.filterValues);
         }, 100);
     }

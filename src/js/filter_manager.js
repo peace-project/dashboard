@@ -10,6 +10,7 @@ export default class FilterManager {
     constructor(capabilityData, testData, filteredData) {
         this.filters = [];
         this.filterValues = {};
+        this.oldFilterValues = {};
         this.capabilityData = capabilityData;
         this.testData = testData;
         this.filteredData = filteredData;
@@ -24,17 +25,18 @@ export default class FilterManager {
     addFilter(filter, defaultValue) {
         if (!this.filterValues.hasOwnProperty(filter)) {
 
-            if(defaultValue === undefined){
-               throw new Error('Filter must  have defaultValues');
+            if (defaultValue === undefined) {
+                throw new Error('Filter must  have defaultValues');
             }
 
             this.filterValues[filter.getName()] = defaultValue;
+            this.oldFilterValues[filter.getName()] = filter.copyFilterValues(defaultValue);
             this.filters.push(filter);
         }
     }
 
     getFilterValues() {
-        return this._copyFiltersValues();
+        return this.filterValues; //this._copyFiltersValues();
     }
 
 
@@ -53,26 +55,25 @@ export default class FilterManager {
         if (filter !== undefined) {
             let filterValuesChanges = {addedValues: [], removedValues: []};
 
-
             if (newFilterValues !== undefined && newFilterValues !== null) {
                 // We must copy the filterValues to manipulate them without any side-effects
-                let diffFilterValues = filter.copyFilterValues(that.filterValues[filterName]);
+                let diffFilterValues = filter.copyFilterValues(that.oldFilterValues[filterName]);
                 let diffNewFilterValues = filter.copyFilterValues(newFilterValues);
 
-                Object.keys(that.filterValues[filterName]).forEach(key => {
+                Object.keys(that.oldFilterValues[filterName]).forEach(key => {
                     if (newFilterValues.hasOwnProperty(key)) {
                         delete diffFilterValues[key];
                         delete diffNewFilterValues[key];
                     }
                 })
 
-
                 filterValuesChanges['addedValues'] = diffNewFilterValues;
                 filterValuesChanges['removedValues'] = diffFilterValues;
 
-                 that.filterValues[filterName] = filter.copyFilterValues(newFilterValues);
+                that.filterValues[filterName] = newFilterValues;
             }
 
+            that.oldFilterValues[filterName] = filter.copyFilterValues(that.filterValues[filterName]);
             filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues, filterValuesChanges);
         }
     }
@@ -80,6 +81,7 @@ export default class FilterManager {
     applyAllFilters() {
         var that = this;
         let filterValuesChanges = {addedValues: [], removedValues: []};
+        that.oldFilterValues = this._copyFiltersValues();
         this.filters.forEach(filter => {
             filter.applyFilter(that.capabilityData, that.testData, that.filteredData, that.filterValues, filterValuesChanges);
         });

@@ -159,10 +159,11 @@ function process(page) {
             dimensionData: filterManager.getFilteredData().groups.data,
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
+
                 filterManager.applyFilter(GroupFilter.Name(), newFilterValues.groups);
-                filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
+               filterManager.applyFilter(ConstructFilter.Name(), newFilterValues.constructs);
                 filterManager.applyFilter(FeatureFilter.Name(), newFilterValues.features);
-                filterManager.applyFilter(TestsFilter.Name());
+               filterManager.applyFilter(TestsFilter.Name());
 
                 let filteredConstructs = viewConverter.convertFilteredData('constructs', filterManager.getFilteredData().constructs.data,
                     capabilityData, langFilterValue);
@@ -171,8 +172,7 @@ function process(page) {
 
                 constructFilters.updateDimensionData(filteredConstructs.dimensionData, filteredConstructs.toRemove);
                 featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
-                console.log('############ filterManager.getFilteredData() ########');
-                console.log(filterManager.getFilteredData());
+
 
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
                 capabilityTableComponent.updateModel(viewModel);

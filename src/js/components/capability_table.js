@@ -41,8 +41,6 @@ export class CapabilityTableComponent extends RenderComponent {
 
         this.context = viewModel;
         this.context['featureTitleColspan'] = featureTitleColspan;
-        console.log('UPDATE------------------------------------');
-        console.log(this.context);
         if(!preventRendering || preventRendering == undefined){
             super.render();
         }
