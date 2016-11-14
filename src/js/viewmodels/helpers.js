@@ -17,3 +17,12 @@ export function groupEngineByName(engineArray){
             }
         }).value();
 }
+
+export function getCapabilityFromId(id) {
+    let idSplit = id.split('_');
+    if (idSplit < 1) {
+        console.error('Wrong featureId. Failed to decode capability');
+        return;
+    }
+    return idSplit[0].toLowerCase();
+}

@@ -4,7 +4,6 @@ import RenderComponent from "../render/render_component";
 import {jquery} from "jquery";
 import {groupEngineByName} from "../viewmodels/helpers";
 import CheckBoxDefault from "./check_box_default";
-import CheckBoxAll from "./check_box_all";
 
 
 export class EnginesFilterComponent extends RenderComponent {
