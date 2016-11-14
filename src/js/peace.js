@@ -59,7 +59,6 @@ function createDataModel(results) {
     results.forEach(function (row) {
         objResults[row.name] = row.result;
     });
-
     return new DataModel(objResults);
 
     /*rawData = {tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
@@ -84,6 +83,7 @@ function process(page) {
     }
     if (page === 'conformance' || page === 'expressiveness' || page === 'performance') {
         let capability = page;
+        console.log(rawData);
         let testData = new TestDataModel(rawData.getTestsByCapability(capability));
         let normalizedCapabilityData = normalizeByCapability(rawData, capability, testData.tests);
 
@@ -125,20 +125,12 @@ function process(page) {
 
 
         // Apply all filters
-        /*let langFilterValue = filterManager.getFilterValue(LanguageFilter.Name());
-        if (langFilterValue == undefined) {
-            console.error('Filter values of Filter: ' + LanguageFilter.Name() + ' is undefined');
-        }*/
-
         filterManager.applyAllFilters();
 
         let viewConverter = new ViewModelConverter();
         var viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
         filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
         let capabilityTableComponent = new CapabilityTableComponent(viewModel);
-        console.log('_________________');
-        console.log(viewModel);
-
 
 
         //TODO check if allEngines is undefined

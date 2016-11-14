@@ -30,14 +30,19 @@ let urls = {
 };
 
 export function fetchBetsyData() {
-    return Promise.all([fetchNamedData(urls.betsy.tests, 'tests'), fetchNamedData(urls.betsy.featureTree, 'featureTree'),
-        fetchNamedData(urls.betsy.engines, 'engines'), fetchNamedData(urls.betsy.independentTests, 'independentTests')]
+    return Promise.all([fetchNamedData(urls.betsy.tests, 'tests'),
+        fetchNamedData(urls.betsy.featureTree, 'featureTree'),
+        fetchNamedData(urls.betsy.engines, 'engines'),
+        fetchNamedData(urls.betsy.independentTests, 'independentTests')]
     )
 }
 
 export function fetchBenFlowData() {
-   return Promise.all([fetchData(urls.benchFlow.tests), fetchData(urls.benchFlow.featureTree),
-        fetchData(urls.benchFlow.engines), fetchData(urls.benchFlow.independentTests), fetchData(urls.benchFlow.metrics)]
+   return Promise.all([fetchNamedData(urls.benchFlow.tests, 'tests'),
+       fetchNamedData(urls.benchFlow.featureTree, 'featureTree'),
+       fetchNamedData(urls.benchFlow.engines, 'engines'),
+       fetchNamedData(urls.benchFlow.independentTests), 'independentTests',
+       fetchNamedData(urls.benchFlow.metrics, 'metrics')]
     );
 }
 
