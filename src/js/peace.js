@@ -4,7 +4,7 @@ import {fetchBetsyData} from './fetch'
 import {fetchBenFlowData} from './fetch'
 import DataModel from './model/data_model'
 import {normalizeByCapability} from "./normalizer";
-import FilterManager from "./filter_manager";
+import FilterManager from "./filters/filter_manager";
 import GroupFilter from "./filters/group_filter";
 import LanguageFilter from "./filters/language_filter";
 import EngineFilter from "./filters/engine_filter";
