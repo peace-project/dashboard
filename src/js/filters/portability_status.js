@@ -59,6 +59,12 @@ export default class PortabilityFilter extends ViewFilter {
                 construct.features[construct.features.length - 1]['lastFeature'] = true;
             } else {
                 if (!that._isConstructMatchingPortabilityStatus(construct, filterValues)) {
+
+                    if(viewModel.constructs[i].isFirstEntry){
+                        // If viewModel.constructs[i+1] is undefined than the whole group has been removed, so do nothing
+                        this._updateGroupFirstEntry(viewModel.constructs[i], viewModel.constructs[i+1]);
+                    }
+
                     viewModel.constructs.splice(i, 1);
                     summaryOutdated = true;
                     continue;
@@ -70,6 +76,13 @@ export default class PortabilityFilter extends ViewFilter {
             viewModel.updateSummaryRow();
         }
         console.log(viewModel);
+    }
+
+    _updateGroupFirstEntry(oldFirstEntryConstruct, newFirstEntryConstruct){
+        let gIndex = oldFirstEntryConstruct.groupIndex;
+        if(newFirstEntryConstruct !== undefined && newFirstEntryConstruct.groupIndex === gIndex){
+            newFirstEntryConstruct.isFirstEntry = true;
+        }
     }
 
 
