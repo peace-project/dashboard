@@ -54,7 +54,6 @@ export class EnginesFilterComponent extends RenderComponent {
     }
 
     onRendering(){
-        console.log('___onRendering');
         let that = this;
         Object.keys(this.allCheckBoxes).forEach(elemId => {
             that.allCheckBoxes[elemId].onRenderingStarted();

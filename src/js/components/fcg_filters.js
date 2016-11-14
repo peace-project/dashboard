@@ -16,21 +16,17 @@ export class FCGFiltersComponent {
     _init() {
         this._createCheckboxForAll();
         this._createCheckboxForInstances();
-
-        this.checkBoxAll.onRenderingStarted();
-        this._renderAllCheckBoxes();
-    }
-
-    _renderAllCheckBoxes() {
-        let that = this;
-        Object.keys(this.allCheckBoxes).forEach(elemId => {
-            that.allCheckBoxes[elemId].onRenderingStarted();
-        });
     }
 
     updateDimensionData(dimensionData, removedData) {
         this.dimensionData = dimensionData;
-        this._updateCheckboxForInstances(removedData);
+        if(removedData === undefined || removedData === null){
+            this._clearCheckboxForInstances();
+            this._createCheckboxForInstances();
+            this.checkBoxAll.setChecked(true);
+        } else {
+            this._updateCheckboxForInstances(removedData);
+        }
     }
 
     _createCheckboxForAll() {
@@ -53,29 +49,39 @@ export class FCGFiltersComponent {
                 }
             }
         );
+
+        this.checkBoxAll.onRenderingStarted();
+    }
+
+    _clearCheckboxForInstances() {
+        let that = this;
+        Object.keys(this.allCheckBoxes).forEach(elemId => {
+            that.allCheckBoxes[elemId].remove();
+        });
+        this.allCheckBoxes = {};
     }
 
     _createCheckboxForInstances() {
         let that = this;
         this.dimensionData.forEach(function (dimData) {
             that.allCheckBoxes[dimData.id] = that._createCheckboxInstance(dimData);
+            //that.allCheckBoxes[dimData.id].onRenderingStarted();
         });
     }
 
     _updateCheckboxForInstances(removedData) {
-        let that = this;
         let newCheckBoxes = {};
 
+        let that = this;
         this.dimensionData.forEach(function (dimData) {
             // Create new checkboxes or...
             if (that.allCheckBoxes[dimData.id] === undefined) {
                 newCheckBoxes[dimData.id] = that._createCheckboxInstance(dimData);
-                newCheckBoxes[dimData.id].onRenderingStarted();
+               // newCheckBoxes[dimData.id].onRenderingStarted();
             } else {
                 // ...use existing one
                 newCheckBoxes[dimData.id] = that.allCheckBoxes[dimData.id];
             }
-
             newCheckBoxes[dimData.id].setChecked(false);
         });
 
@@ -83,9 +89,11 @@ export class FCGFiltersComponent {
         this.checkBoxAll.setChecked(true);
 
         removedData.forEach(data => {
-            let toRemove = that.allCheckBoxes[data.id];
-            if(toRemove !== undefined){
-                toRemove.remove();
+            if(data != undefined){
+                let toRemove = that.allCheckBoxes[data.id];
+                if(toRemove !== undefined){
+                    toRemove.remove();
+                }
             }
             //delete that.filterValues[data.name];
         });
@@ -96,7 +104,7 @@ export class FCGFiltersComponent {
     _createCheckboxInstance(_dimensionData) {
         let that = this;
         let elem = 'input[data-dimension~="' + that.dimension + '"][value="' + _dimensionData.name + '"]';
-        return new CheckBoxDefault(this, {
+        let checkbox = new CheckBoxDefault(this, {
                 dimensionName: that.dimension,
                 elem: elem,
                 is: that.dimension + '-instance',
@@ -113,6 +121,9 @@ export class FCGFiltersComponent {
                 }
             }
         );
+
+        checkbox.onRenderingStarted();
+        return checkbox;
     }
 
     _selectAll(checkbox) {

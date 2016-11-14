@@ -54,6 +54,9 @@ export default class CheckBoxDefault extends RenderComponent {
     }
 
     setChecked(checked){
+        if(this.inputElement === undefined){
+            throw Error('inputElement is undefined');
+        }
         this.inputElement.checked = checked;
         //$(this.options.elem).prop("checked", checked);
     }
