@@ -171,6 +171,9 @@ export class EnginesFilterComponent extends RenderComponent {
             this.filterValues.engines = this.latestVersionValues;
             this._updateCheckedProperties();
             this._doFilter();
+        } else {
+            // When checked, Latest versions checkbox must act as a read-only checkbox
+            checkbox.setChecked(true);
         }
     }
 
