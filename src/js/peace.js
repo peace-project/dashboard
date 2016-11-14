@@ -19,6 +19,7 @@ import {EnginesFilterComponent} from "./components/engines_filters";
 import {FCGFiltersComponent} from "./components/fcg_filters";
 import PortabilityFilterComponent from "./components/portability_filter";
 import {PortabilityStatus} from "./filters/portability_status";
+import LanguageFilterComponent from "./components/language_filter";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -119,29 +120,66 @@ function process(page) {
         filterManager.addFilter(constructFilter, constructFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(featureFilter, featureFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(testsFilter, testData.getAll());
-
         let portabilityFilter = new PortabilityFilter();
         filterManager.addViewModelFilter(portabilityFilter, portabilityFilter.getDefaultFilterValues());
 
+
+        // Apply all filters
         let langFilterValue = filterManager.getFilterValue(LanguageFilter.Name());
         if (langFilterValue == undefined) {
             console.error('Filter values of Filter: ' + LanguageFilter.Name() + ' is undefined');
         }
-
         filterManager.applyAllFilters();
 
         let viewConverter = new ViewModelConverter();
         var viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, langFilterValue);
-
         filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
-
         let capabilityTableComponent = new CapabilityTableComponent(viewModel);
+
+
 
         //TODO check if allEngines is undefined
         let allEngines = capabilityData.getEnginesByLanguage(filterManager.getFilterValues().language);
         let latestVersionValues = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(filterManager.getFilterValues().language));
 
-        let filterComponent = new EnginesFilterComponent({
+
+        new LanguageFilterComponent({
+            filterValues: filterManager.getFilterValues(),
+            onFilter: function (newFilterValues) {
+
+               // langFilterValue = filterManager.getFilterValue(LanguageFilter.Name());
+                filterManager.applyFilter(LanguageFilter.Name(), newFilterValues);
+
+                latestVersionValues = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(newFilterValues));
+                filterManager.getFilterValues().engines = latestVersionValues;
+
+                filterManager.applyFilter(EngineFilter.Name());
+                filterManager.applyFilter(TestsFilter.Name());
+
+
+                // Update filter components
+                allEngines = capabilityData.getEnginesByLanguage(newFilterValues);
+
+                engineFilterComponent.updateModel({
+                    engines: allEngines.data,
+                    latestVersionValues: latestVersionValues,
+                    filterValues: filterManager.getFilterValues()
+                });
+
+
+                console.log('____________________');
+
+                console.log(filterManager.getFilteredData());
+                console.log(filterManager.getFilterValues());
+
+                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, newFilterValues);
+                filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
+                capabilityTableComponent = new CapabilityTableComponent(viewModel);
+            }
+        });
+
+
+        var engineFilterComponent = new EnginesFilterComponent({
             viewModel: {
                 engines: allEngines.data,
                 latestVersionValues: latestVersionValues,
@@ -244,6 +282,8 @@ function process(page) {
             }
 
         });
+
+
 
 
         //filteredData['independentTests'] = _.where(rawData.independentTests, {language: langFilterValue});

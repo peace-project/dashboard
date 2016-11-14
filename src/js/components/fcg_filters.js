@@ -13,7 +13,6 @@ export class FCGFiltersComponent {
         this._init();
     }
 
-
     _init() {
         this._createCheckboxForAll();
         this._createCheckboxForInstances();

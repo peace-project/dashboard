@@ -12,14 +12,12 @@ export default class PortabilityFilterComponent {
 
         $(elem).each(function (index) {
             $(this).on('change', function (event) {
-                console.log('change');
                 if ($(this).is(':checked')) {
                     that.filterValues['portability_status'] = $(this).val();
                     that._doFilter();
                 }
             });
         });
-
     }
 
     _doFilter() {

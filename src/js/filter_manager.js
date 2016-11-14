@@ -67,16 +67,29 @@ export default class FilterManager {
             let filterValuesChanges = {addedValues: [], removedValues: []};
 
             if (newFilterValues !== undefined && newFilterValues !== null) {
-                // We must copy the filterValues to manipulate them without any side-effects
-                let diffFilterValues = filter.copyFilterValues(that.oldFilterValues[filterName]);
-                let diffNewFilterValues = filter.copyFilterValues(newFilterValues);
 
-                Object.keys(that.oldFilterValues[filterName]).forEach(key => {
-                    if (newFilterValues.hasOwnProperty(key)) {
-                        delete diffFilterValues[key];
-                        delete diffNewFilterValues[key];
-                    }
-                })
+                let diffFilterValues;
+                let diffNewFilterValues;
+
+                    // We must copy the filterValues to manipulate them without any side-effects
+                    diffFilterValues = filter.copyFilterValues(that.oldFilterValues[filterName]);
+                    diffNewFilterValues = filter.copyFilterValues(newFilterValues);
+
+
+                if(Array.isArray(newFilterValues)){
+                    Object.keys(that.oldFilterValues[filterName]).forEach(key => {
+                        if (newFilterValues.hasOwnProperty(key)) {
+                            delete diffFilterValues[key];
+                            delete diffNewFilterValues[key];
+                        }
+                    });
+                } else  {
+                    // Must be single type value (String, Number, Boolean, Object or Symbol)
+                    // So removedValues = oldFilterValues and addedValues = newFilterValues
+                    console.log('#####################################');
+                    console.log(that.oldFilterValues);
+                    console.log(newFilterValues);
+                }
 
                 filterValuesChanges['addedValues'] = diffNewFilterValues;
                 filterValuesChanges['removedValues'] = diffFilterValues;

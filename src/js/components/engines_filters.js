@@ -16,7 +16,11 @@ export class EnginesFilterComponent extends RenderComponent {
         this.engines;
         this.checkBoxLastestVersion;
 
-        this.updateModel(options.viewModel);
+        this.filterValues = options.viewModel.filterValues;
+        this.latestVersionValues = options.viewModel.latestVersionValues;
+        this.engines = options.viewModel.engines;
+        this.context['engines'] = groupEngineByName(this.engines);
+
         this._init();
         super.render();
     }
@@ -33,11 +37,25 @@ export class EnginesFilterComponent extends RenderComponent {
         this.latestVersionValues = viewModel.latestVersionValues;
         this.engines = viewModel.engines;
         this.context['engines'] = groupEngineByName(this.engines);
+
+        this.allCheckBoxes = {};
+        this._createCheckboxesForAll();
+        this._createCheckBoxesForInstance();
+
+        super.render();
     }
 
     onRenderingStarted() {
         let that = this;
         this.checkBoxLastestVersion.onRenderingStarted();
+        Object.keys(this.allCheckBoxes).forEach(elemId => {
+            that.allCheckBoxes[elemId].onRenderingStarted();
+        });
+    }
+
+    onRendering(){
+        console.log('___onRendering');
+        let that = this;
         Object.keys(this.allCheckBoxes).forEach(elemId => {
             that.allCheckBoxes[elemId].onRenderingStarted();
         });
