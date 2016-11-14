@@ -136,6 +136,8 @@ function process(page) {
         var viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
         filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
         let capabilityTableComponent = new CapabilityTableComponent(viewModel);
+        console.log('_________________');
+        console.log(viewModel);
 
 
 
@@ -153,8 +155,6 @@ function process(page) {
                 filterManager.getFilterValues().groups = groupFilter.getDefaultFilterValues(newFilterValues, capabilityData);
                 filterManager.getFilterValues().constructs = constructFilter.getDefaultFilterValues(newFilterValues, capabilityData);
                 filterManager.getFilterValues().features = featureFilter.getDefaultFilterValues(newFilterValues, capabilityData);
-
-                //filterManager.applyAllFilters();
 
                 filterManager.applyFilter(LanguageFilter.Name(), newFilterValues);
                 filterManager.applyFilter(EngineFilter.Name());

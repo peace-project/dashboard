@@ -5,7 +5,7 @@
             <th rowspan="3" class="group-col th-last-child">Group</th>
             <th rowspan="3" class="construct-col th-last-child">Pattern</th>
             <th rowspan="3" class="standard-col th-last-child"> {{language}} Standard</th>
-            <th class="text-center engine-col" colspan="{{engines.count}}">Engine</th> 
+            <th class="text-center engine-col" colspan="{{enginesCount}}">Engine</th>
         </tr>
         <tr>
              {{#each engines}}
@@ -16,7 +16,7 @@
             {{#each engines}}
                 {{#each instances}}
                     <th class="cell-version engine-col-{{@../index}}">
-                         <a role="button" tabindex="0" data-engine-info="{{indexEngine}}" class="engine-info" >
+                         <a role="button" tabindex="0" data-engine-info="{{index}}" class="engine-info" >
                      {{versionLong}}</a></th>
                 {{/each}}
             {{/each}}
@@ -26,8 +26,8 @@
     <tbody>
         <tr>
             <td class="border-top">∑</td>
-            <td class="construct-col">{{tests.length}}</td>
-            <td class="standard-col">{{tests.length}}</td>
+            <td class="construct-col">{{constructs.length}}</td>
+            <td class="standard-col">{{constructs.length}}</td>
 
               {{#each engines}}
                 {{#each instances}}
@@ -36,8 +36,7 @@
             {{/each}}           
         </tr>
 
-
-        {{#each tests}} 
+        {{#each constructs}}
                 <tr {{# if features.length}} class="collapse-parent-row" data-toggle="collapse" data-target=".row-feat-{{@../index}}{{@index}}" {{/if}} >
 
                     <td {{#if isFirstEntry}}class="border-top"{{/if}}>{{#if isFirstEntry}} <div>{{groupName}} <a title="{{groupDesc}}" data-toggle="tooltip" class="group-info">
@@ -96,7 +95,7 @@
                         <td class="collapse-feature-cell">
                             <div class="collapse-cell-border">
                                     <p>{{name}}
-                                    <a role="button" tabindex="0" data-feature-info="{{featureIndex}}" class="info-feature">
+                                    <a role="button" tabindex="0" data-feature-info="{{index}}" class="info-feature">
                                     <span class="entypo-help-circled"></span>
                                     </a>
                                 </p>
@@ -109,7 +108,7 @@
                                 <td class="result">
                                 {{#getProperty ../../results id}}
                                     {{#if html}}
-                                        <a role="button" tabindex="0" data-test-info="{{../../../../featureIndex}}" data-test-engine="{{../../id}}"  class="info-engine-test" >
+                                        <a role="button" tabindex="0" data-test-info="{{../../../../index}}" data-test-engine="{{../../id}}"  class="info-engine-test" >
                                          <span class="{{html_class}}">{{html}}</span>
                                         </a>
                                     {{/if}}

@@ -34,6 +34,7 @@ export default class Feature {
         this.testIndexes.forEach(function (testIndex) {
             var test = tests[testIndex];
             if (test !== undefined) {
+
                 if (test.result !== undefined && test.result.testResult !== undefined) {
                     that.results[test.engineID] = new TestResult(test, that); // test.result;
                 }
