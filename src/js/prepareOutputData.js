@@ -216,8 +216,10 @@ export function prepareHtmlData(capability, filteredData, dataFilters, tests){
             feature.testIndexes.forEach( function(testIndex){
                 var test = data.tests[testIndex];
                 if (test !== undefined && hasEngineID(test)){
+
                     feature['results'][test.engineID] = test.result;
                     var isFirstEntry = true;
+
                     for (var key in test.result) {
                         if (test.result.hasOwnProperty(key)) {
 

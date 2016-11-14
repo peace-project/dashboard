@@ -1,7 +1,7 @@
 import {shallowCopy} from "../utils";
 
 //Use for clone/copy and to introduce index
-export default class TestDataModel  {
+export default class DefaultTestData  {
 
     constructor(tests){
         let that = this;

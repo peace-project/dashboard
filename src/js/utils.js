@@ -20,6 +20,14 @@ export function shallowCopy(array){
     return copy;
 }
 
+export function copyShallowObject(object){
+    var copy = {};
+    Object.keys(object).forEach(key => {
+        copy[key] = object[key];
+    });
+    return copy;
+}
+
 if (!String.prototype.trim) {
     String.prototype.trim = function () {
         return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');

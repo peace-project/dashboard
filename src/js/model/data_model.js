@@ -36,6 +36,6 @@ export default class DataModel {
     }
 
     getMetrics() {
-        return this.metrics;
+        return this.metrics[0];
     }
 }

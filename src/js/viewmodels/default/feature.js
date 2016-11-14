@@ -5,7 +5,7 @@ import {getCapabilityFromId} from "../helpers";
 export default class Feature {
     constructor(feature, tests) {
         this.lastFeature = false;
-        this.results = {} //TestResult
+        this.results = {} ;
 
         let that = this;
         Object.keys(feature).forEach(key => {
@@ -34,7 +34,6 @@ export default class Feature {
         this.testIndexes.forEach(function (testIndex) {
             var test = tests[testIndex];
             if (test !== undefined) {
-
                 if (test.result !== undefined && test.result.testResult !== undefined) {
                     that.results[test.engineID] = new TestResult(test, that); // test.result;
                 }

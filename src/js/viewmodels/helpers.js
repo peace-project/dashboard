@@ -1,11 +1,11 @@
 
+var sortVersionAscending = function (a, b) {
+    return a.id.localeCompare(b.id);
+}
+
 export function groupEngineByName(engineArray){
 
-    var sortVersionAscending = function (a, b) {
-        return a.id.localeCompare(b.id);
-    }
-
-    return _.chain(engineArray)
+    let groupEngine = _.chain(engineArray)
         .filter(function(eng){return eng !== undefined})
         .groupBy('name')
         .map(function(val, key){
@@ -16,6 +16,10 @@ export function groupEngineByName(engineArray){
                 instances: instances
             }
         }).value();
+
+
+    groupEngine['instancesCount'] = groupEngine.map(eng => eng.instances.length).reduce((a, b) => a + b, 0);
+    return groupEngine;
 }
 
 export function getCapabilityFromId(id) {

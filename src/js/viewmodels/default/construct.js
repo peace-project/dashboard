@@ -50,8 +50,7 @@ export default class Construct {
                 return;
             }
 
-            //let that = this;
-
+            // Update support status
             Object.keys(viewFeature.results).forEach(function (engineId) {
                 let testResult = viewFeature.results[engineId];
                 that._updateSupportStatus(testResult, capability);

@@ -1,14 +1,14 @@
 'use strict';
 
-import ViewModel from "../viewmodels/default_view_model";
 import ViewFilter from "./view_filter";
+import DefaultViewModel from "../viewmodels/default_view_model";
 
 export const PortabilityStatus = {
     ALL: '0',
     ONLY: '1',
     WITH: '2',
     NOT_SAME: '3'
-}
+};
 
 export default class PortabilityFilter extends ViewFilter {
     constructor() {
@@ -26,8 +26,8 @@ export default class PortabilityFilter extends ViewFilter {
     applyFilter(viewModel, filterValues) {
         console.log('Apply ' + this.getName() + ' filter');
 
-        if (!(viewModel instanceof ViewModel)) {
-            throw Error('filteredData is not of type ViewModel. filteredData=' + viewModel.constructor.name);
+        if (!(viewModel instanceof DefaultViewModel)) {
+            throw Error('filteredData is not of type DefaultViewModel. filteredData=' + viewModel.constructor.name);
         }
         let that = this;
 

@@ -1,13 +1,22 @@
-import ViewModel from "../viewmodels/default_view_model";
+import DefaultViewModel from "../viewmodels/default_view_model";
+import PerformanceViewModel from "../viewmodels/performance_view_model";
+import {isPerformanceCapability} from "../peace";
+import {isConformanceCapability} from "../peace";
+import {isExpressivenessCapability} from "../peace";
 
 export default class ViewModelConverter{
     constructor() {
     }
 
     convert(filteredData, capability, language) {
-        return new ViewModel(filteredData, capability, language);
-    }
+        if(isConformanceCapability(capability) || isExpressivenessCapability(capability)){
+            return new DefaultViewModel(filteredData, capability, language);
 
+        } else if(isPerformanceCapability(capability)) {
+            return new PerformanceViewModel(filteredData, capability, language);
+
+        }
+    }
 
     convertFilteredData(dimension, filteredDimensionData, capabilityData, language) {
         let toRemove = [];

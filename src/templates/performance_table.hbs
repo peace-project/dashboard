@@ -3,7 +3,7 @@
     <thead>
         <tr>
             <th rowspan="4" colspan="2" class="construct-col th-last-child">Experiment</th>
-            <th class="text-center engine-col" colspan="{{math engines.count "*" 4}}">Engine</th>
+            <th class="text-center engine-col" colspan="{{math engines.instancesCount "*" 4}}">Engine</th>
         </tr>
         <tr>
              {{#each engines}}
@@ -14,7 +14,7 @@
             {{#each engines}}
                 {{#each instances}}
                     <th class="cell-version engine-col-{{@../index}}" colspan="4">
-                         <a role="button" tabindex="0" data-engine-info="{{indexEngine}}" class="engine-info" >
+                         <a role="button" tabindex="0" data-engine-info="{{index}}" class="engine-info" >
                      {{versionLong}}</a></th>
                 {{/each}}
             {{/each}}
@@ -23,7 +23,7 @@
     </thead>
     <tbody>
 
-        {{#each tests}}
+        {{#each constructs}}
 
             {{#each features.[0].metricTree}}
 
@@ -33,7 +33,7 @@
                     <td class="construct-col" colspan=2>
                        <div>
                            <span class="entypo-right-open"></span>{{../../name}}
-                            <a role="button" tabindex="0" data-toggle="tooltip" data-feature-info="{{../../features.[0].featureIndex}}" class="info-exp-feature">
+                            <a role="button" tabindex="0" data-toggle="tooltip" data-feature-info="{{../../features.[0].index}}" class="info-exp-feature">
                                 <span class="entypo-help-circled"></span>
                             </a>
                         </div>
@@ -44,7 +44,7 @@
                  <td class="construct-col" colspan=4>
                      <div>
 
-                     <a role="button" tabindex="0"  data-test-info="{{../../../../features.[0].featureIndex}}" data-test-engine="{{id}}" class="info-performance-test">
+                     <a role="button" tabindex="0"  data-test-info="{{../../../../features.[0].index}}" data-test-engine="{{id}}" class="info-performance-test">
                      <span class="entypo-help-circled"></span>
                  </a></div></td>
                  {{/each}}
@@ -85,7 +85,7 @@
                                             {{#if_eq ../../../../../metric "throughput"}}
 
                                               <td class="result-last" colspan="4">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
                                                     {{#getProperty this ../../../../../../metric}}
                                                            {{#if this.max includeZero=true}} {{this.max}} {{else}}--{{/if}}
                                                       {{/getProperty}}
@@ -95,14 +95,14 @@
 
                                              {{else}}
                                                 <td class="result">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
                                                     {{#getProperty this ../../../../../../metric}}
                                                            {{#if this.min includeZero=true}} {{this.min}} {{else}}--{{/if}}
                                                       {{/getProperty}}
                                                     </a>
                                                 </td>
                                                  <td class="result">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
                                                     {{#getProperty this ../../../../../../metric}}
                                                         {{#if this.max includeZero=true}} {{this.max}} {{else}}--{{/if}}
                                                       {{/getProperty}}
@@ -110,14 +110,14 @@
                                                     </a>
                                                 </td>
                                                 <td class="result">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
                                                     {{#getProperty this ../../../../../../metric}}
                                                         {{#if this.avg±ci includeZero=true}} {{this.avg±ci}} {{else}}--{{/if}}
                                                     {{/getProperty}}
                                                     </a>
                                                 </td>
                                                  <td class="result-last">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
                                                     {{#getProperty this ../../../../../../metric}}
                                                         {{#if this.sd includeZero=true}} {{this.sd}} {{else}}--{{/if}}
                                                     {{/getProperty}}
