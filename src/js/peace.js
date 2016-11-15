@@ -1,8 +1,7 @@
 'use strict';
 
-import {fetchBetsyData} from './fetch'
-import {fetchBenFlowData} from './fetch'
-import DataModel from './model/data_model'
+import {fetchBetsyData, fetchBenFlowData} from "./fetch";
+import DataModel from "./model/data_model";
 import {normalizeByCapability} from "./normalizer";
 import FilterManager from "./filters/filter_manager";
 import GroupFilter from "./filters/group_filter";
@@ -10,18 +9,18 @@ import LanguageFilter from "./filters/language_filter";
 import EngineFilter from "./filters/engine_filter";
 import ConstructFilter from "./filters/construct_filter";
 import FeatureFilter from "./filters/feature_filter";
-import PortabilityFilter from "./filters/portability_status";
-import ViewModelConverter from "./filters/view_model_converter";
+import PortabilityFilter, {PortabilityStatus} from "./filters/portability_status";
+import ViewModelConverter from "./viewmodels/view_model_converter";
 import TestsFilter from "./filters/tests_filter";
 import {CapabilityTableComponent} from "./components/capability_table";
-import {EnginesFilterComponent} from "./components/engines_filters";
-import {FCGFiltersComponent} from "./components/fcg_filters";
-import PortabilityFilterComponent from "./components/portability_filter";
-import {PortabilityStatus} from "./filters/portability_status";
-import LanguageFilterComponent from "./components/language_filter";
+import {EnginesFilterComponent} from "./components/filters/engines_filters";
+import {FCGFiltersComponent} from "./components/filters/fcg_filters";
+import PortabilityFilterComponent from "./components/filters/portability_filter";
+import LanguageFilterComponent from "./components/filters/language_filter";
 import DefaultTestData from "./model/test_data";
 import PerformanceTestData from "./model/performance_test_data";
-import EngineInfoPopover from "./components/engine_info_popover";
+import EngineInfoPopover from "./components/popovers/engine_info";
+import DefaultResultPopover from "./components/popovers/default_result";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -175,6 +174,12 @@ function process(page) {
 
         let capabilityTableComponent = new CapabilityTableComponent(viewModel);
 
+
+        console.log(viewModel);
+
+
+
+
         //TODO check if allEngines is undefined
         let allEngines = capabilityData.getEnginesByLanguage(filterManager.getFilterValues().language);
         let latestVersionValues = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(filterManager.getFilterValues().language));
@@ -309,9 +314,6 @@ function process(page) {
                     let filteredFeatures = viewConverter.convertFilteredData('features', filterManager.getFilteredData().features.data,
                         capabilityData, filterManager.getFilterValues().language);
 
-                    console.log('__________filteredConstructs');
-                    console.log(filteredFeatures.toRemove);
-
                     featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
 
                     // ViewModels
@@ -356,11 +358,20 @@ function process(page) {
                 }
 
             });
+
+
+            new DefaultResultPopover({
+                capability: capability,
+                features: filterManager.getFilteredData().features.data,
+                tests: filterManager.getFilteredData().tests
+            });
+
         }
 
         new EngineInfoPopover({
             engines:  filterManager.getFilteredData().engines.data
         });
+
 
 
 

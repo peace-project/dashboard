@@ -1,10 +1,10 @@
 'use strict';
 
-import RenderComponent from "../render/render_component";
+import RenderComponent from "../../render/render_component";
 import {jquery} from "jquery";
-import {groupEngineByName} from "../viewmodels/helpers";
-import CheckBoxDefault from "./check_box_default";
-import {shallowCopy} from "../utils";
+import {groupEngineByName} from "../../viewmodels/helpers";
+import CheckBoxDefault from "../check_box_default";
+import {shallowCopy} from "../../utils";
 
 
 export class EnginesFilterComponent extends RenderComponent {

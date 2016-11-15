@@ -1,5 +1,5 @@
-import RadioButtonDefault from "./radio_button_default";
-import {_sortBy} from "../utils";
+import RadioButtonDefault from "../radio_button_default";
+import {_sortBy} from "../../utils";
 
 export default class LanguageFilterComponent {
     constructor(options) {

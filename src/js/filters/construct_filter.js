@@ -21,12 +21,9 @@ export default class ConstructFilter extends Filter {
         return values;
     }
 
-
-
     getDefaultFilterValues(language, data){
         return this.createFilterValues(data.getAllConstructsByLanguage(language).data);
     }
-
 
     applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges) {
         console.log('Apply Construct filter');
@@ -39,7 +36,6 @@ export default class ConstructFilter extends Filter {
             console.error('No constructs capabilityData to filter');
             return;
         }
-
 
         Object.keys(filterValuesChanges.addedValues).forEach(key => {
             let filterValue = filterValuesChanges.addedValues[key];

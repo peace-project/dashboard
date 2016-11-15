@@ -1,5 +1,5 @@
-import {groupEngineByName} from "./helpers";
-import Construct from "./default/construct";
+import {groupEngineByName} from "../helpers";
+import Construct from "./construct";
 
 export default class DefaultViewModel {
     constructor(data, capability, language) {

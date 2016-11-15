@@ -5,7 +5,6 @@ export default class ViewFilter {
         this.name = name;
     }
 
-
     getName() {
         return this.name;
     }

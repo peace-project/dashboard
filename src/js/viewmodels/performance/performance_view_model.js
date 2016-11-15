@@ -1,5 +1,5 @@
-import {groupEngineByName} from "./helpers";
-import Construct from "./performance/construct";
+import {groupEngineByName} from "../helpers";
+import Construct from "./construct";
 
 export default class PerformanceViewModel {
     constructor(data, capability, language) {

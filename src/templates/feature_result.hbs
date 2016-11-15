@@ -23,14 +23,14 @@
     <tbody>
         <tr>
             <td>Deployable</td> 
-            <td class="test-desc-val tresult-{{test.testDeployable}}">
-            <span>{{test.testDeployableHtml}}</span> 
-            {{test.testDeployable}} </td>
+            <td class="test-desc-val tresult-{{test.result.testDeployable}}">
+            <span>{{test.result.testDeployableHtml}}</span>
+            {{test.result.testDeployable}} </td>
         </tr>
         <tr>
             <td>Successful</td>
-            <td class="test-desc-val tresult-{{test.testSuccessful}}">
-            <span>{{test.testSuccessfulHtml}}</span> {{test.testSuccessful}}</td>
+            <td class="test-desc-val tresult-{{test.result.testSuccessful}}">
+            <span>{{test.result.testSuccessfulHtml}}</span> {{test.result.testSuccessful}}</td>
         </tr>   
         <tr>
             <td>Execution duration </td> 
@@ -67,9 +67,9 @@
 </table> 
 
 <h3 class="test-desc-title">Engine Dependent Files</h3>
-{{#if test.engineDependentFiles.length}}
+{{#if test.engineDependentFilePaths.length}}
 <ul class="list-files"> 
-   {{#each test.engineDependentFiles}}
+   {{#each test.engineDependentFilePaths}}
         <li><span class="entypo-doc-text"></span><a target="_blank" href="data/{{url}}">{{title}}</a></li>
     {{/each}}
 </ul>
@@ -78,9 +78,9 @@
 {{/if}}
 
 <h3 class="test-desc-title">Log files</h3>
-{{#if test.logFiles.length}}
+{{#if test.logFilePaths.length}}
 <ul class="list-files">
-    {{#each test.logFiles}}
+    {{#each test.logFilePaths}}
         <li><span class="entypo-doc-text"></span><a target="_blank" href="data/{{url}}">{{title}}</a></li>
     {{/each}}
 </ul>

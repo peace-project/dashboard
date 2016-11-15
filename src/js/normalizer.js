@@ -114,11 +114,21 @@ function createNormalizedFeature(feature, group, tests, gIndex, currentConstruct
         groupIndex: gIndex,
         constructIndex: currentConstructIndex,
         featureIndex: currentFeatureIndex,
-        testIndexes: featureTests.map(obj => obj.index) //getTestIndexesByFeatureID(tests, feature.id)
+        testIndexes: featureTests.map(obj => obj.index),
+        testIndexesEngine: testIndexesByEngines(featureTests)
+        //getTestIndexesByFeatureID(tests, feature.id)
     };
-
-
 }
+
+function testIndexesByEngines(featureTests){
+    let obj = {};
+    featureTests.forEach(test => {
+        obj[test.engineID] = test.index;
+    });
+    return obj;
+}
+
+
 
 function createNormalizedConstruct(construct, group, gIndex, start, end) {
     return {

@@ -534,7 +534,7 @@ export function prepareHtmlData(capability, filteredData, dataFilters, tests){
     }
 
 
-    export function createLinkFromPaths(paths){
+    function createLinkFromPaths(paths){
         if(!$.isArray(paths)) { return undefined;}
         return paths.map(function(file){ return {title: getTitleFromPath(file), url: file}});
     }

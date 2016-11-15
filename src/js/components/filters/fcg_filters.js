@@ -1,6 +1,6 @@
 'use strict';
 
-import CheckBoxDefault from "./check_box_default";
+import CheckBoxDefault from "../check_box_default";
 
 export class FCGFiltersComponent {
     constructor(options) {

@@ -407,6 +407,7 @@ import {renderFeaturePopover} from "./render/render";
 
     }      
 
+    /*
   export function buildEngineInfoPopover(){
         $('[data-engine-info].engine-info').popover({
             trigger: 'hover',
@@ -429,7 +430,7 @@ import {renderFeaturePopover} from "./render/render";
             });
         });
 
-    }
+    }*/
 
   export function buildEngineInfoPopoverContent(engineIndex, filteredData){
         return renderEngineInfoPopover(filteredData.engines[engineIndex]);

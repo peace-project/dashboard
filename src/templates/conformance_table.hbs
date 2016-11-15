@@ -107,7 +107,9 @@
                                 <td class="result">
                                 {{#getProperty ../../results id}}
                                     {{#if html}}
-                                        <a role="button" tabindex="0" data-test-info="{{../../../../index}}" data-test-engine="{{../../id}}"  class="info-engine-test">
+                                        {{#getProperty ../../../../testIndexesEngine ../../id}}
+                                        <a role="button" tabindex="0" data-test-index="{{this}}" data-feature-index="{{../../../../../index}}"  class="info-engine-test">
+                                        {{/getProperty}}
                                         <span class="{{html_class}}">{{html}}</span>
                                         </a>
                                     {{/if}}

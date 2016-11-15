@@ -58,7 +58,8 @@ export default class NormalizedDataContainer {
                     groupName: val.name,
                     groupIndex: val.groupIndex,
                     constructIndex: val.constructIndex,
-                    testIndexes: val.testIndexes
+                    testIndexes: val.testIndexes,
+                    testIndexesEngine: val.testIndexesEngine
                 };
             });
         } else if (this.dimension === DataDimension.ENGINES) {

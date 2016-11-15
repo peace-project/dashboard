@@ -1,5 +1,5 @@
-import DefaultViewModel from "../viewmodels/default_view_model";
-import PerformanceViewModel from "../viewmodels/performance_view_model";
+import DefaultViewModel from "./default/default_view_model";
+import PerformanceViewModel from "./performance/performance_view_model";
 import {isPerformanceCapability} from "../peace";
 import {isConformanceCapability} from "../peace";
 import {isExpressivenessCapability} from "../peace";

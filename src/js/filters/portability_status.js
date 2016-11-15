@@ -1,7 +1,7 @@
 'use strict';
 
 import ViewFilter from "./view_filter";
-import DefaultViewModel from "../viewmodels/default_view_model";
+import DefaultViewModel from "../viewmodels/default/default_view_model";
 
 export const PortabilityStatus = {
     ALL: '0',
