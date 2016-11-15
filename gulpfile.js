@@ -154,7 +154,7 @@ function watch() {
     gulp.watch('src/**/*.html', ['pages', browserSync.reload]);
     gulp.watch('src/sass/**/*.scss', ['styles' , browserSync.reload]);
     gulp.watch('src/**/*.js', ['scripts', browserSync.reload]);
-    gulp.watch('lib/**', ['lib', browserSync.reload]);
+    gulp.watch('lib/**', [browserSync.reload]);
     gulp.watch('src/templates/**/*.hbs', ['templates', browserSync.reload]);
 }
 
