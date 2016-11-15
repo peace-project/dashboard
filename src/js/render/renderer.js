@@ -10,7 +10,7 @@ export default class Renderer {
         this.started = false;
     }
 
-    render(renderComponent) {
+    renderTemplate(renderComponent){
 
         this._checkComponent(renderComponent);
         let tpl = PeaceTemp.templates[renderComponent.templateId];
@@ -18,8 +18,19 @@ export default class Renderer {
             console.error("Could not find template " + renderComponent.templateId);
             return;
         }
-        let html = tpl(renderComponent.context);
-        $(renderComponent.elementId).html(html);
+
+        renderComponent['html'] = tpl(renderComponent.context);
+        return renderComponent.html;
+    }
+
+    render(renderComponent) {
+        this.renderTemplate(renderComponent);
+
+        if (renderComponent.elementId === undefined) {
+            throw Error('Failed to render a component. elementId is undefined');
+        }
+
+        $(renderComponent.elementId).html(renderComponent.html);
 
         if (this.started) {
             renderComponent.onRendering();
@@ -43,9 +54,7 @@ export default class Renderer {
         } else if (comp.context === undefined) {
             throw Error('Failed to render a component. context is undefined');
         }
-        else if (comp.elementId === undefined) {
-            throw Error('Failed to render a component. elementId is undefined');
-        }
+
     }
 
 

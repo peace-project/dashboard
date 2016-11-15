@@ -6,6 +6,7 @@ export default class RenderComponent {
         this.templateId = templateId;
         this.parentComp = parentComp;
         this.context = {};
+        this.html = {};
 
         //TODO singleton
         this.renderer = new Renderer();
@@ -13,6 +14,10 @@ export default class RenderComponent {
 
     render(){
         this.renderer.render(this);
+    }
+
+    renderTemplate(){
+        return this.renderer.renderTemplate(this);
     }
 
     onRendering(){}

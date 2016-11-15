@@ -15,7 +15,7 @@
             {{#each engines}}
                 {{#each instances}}
                     <th class="cell-version engine-col-{{@../index}}">
-                         <a role="button" tabindex="0" data-engine-info="{{index}}" class="engine-info" >
+                         <a role="button" tabindex="0" data-engine-info="{{index}}" rel="popover" class="engine-info" >
                      {{versionLong}}</a></th>
                 {{/each}}
             {{/each}}

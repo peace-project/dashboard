@@ -21,6 +21,7 @@ import {PortabilityStatus} from "./filters/portability_status";
 import LanguageFilterComponent from "./components/language_filter";
 import DefaultTestData from "./model/test_data";
 import PerformanceTestData from "./model/performance_test_data";
+import EngineInfoPopover from "./components/engine_info_popover";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -356,6 +357,13 @@ function process(page) {
 
             });
         }
+
+        new EngineInfoPopover({
+            engines:  filterManager.getFilteredData().engines.data
+        });
+
+
+
 
 
         //filteredData['independentTests'] = _.where(rawData.independentTests, {language: langFilterValue});
