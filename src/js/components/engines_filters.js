@@ -169,9 +169,6 @@ export class EnginesFilterComponent extends RenderComponent {
 
         if (checkbox.isChecked()) {
             this.filterValues['engines'] = shallowCopy(this.latestVersionValues);
-            console.log('isChecked_________');
-            console.log(this.filterValues['engines']);
-
             this._updateCheckedProperties();
             this._doFilter();
         } else {
