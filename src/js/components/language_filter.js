@@ -24,10 +24,8 @@ export default class LanguageFilterComponent {
         let that = this;
 
         let elem = 'input[data-filter="' + that.dimension + '"][value="' + language + '"]';
-        let checked = (index === 0);
+        let checked = (language === this.filterValues.language);
         let checkedClass = (checked) ? ' active' : '';
-
-        console.log('elem=' +elem);
 
         let radioButton = new RadioButtonDefault(this, {
                 dimensionName: that.dimension,

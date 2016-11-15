@@ -249,11 +249,4 @@ export class EnginesFilterComponent extends RenderComponent {
             that.onFilter(that.filterValues['engines']);
         }, 100);
     }
-
-    /*
-    _filter(callAfterFiltering) {
-        this.onFilter(this.filterValues.engines);
-    } */
-
-
 }
