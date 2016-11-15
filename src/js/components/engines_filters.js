@@ -4,6 +4,7 @@ import RenderComponent from "../render/render_component";
 import {jquery} from "jquery";
 import {groupEngineByName} from "../viewmodels/helpers";
 import CheckBoxDefault from "./check_box_default";
+import {shallowCopy} from "../utils";
 
 
 export class EnginesFilterComponent extends RenderComponent {
@@ -167,7 +168,10 @@ export class EnginesFilterComponent extends RenderComponent {
         $('input[data-engine-all]').prop('checked', false);
 
         if (checkbox.isChecked()) {
-            this.filterValues.engines = this.latestVersionValues;
+            this.filterValues['engines'] = shallowCopy(this.latestVersionValues);
+            console.log('isChecked_________');
+            console.log(this.filterValues['engines']);
+
             this._updateCheckedProperties();
             this._doFilter();
         } else {
