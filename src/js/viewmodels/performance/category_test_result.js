@@ -29,8 +29,10 @@ export default class CategoryTestResult {
         let that = this;
         Object.keys(this.metrics).forEach(metric => {
             if(this._isEmptyResult(test.result[that.category][metric] )){
-               return;
+                delete that.metrics[metric];
+                return;
             }
+
             that.metrics[metric]['results'][test.engineID] = test.result[that.category][metric];
 
             Object.keys(test).forEach(key => {
