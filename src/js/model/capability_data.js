@@ -36,6 +36,10 @@ export default class CapabilityData {
 
     }
 
+    getAllLanguages() {
+        this[_data].getAllLanguages();
+    }
+
     hasLanguage(langName) {
         return this[_data].hasLanguage(langName);
     }

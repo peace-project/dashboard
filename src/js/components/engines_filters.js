@@ -67,7 +67,7 @@ export class EnginesFilterComponent extends RenderComponent {
             elem: '#cbox-lversions',
             checked: true,
             is: 'engine-latest',
-            eventHandler: function (event, checkbox) {
+            clickEventHandler: function (event, checkbox) {
                 that._selectLatestVersions(checkbox);
             }
         });
@@ -88,7 +88,7 @@ export class EnginesFilterComponent extends RenderComponent {
                     dimensionName: 'engines',
                     elem: elem,
                     is: 'engine-all',
-                    eventHandler: function (event, checkbox) {
+                    clickEventHandler: function (event, checkbox) {
                         that._selectEngineAll(engine, checkbox);
                     }
                 }
@@ -112,7 +112,7 @@ export class EnginesFilterComponent extends RenderComponent {
                 checked: checked,
                 is: 'engine-instance',
                 engineName: engine.name,
-                eventHandler: function (event, checkbox) {
+                clickEventHandler: function (event, checkbox) {
                     that._selectEngine(engine, checkbox);
                 }
             });

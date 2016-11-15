@@ -86,19 +86,12 @@ export default class FilterManager {
                 } else  {
                     // Must be single type value (String, Number, Boolean, Object or Symbol)
                     // So removedValues = oldFilterValues and addedValues = newFilterValues
-                    console.log('#####################################');
-                    console.log(that.oldFilterValues);
-                    console.log(newFilterValues);
                 }
 
                 filterValuesChanges['addedValues'] = diffNewFilterValues;
                 filterValuesChanges['removedValues'] = diffFilterValues;
 
                 that.filterValues[filterName] = newFilterValues;
-
-                console.log('____ADDED');
-                console.log(newFilterValues);
-                console.log(filterValuesChanges);
             }
 
             that.oldFilterValues[filterName] = filter.copyFilterValues(that.filterValues[filterName]);

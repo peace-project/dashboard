@@ -60,6 +60,10 @@ export default class CapabilityDataContainer {
         return this.data.hasOwnProperty(language);
     }
 
+    getAllLanguage() {
+        return Object.keys(this.data);
+    }
+
     copyByLang(lang, target) {
         if (!this.hasLanguage(lang)) {
             console.error('lang ' + lang + ' not found');

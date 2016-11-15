@@ -37,7 +37,7 @@ export class FCGFiltersComponent {
                 elem: '#all_' + that.dimension,
                 is: that.dimension + '-all',
                 checked: true,
-                eventHandler: function (event, checkbox) {
+                clickEventHandler: function (event, checkbox) {
                     that._selectAll(checkbox);
                 },
                 html: {
@@ -108,7 +108,7 @@ export class FCGFiltersComponent {
                 dimensionName: that.dimension,
                 elem: elem,
                 is: that.dimension + '-instance',
-                eventHandler: function (event, checkbox) {
+                clickEventHandler: function (event, checkbox) {
                     that._select(checkbox);
                 },
                 html: {

@@ -174,17 +174,17 @@ function process(page) {
 
         let capabilityTableComponent = new CapabilityTableComponent(viewModel);
 
-
         //TODO check if allEngines is undefined
         let allEngines = capabilityData.getEnginesByLanguage(filterManager.getFilterValues().language);
         let latestVersionValues = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(filterManager.getFilterValues().language));
 
-
         new LanguageFilterComponent({
+            dimension: 'language',
+            dimensionData: capabilityData.getAllLanguage().reverse(),
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
 
-                if(capabilityData.hasLanguage(newFilterValues)){
+                if(!capabilityData.hasLanguage(newFilterValues)){
                     console.error('No benchmark results for ' + newFilterValues + ' found.');
                     return;
                 }

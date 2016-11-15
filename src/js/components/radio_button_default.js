@@ -1,12 +1,12 @@
-'use strict';
 
 import RenderComponent from "../render/render_component";
 
-export default class CheckBoxDefault extends RenderComponent {
+export default class RadioButtonDefault extends RenderComponent {
+
     constructor(parentComp, options) {
         super(undefined, undefined, parentComp);
-
         this.options = {};
+
         Object.keys(options).forEach(opt => {
             this.options[opt] = options[opt];
         });
@@ -23,11 +23,13 @@ export default class CheckBoxDefault extends RenderComponent {
 
     _init() {
         if(this.inputElement === undefined){
-            this._createCheckbox();
+            this._createRadioButton();
         }
     }
 
-    _createCheckbox() {
+
+
+    _createRadioButton() {
         if(this.options.html !== undefined && this.options.html.content !== undefined && this.options.html.container !== undefined){
             //var div = '#filter-items-' + this.dimensionName;
             //TODO can we use vanilla javascript here
@@ -44,24 +46,27 @@ export default class CheckBoxDefault extends RenderComponent {
         this.setChecked(this.options.checked);
 
         // Register event handler
+        let that = this;
         if(this.options.clickEventHandler !== undefined){
-            //let eventHandler = this.options.eventHandler.bind(this.parentComp);
-            let that = this;
             that.inputElement.addEventListener('click', function(event){
                 that.options.clickEventHandler(event, that);
             });
         }
+
+        if(this.options.changeEventHandler !== undefined){
+            that.inputElement.addEventListener('change', function(event){
+                that.options.changeEventHandler(event, that);
+            });
+        }
+
     }
 
     setChecked(checked){
-        if(this.inputElement === undefined){
-            throw Error('inputElement is undefined');
-        }
         this.inputElement.checked = checked;
     }
 
     isChecked(){
-      return this.inputElement.checked;
+        return this.inputElement.checked;
     }
 
     getValue(){
@@ -72,12 +77,11 @@ export default class CheckBoxDefault extends RenderComponent {
         return this.inputElement.getAttribute(attr);
     }
 
+
     remove(){
         if(this.inputElement !== undefined && this.options.html.contentClass !== undefined){
             $(this.inputElement).closest(this.options.html.contentClass).remove();
         }
     }
-
-
 
 }
