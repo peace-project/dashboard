@@ -5,16 +5,13 @@ import {isConformanceCapability} from "../peace";
 import {isExpressivenessCapability} from "../peace";
 
 export default class ViewModelConverter{
-    constructor() {
-    }
+    constructor() { }
 
     convert(filteredData, capability, language) {
         if(isConformanceCapability(capability) || isExpressivenessCapability(capability)){
             return new DefaultViewModel(filteredData, capability, language);
-
         } else if(isPerformanceCapability(capability)) {
             return new PerformanceViewModel(filteredData, capability, language);
-
         }
     }
 
@@ -26,7 +23,6 @@ export default class ViewModelConverter{
             dataFn = 'getConstructByIndex';
         } else if(dimension === 'features'){
             dataFn = 'getFeatureByIndex';
-
         }
 
         filteredDimensionData.forEach((data, index) => {
@@ -36,6 +32,7 @@ export default class ViewModelConverter{
         });
 
         let cleanedData = filteredDimensionData.filter(obj => obj !== undefined);
+
         return  {
             dimensionData: cleanedData,
             toRemove: toRemove

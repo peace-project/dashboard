@@ -25,48 +25,44 @@
 
         {{#each constructs}}
 
-            {{#each features.[0].metricTree}}
-
+            {{#each features.[0].results}}
              {{#if isFirstEntry}}
              <tr class="collapse-parent-row row-expanded" data-toggle="collapse" data-target=".row-feat-{{@../index}}" aria-expanded="true" >
 
                     <td class="construct-col" colspan=2>
                        <div>
-                           <span class="entypo-right-open"></span>{{../../name}}
+                           <span class="entypo-right-open"></span>{{../../features.[0].name}}
                             <a role="button" tabindex="0" data-toggle="tooltip" data-feature-info="{{../../features.[0].index}}" class="info-exp-feature">
                                 <span class="entypo-help-circled"></span>
                             </a>
                         </div>
                     </td>
                  {{#each ../../../engines}}
-                 {{#each instances}}
+                    {{#each instances}}
 
                  <td class="construct-col" colspan=4>
                      <div>
-
                      <a role="button" tabindex="0"  data-test-info="{{../../../../features.[0].index}}" data-test-engine="{{id}}" class="info-performance-test">
                      <span class="entypo-help-circled"></span>
                  </a></div></td>
-                 {{/each}}
+                    {{/each}}
                  {{/each}}
                 </tr>
             {{/if}}
 
             <tr class="collapse-header collapse in {{#if isFirstEntry}} row-feat-title {{/if}} row-feat-{{@../index}}" aria-expanded="true">
-                        <td  colspan="2" class="collapse-title-cell {{category}}"><div class="collapse-title-border{{#unless isFirstEntry}} border-top{{/unless}}">{{capitalize categoryName}} </div> </td>
-                        {{#each ../../engines}}
-                            {{#each instances}}
-                                    <td class="metric-title {{../../category}}-t{{#unless ../../isFirstEntry}} border-top{{/unless}}">min</td>
-                                    <td class="metric-title {{../../category}}-t{{#unless ../../isFirstEntry}} border-top{{/unless}}">max</td>
-                                    <td class="metric-title {{../../category}}-t{{#unless ../../isFirstEntry}} border-top{{/unless}}">avg±ci</td>
-                                    <td class="metric-title-last {{../../category}}-t{{#unless ../../isFirstEntry}} border-top{{/unless}}">sd</td>
-                             {{/each}}
-                        {{/each}}
+                <td  colspan="2" class="collapse-title-cell {{category}}"><div class="collapse-title-border{{#unless isFirstEntry}} border-top{{/unless}}">{{capitalize categoryName}} </div> </td>
+                {{#each ../../engines}}
+                    {{#each instances}}
+                            <td class="metric-title {{../../category}}-t{{#unless ../../isFirstEntry}} border-top{{/unless}}">min</td>
+                            <td class="metric-title {{../../category}}-t{{#unless ../../isFirstEntry}} border-top{{/unless}}">max</td>
+                            <td class="metric-title {{../../category}}-t{{#unless ../../isFirstEntry}} border-top{{/unless}}">avg±ci</td>
+                            <td class="metric-title-last {{../../category}}-t{{#unless ../../isFirstEntry}} border-top{{/unless}}">sd</td>
+                     {{/each}}
+                {{/each}}
 
-
-                    </tr>
-                    {{#each metrics}}
-
+            </tr>
+             {{#each this.metrics}}
                     <tr class="collapse-row collapse in row-feat-{{@../../index}}" aria-expanded="true">
                         <td  colspan="2" class="collapse-feature-cell {{../category}}">
                             <div class="collapse-cell-border">
@@ -75,73 +71,53 @@
                             </div>
                         </td>
 
-                        {{#each ../../../engines}}
-                            {{#each instances}}
 
-                                {{#getProperty ../../../../features.[0].results id}}
-                                    {{#if this}}
+                        {{#if_eq @key "throughput"}}
+                            {{#each results}}
+                                <td class="result-last" colspan="4">
+                                    <a role="button" tabindex="0" data-test-info="{{featureIndex}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                            {{#if this.max includeZero=true}} {{this.max}} {{else}}--{{/if}}
+                                    </a>
+                                </td>
+                            {{/each}}
+                        {{else}}
+                            {{#each results}}
 
-                                        {{#getProperty this ../../../../../category}}
-                                            {{#if_eq ../../../../../metric "throughput"}}
+                                <td class="result">
+                                <a role="button" tabindex="0" data-test-info="{{../../../../features.[0].index}}" class="info-engine-test" >
+                                    {{#if this.min includeZero=true}} {{this.min}} {{else}}--{{/if}}
+                                </a>
+                            </td>
+                            <td class="result">
+                                <a role="button" tabindex="0" data-test-info="{{../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                        {{#if this.max includeZero=true}} {{this.max}} {{else}}--{{/if}}
+                                </a>
+                            </td>
+                            <td class="result">
+                                <a role="button" tabindex="0" data-test-info="{{../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                        {{#if this.avg±ci includeZero=true}} {{this.avg±ci}} {{else}}--{{/if}}
+                                </a>
+                            </td>
+                            <td class="result-last">
+                                <a role="button" tabindex="0" data-test-info="{{../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
+                                        {{#if this.sd includeZero=true}} {{this.sd}} {{else}}--{{/if}}
+                                </a>
+                            </td>
+                            {{/each}}
 
-                                              <td class="result-last" colspan="4">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
-                                                    {{#getProperty this ../../../../../../metric}}
-                                                           {{#if this.max includeZero=true}} {{this.max}} {{else}}--{{/if}}
-                                                      {{/getProperty}}
-
-                                                    </a>
-                                                </td>
-
-                                             {{else}}
-                                                <td class="result">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
-                                                    {{#getProperty this ../../../../../../metric}}
-                                                           {{#if this.min includeZero=true}} {{this.min}} {{else}}--{{/if}}
-                                                      {{/getProperty}}
-                                                    </a>
-                                                </td>
-                                                 <td class="result">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
-                                                    {{#getProperty this ../../../../../../metric}}
-                                                        {{#if this.max includeZero=true}} {{this.max}} {{else}}--{{/if}}
-                                                      {{/getProperty}}
-
-                                                    </a>
-                                                </td>
-                                                <td class="result">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
-                                                    {{#getProperty this ../../../../../../metric}}
-                                                        {{#if this.avg±ci includeZero=true}} {{this.avg±ci}} {{else}}--{{/if}}
-                                                    {{/getProperty}}
-                                                    </a>
-                                                </td>
-                                                 <td class="result-last">
-                                                    <a role="button" tabindex="0" data-test-info="{{../../../../../../../../features.[0].index}}" data-test-engine="{{../../../../id}}"  class="info-engine-test" >
-                                                    {{#getProperty this ../../../../../../metric}}
-                                                        {{#if this.sd includeZero=true}} {{this.sd}} {{else}}--{{/if}}
-                                                    {{/getProperty}}
-                                                    </a>
-                                                </td>
-                                            {{/if_eq}}
-                                        {{/getProperty}}
-
-                                    {{else}}
+                        {{/if_eq}}
+                                     <!--   <td class="result">
                                         <td class="result">
                                         <td class="result">
-                                        <td class="result">
-                                        <td class="result-last">
-                                       {{/if}}
-                                {{/getProperty}}
+                                        <td class="result-last"> -->
 
-                             {{/each}} <!-- end instance -->
-                        {{/each}}<!-- end engine -->
+
                     </tr>
-
                     {{/each}}<!-- end metrics -->
 
-              {{/each}} <!-- end metricTree -->
-        {{/each}}
+            {{/each}}<!-- end features.[0].results -->
+
+        {{/each}}<!-- end constructs -->
 
     </tbody>
 

@@ -9,22 +9,15 @@ export default class Construct {
         this.features = [];
     }
 
-    addFeatures(features, tests, metricsInfo) {
-
+    addFeatures(features, tests, metricsInfo, resultOrder) {
         let that = this;
         this.featureIndexes.forEach(index => {
-
             let feature = features[index];
             if (feature === undefined || feature.testIndexes.length < 1) {
                 return;
             }
 
-
-
-            let viewFeature = new Feature(feature, tests, metricsInfo);
-
-            console.log('_______ADDD FEATURE')
-            console.log(viewFeature)
+            let viewFeature = new Feature(feature, tests, metricsInfo, resultOrder);
             that.features.push(viewFeature);
         });
     }
