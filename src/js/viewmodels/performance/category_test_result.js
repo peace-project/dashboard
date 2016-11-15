@@ -58,7 +58,6 @@ export default class CategoryTestResult {
             that.metrics[metric]['results'] = sortedResults;
 
         });
-
     }
 
     _isEmptyResult(result){

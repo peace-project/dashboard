@@ -1,11 +1,12 @@
 'use strict'
 
-export default class CapabilityDataContainer  {
+export default class CapabilityDataContainer {
     constructor(data, capability) {
         this.capability = capability;
         this.data = data;
 
     }
+
     getEnginesByLanguage(language) {
         //TODO return copy ?
         if (!(this.data.hasOwnProperty(language) && this.data[language].hasOwnProperty('engines'))) {
@@ -18,36 +19,36 @@ export default class CapabilityDataContainer  {
     }
 
 
-    getAllGroupsByLanguage(language){
+    getAllGroupsByLanguage(language) {
         return this.data[language].groups;
     }
 
-    getGroupByIndex(language, index){
+    getGroupByIndex(language, index) {
         return this.data[language].groups.data[index];
     }
 
-    getAllConstructsByLanguage(language){
+    getAllConstructsByLanguage(language) {
         return this.data[language].constructs;
     }
-    getConstructByIndex(language, index){
+
+    getConstructByIndex(language, index) {
         return this.data[language].constructs.data[index];
     }
 
-    getFeatureByIndex(language, index){
+    getFeatureByIndex(language, index) {
         return this.data[language].features.data[index];
     }
 
-    getAllFeaturesByLanguage(language){
+    getAllFeaturesByLanguage(language) {
         return this.data[language].features;
     }
 
-    getEngineByIndex(language, index){
+    getEngineByIndex(language, index) {
         return this.data[language].engines.data[index];
     }
 
 
-
-     getAllConstructsName() {
+    getAllConstructsName() {
         return this.data[language].constructs.map(obj => obj.name);
     }
 
@@ -79,7 +80,7 @@ export default class CapabilityDataContainer  {
     }
 
     getLatestEngineVersions(language) {
-        if(language == undefined){
+        if (language == undefined) {
             console.error('language is undefined');
         }
 
@@ -87,7 +88,12 @@ export default class CapabilityDataContainer  {
             return a.id.localeCompare(b.id);
         }
 
-        let engines = this.getEnginesByLanguage(language).data;
+        let engines = this.getEnginesByLanguage(language);
+        if (engines === undefined) {
+            return undefined;
+        }
+
+        engines = engines.data;
         var latestVersions = _.chain(engines)
             .groupBy('name')
             .map(function (val, key) {

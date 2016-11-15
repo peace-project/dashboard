@@ -8,15 +8,7 @@ export default class PerformanceViewModel {
         this.constructs = [];
         this.engines = groupEngineByName(data.engines.data); //createEngines(data.engines.data);
 
-        //console.log('_________data.constructs.data');
-        //console.log(data);
-
         this._addConstructs(data.constructs.data, data.features.data, data.tests, data.metrics);
-
-        // sort features by engines
-
-        //constructs[0].features[0].results = sortedResults;
-
     }
 
     _addConstructs(constructs, features, tests, metricsInfo) {

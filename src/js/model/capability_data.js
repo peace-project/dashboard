@@ -144,38 +144,3 @@ export default class CapabilityData {
 
 }
 
-/*
- function cloneEngines(engines) {
- var target = [];
- for (var index in engines) {
- var idParts = engines[index].id.split('__');
- var versionLong = engines[index].version;
- if (idParts.length > 2) {
- versionLong = engines[index].version + ' ' + idParts[2];
- }
- target[index] = {
- configuration: shallowCopy(engines[index].configuration),
- id: engines[index].id,
- language: engines[index].language,
- name: engines[index].name,
- version: engines[index].version,
- url: engines[index].url,
- license: engines[index].license,
- licenseURL: engines[index].licenseURL,
- releaseDate: engines[index].releaseDate,
- programmingLanguage: engines[index].programmingLanguage,
- versionLong: versionLong,
- indexEngine: index
- }
- }
- return target;
- }
-
-
- function shallowCopy(array) {
- var copy = [];
- for (var index in array) {
- copy[index] = array[index];
- }
- return copy;
- }*/

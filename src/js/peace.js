@@ -119,8 +119,6 @@ function process(page) {
             throw new Error('Failed to create test data model for capability: ' +capability);
         }
 
-        console.log('____TESTDATA');
-        console.log(testData);
         let normalizedCapabilityData = normalizeByCapability(rawData, capability, testData.tests);
 
         var capabilityData = normalizedCapabilityData.getAll();
@@ -186,6 +184,11 @@ function process(page) {
             filterValues: filterManager.getFilterValues(),
             onFilter: function (newFilterValues) {
 
+                if(capabilityData.hasLanguage(newFilterValues)){
+                    console.error('No benchmark results for ' + newFilterValues + ' found.');
+                    return;
+                }
+
                 //Update filter values
                 latestVersionValues = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(newFilterValues));
                 filterManager.getFilterValues().engines = latestVersionValues;
@@ -235,7 +238,9 @@ function process(page) {
 
                 // DefaultViewModel
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
-                filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
+                if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
+                    filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
+                }
                 capabilityTableComponent.updateModel(viewModel);
             }
         });
