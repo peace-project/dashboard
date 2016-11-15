@@ -22,6 +22,8 @@ export default class PerformanceViewModel {
         });
 
         constructs.forEach(construct => {
+            console.log('______construct')
+            console.log(construct);
             if (construct === undefined) { return; }
 
             let viewConstruct = new Construct(construct);

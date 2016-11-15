@@ -43,7 +43,6 @@ export default class CategoryTestResult {
             });
         });
 
-
         // Sort by engine according the resultOrder
         //TODO test if sorting is actually working
         Object.keys(this.metrics).forEach(metric => {
@@ -54,7 +53,6 @@ export default class CategoryTestResult {
                     sortedResults[engineId] = that.metrics[metric]['results'][engineId];
                 }
             });
-
             that.metrics[metric]['results'] = sortedResults;
 
         });

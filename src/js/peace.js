@@ -248,6 +248,21 @@ function process(page) {
         if (isPerformanceCapability(capability)) {
             //TODO create experiment Filter
 
+            var experimentFilter = new FCGFiltersComponent({
+                dimension: 'constructs',
+                dimensionData: filterManager.getFilteredData().constructs.data,
+                filterValues: filterManager.getFilterValues(),
+                onFilter: function (newFilterValues) {
+                    filterManager.applyFilter(ConstructFilter.Name(), newFilterValues);
+                    filterManager.applyFilter(FeatureFilter.Name());
+                    filterManager.applyFilter(TestsFilter.Name());
+
+                    // ViewModels
+                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+                    capabilityTableComponent.updateModel(viewModel);
+                }
+            });
+
 
         } else {
             var groupsFilters = new FCGFiltersComponent({
