@@ -1,4 +1,5 @@
 import RadioButtonDefault from "./radio_button_default";
+import {_sortBy} from "../utils";
 
 export default class LanguageFilterComponent {
     constructor(options) {
@@ -7,13 +8,14 @@ export default class LanguageFilterComponent {
 
         this.filterValues = options.filterValues;
         this.dimension = options.dimension;
-        this.dimensionData = options.dimensionData;
+
+        this.dimensionData = _sortBy(options.dimensionData, ['BPMN', 'BPEL']);
         this._init();
     }
 
+
     _init() {
         let that = this;
-
         this.dimensionData.forEach(function (language, index) {
             that.allCheckBoxes[language] = that._createRadioButton(language, index);
         });

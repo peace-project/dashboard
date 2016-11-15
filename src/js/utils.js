@@ -33,3 +33,7 @@ if (!String.prototype.trim) {
         return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
     };
 }
+
+export function _sortBy(arr, orderArray){
+    return arr.sort((a,b) => orderArray.indexOf(a) > orderArray.indexOf(b));
+}
