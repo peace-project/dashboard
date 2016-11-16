@@ -13,6 +13,7 @@ export class CapabilityTableComponent extends RenderComponent {
 
     onRenderingStarted() {
         this._createSubComponents();
+        this._initializeTooltip();
         this._onCollapseTable();
         this._consumeTableCollapse();
     }
@@ -21,18 +22,18 @@ export class CapabilityTableComponent extends RenderComponent {
         this.engineInfoPopover.onRendering();
         this.defaultResultPopover.onRendering();
         this.defaultTestPopover.onRendering();
+        this._initializeTooltip();
         this._onCollapseTable();
         this._consumeTableCollapse();
     }
 
     _createSubComponents() {
 
-        /*            buildEngineInfoPopover();
-         onCollapseFeatureTable();
-         consumeTableCollapse();
-         onCollapseFilterGroupTitle();
+        /*
          initializeTooltip();
-         buildFeaturePopover();*/
+         onCollapseFilterGroupTitle();
+
+      */
 
         this.engineInfoPopover = new EngineInfoPopover({
             engines: this.viewModel.engines
@@ -95,6 +96,13 @@ export class CapabilityTableComponent extends RenderComponent {
 
 
     }
+
+    _initializeTooltip(){
+    $('[data-toggle="tooltip"]').tooltip({
+        placement:'bottom',
+        container: '.content-wrapper'
+    });
+}
 
 
     _onCollapseTable() {
