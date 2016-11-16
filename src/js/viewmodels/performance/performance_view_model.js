@@ -15,13 +15,13 @@ export default class PerformanceViewModel {
         // SubViewModel (i.e. for popovers)
         this.features = {};
         this.engines = filteredData.engines.data;
-        this.independentTests = {};
 
-        this._addConstructs(filteredData.constructs.data, filteredData.features.data, filteredData.tests,
-            filteredData.independentTests.tests, filteredData.metrics);
+        this.independentTests = filteredData.independentTests.tests.map(test =>  this._formatIndependentTest(test));
+
+        this._addConstructs(filteredData.constructs.data, filteredData.features.data, filteredData.tests, filteredData.metrics);
     }
 
-    _addConstructs(constructs, features, tests, independentTests, metricsInfo) {
+    _addConstructs(constructs, features, tests, metricsInfo) {
         let that = this;
 
         let resultOrder = [];
@@ -40,13 +40,16 @@ export default class PerformanceViewModel {
 
             viewConstruct.features.forEach(feat => {
                 that.features[feat.index] = feat;
-                that.independentTests[feat.testIndependentIndex] =  that._formatIndependentTest(independentTests[feat.testIndependentIndex]);
+               // that.independentTests[feat.testIndependentIndex] =  that._formatIndependentTest(independentTests[feat.testIndependentIndex]);
             });
 
         });
     }
 
+
+
     _formatIndependentTest(test){
+
         if(test.loadFunction['users'] === undefined){
             return test;
         }

@@ -23,7 +23,7 @@ export default class CategoryTestResult {
     addResult(test){
         if(!test.result.hasOwnProperty(this.category)){
             console.error('Test cannot be added to this category metric '+ this.category);
-            return;
+            return false;
         }
 
         let that = this;
@@ -34,13 +34,13 @@ export default class CategoryTestResult {
             }
 
             that.metrics[metric]['results'][test.engineID] = test.result[that.category][metric];
-
+            /*
             Object.keys(test).forEach(key => {
                 if(key !== 'result'){
                     // Add additionally test data
                     that.metrics[metric]['results'][test.engineID][key] = test[key];
                 }
-            });
+            }); */
         });
 
         // Sort by engine according the resultOrder
@@ -56,6 +56,8 @@ export default class CategoryTestResult {
             that.metrics[metric]['results'] = sortedResults;
 
         });
+
+        return true;
     }
 
     _isEmptyResult(result){

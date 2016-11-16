@@ -48,9 +48,11 @@ export default class PerformanceTestData {
             "additionalData": test.additionalData.map(data => {
                 let copy = {};
                 if(data.hasOwnProperty('environment')){
+                    copy['environment'] = {};
                     Object.keys(data['environment']).forEach(key => {
-                        copy[key] = copyShallowObject(data['environment'][key]);
+                        copy['environment'][key] = copyShallowObject(data['environment'][key]);
                     });
+
                 }
                 return copy;
             })

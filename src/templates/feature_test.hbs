@@ -18,6 +18,7 @@
             <td colspan=2 class="popup-tb-val">{{this}}</td>
         </tr>
         {{/each}}
+        {{#if engineIndependentFiles.length}}
         <tr> 
             <td class="popup-tb-title">Engine Independent Files</td>
             <td colspan="2" class="popup-tb-val">
@@ -28,6 +29,7 @@
                 </ul>
             </td>
         </tr>
+        {{/if}}
         {{#if img.src}}
         <tr>
             <td class="popup-tb-title">Process Image</td>

@@ -1,11 +1,11 @@
 import RenderComponent from "../../render/render_component";
 
-export default class  ResultInfoPopover extends RenderComponent {
+export default class FeatureResultPopover extends RenderComponent {
     constructor(options) {
         super(undefined, undefined, undefined);
 
-        this.templateId = options.templateId || 'feature_result'; //feature_test_description
-        this.id = '[data-engine-id].info-engine-test';
+        this.templateId = options.templateId || 'feature_result';
+        this.id = options.id || '[data-engine-id].info-engine-test';
         this.features = options.features;
         this.capability = options.capability;
         this.title = options.title;
@@ -52,12 +52,11 @@ export default class  ResultInfoPopover extends RenderComponent {
     }
 
     _getFeatureName(featureIndex) {
-        console.log('______________________featureIndex='+featureIndex);
         return this.features[featureIndex].name || 'FEATURE_NAME_MISSING';
     }
 
-    _renderContent(featureId, engineId) {
-        var testResult = this.features[featureId].results[engineId];
+    _renderContent(featureIndex, engineId) {
+        var testResult = this.features[featureIndex].results[engineId];
         if (testResult === undefined) {
             console.error('TestResult is undefined');
             return;

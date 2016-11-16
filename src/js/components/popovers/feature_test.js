@@ -1,12 +1,11 @@
 import RenderComponent from "../../render/render_component";
 import {createLinkFromPaths} from "../../viewmodels/helpers";
 
-//TODO merge wih TestInfoPopover?
-export default class TestInfoPopover extends RenderComponent {
+export default class FeatureTestPopover extends RenderComponent {
     constructor(options) {
         super(undefined, undefined, undefined);
 
-        this.templateId = options.templateId || 'test_description'; //feature_test_description
+        this.templateId = options.templateId || 'feature_test';
         this.id = options.id || '[data-feature-index].info-feature';
         this.features = options.features;
         this.independentTests = options.independentTests;

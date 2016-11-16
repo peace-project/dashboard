@@ -20,9 +20,9 @@ import LanguageFilterComponent from "./components/filters/language_filter";
 import DefaultTestData from "./model/test_data";
 import PerformanceTestData from "./model/performance_test_data";
 import EngineInfoPopover from "./components/popovers/engine_info";
-import DefaultResultPopover from "./components/popovers/result_info";
+import DefaultResultPopover from "./components/popovers/feature_result";
 import TestIndependentData from "./model/test_independent_data";
-import DefaultTestPopover from "./components/popovers/test_info";
+import DefaultTestPopover from "./components/popovers/feature_test";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -107,8 +107,6 @@ function process(page) {
             throw new Error('Failed to create test data model for capability: ' +capability);
         }
 
-        console.log('rawData__________________')
-        console.log(rawData)
        let testIndependentData = new TestIndependentData(rawData.getIndependentTestsByCapability(capability));
 
 

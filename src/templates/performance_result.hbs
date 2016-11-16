@@ -1,0 +1,44 @@
+<h3 class="test-desc-title">Ids</h3>
+<table class="table feature-test-desc" width="100%">
+    <tbody>
+    <tr>
+        <td>Feature Id</td>
+        <td class="test-desc-val">{{featureID}} </td>
+    </tr>
+    <tr>
+        <td>Engine Id</td>
+        <td class="test-desc-val">{{engineID}} </td>
+    </tr>
+    <tr>
+        <td>Tool Id</td>
+        <td class="test-desc-val">{{tool.toolID}} </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<h3 class="performance-add-data-title">Additional Data</h3>
+<table class="table performance-add-data-tb" width="100%">
+    <tbody>
+        {{#each additionalData}}
+            {{#each this}}
+            <tr>
+                <td class="popup-tb-title">{{@key}}</td>
+                <td class="popup-tb-val">{{this}}</td>
+            </tr>
+            {{/each}}
+        {{/each}}
+    </tbody>
+</table>
+
+<h3 class="performance-add-data-title">Dependent Files</h3>
+
+{{#if engineDependentFilePaths.length}}
+<ul class="list-files">
+{{#each engineDependentFilePaths}}
+    <li><span class="entypo-doc-text"></span><a target="_blank" href="data/{{url}}">{{title}}</a></li>
+{{/each}}
+</ul>
+{{else}}
+    <p class="empty-message">No files </p>
+{{/if}}

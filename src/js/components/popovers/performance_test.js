@@ -1,4 +1,4 @@
-import DefaultTestPopover from "./test_info";
+import DefaultTestPopover from "./feature_test";
 
 export default class PerformanceTestPopover extends DefaultTestPopover{
     constructor(options) {
