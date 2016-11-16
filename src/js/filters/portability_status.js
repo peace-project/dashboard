@@ -40,14 +40,15 @@ export default class PortabilityFilter extends ViewFilter {
         let summaryOutdated = true;
 
         // Use reserve loop to iterate und mutating an array
-        for(var i=viewModel.constructs.length -1; i >= 0; i -=1){
-            let construct = viewModel.constructs[i];
+        let constructs = viewModel.table.constructs;
+        for(var i=constructs.length -1; i >= 0; i -=1){
+            let construct = constructs[i];
 
             if (filterValues.portability_status === PortabilityStatus.NOT_SAME) {
 
                 var showFeatures = that._filterFeaturesByNotSameStatus(construct, engines);
                 if (showFeatures.length < 1) {
-                   viewModel.constructs.splice(i, 1);
+                    constructs.splice(i, 1);
                     summaryOutdated = true;
                     continue;
                 }
@@ -60,10 +61,10 @@ export default class PortabilityFilter extends ViewFilter {
                 if (!that._isConstructMatchingPortabilityStatus(construct, filterValues)) {
                     if(viewModel.constructs[i].isFirstEntry){
                         // If viewModel.constructs[i+1] is undefined than the whole group has been removed, so do nothing
-                        this._updateGroupFirstEntry(viewModel.constructs[i], viewModel.constructs[i+1]);
+                        this._updateGroupFirstEntry(constructs[i], constructs[i+1]);
                     }
 
-                    viewModel.constructs.splice(i, 1);
+                    constructs.splice(i, 1);
                     summaryOutdated = true;
                     continue;
                 }

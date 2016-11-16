@@ -15,7 +15,7 @@
             {{#each engines}}
                 {{#each instances}}
                     <th class="cell-version engine-col-{{@../index}}">
-                         <a role="button" tabindex="0" data-engine-info="{{index}}" rel="popover" class="engine-info" >
+                         <a role="button" tabindex="0" data-engine-info="{{index}}"  class="engine-info" >
                      {{versionLong}}</a></th>
                 {{/each}}
             {{/each}}
@@ -96,7 +96,7 @@
                         <td class="collapse-feature-cell">
                             <div class="collapse-cell-border">
                                 <p>{{name}}
-                                <a role="button" tabindex="0" data-feature-index="{{index}}" data-test-index="{{testIndependentIndexes}}" class="info-feature">
+                                <a role="button" tabindex="0" data-feature-index="{{index}}" data-test-index="{{testIndependentIndex}}" class="info-feature">
                                 <span class="entypo-help-circled"></span>
                                 </a></p>
                             </div>
@@ -107,9 +107,7 @@
                                 <td class="result">
                                 {{#getProperty ../../results id}}
                                     {{#if html}}
-                                        {{#getProperty ../../../../testIndexesEngine ../../id}}
-                                        <a role="button" tabindex="0" data-test-index="{{this}}" data-feature-index="{{../../../../../index}}"  class="info-engine-test">
-                                        {{/getProperty}}
+                                        <a role="button" tabindex="0" data-engine-id="{{../../id}}" data-feature-index="{{../../../../index}}"  class="info-engine-test">
                                         <span class="{{html_class}}">{{html}}</span>
                                         </a>
                                     {{/if}}

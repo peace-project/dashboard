@@ -60,7 +60,7 @@ export default class NormalizedDataContainer {
                     constructIndex: val.constructIndex,
                     testIndexes: val.testIndexes,
                     testIndexesEngine: val.testIndexesEngine,
-                    testIndependentIndexes: val.testIndependentIndexes,
+                    testIndependentIndex: val.testIndependentIndex,
                 };
             });
         } else if (this.dimension === DataDimension.ENGINES) {

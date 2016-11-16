@@ -117,7 +117,7 @@ function createNormalizedFeature(feature, group, tests, testIndependentData, gIn
         featureIndex: currentFeatureIndex,
         testIndexes: featureTests.map(obj => obj.index),
         testIndexesEngine: testIndexesByEngines(featureTests),
-        testIndependentIndexes: featureTestsIndependent.map(obj => obj.index)
+        testIndependentIndex: featureTestsIndependent.map(obj => obj.index)[0]
         //getTestIndexesByFeatureID(tests, feature.id)
     };
 }

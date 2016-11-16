@@ -125,7 +125,8 @@ function process(page) {
             engines: {},
             constructs: {},
             features: {},
-            tests: {}
+            tests: {},
+            independentTests: testIndependentData
         };
 
         if(isPerformanceCapability(capability)){
@@ -163,10 +164,6 @@ function process(page) {
         }
 
         let capabilityTableComponent = new CapabilityTableComponent(viewModel);
-
-
-        console.log(viewModel);
-
 
 
 
@@ -216,7 +213,7 @@ function process(page) {
                 if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
                     filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
                 }
-                capabilityTableComponent = new CapabilityTableComponent(viewModel);
+                capabilityTableComponent = new CapabilityTableComponent(viewModel, testIndependentData.tests);
             }
         });
 
@@ -350,23 +347,10 @@ function process(page) {
             });
 
 
-            new DefaultResultPopover({
-                capability: capability,
-                features: filterManager.getFilteredData().features.data,
-                tests: filterManager.getFilteredData().tests
-            });
 
-            new DefaultTestPopover({
-                capability: capability,
-                features: filterManager.getFilteredData().features.data,
-                independentTests: testIndependentData.tests,
-            });
 
         }
 
-        new EngineInfoPopover({
-            engines:  filterManager.getFilteredData().engines.data
-        });
 
 
 

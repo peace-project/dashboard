@@ -10,12 +10,13 @@ export default class DefaultTestData {
     constructor(tests) {
         let that = this;
         this.tests = tests.map((test, index) => {
-            let copiedTest = that._formatTestResult(that._copy(test));
+            let copiedTest = that._copy(test);
             copiedTest['index'] = index;
             return copiedTest;
         });
     }
 
+    /*
     _formatTestResult(test) {
         test.result['testDeployableHtml'] = getHtmlTestResult(test.result.testDeployable);
         test.result['testSuccessfulHtml'] = getHtmlTestResult(test.result.testSuccessful);
@@ -29,7 +30,7 @@ export default class DefaultTestData {
         //testDeployable
 
         return test;
-    }
+    }*/
 
     getAll() {
         let that = this;
@@ -50,8 +51,8 @@ export default class DefaultTestData {
                 "testCaseFailures": test.result.testCaseFailures,
                 "testSuccessful": test.result.testSuccessful,
                 "testResult": test.result.testResult,
-                "testDeployableHtml": test.result.testDeployableHtml || undefined,
-                "testSuccessfulHtml": test.result.testSuccessfulHtml || undefined
+               /* "testDeployableHtml": test.result.testDeployableHtml || undefined,
+                "testSuccessfulHtml": test.result.testSuccessfulHtml || undefined*/
             },
             "logFiles": shallowCopy(test.logFiles),
             "testCases": shallowCopy(test.testCases),
@@ -65,8 +66,8 @@ export default class DefaultTestData {
             "engineID": test.engineID,
             "executionTimestamp": test.executionTimestamp,
             "engineDependentFiles": shallowCopy(test.engineDependentFiles),
-            "engineDependentFilePaths": (test.engineDependentFilePaths !== undefined) ? this._copyPaths(test.engineDependentFilePaths) : undefined,
-            "logFilePaths": (test.logFilePaths !== undefined) ? this._copyPaths(test.logFilePaths) : undefined,
+            /* "engineDependentFilePaths": (test.engineDependentFilePaths !== undefined) ? this._copyPaths(test.engineDependentFilePaths) : undefined,
+            "logFilePaths": (test.logFilePaths !== undefined) ? this._copyPaths(test.logFilePaths) : undefined,*/
         };
 
     }

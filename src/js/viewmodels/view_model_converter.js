@@ -32,7 +32,6 @@ export default class ViewModelConverter{
         });
 
         let cleanedData = filteredDimensionData.filter(obj => obj !== undefined);
-
         return  {
             dimensionData: cleanedData,
             toRemove: toRemove

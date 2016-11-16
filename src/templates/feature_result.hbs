@@ -4,15 +4,15 @@
     <tbody>
         <tr> 
             <td>Feature Id</td>
-            <td class="test-desc-val">{{test.featureID}} </td>
+            <td class="test-desc-val">{{featureID}} </td>
         </tr>
         <tr> 
             <td>Engine Id</td>
-            <td class="test-desc-val">{{test.engineID}} </td>
+            <td class="test-desc-val">{{engineID}} </td>
         </tr>
         <tr>
             <td>Tool Id</td>
-            <td class="test-desc-val">{{test.tool.toolID}} </td>
+            <td class="test-desc-val">{{tool.toolID}} </td>
         </tr>
     </tbody>
 </table>
@@ -23,22 +23,22 @@
     <tbody>
         <tr>
             <td>Deployable</td> 
-            <td class="test-desc-val tresult-{{test.result.testDeployable}}">
-            <span>{{test.result.testDeployableHtml}}</span>
-            {{test.result.testDeployable}} </td>
+            <td class="test-desc-val tresult-{{result.testDeployable}}">
+            <span>{{result.testDeployableHtml}}</span>
+            {{result.testDeployable}} </td>
         </tr>
         <tr>
             <td>Successful</td>
-            <td class="test-desc-val tresult-{{test.result.testSuccessful}}">
-            <span>{{test.result.testSuccessfulHtml}}</span> {{test.result.testSuccessful}}</td>
+            <td class="test-desc-val tresult-{{result.testSuccessful}}">
+            <span>{{result.testSuccessfulHtml}}</span> {{result.testSuccessful}}</td>
         </tr>   
         <tr>
             <td>Execution duration </td> 
-            <td class="test-desc-val">{{test.executionDuration}} ms</td>
+            <td class="test-desc-val">{{executionDuration}} ms</td>
         </tr>
         <tr>
             <td>Execution date</td>
-            <td class="test-desc-val">{{test.executionTimestamp}} </td>
+            <td class="test-desc-val">{{executionTimestamp}} </td>
         </tr>
     </tbody>
 </table> 
@@ -55,7 +55,7 @@
         </tr>
         </thead>
         <tbody>
-        {{#each test.testCases}}
+        {{#each testCases}}
             <tr>
                 <td class="tcase-number"><div>{{number}}</td>
                 <td class="tcase-name">{{name}} </td>
@@ -66,9 +66,9 @@
 </table> 
 
 <h3 class="test-desc-title">Engine Dependent Files</h3>
-{{#if test.engineDependentFilePaths.length}}
+{{#if engineDependentFilePaths.length}}
 <ul class="list-files"> 
-   {{#each test.engineDependentFilePaths}}
+   {{#each engineDependentFilePaths}}
         <li><span class="entypo-doc-text"></span><a target="_blank" href="data/{{url}}">{{title}}</a></li>
     {{/each}}
 </ul>
@@ -77,9 +77,9 @@
 {{/if}}
 
 <h3 class="test-desc-title">Log files</h3>
-{{#if test.logFilePaths.length}}
+{{#if logFilePaths.length}}
 <ul class="list-files">
-    {{#each test.logFilePaths}}
+    {{#each logFilePaths}}
         <li><span class="entypo-doc-text"></span><a target="_blank" href="data/{{url}}">{{title}}</a></li>
     {{/each}}
 </ul>

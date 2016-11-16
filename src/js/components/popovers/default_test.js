@@ -13,27 +13,16 @@ export default class DefaultTestPopover extends RenderComponent {
         this.capability = options.capability;
         this._init();
 
-        console.log('_____________OPTIONS')
-        console.log(options)
+    }
+
+    onRendering() {
+        // The DOM of the table containing the results has changed, so we must register the popover again
+        this._initPopover();
     }
 
     _init() {
         let that = this;
-        // Bind popover to an element that will never be removed and use selector option instead
-        $('#cap-table-div').popover({
-            //trigger: 'click focus',
-            html: true,
-            placement: 'auto left',
-            container: '.content-wrapper',
-            selector: that.id,
-            content: function () {
-                return that._renderContent($(this).attr('data-test-index'), $(this).attr('data-feature-index'))
-            },
-            title: function () {
-                return '<span>Feature</span> ' + that._getFeatureName($(this).attr('data-feature-index'));
-            }
-        });
-
+        this._initPopover();
 
         $('body').on('click', function (e) {
             $(that.id).each(function () {
@@ -44,19 +33,41 @@ export default class DefaultTestPopover extends RenderComponent {
         });
     }
 
+    _initPopover() {
+        let that = this;
+        if (this.popoverOptions === undefined) {
+            this.popoverOptions = {
+                //trigger: 'click focus',
+                html: true,
+                placement: 'auto left',
+                container: '.content-wrapper',
+                content: function () {
+                    return that._renderContent($(this).attr('data-test-index'), $(this).attr('data-feature-index'))
+                },
+                title: function () {
+                    return '<span>Feature</span> ' + that._getFeatureName($(this).attr('data-feature-index'));
+                }
+            }
+        }
+
+        $(this.id).popover(this.popoverOptions);
+
+    }
+
     _getFeatureName(featureIndex) {
         return this.features[featureIndex].name || 'FEATURE_NAME_MISSING';
     }
 
-    _renderContent(testIndex, featureIndex){
+    _renderContent(testIndex, featureIndex) {
         var test = this.independentTests[testIndex];
+        console.log(this.independentTests);
         if (test === undefined) {
             console.error('Test is undefined');
             return;
         }
 
         this.context = {
-            featureTestInfo: test,
+            test: test,
             engineIndependentFiles: createLinkFromPaths(test.engineIndependentFiles),
             img: {
                 alt: 'Image ' + test.name,
@@ -65,38 +76,41 @@ export default class DefaultTestPopover extends RenderComponent {
             feature: this.features[featureIndex]
         };
 
+        console.log('context_____________')
+        console.log(this.context)
+
         return super.renderTemplate();
     }
 }
 
 /*
-function buildFeaturePopoverContent(featureIndex, filteredData, capability) {
-    var featureTestInfo = getTestIndependentInfo(filteredData.features[featureIndex].id)
-    var loadFunction = [];
-    var image;
-    if (capability === 'performance') {
-        getChild("LoadFunction", featureTestInfo.loadFunction, loadFunction);
-    }
+ function buildFeaturePopoverContent(featureIndex, filteredData, capability) {
+ var featureTestInfo = getTestIndependentInfo(filteredData.features[featureIndex].id)
+ var loadFunction = [];
+ var image;
+ if (capability === 'performance') {
+ getChild("LoadFunction", featureTestInfo.loadFunction, loadFunction);
+ }
 
 
-    if (featureTestInfo.engineIndependentFiles != undefined && featureTestInfo.engineIndependentFiles !== '') {
-        featureTestInfo.engineIndependentFiles.forEach(function (file) {
-            if (file.substring(file.lastIndexOf('.') + 1) === 'png') {
-                image = file;
-                return;
-            }
-        });
-    }
-    var outputData = {
-        featureTestInfo: featureTestInfo,
-        loadFunction: loadFunction,
-        engineIndependentFiles: createLinkFromPaths(featureTestInfo.engineIndependentFiles),
-        img: {alt: 'image', src: image},
-        feature: filteredData.features[featureIndex]
-    }
-    return renderFeaturePopover(outputData);
-}
+ if (featureTestInfo.engineIndependentFiles != undefined && featureTestInfo.engineIndependentFiles !== '') {
+ featureTestInfo.engineIndependentFiles.forEach(function (file) {
+ if (file.substring(file.lastIndexOf('.') + 1) === 'png') {
+ image = file;
+ return;
+ }
+ });
+ }
+ var outputData = {
+ featureTestInfo: featureTestInfo,
+ loadFunction: loadFunction,
+ engineIndependentFiles: createLinkFromPaths(featureTestInfo.engineIndependentFiles),
+ img: {alt: 'image', src: image},
+ feature: filteredData.features[featureIndex]
+ }
+ return renderFeaturePopover(outputData);
+ }
 
-function getTestIndependentInfo(featureId) {
-    return _.findWhere(filteredData.independentTests, {featureID: featureId});
-}*/
+ function getTestIndependentInfo(featureId) {
+ return _.findWhere(filteredData.independentTests, {featureID: featureId});
+ }*/
