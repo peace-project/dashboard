@@ -21,7 +21,8 @@ import DefaultTestData from "./model/test_data";
 import PerformanceTestData from "./model/performance_test_data";
 import EngineInfoPopover from "./components/popovers/engine_info";
 import DefaultResultPopover from "./components/popovers/default_result";
-import TestIndependentData from "./model/test_independent_Data";
+import TestIndependentData from "./model/test_independent_data";
+import DefaultTestPopover from "./components/popovers/default_test";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -353,6 +354,12 @@ function process(page) {
                 capability: capability,
                 features: filterManager.getFilteredData().features.data,
                 tests: filterManager.getFilteredData().tests
+            });
+
+            new DefaultTestPopover({
+                capability: capability,
+                features: filterManager.getFilteredData().features.data,
+                independentTests: testIndependentData.tests,
             });
 
         }

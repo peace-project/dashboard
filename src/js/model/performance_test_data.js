@@ -10,11 +10,6 @@ export default class PerformanceTestData {
             copiedTest['index'] = index;
             return copiedTest;
         });
-
-        console.log(tests);
-        console.log('_________________-');
-        console.log(this.tests);
-
     }
 
     getAll(){

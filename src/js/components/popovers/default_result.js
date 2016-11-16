@@ -1,6 +1,6 @@
 import RenderComponent from "../../render/render_component";
 
-export default class DefaultResultPopover extends RenderComponent{
+export default class DefaultResultPopover extends RenderComponent {
     constructor(options) {
         super(undefined, undefined, undefined);
 
@@ -30,20 +30,15 @@ export default class DefaultResultPopover extends RenderComponent{
         });
 
         $('body').on('click', function (e) {
-            $('[data-test-info].info-engine-test').each(function () {
+            $(that.id).each(function () {
                 if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
                     $(this).popover('hide');
-
                 }
-
             });
-
         });
     }
 
     _getFeatureName(featureIndex) {
-        console.log('___featureIndex');
-        console.log(this.features);
         return this.features[featureIndex].name || 'FEATURE_NAME_MISSING';
     }
 
@@ -56,7 +51,5 @@ export default class DefaultResultPopover extends RenderComponent{
         this.context['test'] = test;
         return super.renderTemplate();
     }
-
-
 }
 

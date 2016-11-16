@@ -441,7 +441,7 @@ function hasEngineID(test) {
 }
 
 
-export function getTestIndependentInfo(featureId) {
+function getTestIndependentInfo(featureId) {
     return _.findWhere(filteredData.independentTests, {featureID: featureId});
 }
 
