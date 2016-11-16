@@ -550,6 +550,7 @@ import {renderFeaturePopover} from "./render/render";
         }
     }
 
+    /*
     function onCollapseFeatureTable(){
 
         $('.row-feat-title').on('show.bs.collapse', function(){
@@ -583,6 +584,6 @@ import {renderFeaturePopover} from "./render/render";
 
          });
         
-    }
+    } */
 
    

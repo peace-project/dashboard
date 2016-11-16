@@ -13,6 +13,7 @@ export class CapabilityTableComponent extends RenderComponent {
 
     onRenderingStarted(){
         this._createSubComponents();
+        this._onCollapseTable();
     }
 
     onRendering(){
@@ -69,14 +70,6 @@ export class CapabilityTableComponent extends RenderComponent {
 
 
         }
-        /**
-         *             if (capability==='performance'){
-                buildPerformanceTestPopover();
-            } else {
-
-                buildTestIndependentPopover();
-            }
-         */
 
     }
 
@@ -101,7 +94,7 @@ export class CapabilityTableComponent extends RenderComponent {
     }
 
 
-    _onCollapseFeatureTable(){
+    _onCollapseTable(){
 
     $('.row-feat-title').on('show.bs.collapse', function(){
 
