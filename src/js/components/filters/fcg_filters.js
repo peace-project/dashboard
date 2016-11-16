@@ -252,8 +252,7 @@ export class FCGFiltersComponent {
                     that.filterValues.constructs[key].index === data.constructIndex
                 });
 
-                if(!findFeature === undefined ){
-                    console.log('stop_____');
+                if(findFeature === undefined ){
                    return;
                }
             }

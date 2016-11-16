@@ -33,10 +33,9 @@
                        <div>
                            <span class="entypo-down-open"></span>{{../../features.[0].name}}
 
-                            <a role="button" tabindex="0" title="{{../../features.[0].description}}" data-toggle="tooltip"
-                               data-feature-index="{{../../features.[0].index}}" data-test-index="{{../../features.[0].testIndependentIndex}}"
-                               class="construct-info info-exp-feature">
-                                <span class="entypo-info"></span>
+                            <a role="button" tabindex="0" data-feature-index="{{../../features.[0].index}}" data-test-index="{{../../features.[0].testIndependentIndex}}"
+                               class="info-exp-feature">
+                                <span class="entypo-help-circled" title="Click here to obtain more information about this experiment" data-toggle="tooltip"></span>
                             </a>
                         </div>
                     </td>
@@ -46,7 +45,7 @@
                  <td class="construct-col" colspan=4>
                      <div>
                      <a role="button" tabindex="0"  data-feature-index="{{../../../../features.[0].index}}" data-engine-id="{{id}}" class="info-performance-test">
-                     <span class="entypo-help-circled"></span>
+                     <span class="entypo-help-circled" data-toggle="tooltip"  title="Click here to obtain more information about test result for {{id}}"></span>
                  </a></div></td>
                     {{/each}}
                  {{/each}}
