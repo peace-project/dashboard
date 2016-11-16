@@ -248,7 +248,7 @@ export class FCGFiltersComponent {
 
             if (that.dimension === 'features') {
                 let findFeature = Object.keys(that.filterValues.constructs).find(key => {
-                   return that.filterValues.constructs[key].index === data.constructIndex
+                   return that.filterValues.constructs[key].index === data.constructIndex;
                 });
 
                 if(findFeature === undefined ){

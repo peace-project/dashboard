@@ -213,6 +213,13 @@ function process(page) {
                     featuresFilters.searchFullData = capabilityData.getAllFeaturesByLanguage(filterManager.getFilterValues().language).clone().data
                 }
 
+                if (isPerformanceCapability(capability)) {
+                    experimentFilter.updateDimensionData(filterManager.getFilteredData().groups.data);
+                    if(featuresFilters.searchable){
+                        featuresFilters.searchFullData = capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data
+                    }
+                }
+
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, newFilterValues);
 
                 if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
@@ -250,6 +257,8 @@ function process(page) {
                 dimension: 'constructs',
                 dimensionData: filterManager.getFilteredData().constructs.data,
                 filterValues: filterManager.getFilterValues(),
+                searchable: true,
+                searchFullData: capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data,
                 onFilter: function (newFilterValues) {
                     filterManager.applyFilter(ConstructFilter.Name(), newFilterValues);
                     filterManager.applyFilter(FeatureFilter.Name());
