@@ -15,13 +15,13 @@ export function normalizeAll(dataModel) {
     return normalizedData;
 }
 
-export function normalizeByCapability(dataModel, capability, tests) {
+export function normalizeByCapability(dataModel, capability, tests, testIndependentData) {
     var data = {};
     data.featureTree = dataModel.getFeatureTreeByCapability(capability);
     let capabilityData = new CapabilityData(capability);
 
     data.featureTree.languages.forEach(function (treeByLang) {
-        let normalizedTree = normalizeFeatureTree(treeByLang, tests);
+        let normalizedTree = normalizeFeatureTree(treeByLang, tests, testIndependentData);
         normalizedTree['engines'] = normalizeEngines(dataModel.getEngines(), treeByLang.name);
         capabilityData.add(normalizedTree);
     });
@@ -45,7 +45,7 @@ function normalizeTests(tests) {
     tests.forEach((test, index) => test.featureID === feature.id);
 }
 
-function normalizeFeatureTree(featureTree, tests) {
+function normalizeFeatureTree(featureTree, tests, testIndependentData) {
     var cTotalLength = 0;
     var fTotalLength = 0;
     var currentConstructIndex = 0;
@@ -65,7 +65,7 @@ function normalizeFeatureTree(featureTree, tests) {
             sortedFeatures.forEach(function (feature, fIndex) {
                 //var _tests = getFeatureTests(tests);
                 //capData.tests.push(featureTests);
-                var _features = createNormalizedFeature(feature, group, tests, gIndex, currentConstructIndex, currentFeatureIndex);
+                var _features = createNormalizedFeature(feature, group, tests, testIndependentData, gIndex, currentConstructIndex, currentFeatureIndex);
                 capData.features.push(_features);
                 currentFeatureIndex++;
             });
@@ -101,8 +101,9 @@ function createNormalizedGroup(group, start, end) {
     };
 }
 
-function createNormalizedFeature(feature, group, tests, gIndex, currentConstructIndex, currentFeatureIndex) {
+function createNormalizedFeature(feature, group, tests, testIndependentData, gIndex, currentConstructIndex, currentFeatureIndex) {
     let featureTests = tests.filter(test => test.featureID === feature.id);
+    let featureTestsIndependent = testIndependentData.filter(test => test.featureID === feature.id);
     return {
         name: feature.name.replaceAll('_', ' '),
         description: feature.description,
@@ -115,7 +116,8 @@ function createNormalizedFeature(feature, group, tests, gIndex, currentConstruct
         constructIndex: currentConstructIndex,
         featureIndex: currentFeatureIndex,
         testIndexes: featureTests.map(obj => obj.index),
-        testIndexesEngine: testIndexesByEngines(featureTests)
+        testIndexesEngine: testIndexesByEngines(featureTests),
+        testIndependentIndexes: featureTestsIndependent.map(obj => obj.index)
         //getTestIndexesByFeatureID(tests, feature.id)
     };
 }

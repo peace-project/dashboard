@@ -21,6 +21,7 @@ import DefaultTestData from "./model/test_data";
 import PerformanceTestData from "./model/performance_test_data";
 import EngineInfoPopover from "./components/popovers/engine_info";
 import DefaultResultPopover from "./components/popovers/default_result";
+import TestIndependentData from "./model/test_independent_Data";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -46,8 +47,6 @@ export function Peace(page) {
         }).catch(function (err) {
         console.error(err);
     });
-
-
     //console.log(rawData);
 }
 
@@ -86,19 +85,6 @@ function createDataModel(results) {
     });
 
     return new DataModel(objResults);
-
-    /*rawData = {tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
-     filteredData = {groups: [], engines: [], constructs: [], features: []};
-     normalizedData = [];
-     htmlData = {constructs: [], summaryRow: {'totalConstructs': 0}};
-     dataFilters = {
-     language: 'BPMN',
-     groups: undefined,
-     constructs: undefined,
-     features: undefined,
-     portability_status: 0
-     } */
-
 }
 
 
@@ -119,7 +105,11 @@ function process(page) {
             throw new Error('Failed to create test data model for capability: ' +capability);
         }
 
-        let normalizedCapabilityData = normalizeByCapability(rawData, capability, testData.tests);
+        let testIndependentData = new TestIndependentData(rawData.getIndependentTestsByCapability(capability));
+
+        console.log('________testIndependentData')
+        console.log(testIndependentData)
+        let normalizedCapabilityData = normalizeByCapability(rawData, capability, testData.tests, testIndependentData.tests);
 
         var capabilityData = normalizedCapabilityData.getAll();
 
@@ -134,8 +124,7 @@ function process(page) {
             engines: {},
             constructs: {},
             features: {},
-            tests: {},
-            independentTests: {}
+            tests: {}
         };
 
         if(isPerformanceCapability(capability)){

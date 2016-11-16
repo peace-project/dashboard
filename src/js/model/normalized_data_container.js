@@ -59,7 +59,8 @@ export default class NormalizedDataContainer {
                     groupIndex: val.groupIndex,
                     constructIndex: val.constructIndex,
                     testIndexes: val.testIndexes,
-                    testIndexesEngine: val.testIndexesEngine
+                    testIndexesEngine: val.testIndexesEngine,
+                    testIndependentIndexes: val.testIndependentIndexes,
                 };
             });
         } else if (this.dimension === DataDimension.ENGINES) {

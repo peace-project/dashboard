@@ -6,19 +6,26 @@ export default class DataModel {
         this.engines = data.engines;
         this.tests = data.tests;
         this.metrics = data.metrics;
+        this.independentTests = data.independentTests;
+
+        this._filterCapability = function(capability) {
+            return function (test) {
+                let cap = test.featureID.split('__')[0];
+                return cap.toLowerCase() === capability.toLowerCase();
+            }
+        }
     }
 
     getTests() {
         return this.tests
     }
 
+    getIndependentTestsByCapability(capability){
+        return this.independentTests.filter(this._filterCapability(capability));
+    }
+
     getTestsByCapability(capability){
-        //console.log(this.tests);
-        return this.tests.filter(function(test){
-            let cap = test.featureID.split('__')[0];
-            //console.log(cap.toLowerCase() + '===' +capability.toLowerCase());
-            return cap.toLowerCase() === capability.toLowerCase();
-        });
+        return this.tests.filter(this._filterCapability(capability));
     }
 
     getFeatureTree() {
