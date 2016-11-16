@@ -14,9 +14,6 @@ export default class DefaultTestData {
             copiedTest['index'] = index;
             return copiedTest;
         });
-        console.log('copiedTest___');
-        console.log(this.tests);
-
     }
 
     _formatTestResult(test) {
@@ -26,9 +23,10 @@ export default class DefaultTestData {
         test.executionDuration = test.executionDuration.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         test.executionTimestamp = getDateFromTimestamp(test.executionTimestamp);
 
-        test['testCasesFormatted'] = test.testCases.map(formatTestCase);
+        test.testCases = test.testCases.map(formatTestCase);
         test['engineDependentFilePaths'] = createLinkFromPaths(test.engineDependentFiles);
         test['logFilePaths'] = createLinkFromPaths(test.logFiles);
+        //testDeployable
 
         return test;
     }
@@ -57,15 +55,6 @@ export default class DefaultTestData {
             },
             "logFiles": shallowCopy(test.logFiles),
             "testCases": shallowCopy(test.testCases),
-            "testCasesFormatted": test.testCases.map(t => {
-                return {
-                    number: t.number,
-                    name: t.name,
-                    message: t.message,
-                    resultType: t.resultType
-                }
-            })
-            ,
             "executionDuration": test.executionDuration,
             "featureID": test.featureID,
             "tool": {
