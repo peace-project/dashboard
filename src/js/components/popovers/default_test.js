@@ -76,9 +76,6 @@ export default class DefaultTestPopover extends RenderComponent {
             feature: this.features[featureIndex]
         };
 
-        console.log('context_____________')
-        console.log(this.context)
-
         return super.renderTemplate();
     }
 }

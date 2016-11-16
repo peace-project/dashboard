@@ -95,7 +95,7 @@
                         <td class="collapse-feature-cell">
                             <div class="collapse-cell-border">
                                     <p>{{name}}
-                                    <a role="button" tabindex="0" data-feature-info="{{index}}" class="info-feature">
+                                    <a role="button" tabindex="0" data-feature-index="{{index}}" data-test-index="{{testIndependentIndex}}" class="info-feature">
                                     <span class="entypo-help-circled"></span>
                                     </a>
                                 </p>
@@ -108,7 +108,7 @@
                                 <td class="result">
                                 {{#getProperty ../../results id}}
                                     {{#if html}}
-                                        <a role="button" tabindex="0" data-test-info="{{../../../../index}}" data-test-engine="{{../../id}}"  class="info-engine-test" >
+                                        <a role="button" tabindex="0" data-feature-index="{{../../../../index}}" data-engine-id="{{../../id}}"  class="info-engine-test" >
                                          <span class="{{html_class}}">{{html}}</span>
                                         </a>
                                     {{/if}}
