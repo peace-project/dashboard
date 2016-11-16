@@ -292,6 +292,8 @@ function process(page) {
             var constructFilters = new FCGFiltersComponent({
                 dimension: 'constructs',
                 dimensionData: filterManager.getFilteredData().constructs.data,
+                searchable: true,
+                searchFullData: capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data,
                 filterValues: filterManager.getFilterValues(),
                 onFilter: function (newFilterValues) {
                     filterManager.applyFilter(ConstructFilter.Name(), newFilterValues);
@@ -314,6 +316,8 @@ function process(page) {
             var featuresFilters = new FCGFiltersComponent({
                 dimension: 'features',
                 dimensionData: filterManager.getFilteredData().features.data,
+                searchable: true,
+                searchFullData: capabilityData.getAllFeaturesByLanguage(filterManager.getFilterValues().language).clone().data,
                 filterValues: filterManager.getFilterValues(),
                 onFilter: function (newFilterValues) {
                     filterManager.applyFilter(FeatureFilter.Name(), newFilterValues);

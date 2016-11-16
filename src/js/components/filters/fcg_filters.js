@@ -10,17 +10,20 @@ export class FCGFiltersComponent {
         this.filterValues = options.filterValues;
         this.dimension = options.dimension;
         this.dimensionData = options.dimensionData;
+        this.searchable = options.searchable || false;
+        this.searchFullData = options.searchFullData || undefined;
         this._init();
     }
 
     _init() {
         this._createCheckboxForAll();
         this._createCheckboxForInstances();
+        this._createSearchInput();
     }
 
     updateDimensionData(dimensionData, removedData) {
         this.dimensionData = dimensionData;
-        if(removedData === undefined || removedData === null){
+        if (removedData === undefined || removedData === null) {
             this._clearCheckboxForInstances();
             this._createCheckboxForInstances();
             this.checkBoxAll.setChecked(true);
@@ -77,7 +80,7 @@ export class FCGFiltersComponent {
             // Create new checkboxes or...
             if (that.allCheckBoxes[dimData.id] === undefined) {
                 newCheckBoxes[dimData.id] = that._createCheckboxInstance(dimData);
-               // newCheckBoxes[dimData.id].onRenderingStarted();
+                // newCheckBoxes[dimData.id].onRenderingStarted();
             } else {
                 // ...use existing one
                 newCheckBoxes[dimData.id] = that.allCheckBoxes[dimData.id];
@@ -89,9 +92,9 @@ export class FCGFiltersComponent {
         this.checkBoxAll.setChecked(true);
 
         removedData.forEach(data => {
-            if(data != undefined){
+            if (data != undefined) {
                 let toRemove = that.allCheckBoxes[data.id];
-                if(toRemove !== undefined){
+                if (toRemove !== undefined) {
                     toRemove.remove();
                 }
             }
@@ -142,14 +145,15 @@ export class FCGFiltersComponent {
                 that.filterValues[that.dimension][box.getValue()] = {index: box.getAttribute('value-index')};
                 box.setChecked(false);
             });
-        }  /*else {
-            console.log('_UNCHECK_____________');
-            Object.keys(that.allCheckBoxes).forEach(key => {
-                let box = that.allCheckBoxes[key];
-                delete that.filterValues[that.dimension][box.getValue()];
-                box.setChecked(false);
-            });
-        } */
+        }
+        /*else {
+         console.log('_UNCHECK_____________');
+         Object.keys(that.allCheckBoxes).forEach(key => {
+         let box = that.allCheckBoxes[key];
+         delete that.filterValues[that.dimension][box.getValue()];
+         box.setChecked(false);
+         });
+         } */
 
         this._doFilter();
     }
@@ -213,11 +217,55 @@ export class FCGFiltersComponent {
     _doFilter() {
         let that = this;
         setTimeout(function () {
-            console.log('_____DO_FILTER');
-            console.log(that.filterValues);
-
             that.onFilter(that.filterValues[that.dimension]);
         }, 100);
+    }
+
+
+    _createSearchInput() {
+        let that = this;
+        this.searchInput = $('input[data-search~="' + that.dimension + '"]');
+        this.searchInput.on('keyup', function (event) {
+            setTimeout(() => that._doSearch(), 100);
+        });
+    }
+
+    _doSearch() {
+        let searchText = this.searchInput.val();
+        if (searchText.length < 0) {
+            return;
+        }
+
+        searchText = searchText.toLowerCase();
+        let that = this;
+        // We cannot depend on dimensionData as some data might be undefined (filtered out by the user)
+        // Thus searchFullData must contains unfiltered data of this dimension
+        this.searchFullData.forEach(data => {
+
+            // Stop here if the current construct has been filtered out by the group filter
+            if (that.dimension === 'constructs' && !that.filterValues.groups.hasOwnProperty(data.groupName)) {
+                return;
+            }
+
+            if (that.dimension === 'features') {
+                let findFeature = Object.keys(that.filterValues.constructs).find(key => {
+                    that.filterValues.constructs[key].index === data.constructIndex
+                });
+
+                if(!findFeature === undefined ){
+                    console.log('stop_____');
+                   return;
+               }
+            }
+
+            var value = data.name;
+            var elem = $('input[data-dimension~="' + that.dimension + '"][value="' + value + '"]');
+            if (value.toLowerCase().indexOf(searchText) < 0) {
+                $(elem).parent().parent().hide();
+            } else {
+                $(elem).parent().parent().show();
+            }
+        });
     }
 
 }

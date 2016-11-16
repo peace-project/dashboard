@@ -161,8 +161,8 @@ import {renderFeaturePopover} from "./render/render";
 
         addCheckBoxFilterEventHandler('features');
         buildDimensionSearch('features');  
-    }  
-
+    }
+/*
         function buildDimensionSearch(dimension){
         $('input[data-search~="'+ dimension +'"]').on('keyup', function(event) {
             var inputField = $(this);
@@ -192,7 +192,7 @@ import {renderFeaturePopover} from "./render/render";
                 $(elem).parent().parent().show();
             }
         }
-    }
+    }*/
 
     //TODO convert to template
     function buildCheckboxAll(dimension){
@@ -336,6 +336,7 @@ import {renderFeaturePopover} from "./render/render";
     }
 
 
+    /*
     function buildFeaturePopover(){
         $('[data-feature-info].info-feature, [data-feature-info].info-exp-feature').popover({
             //trigger: 'click focus',
@@ -355,7 +356,7 @@ import {renderFeaturePopover} from "./render/render";
             });
         });
        
-    }
+    } */
 
 
     function buildPerformanceTestPopover(){
