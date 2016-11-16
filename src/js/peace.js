@@ -206,7 +206,15 @@ function process(page) {
                 // By passing groupsFilters.dimensionData we clear all current checkboxes first
                 groupsFilters.updateDimensionData(filterManager.getFilteredData().groups.data);
                 constructFilters.updateDimensionData(filterManager.getFilteredData().constructs.data);
+
+                if(constructFilters.searchable){
+                    constructFilters.searchFullData = capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data
+                }
+
                 featuresFilters.updateDimensionData(filterManager.getFilteredData().features.data);
+                if(featuresFilters.searchable){
+                    featuresFilters.searchFullData = capabilityData.getAllFeaturesByLanguage(filterManager.getFilterValues().language).clone().data
+                }
 
                 viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, newFilterValues);
 
