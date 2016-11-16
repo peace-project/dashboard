@@ -3,7 +3,7 @@
     "name": "Micro-Benchmark",
     "description": "Micro-Benchmark of BPMN 2.0 Workflow Mangament Systems involving 7 Workflow Patterns",
     "language": "BPMN",
-    "engineIndependentFiles": "",
+    "engineIndependentFiles": [],
     "featureID": "Performance__BPMN__Default__Micro-Benchmark__Micro-Benchmark",
     "loadFunction": {
       "description": "A load test function",
