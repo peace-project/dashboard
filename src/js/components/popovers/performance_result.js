@@ -1,5 +1,5 @@
 import {createLinkFromPaths} from "../../viewmodels/helpers";
-import DefaultResultPopover from "./default_result";
+import DefaultResultPopover from "./result_info";
 
 export default class PerformanceTestResultPopover extends DefaultResultPopover{
     constructor(options){

@@ -1,8 +1,7 @@
 import RenderComponent from "../render/render_component";
-import {isExpressivenessCapability} from "../peace";
-import {isPerformanceCapability} from "../peace";
-import DefaultResultPopover from "./popovers/default_result";
-import DefaultTestPopover from "./popovers/default_test";
+import {isExpressivenessCapability, isPerformanceCapability} from "../peace";
+import ResultInfoPopover from "./popovers/result_info";
+import TestInfoPopover from "./popovers/test_info";
 import EngineInfoPopover from "./popovers/engine_info";
 
 export class CapabilityTableComponent extends RenderComponent {
@@ -36,18 +35,37 @@ export class CapabilityTableComponent extends RenderComponent {
 
         if(isPerformanceCapability(this.viewModel.capability)) {
 
-
-        } else {
-            this.defaultResultPopover =    new DefaultResultPopover({
-                capability: this.viewModel.capability ,
-                features: this.viewModel.features
-            });
-
-            this.defaultTestPopover =     new DefaultTestPopover({
+            this.defaultTestPopover = new TestInfoPopover({
                 capability: this.viewModel.capability,
                 features: this.viewModel.features,
                 independentTests:  this.viewModel.independentTests,
+                title: 'Performance-Test',
+                id: '[data-feature-index].info-exp-feature'
             });
+
+            this.defaultResultPopover = new ResultInfoPopover({
+                capability: this.viewModel.capability,
+                features: this.viewModel.features,
+                title: 'Performance-Result',
+                id: '[data-test-info].info-performance-test',
+                templateId: 'performance_additional_data'
+            });
+
+        } else {
+
+            this.defaultTestPopover = new TestInfoPopover({
+                capability: this.viewModel.capability,
+                features: this.viewModel.features,
+                independentTests:  this.viewModel.independentTests,
+                title: 'Feature-Test'
+            });
+
+            this.defaultResultPopover = new ResultInfoPopover({
+                capability: this.viewModel.capability ,
+                features: this.viewModel.features,
+                title: 'Feature-Result',
+            });
+
 
         }
         /**
@@ -68,6 +86,8 @@ export class CapabilityTableComponent extends RenderComponent {
         } else if (isPerformanceCapability(viewModel.capability)) {
             featureTitleColspan = featureTitleColspan * 4
         }
+        console.log('__________viewModel')
+        console.log(viewModel)
 
         this.viewModel = viewModel;
         this.context = viewModel.table;

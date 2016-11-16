@@ -1,3 +1,13 @@
-/**
- * Created by shaka on 15.11.2016.
- */
+import DefaultTestPopover from "./test_info";
+
+export default class PerformanceTestPopover extends DefaultTestPopover{
+    constructor(options) {
+        super(options);
+        this.id = '[data-feature-index].info-exp-feature';
+    }
+
+    _renderContent(testIndex, featureIndex) {
+        super._renderContent(testIndex, featureIndex);
+        return super.renderTemplate();
+    }
+}

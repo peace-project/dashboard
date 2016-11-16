@@ -3,23 +3,24 @@
  <table class="table feature-desc" width="100%">
     <tbody>       
         <tr>
-            <td  class="popup-tb-title">Language</td>
-            <td colspan=2 class="popup-tb-val">{{test.language}}</td>
+            <td class="popup-tb-title">Language</td>
+            <td colspan="2" class="popup-tb-val">{{test.language}}</td>
         </tr>
 
         <tr>
-            <td  class="popup-tb-title">Description</td>
-            <td colspan=2 class="popup-tb-val">{{test.description}}</td>
+            <td class="popup-tb-title">Description</td>
+            <td colspan="2" class="popup-tb-val">{{test.description}}</td>
         </tr>
-        {{#each loadFunction}}
+
+        {{#each test.loadFunction}}
         <tr>
-            <td  class="popup-tb-title">{{name}}</td>
-            <td colspan=2 class="popup-tb-val">{{value}}</td>
+            <td  class="popup-tb-title">LoadFunction.{{@key}}</td>
+            <td colspan=2 class="popup-tb-val">{{this}}</td>
         </tr>
         {{/each}}
         <tr> 
             <td class="popup-tb-title">Engine Independent Files</td>
-            <td colspan=2 class="popup-tb-val">
+            <td colspan="2" class="popup-tb-val">
                 <ul class="list-files">
                 {{#each engineIndependentFiles}}
                     <li><span class="entypo-doc-text"></span><a href="data/{{url}}">{{title}}</a></li>
@@ -30,7 +31,7 @@
         {{#if img.src}}
         <tr>
             <td class="popup-tb-title">Process Image</td>
-            <td colspan=2 class="popup-tb-val">
+            <td colspan="2" class="popup-tb-val">
                <a target="_blank" href="data/{{img.src}}"><img  class="process-image" alt="{{img.alt}}" src="data/{{img.src}}" /> </a>
             </td>
         </tr>

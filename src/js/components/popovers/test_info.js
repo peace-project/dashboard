@@ -1,16 +1,17 @@
 import RenderComponent from "../../render/render_component";
 import {createLinkFromPaths} from "../../viewmodels/helpers";
 
-//TODO merge wih DefaultTestPopover?
-export default class DefaultTestPopover extends RenderComponent {
+//TODO merge wih TestInfoPopover?
+export default class TestInfoPopover extends RenderComponent {
     constructor(options) {
         super(undefined, undefined, undefined);
 
         this.templateId = options.templateId || 'test_description'; //feature_test_description
-        this.id = '[data-feature-index].info-feature, [data-feature-index].info-exp-feature';
+        this.id = options.id || '[data-feature-index].info-feature';
         this.features = options.features;
         this.independentTests = options.independentTests;
         this.capability = options.capability;
+        this.title = options.title;
         this._init();
 
     }
@@ -45,13 +46,12 @@ export default class DefaultTestPopover extends RenderComponent {
                     return that._renderContent($(this).attr('data-test-index'), $(this).attr('data-feature-index'))
                 },
                 title: function () {
-                    return '<span>Feature</span> ' + that._getFeatureName($(this).attr('data-feature-index'));
+                    return '<span>'+that.title +'</span> ' + that._getFeatureName($(this).attr('data-feature-index'));
                 }
             }
         }
 
         $(this.id).popover(this.popoverOptions);
-
     }
 
     _getFeatureName(featureIndex) {
@@ -60,7 +60,6 @@ export default class DefaultTestPopover extends RenderComponent {
 
     _renderContent(testIndex, featureIndex) {
         var test = this.independentTests[testIndex];
-        console.log(this.independentTests);
         if (test === undefined) {
             console.error('Test is undefined');
             return;

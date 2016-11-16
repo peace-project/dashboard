@@ -32,7 +32,7 @@
                     <td class="construct-col" colspan=2>
                        <div>
                            <span class="entypo-right-open"></span>{{../../features.[0].name}}
-                            <a role="button" tabindex="0" data-toggle="tooltip" data-feature-info="{{../../features.[0].index}}" class="info-exp-feature">
+                            <a role="button" tabindex="0" data-toggle="tooltip" data-feature-index="{{../../features.[0].index}}" data-test-index="{{../../features.[0].testIndependentIndex}}" class="info-exp-feature">
                                 <span class="entypo-help-circled"></span>
                             </a>
                         </div>
@@ -42,7 +42,7 @@
 
                  <td class="construct-col" colspan=4>
                      <div>
-                     <a role="button" tabindex="0"  data-test-info="{{../../../../features.[0].index}}" data-test-engine="{{id}}" class="info-performance-test">
+                     <a role="button" tabindex="0"  data-test-index="{{../../../../features.[0].index}}" data-engine-id="{{id}}" class="info-performance-test">
                      <span class="entypo-help-circled"></span>
                  </a></div></td>
                     {{/each}}

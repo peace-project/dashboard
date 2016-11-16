@@ -20,9 +20,9 @@ import LanguageFilterComponent from "./components/filters/language_filter";
 import DefaultTestData from "./model/test_data";
 import PerformanceTestData from "./model/performance_test_data";
 import EngineInfoPopover from "./components/popovers/engine_info";
-import DefaultResultPopover from "./components/popovers/default_result";
+import DefaultResultPopover from "./components/popovers/result_info";
 import TestIndependentData from "./model/test_independent_data";
-import DefaultTestPopover from "./components/popovers/default_test";
+import DefaultTestPopover from "./components/popovers/test_info";
 
 
 var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
@@ -85,6 +85,7 @@ function createDataModel(results) {
         objResults[row.name] = row.result;
     });
 
+
     return new DataModel(objResults);
 }
 
@@ -106,10 +107,11 @@ function process(page) {
             throw new Error('Failed to create test data model for capability: ' +capability);
         }
 
-        let testIndependentData = new TestIndependentData(rawData.getIndependentTestsByCapability(capability));
+        console.log('rawData__________________')
+        console.log(rawData)
+       let testIndependentData = new TestIndependentData(rawData.getIndependentTestsByCapability(capability));
 
-        console.log('________testIndependentData')
-        console.log(testIndependentData)
+
         let normalizedCapabilityData = normalizeByCapability(rawData, capability, testData.tests, testIndependentData.tests);
 
         var capabilityData = normalizedCapabilityData.getAll();
