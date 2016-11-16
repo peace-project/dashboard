@@ -41,7 +41,7 @@ export function fetchBenFlowData() {
    return Promise.all([fetchNamedData(urls.benchFlow.tests, 'tests'),
        fetchNamedData(urls.benchFlow.featureTree, 'featureTree'),
        fetchNamedData(urls.benchFlow.engines, 'engines'),
-       fetchNamedData(urls.benchFlow.independentTests), 'independentTests',
+       fetchNamedData(urls.benchFlow.independentTests, 'independentTests'),
        fetchNamedData(urls.benchFlow.metrics, 'metrics')]
     );
 }
