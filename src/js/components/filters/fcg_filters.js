@@ -235,7 +235,6 @@ export class FCGFiltersComponent {
         if (searchText.length < 0) {
             return;
         }
-
         searchText = searchText.toLowerCase();
         let that = this;
         // We cannot depend on dimensionData as some data might be undefined (filtered out by the user)
@@ -249,7 +248,7 @@ export class FCGFiltersComponent {
 
             if (that.dimension === 'features') {
                 let findFeature = Object.keys(that.filterValues.constructs).find(key => {
-                    that.filterValues.constructs[key].index === data.constructIndex
+                   return that.filterValues.constructs[key].index === data.constructIndex
                 });
 
                 if(findFeature === undefined ){
@@ -259,6 +258,9 @@ export class FCGFiltersComponent {
 
             var value = data.name;
             var elem = $('input[data-dimension~="' + that.dimension + '"][value="' + value + '"]');
+
+            console.log(value.toLowerCase().indexOf(searchText))
+
             if (value.toLowerCase().indexOf(searchText) < 0) {
                 $(elem).parent().parent().hide();
             } else {

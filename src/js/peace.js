@@ -19,13 +19,10 @@ import PortabilityFilterComponent from "./components/filters/portability_filter"
 import LanguageFilterComponent from "./components/filters/language_filter";
 import DefaultTestData from "./model/test_data";
 import PerformanceTestData from "./model/performance_test_data";
-import EngineInfoPopover from "./components/popovers/engine_info";
-import DefaultResultPopover from "./components/popovers/feature_result";
 import TestIndependentData from "./model/test_independent_data";
-import DefaultTestPopover from "./components/popovers/feature_test";
 
 
-var page, capability, filteredData, htmlData, dataFilters, numberOfreceivedData, normalizedData;
+var page, capability;
 var rawData;
 
 
@@ -358,103 +355,11 @@ function process(page) {
 
             });
 
-
-
-
         }
 
-
-
-
-
-
-
-        //filteredData['independentTests'] = _.where(rawData.independentTests, {language: langFilterValue});
-
-
-        // let htmlData = prepareHtmlData(capability, filteredData, filterManager.getFilterValues(), testData);
-        // buildFilterItems(capability);
-        //renderCapabilityTable(capability, htmlData, filterManager.getFilterValues());
-        /*
-         prepareHtmlData();
-         buildFilterItems();
-         renderCapabilityTable();*/
     } else if (page === 'engines-overview') {
         engineOverview();
     } else if (page === 'engines-compare') {
         engineCompare();
     }
 }
-
-/*
- page = benchmarkType;
- capability = benchmarkType;
-
- rawData = {tests: [], testsIndependent: [], featureTree: [], engines: [], metrics: []};
- filteredData = {groups: [], engines: [], constructs: [], features: []};
- normalizedData = [];
- htmlData = {constructs:[], summaryRow: {'totalConstructs' : 0} };
- dataFilters = { language:   'BPMN', groups: undefined, constructs: undefined, features: undefined, portability_status: 0}
-
-
- numberOfreceivedData = 0;
- var totalJSONFiles = (page === 'performance') ? 5 : 4;
-
- if(page === 'conformance' || page === 'expressiveness' || page === 'engines-overview'
- || page === 'engines-compare'){
- getJSON("../rawData/tests-engine-dependent.json", setDataCallback('tests', totalJSONFiles));
- getJSON("../rawData/feature-tree.json", setDataCallback('featureTree', totalJSONFiles));
- getJSON("../rawData/engines.json", setDataCallback('engines', totalJSONFiles));
- getJSON("../rawData/tests-engine-independent.json", setDataCallback('independentTests', totalJSONFiles));
- } else if(page === 'performance'){
- getJSON("../rawData/benchflow-tests-engine-dependent.json", setDataCallback('tests', totalJSONFiles));
- getJSON("../rawData/benchflow-feature-tree.json", setDataCallback('featureTree', totalJSONFiles));
- getJSON("../rawData/benchflow-tests-engine-independent.json", setDataCallback('independentTests', totalJSONFiles));
- getJSON("../rawData/benchflow-engines.json", setDataCallback('engines', totalJSONFiles));
- getJSON("../rawData/metrics.json", setDataCallback('metrics', totalJSONFiles));
- }
-
-
- return peace;
- }
-
- function setDataCallback(dataType, totalJSONFiles){
- return function(jsonData, textStatus, jqXHR) {
- if(dataType === 'tests'){
- rawData.tests = jsonData;
- } else if(dataType === 'featureTree'){
- rawData.featureTree = jsonData;
- if(page !== 'engines-overview' && page !== 'engines-compare'){
- udpateFeatureTreeByCapability();
- }
- } else if(dataType === 'engines'){
- rawData.engines = jsonData;
- } else if(dataType === 'independentTests'){
- rawData.independentTests = jsonData;
- } else if(dataType === 'metrics'){
- rawData.metrics = jsonData[0];
- }
-
- numberOfreceivedData++;
- if(numberOfreceivedData === totalJSONFiles){
- if(rawData.featureTree === undefined) {
- console.error('Capability not found in the dataset')
- return false;
- }
- process();
-
- }
- }
- }
-
-
-
- }
-
- function udpateFeatureTreeByCapability(cap){
- if(cap !== undefined) { capability = cap }
-
- rawData.featureTree = _.find(rawData.featureTree, function(feature){
- return feature.id.toLowerCase() == capability.toLowerCase();
- });
- } */
