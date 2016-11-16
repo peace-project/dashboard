@@ -486,14 +486,15 @@ import {renderFeaturePopover} from "./render/render";
     }
 
 
-
+/*
     function initializeTooltip(){
         $('[data-toggle="tooltip"]').tooltip({
             placement:'bottom',
             container: '.content-wrapper'
         });
-    }
+    }*/
 
+/*
     function onCollapseFilterGroupTitle(){
         $('.filter-group-title').on('click', function(){
                 var icon = $(this).find('span');
@@ -507,8 +508,9 @@ import {renderFeaturePopover} from "./render/render";
                     icon.addClass('entypo-right-open'); 
                 }
         });
-    }
+    }*/
 
+    /*
     function consumeTableCollapse(){
         if(capability == 'performance'){
             $('.info-exp-feature').on('click', function (e) {
@@ -548,7 +550,7 @@ import {renderFeaturePopover} from "./render/render";
 
             });
         }
-    }
+    } */
 
     /*
     function onCollapseFeatureTable(){

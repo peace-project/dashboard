@@ -28,13 +28,6 @@ export class CapabilityTableComponent extends RenderComponent {
     }
 
     _createSubComponents() {
-
-        /*
-         initializeTooltip();
-         onCollapseFilterGroupTitle();
-
-      */
-
         this.engineInfoPopover = new EngineInfoPopover({
             engines: this.viewModel.engines
         });

@@ -51,6 +51,8 @@ export class EnginesFilterComponent extends RenderComponent {
         Object.keys(this.allCheckBoxes).forEach(elemId => {
             that.allCheckBoxes[elemId].onRenderingStarted();
         });
+        this._onCollapseEngineName();
+
     }
 
     onRendering(){
@@ -58,6 +60,7 @@ export class EnginesFilterComponent extends RenderComponent {
         Object.keys(this.allCheckBoxes).forEach(elemId => {
             that.allCheckBoxes[elemId].onRenderingStarted();
         });
+        this._onCollapseEngineName();
     }
 
     _createLatestVersionsCheckbox() {
@@ -241,6 +244,21 @@ export class EnginesFilterComponent extends RenderComponent {
             }
         });
         return countCheckedBoxes === countSelectedBoxes;
+    }
+
+    _onCollapseEngineName(){
+        $('.filter-group-title').on('click', function(){
+            var icon = $(this).find('span');
+            var listEl = $(this).attr('data-target');
+
+            if($(listEl).is(':hidden')){
+                icon.removeClass('entypo-right-open');
+                icon.addClass('entypo-down-open');
+            }else {
+                icon.removeClass('entypo-down-open');
+                icon.addClass('entypo-right-open');
+            }
+        });
     }
 
     _doFilter() {
