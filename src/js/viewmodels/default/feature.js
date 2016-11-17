@@ -31,6 +31,7 @@ export default class Feature {
 
     _addTests(tests) {
         let that = this;
+
         this.testIndexes.forEach(function (testIndex) {
             var test = tests[testIndex];
             if (test !== undefined) {

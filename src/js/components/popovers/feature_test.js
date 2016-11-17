@@ -77,35 +77,3 @@ export default class FeatureTestPopover extends RenderComponent {
         return super.renderTemplate();
     }
 }
-
-/*
- function buildFeaturePopoverContent(featureIndex, filteredData, capability) {
- var featureTestInfo = getTestIndependentInfo(filteredData.features[featureIndex].id)
- var loadFunction = [];
- var image;
- if (capability === 'performance') {
- getChild("LoadFunction", featureTestInfo.loadFunction, loadFunction);
- }
-
-
- if (featureTestInfo.engineIndependentFiles != undefined && featureTestInfo.engineIndependentFiles !== '') {
- featureTestInfo.engineIndependentFiles.forEach(function (file) {
- if (file.substring(file.lastIndexOf('.') + 1) === 'png') {
- image = file;
- return;
- }
- });
- }
- var outputData = {
- featureTestInfo: featureTestInfo,
- loadFunction: loadFunction,
- engineIndependentFiles: createLinkFromPaths(featureTestInfo.engineIndependentFiles),
- img: {alt: 'image', src: image},
- feature: filteredData.features[featureIndex]
- }
- return renderFeaturePopover(outputData);
- }
-
- function getTestIndependentInfo(featureId) {
- return _.findWhere(filteredData.independentTests, {featureID: featureId});
- }*/

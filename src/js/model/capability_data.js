@@ -3,7 +3,7 @@ import {DataDimension} from "./normalized_data_container";
 import CapabilityDataContainer from "./capability_data_container";
 const _data = Symbol('data');
 
-// Ensures privacy of data and ensure retrieval via cloning
+// Ensures privacy of data and ensures retrieval via cloning
 // Convenient way to interact with data layer without calling clone/copy
 export default class CapabilityData {
     constructor(capability) {
@@ -21,8 +21,12 @@ export default class CapabilityData {
             this[_data] = new CapabilityDataContainer({}, this.capability);
         }
 
+        if(data.language === undefined){
+            throw Error('Wrong data format');
+        }
+
         if (this[_data].data.hasOwnProperty(data.language)) {
-            console.log('Could not add already existing data');
+            console.log('Language '+data.language + 'already exists');
             return;
         }
 
@@ -61,45 +65,8 @@ export default class CapabilityData {
         return new CapabilityDataContainer(clone, this.capability);
     }
 
-    /*
-     clone(lang, clone){
-     var data = this[_data][lang];
-     let target =  {};
-     target['language'] = lang;
-     target['groups'] = data.groups.clone();
-     target['engines'] = data.engines.clone();
-     target['constructs'] = data.constructs.clone();
-     target['features'] = data.features.clone();
-     target['engines'] = data.engines.clone();
-     console.log("ADD TARGET");
-     console.log(target);
-     clone.add(target);
-     } */
-
-
     copyByLang(lang, target) {
         this[_data].copyByLang(lang, target);
-        /*
-        if (!this[_data].hasLanguage(lang)) {
-            console.error('lang ' + lang + ' not found');
-            return;
-        }
-        if (target === undefined) {
-            console.error('target is undefined');
-            return;
-        }
-
-        var data = this[_data].data[lang];
-
-        console.log("////////////////////");
-
-        target['groups'] = data.groups.clone();
-        target['engines'] = data.engines.clone();
-        target['constructs'] = data.constructs.clone();
-        target['features'] = data.features.clone();
-        target['engines'] = data.engines.clone(); */
-
-
     }
 
     getByLanguage(language) {

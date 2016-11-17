@@ -46,7 +46,7 @@ export default class FeatureFilter extends Filter {
         filteredData.features.data.forEach(function (feature, index) {
             if (feature !== undefined) {
                 var filterPredicate = (countFilterFeatures === 0) ? false : !filterValues.features.hasOwnProperty(feature.name);
-                let constructIsFilteredOut = (filteredData.constructs.data[feature.constructIndex] === undefined);
+                let constructIsFilteredOut = (filteredData.constructs.data[feature.constructsIndex] === undefined);
                 if (feature !== undefined && (filterPredicate || constructIsFilteredOut)) {
                     filteredData.features.data[index] = undefined;
                     delete filterValues.features[feature.name];

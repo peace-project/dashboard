@@ -25,7 +25,6 @@ export function normalizeByCapability(dataModel, capability, tests, testIndepend
         normalizedTree['engines'] = normalizeEngines(dataModel.getEngines(), treeByLang.name);
         capabilityData.add(normalizedTree);
     });
-    //capabilityData.add(dataModel.getTestsByCapability(capability));
     return capabilityData;
 }
 
@@ -53,7 +52,6 @@ function normalizeFeatureTree(featureTree, tests, testIndependentData) {
 
     var capData = {language: undefined, groups: [], engines: [], constructs: [], features: []};
     capData.language = featureTree.name;
-
 
     var sortedGroups = sortDataAlphabetic(featureTree.groups, 'name');
     sortedGroups.forEach(function (group, gIndex) {

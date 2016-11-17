@@ -4,7 +4,7 @@ import {getCapabilityFromId} from "../helpers";
 
 //TODO rename to ViewConstruct
 export default class Construct {
-    constructor(construct) {
+    constructor(construct, group) {
         //TODO
         //this.construct = construct;
         let that = this;
@@ -19,6 +19,10 @@ export default class Construct {
         this.supportStatus = {};
         this.features = [];
         this.capability = getCapabilityFromId(this.id);
+
+        this['groupName'] = group.name;
+        this['groupDesc'] = group.description;
+
     }
 
 
@@ -26,14 +30,14 @@ export default class Construct {
         var capability = undefined;
         let that = this;
 
-        this.featureIndexes.forEach(index => {
+        this.featuresIndexes.forEach(index => {
             let feature = features[index];
             if (feature === undefined || feature.testIndexes.length < 1) {
                 return;
             }
 
             let viewFeature = new Feature(feature, tests);
-            that.moreThanTwoFeatures = that.featureIndexes.length > 1;
+            that.moreThanTwoFeatures = that.featuresIndexes.length > 1;
 
             if (that.upperBound !== '+') {
                 that.upperBound = viewFeature.upperBound;
@@ -56,6 +60,7 @@ export default class Construct {
                 that._updateSupportStatus(testResult, capability);
             });
 
+            viewFeature['groupName'] = this.groupName;
             that.features.push(viewFeature);
         });
 

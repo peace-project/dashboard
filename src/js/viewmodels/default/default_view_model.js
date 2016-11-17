@@ -29,11 +29,11 @@ export default class DefaultViewModel {
             }
         });
 
-        this._addConstructs(filteredData.constructs.data, filteredData.features.data, filteredData.tests,
+        this._addConstructs(filteredData.groups.data, filteredData.constructs.data, filteredData.features.data, filteredData.tests,
             filteredData.independentTests.tests);
     }
 
-    _addConstructs(constructs, features, tests, independentTests) {
+    _addConstructs(groups, constructs, features, tests, independentTests) {
         // clear constructs
         this.table.constructs.length = 0;
         let that = this;
@@ -44,7 +44,9 @@ export default class DefaultViewModel {
                 return;
             }
 
-            let viewConstruct = new Construct(construct);
+            // Add groupInfo
+            let group = groups[construct.groupsIndex];
+            let viewConstruct = new Construct(construct, group);
             viewConstruct.addFeatures(features, tests);
 
             if (viewConstruct.features.length < 1) {
@@ -61,8 +63,8 @@ export default class DefaultViewModel {
             // Reset old value of isFirstEntry to avoid duplicate group marking
             // Marks construct as the first row of a group
             viewConstruct.isFirstEntry = false;
-            if (viewConstruct.groupIndex !== lastGroupIndex) {
-                lastGroupIndex = viewConstruct.groupIndex;
+            if (viewConstruct.groupsIndex !== lastGroupIndex) {
+                lastGroupIndex = viewConstruct.groupsIndex;
                 viewConstruct.isFirstEntry = true;
             }
 
@@ -87,7 +89,7 @@ export default class DefaultViewModel {
     _updateSummaryRow(construct) {
         let that = this;
         Object.keys(construct.supportStatus).forEach(engineID => {
-            if (construct.featureIndexes.length === construct.supportStatus[engineID].supportedFeature) {
+            if (construct.featuresIndexes.length === construct.supportStatus[engineID].supportedFeature) {
                 that.table.summaryRow[engineID] += 1;
             } else if (that.capability === 'expressiveness' && construct.supportStatus[engineID].supportedFeature > 0) {
                 if (construct.upperBound === '+') {

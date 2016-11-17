@@ -77,8 +77,8 @@ export default class PortabilityFilter extends ViewFilter {
     }
 
     _updateGroupFirstEntry(oldFirstEntryConstruct, newFirstEntryConstruct){
-        let gIndex = oldFirstEntryConstruct.groupIndex;
-        if(newFirstEntryConstruct !== undefined && newFirstEntryConstruct.groupIndex === gIndex){
+        let gIndex = oldFirstEntryConstruct.groupsIndex;
+        if(newFirstEntryConstruct !== undefined && newFirstEntryConstruct.groupsIndex === gIndex){
             newFirstEntryConstruct.isFirstEntry = true;
         }
     }

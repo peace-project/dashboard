@@ -53,8 +53,8 @@ export function prepareHtmlData(capability, filteredData, dataFilters, tests){
             // Reset old value of isFirstEntry to avoid duplicate group marking
             // Marks construct as the first row of a group
             construct.isFirstEntry = false;
-            if(construct.groupIndex !== lastGroupIndex){
-                lastGroupIndex = construct.groupIndex;
+            if(construct.groupsIndex !== lastGroupIndex){
+                lastGroupIndex = construct.groupsIndex;
                 construct.isFirstEntry = true;
             }
             htmlData.constructs.push(construct);
@@ -203,9 +203,9 @@ export function prepareHtmlData(capability, filteredData, dataFilters, tests){
         construct['features'] = [];
         var lastFeatureIndex ;
 
-        if (construct.featureIndexes.length < 1){ return; }
+        if (construct.featuresIndexes.length < 1){ return; }
 
-        var feature = filteredData.features.data[construct.featureIndexes[0]];
+        var feature = filteredData.features.data[construct.featuresIndexes[0]];
         if (!feature || feature.testIndexes.length < 1){ return; }
 
             construct['features'].push(feature);
@@ -309,12 +309,12 @@ export function prepareHtmlData(capability, filteredData, dataFilters, tests){
     function addFeatureAndTestData(construct, filteredData, tests){
         construct['features'] = [];
         construct['supportStatus'] = {};
-        construct['moreThanTwoFeatures'] = construct.featureIndexes.length > 1;
+        construct['moreThanTwoFeatures'] = construct.featuresIndexes.length > 1;
         construct['upperBound'] = '-';
 
 
         var lastFeatureIndex ;
-        _.each(construct.featureIndexes, function(index){
+        _.each(construct.featuresIndexes, function(index){
 
             var feature = filteredData.features.data[index];
             if (!feature || feature.testIndexes.length < 1){ return; }
@@ -397,9 +397,9 @@ export function prepareHtmlData(capability, filteredData, dataFilters, tests){
     function updateSupportStatus(construct){
         for(var engineID  in construct['supportStatus']){
             construct['supportStatus'][engineID]['supportedFeaturePercent'] =
-            (construct['supportStatus'][engineID].supportedFeature/construct.featureIndexes.length) * 100;
+            (construct['supportStatus'][engineID].supportedFeature/construct.featuresIndexes.length) * 100;
 
-            if(construct.featureIndexes.length === construct['supportStatus'][engineID].supportedFeature){
+            if(construct.featuresIndexes.length === construct['supportStatus'][engineID].supportedFeature){
                 construct['supportStatus'][engineID].fullSupport = true;
                 construct['supportStatus'][engineID].html = '✔' ;
 

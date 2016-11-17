@@ -11,7 +11,7 @@ export default class Construct {
 
     addFeatures(features, tests, metricsInfo, resultOrder) {
         let that = this;
-        this.featureIndexes.forEach(index => {
+        this.featuresIndexes.forEach(index => {
             let feature = features[index];
             if (feature === undefined || feature.testIndexes.length < 1) {
                 return;

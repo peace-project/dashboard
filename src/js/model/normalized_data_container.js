@@ -1,3 +1,4 @@
+import {shallowCopy} from "../utils";
 export const DataDimension = {
     GROUPS : 'groups',
     CONSTRUCTS : 'constructs',
@@ -11,10 +12,6 @@ export default class NormalizedDataContainer {
     constructor(data, dimension) {
         this.data = data;
         this.dimension = dimension;
-        /*var that = this;
-        Object.keys(data).forEach(function (key) {
-            that[key] = data[key];
-        })*/
     }
 
      clone() {
@@ -26,7 +23,7 @@ export default class NormalizedDataContainer {
                     name: val.name,
                     description: val.description,
                     id: val.id,
-                    constructIndexes: shallowCopy(val.constructIndexes)
+                    constructsIndexes: shallowCopy(val.constructsIndexes)
                 };
             });
         } else if (this.dimension === DataDimension.CONSTRUCTS) {
@@ -36,12 +33,12 @@ export default class NormalizedDataContainer {
                     name: val.name,
                     description: val.description,
                     id: val.id,
-                    groupId: val.groupId,
-                    groupName: val.groupName,
-                    groupDesc: val.groupDesc,
+                   // groupId: val.groupId,
+                 //   groupName: val.groupName,
+                  //  groupDesc: val.groupDesc,
                     isFirstEntry: val.isFirstEntry,
-                    groupIndex: val.groupIndex,
-                    featureIndexes: val.featureIndexes
+                    groupsIndex: val.groupsIndex,
+                    featuresIndexes: val.featuresIndexes
                 };
             });
 
@@ -54,10 +51,10 @@ export default class NormalizedDataContainer {
                     id: val.id,
                     upperBound: val.upperBound,
                     lastFeature: val.lastFeature,
-                    groupId: val.groupId,
-                    groupName: val.name,
-                    groupIndex: val.groupIndex,
-                    constructIndex: val.constructIndex,
+                   // groupId: val.groupId,
+                   // groupName: val.groupName,
+                    groupsIndex: val.groupsIndex,
+                    constructsIndex: val.constructsIndex,
                     testIndexes: val.testIndexes,
                     testIndexesEngine: val.testIndexesEngine,
                     testIndependentIndex: val.testIndependentIndex,
@@ -95,10 +92,10 @@ export default class NormalizedDataContainer {
 }
 
 //TODO duplicate code
-function shallowCopy(array) {
+/*function shallowCopy(array) {
     var copy = [];
     for (var index in array) {
         copy[index] = array[index];
     }
     return copy;
-}
+}*/

@@ -289,7 +289,7 @@ function filterByConstruct() {
     filteredData.constructs.forEach(function (construct, index) {
         if (construct !== undefined) {
             var filterPredicate = (dataFilters.constructs.length == 0) ? false : (dataFilters.constructs.indexOf(construct.name) == -1);
-            if ((filterPredicate || filteredData.groups[construct.groupIndex] == undefined)) {
+            if ((filterPredicate || filteredData.groups[construct.groupsIndex] == undefined)) {
                 filteredData.constructs[index] = undefined;
             }
         }
@@ -310,7 +310,7 @@ function filterByFeature() {
     filteredData.features.forEach(function (feature, index) {
         if (feature !== undefined) {
             var filterPredicate = (dataFilters.features.length == 0) ? false : (dataFilters.features.indexOf(feature.name) == -1);
-            if (feature !== undefined && (filterPredicate || (filteredData.constructs[feature.constructIndex] == undefined))) {
+            if (feature !== undefined && (filterPredicate || (filteredData.constructs[feature.constructsIndex] == undefined))) {
                 filteredData.features[index] = undefined;
             }
         }

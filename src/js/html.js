@@ -133,7 +133,7 @@ import {renderFeaturePopover} from "./render/render";
         addCheckBoxAllFilterEventHandler('constructs');
 
         getNormalizedDataByLang().constructs.forEach(function(construct){
-            if(filteredData.groups[construct.groupIndex] !== undefined) { 
+            if(filteredData.groups[construct.groupsIndex] !== undefined) {
                 buildFilterCheckboxes('constructs', construct.name);
                 var checked = dataFilters.constructs.indexOf(construct.name) > -1;
                 $('input[data-dimension~="constructs"][value~="'+ construct.name+'"]').prop("checked", checked);
@@ -152,7 +152,7 @@ import {renderFeaturePopover} from "./render/render";
         addCheckBoxAllFilterEventHandler('features');
 
         getNormalizedDataByLang().features.forEach(function(feature){
-            if(filteredData.constructs[feature.constructIndex] !== undefined) { 
+            if(filteredData.constructs[feature.constructsIndex] !== undefined) {
                 buildFilterCheckboxes('features', feature.name);
                 var checked = dataFilters.features.indexOf(feature.name) > -1;
                 $('input[data-dimension~="features"][value~="'+ feature.name+'"]').prop("checked", checked);
@@ -176,11 +176,11 @@ import {renderFeaturePopover} from "./render/render";
         searchText = searchText.toLowerCase();
         var normalizedData = getNormalizedDataByLang();
         for(var i=0; i < normalizedData[dimension].length; i++){
-            if(dimension === 'constructs' && filteredData.groups[normalizedData[dimension][i].groupIndex] === undefined) { 
+            if(dimension === 'constructs' && filteredData.groups[normalizedData[dimension][i].groupsIndex] === undefined) {
                 return true;
             }
 
-            if(dimension === 'features' && filteredData.constructs[normalizedData[dimension][i].constructIndex] === undefined) { 
+            if(dimension === 'features' && filteredData.constructs[normalizedData[dimension][i].constructsIndex] === undefined) {
                 return true;
             }
   

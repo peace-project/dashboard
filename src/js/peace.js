@@ -20,6 +20,7 @@ import LanguageFilterComponent from "./components/filters/language_filter";
 import DefaultTestData from "./model/test_data";
 import PerformanceTestData from "./model/performance_test_data";
 import TestIndependentData from "./model/test_independent_data";
+import {normalizeCapability} from "./model/pbel/normalizer";
 
 
 var page, capability;
@@ -107,7 +108,7 @@ function process(page) {
        let testIndependentData = new TestIndependentData(rawData.getIndependentTestsByCapability(capability));
 
 
-        let normalizedCapabilityData = normalizeByCapability(rawData, capability, testData.tests, testIndependentData.tests);
+        let normalizedCapabilityData = normalizeCapability(rawData, capability, testData.tests, testIndependentData.tests);
 
         var capabilityData = normalizedCapabilityData.getAll();
 

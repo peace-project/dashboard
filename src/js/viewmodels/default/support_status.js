@@ -15,9 +15,9 @@ export default class SupportStatus {
 
     updateSupportStatus(construct, capability) {
 
-        this['supportedFeaturePercent'] = (this.supportedFeature / construct.featureIndexes.length) * 100;
+        this['supportedFeaturePercent'] = (this.supportedFeature / construct.featuresIndexes.length) * 100;
 
-        if (construct.featureIndexes.length === this.supportedFeature) {
+        if (construct.featuresIndexes.length === this.supportedFeature) {
             this.fullSupport = true;
             this.html = '✔';
 

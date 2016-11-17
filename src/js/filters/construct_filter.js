@@ -41,8 +41,8 @@ export default class ConstructFilter extends Filter {
             let filterValue = filterValuesChanges.addedValues[key];
             filteredData.constructs.data[filterValue.index] = capabilityData.getConstructByIndex(filterValues.language, filterValue.index);
 
-            let featureIndexes = filteredData.constructs.data[filterValue.index].featureIndexes;
-            featureIndexes.forEach(function (index) {
+            let featuresIndexes = filteredData.constructs.data[filterValue.index].featuresIndexes;
+            featuresIndexes.forEach(function (index) {
                 filteredData.features.data[index] =  capabilityData.getFeatureByIndex(filterValues.language, index);
             });
         });
@@ -53,7 +53,7 @@ export default class ConstructFilter extends Filter {
         filteredData.constructs.data.forEach(function (construct, index) {
             if (construct !== undefined) {
                 var filterPredicate = (countFilterConstructs === 0) ? false : !filterValues.constructs.hasOwnProperty(construct.name);
-                if (filterPredicate || filteredData.groups.data[construct.groupIndex] === undefined) {
+                if (filterPredicate || filteredData.groups.data[construct.groupsIndex] === undefined) {
                     // filter out unselected data
                     filteredData.constructs.data[index] = undefined;
                     delete filterValues.constructs[construct.name];
@@ -67,7 +67,7 @@ export default class ConstructFilter extends Filter {
 
     _updateFeaturesFilterValues(construct, capabilityData, filterValues) {
         // If a construct has been added, return to default setting by selecting all features
-        construct.featureIndexes.forEach(function (index) {
+        construct.featuresIndexes.forEach(function (index) {
             let feature = capabilityData.getFeatureByIndex(filterValues.language, index);
             filterValues.features[feature.name] = {index: index};
         });

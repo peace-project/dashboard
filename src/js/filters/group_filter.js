@@ -46,12 +46,12 @@ export default class GroupFilter extends Filter {
             // only contains constructs of the old groups. Thus, we must update the filterValues.constructs before
             // applying {@link ConstructFilter} filter
 
-            let constructIndexes = filteredData.groups.data[filterValue.index].constructIndexes;
-            constructIndexes.forEach(function (index) {
+            let constructsIndexes = filteredData.groups.data[filterValue.index].constructsIndexes;
+            constructsIndexes.forEach(function (index) {
                 filteredData.constructs.data[index] = capabilityData.getConstructByIndex(filterValues.language, index);
 
-                let featureIndexes = filteredData.constructs.data[index].featureIndexes;
-                featureIndexes.forEach(function (index) {
+                let featuresIndexes = filteredData.constructs.data[index].featuresIndexes;
+                featuresIndexes.forEach(function (index) {
                     filteredData.features.data[index] = capabilityData.getFeatureByIndex(filterValues.language, index);
                 });
             });
@@ -77,11 +77,11 @@ export default class GroupFilter extends Filter {
     }
 
     _updateFilterValues(group, capabilityData, filterValues) {
-        group.constructIndexes.forEach(function (index) {
+        group.constructsIndexes.forEach(function (index) {
             let construct = capabilityData.getConstructByIndex(filterValues.language, index);
             filterValues.constructs[construct.name] = {index: index};
 
-            construct.featureIndexes.forEach(function (fIndex) {
+            construct.featuresIndexes.forEach(function (fIndex) {
                 let feature = capabilityData.getFeatureByIndex(filterValues.language, fIndex);
                 filterValues.features[feature.name] = {index: fIndex};
             });

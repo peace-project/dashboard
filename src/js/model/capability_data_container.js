@@ -78,6 +78,7 @@ export default class CapabilityDataContainer {
 
 
         target['groups'] = data.groups.clone();
+
         target['constructs'] = data.constructs.clone();
         target['features'] = data.features.clone();
         target['engines'] = data.engines.clone();
