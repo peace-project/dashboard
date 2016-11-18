@@ -78,17 +78,12 @@ export default class NormalizedDataContainer {
                 target[index] = {
                     'index': index,
                     id: val.id,
-                    language: val.language,
                     name: val.name,
                     version: val.version,
-                    url: val.url,
-                    license: val.license,
-                    licenseURL: val.licenseURL,
-                    releaseDate: val.releaseDate,
-                    programmingLanguage: val.programmingLanguage,
-                    versionLong: versionLong,
-                    //indexEngine: index,
-                    configuration: shallowCopy(val.configuration)
+                    configuration: shallowCopy(val.configuration),
+                    language: val.language,
+                    extensions: shallowObjectCopy(val.extensions),
+                    versionLong: versionLong
                 };
             });
         } else if (this.dimension === DataType.TESTS) {
@@ -106,7 +101,6 @@ export default class NormalizedDataContainer {
                 };
             });
         } else if (this.dimension === DataType.TESTS_INDEPENDENT) {
-            console.log(this.data);
             this.data.forEach((val, index) => {
                 target[index] = {
                     id: val.id,
@@ -117,10 +111,11 @@ export default class NormalizedDataContainer {
                     files: val.files,
                     testPartners: val.testPartners, //TODO should be ignored?
                     extensions: shallowObjectCopy(val.extensions),
-                    metrics: this._getMetricArray(val.metrics).map(m => {
+                    metrics: val.metrics.map(m => {
                         return {id: m.id, metricType: m.metricType}
                     }),
-                    image : val.files.file.find(path => path.toLowerCase().split('.').pop() === 'png'),
+                    files: val.files
+                    //image : (val.files && val.files.toLowerCase().split('.').pop() === 'png') ? file : undefined,
                 }
             });
         } else {
@@ -130,10 +125,6 @@ export default class NormalizedDataContainer {
         return new NormalizedDataContainer(target, this.dimension);
     }
 
-    //TODO should be removed when fixed by Simon
-    _getMetricArray(metrics){
-        return (metrics.hasOwnProperty('metric')) ? metrics.metric :  metrics;
-    }
 }
 
 

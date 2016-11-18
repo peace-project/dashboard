@@ -29,8 +29,8 @@ export default class DefaultViewModel {
             }
         });
 
-        this._addConstructs(filteredData.groups.data, filteredData.constructs.data, filteredData.features.data, filteredData.tests,
-            independentTests);
+        this._addConstructs(filteredData.groups.data, filteredData.constructs.data,
+            filteredData.features.data, filteredData.tests, independentTests);
     }
 
     _addConstructs(groups, constructs, features, tests, independentTests) {

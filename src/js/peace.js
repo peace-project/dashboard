@@ -131,12 +131,16 @@ function process(page) {
         let featureFilter = new FeatureFilter();
         let testsFilter = new TestsFilter();
 
+
+        let testData = capabilityData.getAllTestsByLanguage(defaultLang);
+        testData = (testData) ? testData.clone() : [];
+
         filterManager.addFilter(new LanguageFilter(), defaultLang);
         filterManager.addFilter(engineFilter, engineFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(groupFilter, groupFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(constructFilter, constructFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(featureFilter, featureFilter.getDefaultFilterValues(defaultLang, capabilityData));
-        filterManager.addFilter(testsFilter, capabilityData.getAllTestsByLanguage(defaultLang).clone());
+        filterManager.addFilter(testsFilter, testData);
         let portabilityFilter = new PortabilityFilter();
         filterManager.addViewModelFilter(portabilityFilter, portabilityFilter.getDefaultFilterValues());
 

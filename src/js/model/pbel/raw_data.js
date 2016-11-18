@@ -5,13 +5,13 @@ export default class RawDataModel {
 
         //this.capabilities = data.pebl.benchmark.capabilities;
         this.metricTypes = data.pebl.benchmark.metricTypes;
-        this._independentTests = data.pebl.benchmark.tests.test;
-        this._tests = data.pebl.result.testResults.testResult;
+        this._independentTests = data.pebl.benchmark.tests;
+        this._tests = data.pebl.result.testResults;
 
         //TODO rename to capabilities
-        this._capabilities = data.pebl.benchmark.capabilities.capability;
-        this._engines = data.pebl.result.engines.engine;
-        this.tools = data.pebl.result.tools;
+        this._capabilities = data.pebl.benchmark.capabilities;
+        this._engines = data.pebl.result.engines;
+        this._tools = data.pebl.result.tools;
         //this.tests = data.pebl.result.featureResults;
         //this.metrics = data.metrics;
        // this.independentTests = data.pebl.result.testResults;

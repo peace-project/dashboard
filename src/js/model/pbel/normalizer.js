@@ -1,26 +1,20 @@
-import {sortDataAlphabetic} from "../../utils";
+'use strict'
+
+import {sortDataAlphabetic, capitalizeFirstLetter, shallowCopy} from "../../utils";
 import CapabilityData from "../capability_data";
-import {capitalizeFirstLetter} from "../../utils";
-import {shallowCopy} from "../../utils";
 import Schema from "./schema";
-import TestIndependentData from "../test_independent_data";
-import {isPerformanceCapability} from "../../peace";
-import {isConformanceCapability} from "../../peace";
-import {isExpressivenessCapability} from "../../peace";
-import PerformanceTestData from "../performance_test_data";
-import DefaultTestData from "../test_data";
 import {DataType} from "../normalized_data_container";
 
 // Inspired by normalizr
 
 const afterAssignGroups = function (normalized, schema, parentIndex, fullNormalized) {
     normalized['name'] = capitalizeFirstLetter(normalized['name'].replaceAll('_', ' '));
-    normalized['metrics'] = normalized['metrics'].metric;
+    //normalized['metrics'] = normalized['metrics'].metric;
 };
 
 const afterAssignConstructs = function (normalized, schema, parentIndex, fullNormalized) {
     normalized['name'] = capitalizeFirstLetter(normalized['name'].replaceAll('_', ' '));
-    normalized['metrics'] = normalized['metrics'].metric;
+ //   normalized['metrics'] = normalized['metrics'].metric;
 };
 
 
@@ -50,6 +44,7 @@ function copyAndFormat(engines) {
             if (idParts.length > 2) {
                 versionLong = engines[index].version + ' ' + idParts[2];
             }
+
             sortedEngines[index]['index'] = index;
             sortedEngines[index]['versionLong'] = versionLong;
         }
@@ -91,6 +86,7 @@ function addIndependentTests(tests, capabilityData){
     tests.forEach(test => {
        let language = test.id.split('__')[1];
        capabilityData.add(language, test, DataType.TESTS_INDEPENDENT);
+
     });
 }
 
@@ -98,16 +94,27 @@ export function normalizeCapability(rawData, capability) {
     let capabilityData = new CapabilityData(capability);
 
     let tests = rawData.getTestsByCapability(capability);
+    if(tests === undefined || tests.length === 0){
+        throw new Error('No tests found for capability '+ capability);
+    }
+
+    console.log('tests=='+tests)
+    console.log(tests)
+
     let engines = copyAndFormat(rawData.getEngines());
+    if(engines === undefined || engines.length === 0){
+        throw new Error('No engines found for capability '+ capability);
+    }
+
     let testIndependentData = rawData.getIndependentTestsByCapability(capability);
+    if(testIndependentData === undefined || testIndependentData.length === 0){
+        throw new Error('TestData for capability '+ capability + ' is incomplete');
+    }
+
 
     addTests(tests, capabilityData);
     addEngines(engines, capabilityData);
     addIndependentTests(testIndependentData, capabilityData);
-
-
-
-
 
 
 
@@ -130,7 +137,7 @@ export function normalizeCapability(rawData, capability) {
 
 
     const groups = new Schema('groups', {
-            inputKey: 'group',
+            //inputKey: 'group',
             sortData: sortByName,
             afterAssign: afterAssignGroups
         }
@@ -151,11 +158,11 @@ export function normalizeCapability(rawData, capability) {
 
 
     groups.define({
-        'featureSet': constructs
+        'featureSets': constructs
     });
 
     constructs.define({
-        'feature': features
+        'features': features
     });
 
 
@@ -163,7 +170,7 @@ export function normalizeCapability(rawData, capability) {
     //var data = {};
     let featureTree = rawData.getFeatureTreeByCapability(capability);
 
-    featureTree.language.forEach(featureSet => {
+    featureTree.languages.forEach(featureSet => {
         let normalizedData = normalize(featureSet, groups);
         console.log(normalizedData);
         capabilityData.addAll(normalizedData, featureSet.name);

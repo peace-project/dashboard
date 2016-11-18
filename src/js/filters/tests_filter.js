@@ -18,8 +18,13 @@ export default class TestsFilter extends Filter{
         }
 
         let testData = capabilityData.getAllTestsByLanguage(filterValues.language);
+        if(testData === undefined){
+            console.log('stop filer. we have found no tests')
+            return;
+        }
+
         if(filteredData.tests.length === undefined){
-            filteredData.tests = testData.clone().data;
+            filteredData.tests = testData.clone();
         }
 
         console.log('Apply tests filter');
