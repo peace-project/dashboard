@@ -1,18 +1,6 @@
 import {jquery} from "jquery"
 
 
-/*
- function getJSON(url, callback){
- $.ajax({
- type: 'GET',
- url: url,
- async: true,
- cache: false,
- dataType: 'json',
- success: callback
- });
- } */
-
 let urls = {
     betsy: {
         tests: "../data/tests-engine-dependent.json",
