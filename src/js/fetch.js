@@ -29,6 +29,10 @@ let urls = {
     }
 };
 
+export function fetchPbelData() {
+    return fetchData('../data/pebl.json');
+}
+
 export function fetchBetsyData() {
     return Promise.all([fetchNamedData(urls.betsy.tests, 'tests'),
         fetchNamedData(urls.betsy.featureTree, 'featureTree'),

@@ -47,14 +47,23 @@ export default class CapabilityDataContainer {
         return this.data[language].engines.data[index];
     }
 
-
-    getAllConstructsName() {
-        return this.data[language].constructs.map(obj => obj.name);
+    getAllTestsByLanguage(language){
+        return this.data[language].tests;
     }
 
-    getAllFeaturesName() {
-        return this.data[language].features.map(obj => obj.name);
+    getAllTestIndependentByLanguage(language){
+        return this.data[language].tests_independent;
     }
+
+
+    /*
+        getAllConstructsName() {
+            return this.data[language].constructs.map(obj => obj.name);
+        }
+
+        getAllFeaturesName() {
+            return this.data[language].features.map(obj => obj.name);
+        } */
 
     hasLanguage(language) {
         return this.data.hasOwnProperty(language);
@@ -63,6 +72,9 @@ export default class CapabilityDataContainer {
     getAllLanguage() {
         return Object.keys(this.data);
     }
+
+
+
 
     copyByLang(lang, target) {
         if (!this.hasLanguage(lang)) {
@@ -76,12 +88,17 @@ export default class CapabilityDataContainer {
 
         var data = this.data[lang];
 
-
+        for(let key in data){
+            if(data.hasOwnProperty(key) && !(typeof data[key] === 'string')){
+                target[key] = data[key].clone();
+            }
+        }
+        /*
         target['groups'] = data.groups.clone();
-
         target['constructs'] = data.constructs.clone();
         target['features'] = data.features.clone();
         target['engines'] = data.engines.clone();
+        target['tests'] = data.tests.clone();*/
     }
 
     getLatestEngineVersions(language) {

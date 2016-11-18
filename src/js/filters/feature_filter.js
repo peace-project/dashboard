@@ -25,7 +25,7 @@ export default class FeatureFilter extends Filter {
         return this.createFilterValues(data.getAllFeaturesByLanguage(language));
     }
 
-    applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges) {
+    applyFilter(capabilityData, filteredData, filterValues, filterValuesChanges) {
         console.log('Apply ' + this.getName() + ' filter');
 
         if (!this.hasRequiredFilterValues(filterValues)) {

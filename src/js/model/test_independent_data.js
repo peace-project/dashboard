@@ -16,7 +16,7 @@ export default class TestIndependentData {
     }
 
     _formatTestResult(test) {
-        test['image'] = test.engineIndependentFiles.find(path => path.toLowerCase().split('.').pop() === 'png');
+        test['image'] = test.files.file.find(path => path.toLowerCase().split('.').pop() === 'png');
         return test;
     }
 

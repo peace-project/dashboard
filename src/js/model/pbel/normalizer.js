@@ -3,15 +3,24 @@ import CapabilityData from "../capability_data";
 import {capitalizeFirstLetter} from "../../utils";
 import {shallowCopy} from "../../utils";
 import Schema from "./schema";
+import TestIndependentData from "../test_independent_data";
+import {isPerformanceCapability} from "../../peace";
+import {isConformanceCapability} from "../../peace";
+import {isExpressivenessCapability} from "../../peace";
+import PerformanceTestData from "../performance_test_data";
+import DefaultTestData from "../test_data";
+import {DataType} from "../normalized_data_container";
 
 // Inspired by normalizr
 
 const afterAssignGroups = function (normalized, schema, parentIndex, fullNormalized) {
-    normalized['name'] = capitalizeFirstLetter(normalized['name'].replaceAll('_', ' '))
+    normalized['name'] = capitalizeFirstLetter(normalized['name'].replaceAll('_', ' '));
+    normalized['metrics'] = normalized['metrics'].metric;
 };
 
 const afterAssignConstructs = function (normalized, schema, parentIndex, fullNormalized) {
-    normalized['name'] = capitalizeFirstLetter(normalized['name'].replaceAll('_', ' '))
+    normalized['name'] = capitalizeFirstLetter(normalized['name'].replaceAll('_', ' '));
+    normalized['metrics'] = normalized['metrics'].metric;
 };
 
 
@@ -20,19 +29,108 @@ const sortByName = function (data) {
 };
 
 
-export function normalizeCapability(dataModel, capability, tests, testIndependentData) {
+function addIndex(tests) {
+    let _tests = tests.map((test, index) => {
+        test['index'] = index;
+        return test;
+    });
+
+    return _tests;
+}
+
+
+
+function copyAndFormat(engines) {
+    let sortedEngines = sortDataAlphabetic(engines, 'name');
+
+    for (let index in sortedEngines) {
+        if(engines.hasOwnProperty(index)){
+            let idParts = engines[index].id.split('__');
+            let versionLong = engines[index].version;
+            if (idParts.length > 2) {
+                versionLong = engines[index].version + ' ' + idParts[2];
+            }
+            sortedEngines[index]['index'] = index;
+            sortedEngines[index]['versionLong'] = versionLong;
+        }
+    }
+    return sortedEngines;
+}
+
+/*
+function normalizeResultsByCapability(rawData, capability) {
+    let tests = addIndex(rawData.getTestsByCapability(capability));
+    let testIndependentData = addIndex(rawData.getIndependentTestsByCapability(capability));
+    //let testIndependentData = new TestIndependentData(rawData.getIndependentTestsByCapability(capability));
+
+    return  {
+        testIndependentData : testIndependentData,
+        tests : tests
+    }
+}*/
+
+
+function addTests(tests, capabilityData){
+    addIndex(tests);
+    tests.forEach(test => {
+        let language = test.test.split('__')[1];
+        capabilityData.add(language, test, DataType.TESTS);
+    });
+}
+
+
+function addEngines(engines, capabilityData){
+    engines.forEach(engine => {
+        let language = engine.language.split('__')[0];
+        capabilityData.add(language, engine, DataType.ENGINES);
+    });
+}
+
+function addIndependentTests(tests, capabilityData){
+    addIndex(tests);
+    tests.forEach(test => {
+       let language = test.id.split('__')[1];
+       capabilityData.add(language, test, DataType.TESTS_INDEPENDENT);
+    });
+}
+
+export function normalizeCapability(rawData, capability) {
+    let capabilityData = new CapabilityData(capability);
+
+    let tests = rawData.getTestsByCapability(capability);
+    let engines = copyAndFormat(rawData.getEngines());
+    let testIndependentData = rawData.getIndependentTestsByCapability(capability);
+
+    addTests(tests, capabilityData);
+    addEngines(engines, capabilityData);
+    addIndependentTests(testIndependentData, capabilityData);
+
+
+
+
+
+
 
     const afterAssignFeatures = function (normalized, schema, parentIndex, fullNormalized) {
         normalized['name'] = capitalizeFirstLetter(normalized['name'].replaceAll('_', ' '));
-        let featureTests = tests.filter(test => test.featureID === normalized.id);
+        let testResult = tests.filter(test => {
+            const featureId = test.test.replace('__test', '').toLowerCase();
+            return featureId === normalized.id.toLowerCase();
+        });
+
+
         let featureTestsIndependent = testIndependentData.filter(test => test.featureID === normalized.id);
-        normalized['testIndexes'] = featureTests.map(obj => obj.index);
+
+        normalized['testIndexes'] = testResult.map(obj => obj.index);
+        normalized['testIndexesEngine'] = testIndexesByEngines(testResult);
+
         normalized['testIndependentIndex'] = featureTestsIndependent.map(obj => obj.index)[0];
-        normalized['testIndexesEngine'] = testIndexesByEngines(featureTests);
+
     };
 
 
     const groups = new Schema('groups', {
+            inputKey: 'group',
             sortData: sortByName,
             afterAssign: afterAssignGroups
         }
@@ -51,25 +149,25 @@ export function normalizeCapability(dataModel, capability, tests, testIndependen
     });
 
 
+
     groups.define({
-        'constructs': constructs
+        'featureSet': constructs
     });
 
     constructs.define({
-        'features': features
+        'feature': features
     });
 
 
-    var data = {};
-    data.featureTree = dataModel.getFeatureTreeByCapability(capability);
-    let capabilityData = new CapabilityData(capability);
 
+    //var data = {};
+    let featureTree = rawData.getFeatureTreeByCapability(capability);
 
-    data.featureTree.languages.forEach(featureSet => {
+    featureTree.language.forEach(featureSet => {
         let normalizedData = normalize(featureSet, groups);
-        normalizedData['language'] = featureSet.name;
-        normalizedData['engines'] = normalizeEngines(dataModel.getEngines(), featureSet.name);
-        capabilityData.add(normalizedData);
+        console.log(normalizedData);
+        capabilityData.addAll(normalizedData, featureSet.name);
+
     });
 
     console.log('_________normalizedTree');
@@ -79,15 +177,6 @@ export function normalizeCapability(dataModel, capability, tests, testIndependen
 
 
 
-
-function normalizeEngines(engines, lang) {
-    let copyEngines_ = copyEngines(_.where(engines, {language: lang}));
-    let sortedEngines = sortDataAlphabetic(copyEngines_, 'name');
-    sortedEngines.forEach(function (engine, index) {
-        engine['index'] = index
-    });
-    return sortedEngines;
-}
 
 
 export function normalize(obj, schema) {
@@ -102,18 +191,24 @@ export function normalize(obj, schema) {
 
 
 function visit(obj, schema, normalized, parentIndex) {
-    let schemaKey = schema.getKey();
-    if (!obj.hasOwnProperty(schemaKey)) {
-        throw Error('Schema key ' + schemaKey + ' not found in input data');
+    let nestedSchemaKey = schema.getKey();
+    if(schema.getParentSchema()){
+        nestedSchemaKey = schema.getNestedKey()
+    } else if(schema.getInputKey()){
+        nestedSchemaKey = schema.getInputKey();
     }
 
-    let data = obj[schemaKey];
+    if (!obj.hasOwnProperty(nestedSchemaKey)) {
+        throw Error('Schema key ' + nestedSchemaKey + ' not found in input data');
+    }
+
+    let data = obj[nestedSchemaKey];
     let sortData = schema.getSortData();
     if (sortData) {
         data = sortData(data);
     }
 
-
+    let schemaKey = schema.getKey();
     normalized[schemaKey] = normalized[schemaKey] || [];
     let nestedSchema = schema.getNestedSchema();
 

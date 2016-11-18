@@ -28,7 +28,7 @@ export default class Filter {
         return true;
     }
 
-    applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges) {
+    applyFilter(capabilityData, filteredData, filterValues, filterValuesChanges) {
         throw Error("Unsupported operation in Filter " + this.name);
     }
 

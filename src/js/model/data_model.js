@@ -1,5 +1,5 @@
 
-export default class DataModel {
+export default class RawDataModel {
 
     constructor(data) {
         this.featureTree = data.featureTree;

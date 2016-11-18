@@ -1,8 +1,6 @@
 'use strict';
 
-import {fetchBetsyData, fetchBenFlowData} from "./fetch";
-import DataModel from "./model/data_model";
-import {normalizeByCapability} from "./normalizer";
+import {fetchPbelData} from "./fetch";
 import FilterManager from "./filters/filter_manager";
 import GroupFilter from "./filters/group_filter";
 import LanguageFilter from "./filters/language_filter";
@@ -17,10 +15,8 @@ import {EnginesFilterComponent} from "./components/filters/engines_filters";
 import {FCGFiltersComponent} from "./components/filters/fcg_filters";
 import PortabilityFilterComponent from "./components/filters/portability_filter";
 import LanguageFilterComponent from "./components/filters/language_filter";
-import DefaultTestData from "./model/test_data";
-import PerformanceTestData from "./model/performance_test_data";
-import TestIndependentData from "./model/test_independent_data";
 import {normalizeCapability} from "./model/pbel/normalizer";
+import RawDataModel from "./model/pbel/raw_data";
 
 
 var page, capability;
@@ -68,51 +64,44 @@ export function isPerformanceCapability(capability){
 
 
 function loadData(page) {
+    return fetchPbelData();
+    /*
     if (page === 'conformance' || page === 'expressiveness' || page === 'engines-overview' || page === 'engines-compare') {
         return fetchBetsyData();
     } else if (page === 'performance') {
         return fetchBenFlowData();
     } else {
         throw Error("Unsupported page");
-    }
+    }*/
 }
 
 function createDataModel(results) {
-    var objResults = {};
+   /* var objResults = {};
     results.forEach(function (row) {
         objResults[row.name] = row.result;
-    });
+    });*/
+
+   //    return new RawDataModel(objResults);
 
 
-    return new DataModel(objResults);
+    return new RawDataModel(results);
 }
 
 
 function process(page) {
-    if (!(rawData instanceof DataModel)) {
+    if (!(rawData instanceof RawDataModel)) {
         console.log('Failed to initialize JSON rawData');
         return;
     }
     if (page === 'conformance' || page === 'expressiveness' || page === 'performance') {
         let capability = page;
 
-        let testData;
-        if(isPerformanceCapability(capability)){
-            testData = new PerformanceTestData(rawData.getTestsByCapability(capability));
-        } else if(isConformanceCapability(capability) || isExpressivenessCapability(capability)){
-            testData = new DefaultTestData(rawData.getTestsByCapability(capability));
-        } else {
-            throw new Error('Failed to create test data model for capability: ' +capability);
-        }
-
-       let testIndependentData = new TestIndependentData(rawData.getIndependentTestsByCapability(capability));
+        let normalizedData = normalizeCapability(rawData, capability);
+        //TODO getAll should be called transparently, since most of the time we will use CapabilityDataContainer anyway
+        var capabilityData = normalizedData.getAll();
 
 
-        let normalizedCapabilityData = normalizeCapability(rawData, capability, testData.tests, testIndependentData.tests);
-
-        var capabilityData = normalizedCapabilityData.getAll();
-
-        let defaultLang = 'BPMN';
+        let defaultLang = 'BPEL';
         if (!capabilityData.hasLanguage(defaultLang)) {
             console.warn(defaultLang + " does not exist")
         }
@@ -124,7 +113,8 @@ function process(page) {
             constructs: {},
             features: {},
             tests: {},
-            independentTests: testIndependentData
+            //TODO misleading? independentTests will not be filtered
+           // independentTests: capabilityData.getAllTestIndependentByLanguage()
         };
 
         if(isPerformanceCapability(capability)){
@@ -132,7 +122,7 @@ function process(page) {
         }
 
         //TODO Rename to ProcessPipeline
-        let filterManager = new FilterManager(capabilityData, testData, filteredData);
+        let filterManager = new FilterManager(capabilityData, filteredData);
         // Adding order represents the calling order. It must be adhered to
 
         let engineFilter = new EngineFilter();
@@ -146,7 +136,7 @@ function process(page) {
         filterManager.addFilter(groupFilter, groupFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(constructFilter, constructFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(featureFilter, featureFilter.getDefaultFilterValues(defaultLang, capabilityData));
-        filterManager.addFilter(testsFilter, testData.getAll());
+        filterManager.addFilter(testsFilter, capabilityData.getAllTestsByLanguage(defaultLang).clone());
         let portabilityFilter = new PortabilityFilter();
         filterManager.addViewModelFilter(portabilityFilter, portabilityFilter.getDefaultFilterValues());
 
@@ -154,16 +144,16 @@ function process(page) {
         // Apply all filters
         filterManager.applyAllFilters();
 
+        let testIndependentData = capabilityData.getAllTestIndependentByLanguage(filterManager.getFilterValues().language);
+
         let viewConverter = new ViewModelConverter();
-        var viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+        var viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language, testIndependentData);
 
         if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
             filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
         }
 
         let capabilityTableComponent = new CapabilityTableComponent(viewModel);
-
-
 
         //TODO check if allEngines is undefined
         let allEngines = capabilityData.getEnginesByLanguage(filterManager.getFilterValues().language);
@@ -179,6 +169,8 @@ function process(page) {
                     console.error('No benchmark results for ' + newFilterValues + ' found.');
                     return;
                 }
+
+                testIndependentData = capabilityData.getAllTestIndependentByLanguage(newFilterValues);
 
                 //Update filter values
                 latestVersionValues = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(newFilterValues));
@@ -221,12 +213,12 @@ function process(page) {
                     }
                 }
 
-                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, newFilterValues);
+                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, newFilterValues, testIndependentData);
 
                 if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
                     filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
                 }
-                capabilityTableComponent = new CapabilityTableComponent(viewModel, testIndependentData.tests);
+                capabilityTableComponent = new CapabilityTableComponent(viewModel, testIndependentData);
             }
         });
 
@@ -243,7 +235,7 @@ function process(page) {
                 filterManager.applyFilter(TestsFilter.Name());
 
                 // DefaultViewModel
-                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language, testIndependentData);
                 if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
                     filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
                 }
@@ -266,7 +258,7 @@ function process(page) {
                     filterManager.applyFilter(TestsFilter.Name());
 
                     // ViewModels
-                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language, testIndependentData);
                     capabilityTableComponent.updateModel(viewModel);
                 }
             });
@@ -296,7 +288,7 @@ function process(page) {
                     featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
 
                     // ViewModels
-                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language, testIndependentData);
                     filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
                     capabilityTableComponent.updateModel(viewModel);
 
@@ -321,7 +313,7 @@ function process(page) {
                     featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
 
                     // ViewModels
-                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language, testIndependentData);
                     filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel)
                     capabilityTableComponent.updateModel(viewModel);
                 }
@@ -339,7 +331,7 @@ function process(page) {
                     filterManager.applyFilter(TestsFilter.Name());
 
                     // DefaultViewModel
-                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language, testIndependentData);
                     filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
                     capabilityTableComponent.updateModel(viewModel);
                 }
@@ -354,7 +346,7 @@ function process(page) {
                     if (reBuildViewModel) {
                         // We have applied a different PortabilityStatus than ALL which has reduced the items of the viewModel
                         // Hence, build a complete viewModel again
-                        viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+                        viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language, testIndependentData);
                     }
 
                     filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel, newFilterValues);

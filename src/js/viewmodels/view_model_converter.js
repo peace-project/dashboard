@@ -7,11 +7,11 @@ import {isExpressivenessCapability} from "../peace";
 export default class ViewModelConverter{
     constructor() { }
 
-    convert(filteredData, capability, language) {
+    convert(filteredData, capability, language, independentTests) {
         if(isConformanceCapability(capability) || isExpressivenessCapability(capability)){
-            return new DefaultViewModel(filteredData, capability, language);
+            return new DefaultViewModel(filteredData, capability, language, independentTests);
         } else if(isPerformanceCapability(capability)) {
-            return new PerformanceViewModel(filteredData, capability, language);
+            return new PerformanceViewModel(filteredData, capability, language, independentTests);
         }
     }
 

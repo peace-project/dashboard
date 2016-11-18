@@ -24,7 +24,7 @@ export default class EngineFilter extends Filter {
         return EngineFilter.createFilterValues(data.getLatestEngineVersions(language));
     }
 
-    applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges) {
+    applyFilter(capabilityData, filteredData, filterValues, filterValuesChanges) {
         console.log('Apply engine filter');
 
         if (!this.hasRequiredFilterValues(filterValues)) {

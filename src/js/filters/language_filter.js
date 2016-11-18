@@ -16,7 +16,7 @@ export default class LanguageFilter extends Filter{
         return 'BPMN';
     }
 
-    applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges){
+    applyFilter(capabilityData, filteredData, filterValues, filterValuesChanges){
         if (filterValues.language == undefined) {
             filterValues.language = this.getDefaultFilterValues();
         }

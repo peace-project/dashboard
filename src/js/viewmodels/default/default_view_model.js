@@ -3,7 +3,7 @@ import Construct from "./construct";
 
 //rename to default tableViewModel
 export default class DefaultViewModel {
-    constructor(filteredData, capability, language) {
+    constructor(filteredData, capability, language, independentTests) {
         this.capability = capability;
         this.language = language;
 
@@ -30,7 +30,7 @@ export default class DefaultViewModel {
         });
 
         this._addConstructs(filteredData.groups.data, filteredData.constructs.data, filteredData.features.data, filteredData.tests,
-            filteredData.independentTests.tests);
+            independentTests);
     }
 
     _addConstructs(groups, constructs, features, tests, independentTests) {

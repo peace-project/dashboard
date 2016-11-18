@@ -20,7 +20,7 @@ export function shallowCopy(array){
     return copy;
 }
 
-export function copyShallowObject(object){
+export function shallowObjectCopy(object){
     var copy = {};
     Object.keys(object).forEach(key => {
         copy[key] = object[key];

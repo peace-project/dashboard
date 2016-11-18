@@ -1,5 +1,5 @@
 import NormalizedDataContainer from "./normalized_data_container";
-import {DataDimension} from "./normalized_data_container";
+import {DataType} from "./normalized_data_container";
 import CapabilityDataContainer from "./capability_data_container";
 const _data = Symbol('data');
 
@@ -8,45 +8,67 @@ const _data = Symbol('data');
 export default class CapabilityData {
     constructor(capability) {
         this[_data] = {};
-        this.capability = capability;
+        this._capability = capability;
+
+        if (Object.keys(this[_data]).length === 0 && this[_data].constructor === Object) {
+            this[_data] = new CapabilityDataContainer({}, this._capability);
+        }
     }
 
     getCapability() {
-        return this.capability;
+        return this._capability;
     }
 
-    add(data) {
-        // is empty?
-        if (Object.keys(this[_data]).length === 0 && this[_data].constructor === Object) {
-            this[_data] = new CapabilityDataContainer({}, this.capability);
+
+    addAll(data, language) {
+        if(language === undefined){
+            throw Error('language is undefined');
         }
 
-        if(data.language === undefined){
-            throw Error('Wrong data format');
+        this[_data].data[language] = this[_data].data[language] || {};
+        let __data = this[_data].data[language];
+
+        for(let key in data){
+           if(data.hasOwnProperty(key)){
+               if(!__data.hasOwnProperty(key)){
+                   __data[key] = new NormalizedDataContainer(data[key], key);
+               } else {
+                   let arr = __data[key].data;
+                   arr.push.apply(arr, data[key]);
+               }
+           }
         }
 
-        if (this[_data].data.hasOwnProperty(data.language)) {
-            console.log('Language '+data.language + 'already exists');
-            return;
-        }
-
-       // this[_data].add(data);
+        console.log('__data');
+        console.log(this[_data].data);
+/*
         this[_data].data[data.language] = {
-            groups: new NormalizedDataContainer(data.groups, DataDimension.GROUPS),
-            constructs: new NormalizedDataContainer(data.constructs, DataDimension.CONSTRUCTS),
-            features: new NormalizedDataContainer(data.features, DataDimension.FEATURES),
-            engines: new NormalizedDataContainer(data.engines, DataDimension.ENGINES)
-        };
-
+            groups: new NormalizedDataContainer(data.groups, DataType.GROUPS),
+            constructs: new NormalizedDataContainer(data.constructs, DataType.CONSTRUCTS),
+            features: new NormalizedDataContainer(data.features, DataType.FEATURES),
+            engines: new NormalizedDataContainer(data.engines, DataType.ENGINES)
+        }; */
     }
 
+    add(language, newData, dataType){
+        this[_data].data[language] = this[_data].data[language] || {};
+
+        if(this[_data].data[language].hasOwnProperty(dataType)){
+            let arr = this[_data].data[language][dataType].data;
+            arr.push(newData);
+        } else {
+            this[_data].data[language][dataType] = new NormalizedDataContainer([newData], dataType);
+        }
+    }
+/*
     getAllLanguages() {
         this[_data].getAllLanguages();
     }
 
     hasLanguage(langName) {
         return this[_data].hasLanguage(langName);
-    }
+    } */
+
 
     getAll() {
         // we need to clone to make sure that filter does not modify it,
@@ -62,7 +84,7 @@ export default class CapabilityData {
 
         // CapabilityDataContainer add some convenient methods for users
         // and its data can be modified
-        return new CapabilityDataContainer(clone, this.capability);
+        return new CapabilityDataContainer(clone, this._capability);
     }
 
     copyByLang(lang, target) {
@@ -111,6 +133,7 @@ export default class CapabilityData {
         let data = this[_data];
         return data[language].data.getLatestEngineVersions(language).clone();
     }
+
 
 
 }

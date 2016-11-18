@@ -11,18 +11,19 @@ export default class TestsFilter extends Filter{
 
     static Name(){ return 'tests'};
 
-    applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges){
+    applyFilter(capabilityData, filteredData, filterValues, filterValuesChanges){
 
         if(!this.hasRequiredFilterValues(filterValues)){
             return;
         }
 
+        let testData = capabilityData.getAllTestsByLanguage(filterValues.language);
         if(filteredData.tests.length === undefined){
-            filteredData.tests = testData.getAll();
+            filteredData.tests = testData.clone().data;
         }
 
         console.log('Apply tests filter');
-        testData.tests.forEach(function (test, index) {
+        testData.data.forEach(function (test, index) {
             if (test !== undefined) {
                 if (!filterValues.engines.hasOwnProperty(test.engineID)) {
                   filteredData.tests[index] = undefined;

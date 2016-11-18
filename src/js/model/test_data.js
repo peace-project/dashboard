@@ -1,5 +1,5 @@
 import {shallowCopy} from "../utils";
-
+import {shallowObjectCopy} from "../utils";
 //Use for clone/copy and to introduce index
 export default class DefaultTestData {
 
@@ -23,6 +23,20 @@ export default class DefaultTestData {
 
     _copy(test) {
 
+        //Missing: featureID, executionDuration
+
+        return {
+            test : test.test,
+            engine : test.engine,
+            tool : test.tool,
+            files: shallowCopy(test.files),
+            measurements: shallowCopy(test.measurements),
+            extensions: shallowObjectCopy(test.extensions),
+            testCaseResults: shallowObjectCopy(test.extensions)
+
+        }
+
+        /*
         return {
             "result": {
                 "testCaseSuccesses": test.result.testCaseSuccesses,
@@ -44,7 +58,7 @@ export default class DefaultTestData {
             "engineID": test.engineID,
             "executionTimestamp": test.executionTimestamp,
             "engineDependentFiles": shallowCopy(test.engineDependentFiles),
-        };
+        }; */
 
     }
 

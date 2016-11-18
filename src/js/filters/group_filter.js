@@ -24,7 +24,7 @@ export default class GroupFilter extends Filter {
         return this.createFilterValues(data.getAllGroupsByLanguage(language));
     }
 
-    applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges) {
+    applyFilter(capabilityData, filteredData, filterValues, filterValuesChanges) {
         console.log('Apply Group filter');
 
         if (!this.hasRequiredFilterValues(filterValues)) {

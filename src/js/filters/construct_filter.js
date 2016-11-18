@@ -25,7 +25,7 @@ export default class ConstructFilter extends Filter {
         return this.createFilterValues(data.getAllConstructsByLanguage(language).data);
     }
 
-    applyFilter(capabilityData, testData, filteredData, filterValues, filterValuesChanges) {
+    applyFilter(capabilityData, filteredData, filterValues, filterValuesChanges) {
         console.log('Apply Construct filter');
 
         if(!this.hasRequiredFilterValues(filterValues)){

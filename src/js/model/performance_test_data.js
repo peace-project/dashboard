@@ -1,5 +1,5 @@
 import {shallowCopy} from "../utils";
-import {copyShallowObject} from "../utils";
+import {shallowObjectCopy} from "../utils";
 export default class PerformanceTestData {
 
     constructor(tests){
@@ -33,15 +33,15 @@ export default class PerformanceTestData {
             "engineID": test.engineID,
             "result": {
                 "performance": {
-                    "process_duration": copyShallowObject(test.result.performance.process_duration),
-                    "throughput":  copyShallowObject(test.result.performance.throughput),
-                    "number_of_process_instances": copyShallowObject(test.result.performance.number_of_process_instances)
+                    "process_duration": shallowObjectCopy(test.result.performance.process_duration),
+                    "throughput":  shallowObjectCopy(test.result.performance.throughput),
+                    "number_of_process_instances": shallowObjectCopy(test.result.performance.number_of_process_instances)
                 },
                 "resource_utilisation": {
-                    "cpu": copyShallowObject(test.result.resource_utilisation.cpu),
-                    "ram": copyShallowObject(test.result.resource_utilisation.ram),
-                    "io": copyShallowObject(test.result.resource_utilisation.io),
-                    "size_of_stored_data": copyShallowObject(test.result.resource_utilisation.size_of_stored_data)
+                    "cpu": shallowObjectCopy(test.result.resource_utilisation.cpu),
+                    "ram": shallowObjectCopy(test.result.resource_utilisation.ram),
+                    "io": shallowObjectCopy(test.result.resource_utilisation.io),
+                    "size_of_stored_data": shallowObjectCopy(test.result.resource_utilisation.size_of_stored_data)
                 }
             },
             "engineDependentFiles": shallowCopy(test.engineDependentFiles),
@@ -50,7 +50,7 @@ export default class PerformanceTestData {
                 if(data.hasOwnProperty('environment')){
                     copy['environment'] = {};
                     Object.keys(data['environment']).forEach(key => {
-                        copy['environment'][key] = copyShallowObject(data['environment'][key]);
+                        copy['environment'][key] = shallowObjectCopy(data['environment'][key]);
                     });
 
                 }
