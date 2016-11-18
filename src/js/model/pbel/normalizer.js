@@ -93,25 +93,10 @@ function addIndependentTests(tests, capabilityData){
 export function normalizeCapability(rawData, capability) {
     let capabilityData = new CapabilityData(capability);
 
-    let tests = rawData.getTestsByCapability(capability);
-    if(tests === undefined || tests.length === 0){
-        throw new Error('No tests found for capability '+ capability);
-    }
-
-    console.log('tests=='+tests)
-    console.log(tests)
-
-    let engines = copyAndFormat(rawData.getEngines());
-    if(engines === undefined || engines.length === 0){
-        throw new Error('No engines found for capability '+ capability);
-    }
-
-    let testIndependentData = rawData.getIndependentTestsByCapability(capability);
-    if(testIndependentData === undefined || testIndependentData.length === 0){
-        throw new Error('TestData for capability '+ capability + ' is incomplete');
-    }
-
-
+    let tests = rawData.getTestsByCapability(capability) || [];
+    let engines = copyAndFormat(rawData.getEngines()) || [];
+    let testIndependentData = rawData.getIndependentTestsByCapability(capability) || [];
+    
     addTests(tests, capabilityData);
     addEngines(engines, capabilityData);
     addIndependentTests(testIndependentData, capabilityData);
