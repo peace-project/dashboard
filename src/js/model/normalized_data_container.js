@@ -90,7 +90,7 @@ export default class NormalizedDataContainer {
                     id: val.id,
                     name: val.name,
                     version: val.version,
-                    configuration: shallowCopy(val.configuration),
+                    configuration: val.configuration,
                     language: val.language,
                     extensions: shallowObjectCopy(val.extensions),
                     versionLong: versionLong
