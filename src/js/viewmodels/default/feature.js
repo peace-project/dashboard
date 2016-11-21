@@ -32,8 +32,8 @@ export default class Feature {
         let that = this;
 
         that.metricIndexes.forEach(function (metricIndex) {
-            let engineID = featureResults[metricIndex.featureTestIndex].engine;
-            let measurements = featureResults[metricIndex.featureTestIndex].measurements;
+            let engineID = featureResults[metricIndex.featureResultIndex].engine;
+            let measurements = featureResults[metricIndex.featureResultIndex].measurements;
             if (measurements !== undefined && metricIndex.measurementIndexes.length > 0) {
                 metricIndex.measurementIndexes.forEach(index => {
                     let metric = measurements[index];
@@ -49,6 +49,7 @@ export default class Feature {
         this.results[engineID] = this.results[engineID] || {};
         this.results[engineID][name] = metric.value;
 
+
         if (name === 'testResultTrivalentAggregation' && this.capability !== 'expressiveness') {
             this.results[engineID]['html'] = getHtmlTestResult(metric.value, this.capability);
         }
@@ -57,7 +58,9 @@ export default class Feature {
             this.results[engineID]['html_class'] = (metric.value === '1') ? 'support-true' : 'support-false';
         }
 
-        if (this.capability === 'expressiveness' && name === 'support') {
+        if (this.capability === 'expressiveness' && name === 'patternImplementationSupport') {
+            console.log(name);
+
             this.results[engineID]['html'] = getHtmlTestResult(metric.value, this.capability);
             this.results[engineID]['html_class'] = getSupportClass(metric.value, this.extensions['languageSupport']);
 

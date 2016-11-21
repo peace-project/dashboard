@@ -6,8 +6,8 @@ export default class RawDataModel {
         //this.capabilities = data.pebl.benchmark.capabilities;
         this.metricTypes = data.pebl.benchmark.metricTypes;
         this._independentTests = data.pebl.benchmark.tests;
-        //this._tests = data.pebl.result.testResults;
-        this._tests = data.pebl.result.featureResults;
+        this._testResults = data.pebl.result.testResults;
+        this._featureResults = data.pebl.result.featureResults;
 
         //TODO rename to capabilities
         this._capabilities = data.pebl.benchmark.capabilities;
@@ -24,12 +24,15 @@ export default class RawDataModel {
 
     getFeatureResultsByCapability(capability) {
         let that = this;
-        return this._tests.filter(test => that._getMeasurementByCapability(test, capability));
+        return this._featureResults.filter(test => that._getMeasurementByCapability(test, capability));
+    }
 
-        /* return this._tests.filter(function (test) {
-         let cap = test['test'].split('__')[0];
-         return cap.toLowerCase() === capability.toLowerCase();
-         }); */
+    getTestResultsByCapability(capability) {
+        let that = this;
+        return this._testResults.filter(result => {
+            let cap = result.test.split('__')[0];
+            return cap.toLowerCase() === capability.toLowerCase();
+        });
     }
 
     _getMeasurementByCapability(test, capability) {

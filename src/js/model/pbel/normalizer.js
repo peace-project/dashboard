@@ -55,13 +55,8 @@ function copyAndFormat(engines) {
 
 
 function addFeatureResults(featureResults, capabilityData) {
-    //addIndex(featureResults);
-
     let measurementByLanguage = {};
-
-
     featureResults.forEach(test => {
-
         test.measurements.forEach(measure => {
             let splittedMetric = measure.metric.split('__');
             // Skip language independent results
@@ -70,7 +65,6 @@ function addFeatureResults(featureResults, capabilityData) {
             }
 
             let language = measure.metric.split('__')[1];
-
             if (measurementByLanguage[language] === undefined) {
                 measurementByLanguage[language] = {
                     engine: test.engine,
@@ -80,9 +74,6 @@ function addFeatureResults(featureResults, capabilityData) {
             }
             measurementByLanguage[language]['measurements'].push(measure);
         });
-
-        // let language = test.test.split('__')[1];
-        //
     });
 
     for (let language in measurementByLanguage) {
@@ -94,10 +85,17 @@ function addFeatureResults(featureResults, capabilityData) {
 
 }
 
+function addTestResults(testResults, capabilityData) {
+    testResults.forEach(result => {
+        let language = result.test.split('__')[1];
+        capabilityData.add(language, result, DataType.TEST_RESULTS);
+    });
+
+}
 
 function addEngines(engines, capabilityData) {
     engines.forEach(engine => {
-        if(engine.version === 'N.NN.N' && capabilityData.getCapability() !== 'performance'){
+        if (engine.version === 'N.NN.N' && capabilityData.getCapability() !== 'performance') {
             return;
         }
 
@@ -118,14 +116,16 @@ function addIndependentTests(tests, capabilityData) {
 export function normalizeCapability(rawData, capability) {
     let capabilityData = new CapabilityData(capability);
 
+    let testResults = rawData.getTestResultsByCapability(capability) || [];
     let featureResults = rawData.getFeatureResultsByCapability(capability) || [];
     let engines = copyAndFormat(rawData.getEngines()) || [];
     let testIndependentData = rawData.getIndependentTestsByCapability(capability) || [];
 
+
+    addTestResults(testResults, capabilityData);
     addFeatureResults(featureResults, capabilityData);
     addEngines(engines, capabilityData);
     addIndependentTests(testIndependentData, capabilityData);
-
 
     return normalizeFeatureTree(capabilityData, capability, rawData)
 
@@ -142,13 +142,22 @@ function normalizeFeatureTree(capabilityData, capability, rawData) {
 
     const afterAssignConstructs = function (normalized, schema, parentIndex, fullNormalized) {
         normalized['name'] = capitalizeFirstLetter(normalized['name'].replaceAll('_', ' '));
-        addFeatureTestIndexes(normalized, allData);
+        let language = normalized.id.split('__')[1];
+        let featureResults = allData.getFeatureResultsByLanguage(language);
+        addFeatureResultIndexes(normalized, featureResults);
     };
 
 
     const afterAssignFeatures = function (normalized, schema, parentIndex, fullNormalized) {
         normalized['name'] = capitalizeFirstLetter(normalized['name'].replaceAll('_', ' '));
-        addFeatureTestIndexes(normalized, allData);
+        let language = normalized.id.split('__')[1];
+
+        let featureResults = allData.getFeatureResultsByLanguage(language);
+        addFeatureResultIndexes(normalized, featureResults);
+
+        let testResults = allData.getTestResultsByLanguage(language);
+        addTestResultIndex(normalized, testResults);
+
         // let featureTestsIndependent = testIndependentData.filter(test => test.featureID === normalized.id);
 
         //normalized['testIndexes'] = testResult.map(obj => obj.index);
@@ -198,22 +207,33 @@ function normalizeFeatureTree(capabilityData, capability, rawData) {
     return capabilityData;
 }
 
+function addTestResultIndex(normalized, testResults) {
+    normalized['testResultIndex'] = {}
 
-function addFeatureTestIndexes(normalized, allData) {
-    // Always add metricIndexes property to avoid checking against undefined
-    normalized['metricIndexes'] = [];
-
-    let language = normalized.id.split('__')[1];
-    let testResult = allData.getFeatureResultsByLanguage(language);
-
-    if (testResult === undefined || !Array.isArray(normalized['metrics'])) {
+    if (testResults === undefined) {
         return;
     }
 
+    for (let key in testResults.data) {
+        let id = testResults.data[key].test.replace('__test', '');
+        if (id.toLowerCase() === normalized.id.toLowerCase()) {
+            normalized['testResultIndex'] = key;
+            break;
+        }
+    }
+}
 
-    testResult.data.forEach((test, index) => {
-        const metricIndexes = {featureTestIndex: undefined, measurementIndexes: []};
-        metricIndexes['featureTestIndex'] = index;
+function addFeatureResultIndexes(normalized, featureResults) {
+    // Always add metricIndexes property to avoid checking against undefined
+    normalized['metricIndexes'] = [];
+
+    if (featureResults === undefined || !Array.isArray(normalized['metrics'])) {
+        return;
+    }
+
+    featureResults.data.forEach((test, index) => {
+        const metricIndexes = {featureResultIndex: undefined, measurementIndexes: []};
+        metricIndexes['featureResultIndex'] = index;
 
         for (let key in test.measurements) {
             let measure = test.measurements[key];
@@ -225,19 +245,6 @@ function addFeatureTestIndexes(normalized, allData) {
 
         normalized['metricIndexes'].push(metricIndexes);
     });
-
-    /* testResult.data.forEach(test => {
-     for (let key in test.measurements) {
-     if (test.measurements.hasOwnProperty(key)) {
-     let measure = test.measurements[key];
-     let id = measure.metric.substring(0, measure.metric.lastIndexOf('__')).toLowerCase();
-     if (id === normalized.id.toLowerCase()) {
-     featureTestIndexes.push(key);
-     }
-     }
-     }
-     });*/
-
 }
 
 

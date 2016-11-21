@@ -48,7 +48,7 @@ export default class NormalizedDataContainer {
                         return {id: m.id, metricType: m.metricType}
                     }),
                     metricIndexes: val.metricIndexes.map(m => {
-                        return {featureTestIndex: m.featureTestIndex, measurementIndexes: shallowCopy(m.measurementIndexes)
+                        return {featureResultIndex: m.featureResultIndex, measurementIndexes: shallowCopy(m.measurementIndexes)
                         }
                     }),
                     extensions: shallowObjectCopy(val.extensions)
@@ -69,7 +69,7 @@ export default class NormalizedDataContainer {
                         return {id: m.id, metricType: m.metricType}
                     }),
                     metricIndexes: val.metricIndexes.map(m => {
-                        return {featureTestIndex: m.featureTestIndex, measurementIndexes: shallowCopy(m.measurementIndexes)
+                        return {featureResultIndex: m.featureResultIndex, measurementIndexes: shallowCopy(m.measurementIndexes)
                         }
                     }),
                     extensions: shallowObjectCopy(val.extensions),
@@ -103,6 +103,7 @@ export default class NormalizedDataContainer {
                     engine: val.engine,
                     tool: val.tool,
                     measurements: shallowObjectCopy(val.measurements),
+                    testResultIndex: val.testResultIndex
 
                 };
             });

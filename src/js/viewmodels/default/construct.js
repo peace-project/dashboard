@@ -38,9 +38,9 @@ export default class Construct {
         let that = this;
 
         that.metricIndexes.forEach(function (metricIndex) {
-            let engineID = featureResults[metricIndex.featureTestIndex].engine;
+            let engineID = featureResults[metricIndex.featureResultIndex].engine;
 
-            let measurements = featureResults[metricIndex.featureTestIndex].measurements;
+            let measurements = featureResults[metricIndex.featureResultIndex].measurements;
             if (measurements !== undefined && metricIndex.measurementIndexes.length > 0) {
                 metricIndex.measurementIndexes.forEach(index => {
                     let metric = measurements[index];
@@ -71,7 +71,7 @@ export default class Construct {
             this.results[engineID]['html_class'] = (metric.value === '1') ? 'support-true' : 'support-false';
         }
 
-        if (this.capability === 'expressiveness' && name === 'support') {
+        if (this.capability === 'expressiveness' && name === 'patternSupport') {
             this.results[engineID]['html'] = getHtmlTestResult(metric.value, this.capability);
             this.results[engineID]['html_class'] = getSupportClass(metric.value, this.extensions['languageSupport']);
 

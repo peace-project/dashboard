@@ -57,12 +57,15 @@ export default class CapabilityDataContainer {
     }*/
 
     getAllTestIndependentByLanguage(language){
-        return this.data[language].tests_independent;
+        return this.data[language][DataType.TESTS_INDEPENDENT];
     }
 
     getFeatureResultsByLanguage(language){
         return this.data[language][DataType.FEATURE_RESULTS];
+    }
 
+    getTestResultsByLanguage(language){
+        return this.data[language][DataType.TEST_RESULTS];
     }
 
 
