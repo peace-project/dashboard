@@ -53,12 +53,12 @@
                          </div>
                     </td>
 
-                    <td class="{{html_standard_class}}"> {{upperBound}}  </td>
+                    <td class="{{html_standard_class}}"> {{extensions.languageSupport}}  </td>
 
                         {{#each ../engines}}
                             {{#each instances}}
                                  <td class="result">
-                                {{#getProperty ../../supportStatus id}}
+                                {{#getProperty ../../results id}}
                                     <span class="{{html_class}}">{{html}}</span>
                                 {{/getProperty}}
                                 </td>
@@ -77,7 +77,7 @@
                             {{#each ../../../engines}}
                                 {{#each instances}}
                                      <td class="collapse-header-cell">
-                                    {{#getProperty ../../../../supportStatus id}} 
+                                    {{#getProperty ../../../../results id}}
                                         {{#if engineID}}
                                             {{supportedFeature}}/{{../../../../../features.length}}
                                         {{/if}}
@@ -102,16 +102,14 @@
                             </div>
                         </td>
 
-                        <td class="{{html_standard_class}}">{{upperBound}}</td>
+                        <td class="{{html_standard_class}}">{{extensions.languageSupport}}</td>
                         {{#each ../../../engines}}
                             {{#each instances}}
                                 <td class="result">
                                 {{#getProperty ../../results id}}
-                                    {{#if html}}
-                                        <a role="button" tabindex="0" data-feature-index="{{../../../../index}}" data-engine-id="{{../../id}}"  class="info-engine-test" >
+                                        <a role="button" tabindex="0" data-feature-index="{{../../../index}}" data-engine-id="{{../id}}"  class="info-engine-test" >
                                          <span class="{{html_class}}">{{html}}</span>
                                         </a>
-                                    {{/if}}
                                 {{/getProperty}}
                                 </td>
                              {{/each}}

@@ -1,4 +1,8 @@
+import {DataType} from "./normalized_data_container";
 'use strict'
+
+//TODO Make this class inherently immutable ==> calling this method should automatically call clone()
+//This will also free users to append 'data' fpr accessing data
 
 export default class CapabilityDataContainer {
     constructor(data, capability) {
@@ -47,12 +51,18 @@ export default class CapabilityDataContainer {
         return this.data[language].engines.data[index];
     }
 
+    /*
     getAllTestsByLanguage(language){
         return this.data[language].tests;
-    }
+    }*/
 
     getAllTestIndependentByLanguage(language){
         return this.data[language].tests_independent;
+    }
+
+    getFeatureResultsByLanguage(language){
+        return this.data[language][DataType.FEATURE_RESULTS];
+
     }
 
 

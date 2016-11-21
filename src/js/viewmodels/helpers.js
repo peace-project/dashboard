@@ -72,12 +72,13 @@ export function formatTestCase(obj) {
         resultType: resultType
     }
 }
-export function getHtmlTestResult(result, upperBound, capability) {
+export function getHtmlTestResult(result, capability) {
     if (result === '+') {
-        if (capability === 'expressiveness') {
+        return (capability === 'expressiveness') ? '+' : '✔';
+      /* if (capability === 'expressiveness') {
             return upperBound;
-        }
-        return '✔';
+        }*/
+      //  return '✔';
     } else if (result === '-') {
         return (capability === 'expressiveness') ? '━' : '✖';
     } else if (result === true) {

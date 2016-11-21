@@ -16,7 +16,7 @@ export default class DefaultViewModel {
         };
         this.table.enginesCount = this.table.engines.instancesCount;
 
-        // SubViewModel (i.e. for popovers)
+        // For SubViewModels (i.e. for popovers)
         this.features = {};
         this.engines = filteredData.engines.data;
         this.independentTests = {};
@@ -30,7 +30,7 @@ export default class DefaultViewModel {
         });
 
         this._addConstructs(filteredData.groups.data, filteredData.constructs.data,
-            filteredData.features.data, filteredData.tests, independentTests);
+            filteredData.features.data, filteredData.tests.data, independentTests);
     }
 
     _addConstructs(groups, constructs, features, tests, independentTests) {
@@ -46,13 +46,13 @@ export default class DefaultViewModel {
 
             // Add groupInfo
             let group = groups[construct.groupsIndex];
-            let viewConstruct = new Construct(construct, group);
-            viewConstruct.addFeatures(features, tests);
+            let viewConstruct = new Construct(construct, group, features, tests);
 
             if (viewConstruct.features.length < 1) {
                 return;
             }
 
+            //For SubViewModels
             viewConstruct.features.forEach(feat => {
                 that.features[feat.index] = feat;
                 //that.test[feat.testIndexes] = tests[feat.testIndexes];
@@ -69,11 +69,12 @@ export default class DefaultViewModel {
             }
 
 
-            that._updateSummaryRow(viewConstruct);
+           // that._updateSummaryRow(viewConstruct);
 
             that.table.constructs.push(viewConstruct);
 
         });
+
 
     }
 
@@ -82,7 +83,7 @@ export default class DefaultViewModel {
         //that.summaryRow[engine.id] = 0;
         Object.keys(that.table.summaryRow).forEach(key => that.table.summaryRow[key] = 0);
         that.table.constructs.forEach(function (construct) {
-            that._updateSummaryRow(construct);
+            //that._updateSummaryRow(construct);
         });
     }
 
@@ -100,6 +101,15 @@ export default class DefaultViewModel {
     }
 }
 
+export function getSupportClass(result, languageSupport){
+    if (result === '+/-' && languageSupport === result) {
+        return 'support-partial-true';
+    } else if(result === '+/-'){
+        return 'support-partial';
+    } else {
+        return (result === '+')  ? 'support-true' : 'support-false';
+    }
+}
 
 export function getResultClass(result, resultHtml, upperBound) {
     // add result class

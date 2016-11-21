@@ -6,7 +6,8 @@ export const DataType = {
     FEATURES: 'features',
     ENGINES: 'engines',
     TESTS_INDEPENDENT: 'tests_independent',
-    TESTS: 'tests'
+    FEATURE_RESULTS: 'featureResults',
+    TEST_RESULTS: 'testResults'
 }
 
 // NormalizedDataContainer add some convenient methods such as for cloning this object
@@ -46,6 +47,10 @@ export default class NormalizedDataContainer {
                     metrics: val.metrics.map(m => {
                         return {id: m.id, metricType: m.metricType}
                     }),
+                    metricIndexes: val.metricIndexes.map(m => {
+                        return {featureTestIndex: m.featureTestIndex, measurementIndexes: shallowCopy(m.measurementIndexes)
+                        }
+                    }),
                     extensions: shallowObjectCopy(val.extensions)
                 };
             });
@@ -57,14 +62,19 @@ export default class NormalizedDataContainer {
                     name: val.name,
                     description: val.description,
                     id: val.id,
-                    extensions: shallowObjectCopy(val.extensions),
-                    upperBound: val.upperBound, //missing
                     lastFeature: val.lastFeature,
-                    groupsIndex: val.groupsIndex,
+                    //groupsIndex: val.groupsIndex,
                     constructsIndex: val.constructsIndex,
-                    testIndexes: val.testIndexes,
-                    testIndexesEngine: val.testIndexesEngine,
-                    testIndependentIndex: val.testIndependentIndex,
+                    metrics: val.metrics.map(m => {
+                        return {id: m.id, metricType: m.metricType}
+                    }),
+                    metricIndexes: val.metricIndexes.map(m => {
+                        return {featureTestIndex: m.featureTestIndex, measurementIndexes: shallowCopy(m.measurementIndexes)
+                        }
+                    }),
+                    extensions: shallowObjectCopy(val.extensions),
+                    //testIndexesEngine: val.testIndexesEngine,
+                    //testIndependentIndex: val.testIndependentIndex,
                 };
             });
         } else if (this.dimension === DataType.ENGINES) {
@@ -86,21 +96,33 @@ export default class NormalizedDataContainer {
                     versionLong: versionLong
                 };
             });
-        } else if (this.dimension === DataType.TESTS) {
+        } else if (this.dimension === DataType.FEATURE_RESULTS) {
+            //Missing: featureID, executionDuration
+            this.data.forEach((val, index) => {
+                target[index] = {
+                    engine: val.engine,
+                    tool: val.tool,
+                    measurements: shallowObjectCopy(val.measurements),
+
+                };
+            });
+        } else if (this.dimension === DataType.TEST_RESULTS) {
             //Missing: featureID, executionDuration
             this.data.forEach((val, index) => {
                 target[index] = {
                     test: val.test,
                     engine: val.engine,
                     tool: val.tool,
-                    files: shallowCopy(val.files),
-                    measurements: shallowCopy(val.measurements),
+                    files: val.files,
+                    measurements: shallowObjectCopy(val.measurements),
                     extensions: shallowObjectCopy(val.extensions),
                     testCaseResults: shallowObjectCopy(val.testCaseResults)
 
                 };
             });
-        } else if (this.dimension === DataType.TESTS_INDEPENDENT) {
+        }
+
+        else if (this.dimension === DataType.TESTS_INDEPENDENT) {
             this.data.forEach((val, index) => {
                 target[index] = {
                     id: val.id,
@@ -114,7 +136,6 @@ export default class NormalizedDataContainer {
                     metrics: val.metrics.map(m => {
                         return {id: m.id, metricType: m.metricType}
                     }),
-                    files: val.files
                     //image : (val.files && val.files.toLowerCase().split('.').pop() === 'png') ? file : undefined,
                 }
             });

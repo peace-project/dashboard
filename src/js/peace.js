@@ -101,7 +101,7 @@ function process(page) {
         var capabilityData = normalizedData.getAll();
 
 
-        let defaultLang = 'BPEL';
+        let defaultLang = 'BPMN';
         if (!capabilityData.hasLanguage(defaultLang)) {
             console.warn(defaultLang + " does not exist")
         }
@@ -132,7 +132,7 @@ function process(page) {
         let testsFilter = new TestsFilter();
 
 
-        let testData = capabilityData.getAllTestsByLanguage(defaultLang);
+        let testData = capabilityData.getFeatureResultsByLanguage(defaultLang);
         testData = (testData) ? testData.clone() : [];
 
         filterManager.addFilter(new LanguageFilter(), defaultLang);
