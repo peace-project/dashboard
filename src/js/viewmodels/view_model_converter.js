@@ -3,6 +3,9 @@ import PerformanceViewModel from "./performance/performance_view_model";
 import {isPerformanceCapability} from "../peace";
 import {isConformanceCapability} from "../peace";
 import {isExpressivenessCapability} from "../peace";
+import {getHtmlTestResult} from "./helpers";
+import {createLinkFromPaths} from "./helpers";
+import {getMetricName} from "./helpers";
 
 export default class ViewModelConverter{
     constructor() { }
@@ -37,4 +40,5 @@ export default class ViewModelConverter{
             toRemove: toRemove
         }
     }
+
 }

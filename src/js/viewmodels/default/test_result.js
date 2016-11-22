@@ -8,8 +8,6 @@ import {formatTestCase} from "../helpers";
 export default class TestResult {
     constructor(metric) {
         let that = this;
-        console.log('ADDD metric ' + metric)
-        console.log(metric)
 
 
         /*

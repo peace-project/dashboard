@@ -1,6 +1,7 @@
 import {getCapabilityFromId, getHtmlTestResult} from "../helpers";
 import {getResultClass} from "./default_view_model";
 import {getSupportClass} from "./default_view_model";
+import {getMetricName} from "../helpers";
 
 //TODO rename to ViewFeature
 export default class Feature {
@@ -45,7 +46,7 @@ export default class Feature {
     }
 
     _addMetric(engineID, metric) {
-        let name = this._getMetricNames(metric.metric);
+        let name = getMetricName(metric.metric);
         this.results[engineID] = this.results[engineID] || {};
         this.results[engineID][name] = metric.value;
 
@@ -59,8 +60,6 @@ export default class Feature {
         }
 
         if (this.capability === 'expressiveness' && name === 'patternImplementationSupport') {
-            console.log(name);
-
             this.results[engineID]['html'] = getHtmlTestResult(metric.value, this.capability);
             this.results[engineID]['html_class'] = getSupportClass(metric.value, this.extensions['languageSupport']);
 
@@ -71,12 +70,7 @@ export default class Feature {
     }
 
 
-    _getMetricNames(metric) {
-        const splittedMetric = metric.split('__');
-        const length = splittedMetric.length - 1;
-        return (length > -1) ? splittedMetric[length] : undefined;
 
-    }
 
 
 }

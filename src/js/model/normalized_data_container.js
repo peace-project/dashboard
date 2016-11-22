@@ -73,6 +73,7 @@ export default class NormalizedDataContainer {
                         }
                     }),
                     extensions: shallowObjectCopy(val.extensions),
+                    testResultIndex: shallowCopy(val.testResultIndex)
                     //testIndexesEngine: val.testIndexesEngine,
                     //testIndependentIndex: val.testIndependentIndex,
                 };
@@ -102,9 +103,9 @@ export default class NormalizedDataContainer {
                 target[index] = {
                     engine: val.engine,
                     tool: val.tool,
-                    measurements: shallowObjectCopy(val.measurements),
-                    testResultIndex: val.testResultIndex
-
+                    measurements: val.measurements.map(m => {
+                        return {metric: m.metric, value: m.value}
+                    })
                 };
             });
         } else if (this.dimension === DataType.TEST_RESULTS) {
@@ -115,9 +116,18 @@ export default class NormalizedDataContainer {
                     engine: val.engine,
                     tool: val.tool,
                     files: val.files,
-                    measurements: shallowObjectCopy(val.measurements),
+                    logFiles: val.logFiles,
+                    measurements: val.measurements.map(m => {
+                        return {metric: m.metric, value: m.value}
+                    }),
                     extensions: shallowObjectCopy(val.extensions),
-                    testCaseResults: shallowObjectCopy(val.testCaseResults)
+                    testCaseResults: val.testCaseResults.map(m => {
+                        return {
+                            name: m.name,
+                            number: m.number,
+                            value: m.value
+                        }
+                    }),
 
                 };
             });

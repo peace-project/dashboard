@@ -208,7 +208,7 @@ function normalizeFeatureTree(capabilityData, capability, rawData) {
 }
 
 function addTestResultIndex(normalized, testResults) {
-    normalized['testResultIndex'] = {}
+    normalized['testResultIndex'] = {};
 
     if (testResults === undefined) {
         return;
@@ -217,8 +217,10 @@ function addTestResultIndex(normalized, testResults) {
     for (let key in testResults.data) {
         let id = testResults.data[key].test.replace('__test', '');
         if (id.toLowerCase() === normalized.id.toLowerCase()) {
-            normalized['testResultIndex'] = key;
-            break;
+            let engineId = testResults.data[key].engine;
+            normalized['testResultIndex'][engineId] = normalized['testResultIndex'][engineId] || [];
+            normalized['testResultIndex'][engineId] = key;
+          //  break;
         }
     }
 }

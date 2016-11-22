@@ -1,4 +1,4 @@
-import {getResultClass} from "./default_view_model";
+//import {getResultClass} from "./default_view_model";
 
 export default class SupportStatus {
     constructor(data) {

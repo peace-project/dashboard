@@ -107,7 +107,10 @@
                             {{#each instances}}
                                 <td class="result">
                                 {{#getProperty ../../results id}}
-                                        <a role="button" tabindex="0" data-feature-index="{{../../../index}}" data-engine-id="{{../id}}"  class="info-engine-test" >
+                                        <a role="button" tabindex="0" data-feature-name="{{../../../../name}}"
+                                           data-engine-id="{{../id}}"
+                                           data-test-index="{{#getProperty ../../../testResultIndex ../id}}{{this}}{{/getProperty}}"
+                                           class="info-engine-test" >
                                          <span class="{{html_class}}">{{html}}</span>
                                         </a>
                                 {{/getProperty}}

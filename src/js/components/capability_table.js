@@ -3,7 +3,7 @@ import {isExpressivenessCapability, isPerformanceCapability} from "../peace";
 import EngineInfoPopover from "./popovers/engine_info";
 import PerformanceResultPopover from "./popovers/performance_result";
 import FeatureTestPopover from "./popovers/feature_test";
-import FeatureResultPopover from "./popovers/feature_result";
+import TestResultPopover from "./popovers/test_result";
 
 export class CapabilityTableComponent extends RenderComponent {
     constructor(viewModel) {
@@ -59,9 +59,10 @@ export class CapabilityTableComponent extends RenderComponent {
                 title: 'Feature-Test'
             });
 
-            this.defaultResultPopover = new FeatureResultPopover({
+            this.defaultResultPopover = new TestResultPopover({
                 capability: this.viewModel.capability,
                 features: this.viewModel.features,
+                testResults: this.viewModel.testResults,
                 title: 'Feature-Result',
             });
 

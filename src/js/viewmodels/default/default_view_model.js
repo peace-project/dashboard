@@ -110,7 +110,7 @@ export function getSupportClass(result, languageSupport){
         return (result === '+')  ? 'support-true' : 'support-false';
     }
 }
-
+/*
 export function getResultClass(result, resultHtml, upperBound) {
     // add result class
     if (resultHtml !== '+/-') {
@@ -120,7 +120,7 @@ export function getResultClass(result, resultHtml, upperBound) {
     } else {
         return 'support-partial';
     }
-}
+} */
 
 
 

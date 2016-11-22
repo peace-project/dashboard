@@ -57,11 +57,11 @@ export function getDateFromTimestamp(timestamp_ms) {
 
 export function formatTestCase(obj) {
     let message, resultType;
-    if (obj.message === undefined || obj.message.toString().length == '0') {
+    if (obj.value === undefined || obj.value.toString().length == '0') {
         message = 'Passed';
         resultType = 'passed';
     } else {
-        message = obj.message.replace('but got', '\n but got');
+        message = obj.value.replace('but got', '\n but got');
         resultType = 'failed';
     }
 
@@ -81,11 +81,17 @@ export function getHtmlTestResult(result, capability) {
       //  return '✔';
     } else if (result === '-') {
         return (capability === 'expressiveness') ? '━' : '✖';
-    } else if (result === true) {
+    } else if (result === true || result === 'true') {
         return '✔';
-    } else if (result === false) {
+    } else if (result === false || result === 'false') {
         return '✖';
     } else if (result === '+/-') {
         return '+/-';
     }
+}
+
+export function getMetricName(metric) {
+    const splittedMetric = metric.split('__');
+    const length = splittedMetric.length - 1;
+    return (length > -1) ? splittedMetric[length] : undefined;
 }

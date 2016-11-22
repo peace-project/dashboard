@@ -2,7 +2,7 @@ import {groupEngineByName} from "../helpers";
 import Construct from "./construct";
 
 export default class PerformanceViewModel {
-    constructor(filteredData, capability, language, independentTests) {
+    constructor(filteredData, capability, language, testResults, independentTests) {
         this.capability = capability;
         this.language = language;
 

@@ -1,4 +1,4 @@
-import FeatureResultPopover from "./feature_result";
+import FeatureResultPopover from "./test_result";
 
 export default class PerformanceResultPopover extends FeatureResultPopover {
     constructor(options) {

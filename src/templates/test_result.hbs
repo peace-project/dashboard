@@ -3,16 +3,16 @@
 <table class="table feature-test-desc" width="100%">
     <tbody>
         <tr> 
-            <td>Feature Id</td>
-            <td class="test-desc-val">{{id}} </td>
+            <td>Test Id</td>
+            <td class="test-desc-val">{{test}} </td>
         </tr>
         <tr> 
             <td>Engine Id</td>
-            <td class="test-desc-val">{{engineID}} </td>
+            <td class="test-desc-val">{{engine}} </td>
         </tr>
         <tr>
             <td>Tool Id</td>
-            <td class="test-desc-val">{{tool.toolID}} </td>
+            <td class="test-desc-val">{{tool}} </td>
         </tr>
     </tbody>
 </table>
@@ -23,14 +23,14 @@
     <tbody>
         <tr>
             <td>Deployable</td> 
-            <td class="test-desc-val tresult-{{result.testDeployable}}">
-            <span>{{result.testDeployableHtml}}</span>
-            {{result.testDeployable}} </td>
+            <td class="test-desc-val tresult-{{testDeployable}}">
+            <span>{{testDeployableHtml}}</span>
+            {{testDeployable}} </td>
         </tr>
         <tr>
             <td>Successful</td>
-            <td class="test-desc-val tresult-{{result.testSuccessful}}">
-            <span>{{result.testSuccessfulHtml}}</span> {{result.testSuccessful}}</td>
+            <td class="test-desc-val tresult-{{testSuccessful}}">
+            <span>{{testSuccessfulHtml}}</span> {{testSuccessful}}</td>
         </tr>   
         <tr>
             <td>Execution duration </td> 
@@ -55,7 +55,7 @@
         </tr>
         </thead>
         <tbody>
-        {{#each testCases}}
+        {{#each testCaseResults}}
             <tr>
                 <td class="tcase-number"><div>{{number}}</td>
                 <td class="tcase-name">{{name}} </td>
