@@ -95,7 +95,10 @@
                         <td class="collapse-feature-cell">
                             <div class="collapse-cell-border">
                                     <p>{{name}}
-                                    <a role="button" tabindex="0" data-feature-index="{{index}}" data-test-index="{{testIndependentIndex}}" class="info-feature">
+                                    <a role="button" tabindex="0"
+                                       data-feature-index="{{index}}"
+                                       data-test-index="{{testIndependentIndex}}"
+                                       class="info-feature">
                                     <span class="entypo-help-circled"></span>
                                     </a>
                                 </p>
@@ -107,7 +110,8 @@
                             {{#each instances}}
                                 <td class="result">
                                 {{#getProperty ../../results id}}
-                                        <a role="button" tabindex="0" data-feature-name="{{../../../../name}}"
+                                        <a role="button" tabindex="0"
+                                           data-feature-name="{{../../../../name}}"
                                            data-engine-id="{{../id}}"
                                            data-test-index="{{#getProperty ../../../testResultIndex ../id}}{{this}}{{/getProperty}}"
                                            class="info-engine-test" >

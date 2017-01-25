@@ -73,9 +73,9 @@ export default class NormalizedDataContainer {
                         }
                     }),
                     extensions: shallowObjectCopy(val.extensions),
-                    testResultIndex: shallowCopy(val.testResultIndex)
+                    testResultIndex: shallowCopy(val.testResultIndex),
+                    testIndependentIndex: val.testIndependentIndex
                     //testIndexesEngine: val.testIndexesEngine,
-                    //testIndependentIndex: val.testIndependentIndex,
                 };
             });
         } else if (this.dimension === DataType.ENGINES) {
@@ -140,14 +140,20 @@ export default class NormalizedDataContainer {
                     feature: val.feature,
                     process: val.process,
                     description: val.description,
-                    testCases: val.testCases, //TODO should be ignored? => since it will never be displayed
+                    testCases: val.testCases.map(t =>{
+                        return { name: t.name,
+                            number: t.number,
+                            extensions: shallowObjectCopy(t.extensions),
+                            testSteps: shallowObjectCopy(t.testSteps)}
+                    }),
+                    //TODO should be ignored? => since it will never be displayed
                     files: val.files,
                     testPartners: val.testPartners, //TODO should be ignored?
                     extensions: shallowObjectCopy(val.extensions),
                     metrics: val.metrics.map(m => {
                         return {id: m.id, metricType: m.metricType}
                     }),
-                    //image : (val.files && val.files.toLowerCase().split('.').pop() === 'png') ? file : undefined,
+                    testIndependentIndex: val.testIndependentIndex
                 }
             });
         } else {

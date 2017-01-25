@@ -158,11 +158,16 @@ function normalizeFeatureTree(capabilityData, capability, rawData) {
         let testResults = allData.getTestResultsByLanguage(language);
         addTestResultIndex(normalized, testResults);
 
-        // let featureTestsIndependent = testIndependentData.filter(test => test.featureID === normalized.id);
-
         //normalized['testIndexes'] = testResult.map(obj => obj.index);
         // normalized['testIndexesEngine'] = testIndexesByEngines(testResult);
-        // normalized['testIndependentIndex'] = featureTestsIndependent.map(obj => obj.index)[0];
+        let engineTestsIndependent = allData.getAllTestIndependentByLanguage(language); //.filter(test => test.feature === normalized.id);
+
+
+        for(let key in engineTestsIndependent.data){
+            if(engineTestsIndependent.data[key].feature === normalized.id){
+                normalized['testIndependentIndex'] = key;
+            }
+        }
     };
 
 

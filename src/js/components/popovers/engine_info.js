@@ -54,6 +54,7 @@ export default class EngineInfoPopover extends RenderComponent {
     }
 
     _getEngineNameId(engineIndex) {
+        console.log(this.engines);
         return this.engines[engineIndex].name + ' ' + this.engines[engineIndex].version;
     }
 }

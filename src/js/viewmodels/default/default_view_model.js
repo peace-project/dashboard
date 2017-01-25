@@ -3,7 +3,7 @@ import Construct from "./construct";
 
 //rename to default tableViewModel
 export default class DefaultViewModel {
-    constructor(filteredData, capability, language, independentTests) {
+    constructor(filteredData, capability, language) {
         this.capability = capability;
         this.language = language;
 
@@ -29,11 +29,12 @@ export default class DefaultViewModel {
             }
         });
 
+
         this._addConstructs(filteredData.groups.data, filteredData.constructs.data,
-            filteredData.features.data, filteredData.tests.data, independentTests);
+            filteredData.features.data, filteredData.tests.data);
     }
 
-    _addConstructs(groups, constructs, features, tests, independentTests) {
+    _addConstructs(groups, constructs, features, tests) {
         // clear constructs
         this.table.constructs.length = 0;
         let that = this;
@@ -56,7 +57,7 @@ export default class DefaultViewModel {
             viewConstruct.features.forEach(feat => {
                 that.features[feat.index] = feat;
                 //that.test[feat.testIndexes] = tests[feat.testIndexes];
-                that.independentTests[feat.testIndependentIndex] =  independentTests[feat.testIndependentIndex];
+                //that.independentTests[feat.testIndependentIndex] =  independentTests[feat.testIndependentIndex];
             });
 
 

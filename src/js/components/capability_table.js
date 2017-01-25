@@ -2,7 +2,7 @@ import RenderComponent from "../render/render_component";
 import {isExpressivenessCapability, isPerformanceCapability} from "../peace";
 import EngineInfoPopover from "./popovers/engine_info";
 import PerformanceResultPopover from "./popovers/performance_result";
-import FeatureTestPopover from "./popovers/feature_test";
+import TestInfoPopover from "./popovers/tests_info";
 import TestResultPopover from "./popovers/test_result";
 
 export class CapabilityTableComponent extends RenderComponent {
@@ -19,6 +19,7 @@ export class CapabilityTableComponent extends RenderComponent {
     }
 
     onRendering() {
+
         this.engineInfoPopover.onRendering();
         this.defaultResultPopover.onRendering();
         this.defaultTestPopover.onRendering();
@@ -34,10 +35,10 @@ export class CapabilityTableComponent extends RenderComponent {
 
         if (isPerformanceCapability(this.viewModel.capability)) {
 
-            this.defaultTestPopover = new FeatureTestPopover({
+            this.defaultTestPopover = new TestInfoPopover({
                 capability: this.viewModel.capability,
                 features: this.viewModel.features,
-                independentTests: this.viewModel.independentTests,
+                testsIndependent: this.viewModel.testsIndependent,
                 title: 'Performance-Test',
                 id: '[data-feature-index].info-exp-feature'
             });
@@ -52,21 +53,38 @@ export class CapabilityTableComponent extends RenderComponent {
 
         } else {
 
-            this.defaultTestPopover = new FeatureTestPopover({
+            this.defaultTestPopover = new TestInfoPopover({
                 capability: this.viewModel.capability,
                 features: this.viewModel.features,
-                independentTests: this.viewModel.independentTests,
+                testsIndependent: this.viewModel.testsIndependent,
                 title: 'Feature-Test'
             });
 
             this.defaultResultPopover = new TestResultPopover({
                 capability: this.viewModel.capability,
-                features: this.viewModel.features,
+                //  features: this.viewModel.features,
                 testResults: this.viewModel.testResults,
                 title: 'Feature-Result',
             });
 
 
+        }
+
+    }
+
+    _updateSubComponents() {
+        if (this.engineInfoPopover) {
+            this.engineInfoPopover.engines = this.viewModel.engines;
+        }
+
+        if (this.defaultTestPopover) {
+            this.defaultTestPopover.capability = this.viewModel.capability;
+            this.defaultTestPopover.features = this.viewModel.features;
+            this.defaultTestPopover.testsIndependent = this.viewModel.testsIndependent;
+        }
+        if (this.defaultResultPopover) {
+            this.defaultResultPopover.capability = this.viewModel.capability;
+            this.defaultResultPopover.testResults = this.viewModel.testResults;
         }
 
     }
@@ -78,25 +96,28 @@ export class CapabilityTableComponent extends RenderComponent {
         } else if (isPerformanceCapability(viewModel.capability)) {
             featureTitleColspan = featureTitleColspan * 4
         }
-        console.log('__________viewModel')
-        console.log(viewModel)
+        console.log('__________viewModel');
+        console.log(viewModel);
+
 
         this.viewModel = viewModel;
         this.context = viewModel.table;
+
+        this._updateSubComponents();
+
         this.context['featureTitleColspan'] = featureTitleColspan;
-        if (!preventRendering || preventRendering == undefined) {
+
+        if (!preventRendering || preventRendering === undefined) {
             super.render();
         }
-
-
     }
 
-    _initializeTooltip(){
-    $('[data-toggle="tooltip"]').tooltip({
-        placement:'bottom',
-        container: '.content-wrapper'
-    });
-}
+    _initializeTooltip() {
+        $('[data-toggle="tooltip"]').tooltip({
+            placement: 'bottom',
+            container: '.content-wrapper'
+        });
+    }
 
 
     _onCollapseTable() {

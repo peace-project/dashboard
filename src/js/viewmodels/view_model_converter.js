@@ -10,11 +10,11 @@ import {getMetricName} from "./helpers";
 export default class ViewModelConverter{
     constructor() { }
 
-    convert(filteredData, capability, language, independentTests) {
+    convert(filteredData, capability, language) {
         if(isConformanceCapability(capability) || isExpressivenessCapability(capability)){
-            return new DefaultViewModel(filteredData, capability, language, independentTests);
+            return new DefaultViewModel(filteredData, capability, language);
         } else if(isPerformanceCapability(capability)) {
-            return new PerformanceViewModel(filteredData, capability, language, independentTests);
+            return new PerformanceViewModel(filteredData, capability, language);
         }
     }
 

@@ -1,0 +1,59 @@
+<h3 class="feat-desc-title">Test (Engine Independent)</h3>
+
+ <table class="table feature-desc" width="100%">
+    <tbody>       
+        <tr>
+            <td class="popup-tb-title">Id</td>
+            <td colspan="2" class="popup-tb-val">{{test.id}}</td>
+        </tr>
+        <tr>
+            <td class="popup-tb-title">Feature Id</td>
+            <td class="popup-tb-val">{{test.feature}} </td>
+        </tr>
+        <tr>
+            <td class="popup-tb-title">Description</td>
+            <td colspan="2" class="popup-tb-val">{{test.description}}</td>
+        </tr>
+
+        {{#each test.loadFunction}}
+        <tr>
+            <td  class="popup-tb-title">LoadFunction.{{@key}}</td>
+            <td colspan=2 class="popup-tb-val">{{this}}</td>
+        </tr>
+        {{/each}}
+
+
+        {{#if processFiles.length}}
+            <tr>
+                <td class="popup-tb-title">Process Files</td>
+                <td colspan="2" class="popup-tb-val">
+                    <ul class="list-files">
+                        {{#each processFiles}}
+                            <li><span class="entypo-doc-text"></span><a href="data/{{url}}">{{title}}</a></li>
+                        {{/each}}
+                    </ul>
+                </td>
+            </tr>
+        {{/if}}
+        {{#if files.length}}
+        <tr> 
+            <td class="popup-tb-title">Files</td>
+            <td colspan="2" class="popup-tb-val">
+                <ul class="list-files">
+                {{#each files}}
+                    <li><span class="entypo-doc-text"></span><a href="data/{{url}}">{{title}}</a></li>
+                {{/each}}
+                </ul>
+            </td>
+        </tr>
+        {{/if}}
+        {{#if image.src}}
+        <tr>
+            <td class="popup-tb-title">Process Image</td>
+            <td colspan="2" class="popup-tb-val">
+               <a target="_blank" href="data/{{image.src}}"><img  class="process-image" alt="{{image.alt}}" src="data/{{image.src}}" /> </a>
+            </td>
+        </tr>
+        {{/if}}
+    </tbody>
+</table>

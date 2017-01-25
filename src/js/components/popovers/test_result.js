@@ -11,7 +11,7 @@ export default class TestResultPopover extends RenderComponent {
 
         this.templateId = options.templateId || 'test_result';
         this.id = options.id || '[data-engine-id].info-engine-test';
-        this.features = options.features;
+       // this.features = options.features;
         this.testResults = options.testResults;
         this.capability = options.capability;
         this.title = options.title;
@@ -76,7 +76,6 @@ export default class TestResultPopover extends RenderComponent {
             this.context[name] = measure.value;
         });
 
-
         this.context['deploymentPackage'] = testResult.deploymentPackage;
         //context['extensions'] = testResult.extensions;
         this.context['testDeployableHtml'] = getHtmlTestResult(this.context.testDeployable);
@@ -88,8 +87,6 @@ export default class TestResultPopover extends RenderComponent {
         this.context['executionTimestamp'] = getDateFromTimestamp(parseInt(testResult.executionTimestamp));
         this.context['testCaseResults'] = testResult.testCaseResults.map(formatTestCase);
 
-        console.log('_____________')
-        console.log(this.context)
         return super.renderTemplate();
     }
 }
