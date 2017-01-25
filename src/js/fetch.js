@@ -1,6 +1,5 @@
 import {jquery} from "jquery"
 
-
 let urls = {
     betsy: {
         tests: "../data/tests-engine-dependent.json",

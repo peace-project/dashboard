@@ -5,22 +5,22 @@ const _data = Symbol('data');
 
 /**
  * This class reduces the amount of data probably not needed for build view components
- * It only contains data of specific capability and it groups the data according to the process language
+ * It only contains data of a specific capability and it groups the data according to the process language
  * since users will only interact with one language at the time.
  *
  * It ensures data privacy and forces retrieval via cloning
  *
  * The data is hold by the CapabilityDataContainer which is always returned when accessing data
- * It provides convenient methods that handles the clone/copy for the view components.
- * by calling getAll() implements most convenient methods
+ * It provides convenient methods that handles the clone/copy for the view components by calling getAll() which
+ * implements most convenient methods
  *
- * Typically the process in using this class s as follows
+ * Typically, the process in using this class is as follows:
  *      1. During the normalization process => call #addAll() to add data for this capability
  *      2. After the normalization process => call #getAll() to get all added data
  * It should be enough for the UI to call the #getAll() once
  *
  * TODO It should be enough to call #getAll() once , however this is not true for the normalizer
- ** TODO this class should be transparent for UI, only use by the normalizer (the normalizer should only run once)
+ * TODO this class should be transparent for UI and only used by the normalizer (the normalizer should only run once)
  *
  *  @author David Bimamisa
  */

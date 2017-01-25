@@ -17,6 +17,8 @@ import PortabilityFilterComponent from "./components/filters/portability_filter"
 import LanguageFilterComponent from "./components/filters/language_filter";
 import {normalizeCapability} from "./model/pbel/normalizer";
 import RawDataModel from "./model/pbel/raw_data";
+import {createViewModel} from "./viewmodels/view_models_creator";
+import ViewModelCreator from "./viewmodels/view_models_creator";
 
 
 var page, capability;
@@ -87,7 +89,6 @@ function createDataModel(results) {
     return new RawDataModel(results);
 }
 
-
 function process(page) {
     if (!(rawData instanceof RawDataModel)) {
         console.log('Failed to initialize JSON rawData');
@@ -100,11 +101,19 @@ function process(page) {
         //TODO getAll should be called transparently, since most of the time we will use CapabilityDataContainer anyway
         var capabilityData = normalizedData.getAll();
 
+        //TODO Rename to ProcessPipeline
+        let filterManager = setUpFilterManager(capabilityData, capability);
+        let viewModelCreator = new ViewModelCreator();
+        viewModelCreator.createViewModel(capabilityData, filterManager);
 
-        let defaultLang = 'BPMN';
-        if (!capabilityData.hasLanguage(defaultLang)) {
-            console.warn(defaultLang + " does not exist")
-        }
+
+    } else if (page === 'engines-overview') {
+        engineOverview();
+    } else if (page === 'engines-compare') {
+        engineCompare();
+    }
+
+    function setUpFilterManager(capabilityData, capability){
 
         let filteredData = {
             capability: capability,
@@ -114,16 +123,20 @@ function process(page) {
             features: {},
             tests: {},
             //TODO misleading? independentTests will not be filtered
-           // independentTests: capabilityData.getAllTestIndependentByLanguage()
+            // independentTests: capabilityData.getAllTestIndependentByLanguage()
         };
 
         if(isPerformanceCapability(capability)){
             filteredData['metrics'] = rawData.getMetrics();
         }
 
-        //TODO Rename to ProcessPipeline
         let filterManager = new FilterManager(capabilityData, filteredData);
         // Adding order represents the calling order. It must be adhered to
+
+        let defaultLang = 'BPMN';
+        if (!capabilityData.hasLanguage(defaultLang)) {
+            console.warn(defaultLang + " does not exist")
+        }
 
         let engineFilter = new EngineFilter();
         let groupFilter = new GroupFilter();
@@ -132,249 +145,24 @@ function process(page) {
         let testsFilter = new TestsFilter();
 
 
-        let testData = capabilityData.getFeatureResultsByLanguage(defaultLang);
-        testData = (testData) ? testData.clone() : [];
-
         filterManager.addFilter(new LanguageFilter(), defaultLang);
         filterManager.addFilter(engineFilter, engineFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(groupFilter, groupFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(constructFilter, constructFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(featureFilter, featureFilter.getDefaultFilterValues(defaultLang, capabilityData));
+
+        let testData = capabilityData.getFeatureResultsByLanguage(defaultLang);
+        testData = (testData) ? testData.clone() : [];
         filterManager.addFilter(testsFilter, testData);
+
         let portabilityFilter = new PortabilityFilter();
         filterManager.addViewModelFilter(portabilityFilter, portabilityFilter.getDefaultFilterValues());
 
         // Apply all filters
         filterManager.applyAllFilters();
 
-        let testIndependentData = capabilityData.getAllTestIndependentByLanguage(filterManager.getFilterValues().language);
-        let testResults = capabilityData.getTestResultsByLanguage(filterManager.getFilterValues().language);
-
-        let viewConverter = new ViewModelConverter();
-        var viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
-
-        if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
-            filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
-        }
-
-        viewModel['testResults'] = testResults.data;
-        viewModel['testsIndependent'] = testIndependentData.data;
-        let capabilityTableComponent = new CapabilityTableComponent(viewModel);
-
-        //TODO check if allEngines is undefined
-        let allEngines = capabilityData.getEnginesByLanguage(filterManager.getFilterValues().language);
-        let latestVersionValues = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(filterManager.getFilterValues().language));
-
-        new LanguageFilterComponent({
-            dimension: 'language',
-            dimensionData: capabilityData.getAllLanguage().reverse(),
-            filterValues: filterManager.getFilterValues(),
-            onFilter: function (newFilterValues) {
-
-                if(!capabilityData.hasLanguage(newFilterValues)){
-                    console.error('No benchmark results for ' + newFilterValues + ' found.');
-                    return;
-                }
-
-                //Update filter values
-                latestVersionValues = EngineFilter.createFilterValues(capabilityData.getLatestEngineVersions(newFilterValues));
-                filterManager.getFilterValues().engines = latestVersionValues;
-                filterManager.getFilterValues().groups = groupFilter.getDefaultFilterValues(newFilterValues, capabilityData);
-                filterManager.getFilterValues().constructs = constructFilter.getDefaultFilterValues(newFilterValues, capabilityData);
-                filterManager.getFilterValues().features = featureFilter.getDefaultFilterValues(newFilterValues, capabilityData);
-
-                filterManager.applyFilter(LanguageFilter.Name(), newFilterValues);
-                filterManager.applyFilter(EngineFilter.Name());
-                filterManager.applyFilter(GroupFilter.Name());
-                filterManager.applyFilter(ConstructFilter.Name());
-                filterManager.applyFilter(FeatureFilter.Name());
-                filterManager.applyFilter(TestsFilter.Name());
-
-                // Update filter components
-                engineFilterComponent.updateModel({
-                    engines: capabilityData.getEnginesByLanguage(newFilterValues).data,
-                    latestVersionValues: latestVersionValues,
-                    filterValues: filterManager.getFilterValues()
-                });
-
-                // By passing groupsFilters.dimensionData we clear all current checkboxes first
-                groupsFilters.updateDimensionData(filterManager.getFilteredData().groups.data);
-                constructFilters.updateDimensionData(filterManager.getFilteredData().constructs.data);
-
-                if(constructFilters.searchable){
-                    constructFilters.searchFullData = capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data
-                }
-
-                featuresFilters.updateDimensionData(filterManager.getFilteredData().features.data);
-                if(featuresFilters.searchable){
-                    featuresFilters.searchFullData = capabilityData.getAllFeaturesByLanguage(filterManager.getFilterValues().language).clone().data
-                }
-
-                if (isPerformanceCapability(capability)) {
-                    experimentFilter.updateDimensionData(filterManager.getFilteredData().groups.data);
-                    if(featuresFilters.searchable){
-                        featuresFilters.searchFullData = capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data
-                    }
-                }
-
-                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, newFilterValues);
-
-                if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
-                    filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
-                }
-
-                let testResults = capabilityData.getTestResultsByLanguage(newFilterValues);
-                let testIndependentData = capabilityData.getAllTestIndependentByLanguage(newFilterValues);
-
-
-                viewModel['testResults'] = (testResults) ? testResults.data : undefined;
-                viewModel['testsIndependent'] = testIndependentData.data;
-
-                capabilityTableComponent.updateModel(viewModel);
-            }
-        });
-
-
-        var engineFilterComponent = new EnginesFilterComponent({
-            viewModel: {
-                engines: allEngines.data,
-                latestVersionValues: latestVersionValues,
-                filterValues: filterManager.getFilterValues()
-            },
-            onFilter: function (newFilterValues) {
-                // Filters
-                filterManager.applyFilter(EngineFilter.Name(), newFilterValues);
-                filterManager.applyFilter(TestsFilter.Name());
-
-                // DefaultViewModel
-                viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
-                if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
-                    filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
-                }
-                capabilityTableComponent.updateModel(viewModel);
-            }
-        });
-
-        if (isPerformanceCapability(capability)) {
-            //TODO create experiment Filter
-
-            var experimentFilter = new FCGFiltersComponent({
-                dimension: 'constructs',
-                dimensionData: filterManager.getFilteredData().constructs.data,
-                filterValues: filterManager.getFilterValues(),
-                searchable: true,
-                searchFullData: capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data,
-                onFilter: function (newFilterValues) {
-                    filterManager.applyFilter(ConstructFilter.Name(), newFilterValues);
-                    filterManager.applyFilter(FeatureFilter.Name());
-                    filterManager.applyFilter(TestsFilter.Name());
-
-                    // ViewModels
-                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
-                    capabilityTableComponent.updateModel(viewModel);
-                }
-            });
-
-
-        } else {
-            var groupsFilters = new FCGFiltersComponent({
-                dimension: 'groups',
-                dimensionData: filterManager.getFilteredData().groups.data,
-                filterValues: filterManager.getFilterValues(),
-                onFilter: function (newFilterValues) {
-
-                    filterManager.applyFilter(GroupFilter.Name(), newFilterValues);
-                    filterManager.applyFilter(ConstructFilter.Name());
-                    filterManager.applyFilter(FeatureFilter.Name());
-                    filterManager.applyFilter(TestsFilter.Name());
-
-                    let langFilterValue = filterManager.getFilterValues().language;
-
-                    let filteredConstructs = viewConverter.convertFilteredData('constructs', filterManager.getFilteredData().constructs.data,
-                        capabilityData, langFilterValue);
-                    let filteredFeatures = viewConverter.convertFilteredData('features', filterManager.getFilteredData().features.data,
-                        capabilityData, langFilterValue);
-
-
-                    constructFilters.updateDimensionData(filteredConstructs.dimensionData, filteredConstructs.toRemove);
-                    featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
-
-                    // ViewModels
-                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
-                    filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
-                    capabilityTableComponent.updateModel(viewModel);
-
-                }
-            });
-
-
-            var constructFilters = new FCGFiltersComponent({
-                dimension: 'constructs',
-                dimensionData: filterManager.getFilteredData().constructs.data,
-                searchable: true,
-                searchFullData: capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data,
-                filterValues: filterManager.getFilterValues(),
-                onFilter: function (newFilterValues) {
-                    filterManager.applyFilter(ConstructFilter.Name(), newFilterValues);
-                    filterManager.applyFilter(FeatureFilter.Name());
-                    filterManager.applyFilter(TestsFilter.Name());
-
-                    let filteredFeatures = viewConverter.convertFilteredData('features', filterManager.getFilteredData().features.data,
-                        capabilityData, filterManager.getFilterValues().language);
-
-                    featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
-
-                    // ViewModels
-                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
-                    filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel)
-                    capabilityTableComponent.updateModel(viewModel);
-                }
-            });
-
-
-            var featuresFilters = new FCGFiltersComponent({
-                dimension: 'features',
-                dimensionData: filterManager.getFilteredData().features.data,
-                searchable: true,
-                searchFullData: capabilityData.getAllFeaturesByLanguage(filterManager.getFilterValues().language).clone().data,
-                filterValues: filterManager.getFilterValues(),
-                onFilter: function (newFilterValues) {
-                    filterManager.applyFilter(FeatureFilter.Name(), newFilterValues);
-                    filterManager.applyFilter(TestsFilter.Name());
-
-                    // DefaultViewModel
-                    viewModel = viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
-                    filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel);
-                    capabilityTableComponent.updateModel(viewModel);
-                }
-            });
-
-
-            let reBuildViewModel = false;
-            var portabilityFilterComp = new PortabilityFilterComponent({
-                filterValues: filterManager.getFilterValues(),
-                onFilter: function (newFilterValues) {
-
-                    if (reBuildViewModel) {
-                        // We have applied a different PortabilityStatus than ALL which has reduced the items of the viewModel
-                        // Hence, build a complete viewModel again
-                        viewModel = viewConverter.convert(filterManager.getFilteredData(), capability,
-                            filterManager.getFilterValues().language);
-                    }
-
-                    filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel, newFilterValues);
-                    capabilityTableComponent.updateModel(viewModel);
-
-                    reBuildViewModel = newFilterValues !== PortabilityStatus.ALL;
-                }
-
-            });
-
-        }
-
-    } else if (page === 'engines-overview') {
-        engineOverview();
-    } else if (page === 'engines-compare') {
-        engineCompare();
+        return filterManager;
     }
+
+
 }

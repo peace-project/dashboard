@@ -7,7 +7,7 @@ import {getHtmlTestResult} from "./helpers";
 import {createLinkFromPaths} from "./helpers";
 import {getMetricName} from "./helpers";
 
-export default class ViewModelConverter{
+export default class ViewModelConverter {
     constructor() { }
 
     convert(filteredData, capability, language) {

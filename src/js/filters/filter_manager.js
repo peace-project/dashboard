@@ -29,6 +29,13 @@ export default class FilterManager {
         }
     }
 
+    getFilterDefaultValues(filterName, language, data) {
+       let filter = this.filters.find(f => f.getName() == filterName);
+       if(filter){
+           filter.getDefaultFilterValues(language, data)
+       }
+    }
+
     addViewModelFilter(filter, defaultValue) {
         if (!this.filterValues.hasOwnProperty(filter)) {
             if (defaultValue === undefined) {

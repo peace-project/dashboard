@@ -4,7 +4,7 @@ export default class RawDataModel {
 
 
         //this.capabilities = data.pebl.benchmark.capabilities;
-        this.metricTypes = data.pebl.benchmark.metricTypes;
+        this._metricTypes = data.pebl.benchmark.metricTypes;
         this._independentTests = data.pebl.benchmark.tests;
         this._testResults = data.pebl.result.testResults;
         this._featureResults = data.pebl.result.featureResults;
