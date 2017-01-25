@@ -134,7 +134,7 @@ export default class ViewModelCreator {
                 if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
                     filterManager.applyViewModelFilter(PortabilityFilter.Name(),  that.viewModel);
                 }
-                capabilityTableComponent.updateModel( that.viewModel);
+                capabilityTableComponent.updateModel(that.viewModel);
             }
         });
 
@@ -173,6 +173,7 @@ export default class ViewModelCreator {
 
                     let langFilterValue = filterManager.getFilterValues().language;
 
+
                     let filteredConstructs =  that.viewConverter.convertFilteredData('constructs', filterManager.getFilteredData().constructs.data,
                         capabilityData, langFilterValue);
                     let filteredFeatures =  that.viewConverter.convertFilteredData('features', filterManager.getFilteredData().features.data,
@@ -202,15 +203,15 @@ export default class ViewModelCreator {
                     filterManager.applyFilter(FeatureFilter.Name());
                     filterManager.applyFilter(TestsFilter.Name());
 
-                    let filteredFeatures = this.viewConverter.convertFilteredData('features', filterManager.getFilteredData().features.data,
+                    let filteredFeatures = that.viewConverter.convertFilteredData('features', filterManager.getFilteredData().features.data,
                         capabilityData, filterManager.getFilterValues().language);
 
                     featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
 
                     // ViewModels
-                    viewModel = this.viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
-                    filterManager.applyViewModelFilter(PortabilityFilter.Name(), viewModel)
-                    capabilityTableComponent.updateModel(viewModel);
+                    that.viewModel = that.viewConverter.convert(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+                    filterManager.applyViewModelFilter(PortabilityFilter.Name(), that.viewModel)
+                    capabilityTableComponent.updateModel(that.viewModel);
                 }
             });
 
