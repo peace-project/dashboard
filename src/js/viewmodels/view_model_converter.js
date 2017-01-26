@@ -3,14 +3,12 @@ import PerformanceViewModel from "./performance/performance_view_model";
 import {isPerformanceCapability} from "../peace";
 import {isConformanceCapability} from "../peace";
 import {isExpressivenessCapability} from "../peace";
-import {getHtmlTestResult} from "./helpers";
-import {createLinkFromPaths} from "./helpers";
-import {getMetricName} from "./helpers";
 
-export default class ViewModelConverter {
-    constructor() { }
+/*export default class ViewModelConverter {
+    constructor() { }*/
 
-    convert(filteredData, capability, language) {
+    //TODO rename to createTableViewModel
+   export function createTableViewModel(filteredData, capability, language) {
         if(isConformanceCapability(capability) || isExpressivenessCapability(capability)){
             return new DefaultViewModel(filteredData, capability, language);
         } else if(isPerformanceCapability(capability)) {
@@ -18,7 +16,7 @@ export default class ViewModelConverter {
         }
     }
 
-    convertFilteredData(dimension, filteredDimensionData, capabilityData, language) {
+   export function convertFilteredData(dimension, filteredDimensionData, capabilityData, language) {
         let toRemove = [];
 
         let dataFn;
@@ -41,4 +39,4 @@ export default class ViewModelConverter {
         }
     }
 
-}
+//}

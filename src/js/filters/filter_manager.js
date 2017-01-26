@@ -12,6 +12,9 @@ export default class FilterManager {
         // Initialize filterValues
     }
 
+
+
+
     getFilteredData() {
         return this.filteredData;
     }
@@ -29,10 +32,11 @@ export default class FilterManager {
         }
     }
 
+
     getFilterDefaultValues(filterName, language, data) {
        let filter = this.filters.find(f => f.getName() == filterName);
        if(filter){
-           filter.getDefaultFilterValues(language, data)
+           return filter.getDefaultFilterValues(language, data)
        }
     }
 
@@ -59,7 +63,7 @@ export default class FilterManager {
         return undefined;
     }
 
-    applyFilter(filterName, newFilterValues) {
+    applyFilter(filterName, newFilterValues, cascade) {
         let filter = this.filters.find(f => f.getName() == filterName);
         let that = this;
 
@@ -94,10 +98,24 @@ export default class FilterManager {
                 that.filterValues[filterName] = newFilterValues;
             }
 
+            console.log('VALUES ' + filterName)
+            console.log(that.filterValues[filterName]);
             that.oldFilterValues[filterName] = filter.copyFilterValues(that.filterValues[filterName]);
 
             filter.applyFilter(that.capabilityData, that.filteredData, that.filterValues, filterValuesChanges);
+
+            if(cascade !== false && cascade !== undefined && newFilterValues !== null){
+                if(filter.getDependentFilters() === undefined){
+                    return;
+                }
+                filter.getDependentFilters().forEach( filterName => {
+                    console.log('+++ Apply ' + filterName);
+                    that.applyFilter(filterName, undefined, false);
+                })
+            }
         }
+
+
     }
 
     applyViewModelFilter(filterName, viewModel, newFilterValues) {

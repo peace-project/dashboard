@@ -12,6 +12,7 @@ export default class GroupFilter extends Filter {
         return 'groups'
     }
 
+
     createFilterValues(groups) {
         var values = {};
         groups.data.forEach((obj) => {

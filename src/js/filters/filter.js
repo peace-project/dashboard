@@ -10,6 +10,14 @@ export default class Filter {
         return this.name;
     }
 
+    setDependentFilters(filterNames) {
+        this.filterNames = filterNames;
+    }
+
+    getDependentFilters() {
+        return this.filterNames;
+    }
+
     getDefaultFilterValues(language, data) {
         throw Error("Unsupported operation in Filter " + this.name);
     }

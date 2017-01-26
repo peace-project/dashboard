@@ -7,12 +7,14 @@ import LanguageFilter from "./filters/language_filter";
 import EngineFilter from "./filters/engine_filter";
 import ConstructFilter from "./filters/construct_filter";
 import FeatureFilter from "./filters/feature_filter";
-import PortabilityFilter from "./filters/portability_status";
+import PortabilityFilter, {PortabilityStatus} from "./filters/portability_status";
 import TestsFilter from "./filters/tests_filter";
 import {normalizeCapability} from "./model/pbel/normalizer";
 import RawDataModel from "./model/pbel/raw_data";
-import {createViewModel} from "./viewmodels/view_models_creator";
-import ViewModelCreator from "./viewmodels/view_models_creator";
+import {createViewModel} from "./viewmodels/table_view_model_view";
+import {createTableViewModel, convertFilteredData} from "./viewmodels/view_model_converter";
+import TableViewModelView from "./viewmodels/table_view_model_view";
+import FiltersViewModelView from "./viewmodels/filters_view_model_view";
 
 
 var page, capability;
@@ -42,44 +44,28 @@ export function Peace(page) {
 }
 
 //TODO should be called via Peace.checkCapabilityType
-export function checkCapabilityType(capability, type){
+export function checkCapabilityType(capability, type) {
     return (capability.toLowerCase() === type);
 }
 
-export function isConformanceCapability(capability){
+export function isConformanceCapability(capability) {
     return checkCapabilityType(capability, CapabilityTypes.CONFORMANCE);
 }
 
-export function isExpressivenessCapability(capability){
+export function isExpressivenessCapability(capability) {
     return checkCapabilityType(capability, CapabilityTypes.EXPRESSIVENESS);
 }
 
-export function isPerformanceCapability(capability){
+export function isPerformanceCapability(capability) {
     return checkCapabilityType(capability, CapabilityTypes.PERFORMANCE);
 }
 
 
 function loadData(page) {
     return fetchPbelData();
-    /*
-    if (page === 'conformance' || page === 'expressiveness' || page === 'engines-overview' || page === 'engines-compare') {
-        return fetchBetsyData();
-    } else if (page === 'performance') {
-        return fetchBenFlowData();
-    } else {
-        throw Error("Unsupported page");
-    }*/
 }
 
 function createDataModel(results) {
-   /* var objResults = {};
-    results.forEach(function (row) {
-        objResults[row.name] = row.result;
-    });*/
-
-   //    return new RawDataModel(objResults);
-
-
     return new RawDataModel(results);
 }
 
@@ -97,8 +83,26 @@ function process(page) {
 
         //TODO Rename to ProcessPipeline
         let filterManager = setUpFilterManager(capabilityData, capability);
-        let viewModelCreator = new ViewModelCreator();
-        viewModelCreator.createViewModel(capabilityData, filterManager);
+
+        let tableViewModelView = new TableViewModelView(filterManager, capabilityData);
+        tableViewModelView.initialize();
+
+        let filtersViewModelView = new FiltersViewModelView(filterManager, {
+            onFilterLanguage: function (capability, newFilterValues) {
+                tableViewModelView.updateTableResultLanguage(capability, newFilterValues)
+            },
+            onFilterEngines: function (capability) {
+                tableViewModelView.updateTableResult(capability)
+            },
+            onFilterFCG: function (capability) {
+                tableViewModelView.updateTableResult(capability)
+            },
+            onFilterPortability: function (capability, newFilterValues, reBuildViewModel) {
+                tableViewModelView.updateTableResultPortability(capability, newFilterValues, reBuildViewModel);
+            }
+        });
+
+        filtersViewModelView.initialize(capabilityData);
 
 
     } else if (page === 'engines-overview') {
@@ -107,7 +111,8 @@ function process(page) {
         engineCompare();
     }
 
-    function setUpFilterManager(capabilityData, capability){
+
+    function setUpFilterManager(capabilityData, capability) {
 
         let filteredData = {
             capability: capability,
@@ -120,7 +125,7 @@ function process(page) {
             // independentTests: capabilityData.getAllTestIndependentByLanguage()
         };
 
-        if(isPerformanceCapability(capability)){
+        if (isPerformanceCapability(capability)) {
             filteredData['metrics'] = rawData.getMetrics();
         }
 
@@ -132,14 +137,22 @@ function process(page) {
             console.warn(defaultLang + " does not exist")
         }
 
+        let languageFilter = new LanguageFilter();
         let engineFilter = new EngineFilter();
         let groupFilter = new GroupFilter();
         let constructFilter = new ConstructFilter();
         let featureFilter = new FeatureFilter();
         let testsFilter = new TestsFilter();
 
+        //Specify hierarchy
 
-        filterManager.addFilter(new LanguageFilter(), defaultLang);
+        languageFilter.setDependentFilters([EngineFilter.Name(), GroupFilter.Name(), ConstructFilter.Name(), FeatureFilter.Name(), TestsFilter.Name()]);
+        engineFilter.setDependentFilters([TestsFilter.Name()]);
+        groupFilter.setDependentFilters([ConstructFilter.Name(), FeatureFilter.Name(), TestsFilter.Name()]);
+        constructFilter.setDependentFilters([FeatureFilter.Name(), TestsFilter.Name()]);
+        featureFilter.setDependentFilters([TestsFilter.Name()]);
+
+        filterManager.addFilter(languageFilter, defaultLang);
         filterManager.addFilter(engineFilter, engineFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(groupFilter, groupFilter.getDefaultFilterValues(defaultLang, capabilityData));
         filterManager.addFilter(constructFilter, constructFilter.getDefaultFilterValues(defaultLang, capabilityData));
@@ -157,6 +170,15 @@ function process(page) {
 
         return filterManager;
     }
+
+
+    function updateFilterDimensionData(dimensionName, filterComp, filterManager, langFilterValue) {
+        let filteredConstructs = convertFilteredData(dimensionName, filterManager.getFilteredData().constructs.data, capabilityData, langFilterValue);
+        filterComp.updateDimensionData(filteredConstructs.dimensionData, filteredConstructs.toRemove);
+    }
+
+
+
 
 
 }
