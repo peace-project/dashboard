@@ -7,12 +7,12 @@ import LanguageFilter from "./filters/language_filter";
 import EngineFilter from "./filters/engine_filter";
 import ConstructFilter from "./filters/construct_filter";
 import FeatureFilter from "./filters/feature_filter";
-import PortabilityFilter, {PortabilityStatus} from "./filters/portability_status";
+import PortabilityFilter from "./filters/portability_status";
 import TestsFilter from "./filters/tests_filter";
 import {normalizeCapability} from "./model/pbel/normalizer";
 import RawDataModel from "./model/pbel/raw_data";
 import {createViewModel} from "./viewmodels/table_view_model_view";
-import {createTableViewModel, convertFilteredData} from "./viewmodels/view_model_converter";
+import {convertFilteredData} from "./viewmodels/view_model_converter";
 import TableViewModelView from "./viewmodels/table_view_model_view";
 import FiltersViewModelView from "./viewmodels/filters_view_model_view";
 
@@ -88,14 +88,14 @@ function process(page) {
         tableViewModelView.initialize();
 
         let filtersViewModelView = new FiltersViewModelView(filterManager, {
-            onFilterLanguage: function (capability, newFilterValues) {
-                tableViewModelView.updateTableResultLanguage(capability, newFilterValues)
+            onFilterLanguage: function (capability) {
+                tableViewModelView.updateViewModelView(capability, true)
             },
             onFilterEngines: function (capability) {
-                tableViewModelView.updateTableResult(capability)
+                tableViewModelView.updateViewModelView(capability)
             },
             onFilterFCG: function (capability) {
-                tableViewModelView.updateTableResult(capability)
+                tableViewModelView.updateViewModelView(capability)
             },
             onFilterPortability: function (capability, newFilterValues, reBuildViewModel) {
                 tableViewModelView.updateTableResultPortability(capability, newFilterValues, reBuildViewModel);

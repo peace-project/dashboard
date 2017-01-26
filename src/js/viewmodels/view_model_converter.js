@@ -4,8 +4,6 @@ import {isPerformanceCapability} from "../peace";
 import {isConformanceCapability} from "../peace";
 import {isExpressivenessCapability} from "../peace";
 
-/*export default class ViewModelConverter {
-    constructor() { }*/
 
     //TODO rename to createTableViewModel
    export function createTableViewModel(filteredData, capability, language) {
@@ -38,5 +36,3 @@ import {isExpressivenessCapability} from "../peace";
             toRemove: toRemove
         }
     }
-
-//}

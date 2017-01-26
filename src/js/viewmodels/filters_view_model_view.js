@@ -29,8 +29,6 @@ export default class FiltersViewModelView {
 
         let that = this;
 
-        console.log('GOURPS___')
-        console.log(filterManager.getFilterDefaultValues(GroupFilter.Name(), 'BPMN', capabilityData));
 
         new LanguageFilterComponent({
             dimension: 'language',
@@ -81,7 +79,7 @@ export default class FiltersViewModelView {
                     }
                 }
 
-                that.filtersCallback['onFilterLanguage'](capability, newFilterValues);
+                that.filtersCallback['onFilterLanguage'](capability);
                // updateTableResultLanguage(filterManager, capability, capabilityTableComponent, newFilterValues);
 
 
