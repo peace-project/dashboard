@@ -141,8 +141,6 @@ export default class PortabilityFilter extends ViewFilter {
         let firstResult = undefined;
 
         let resultProp = undefined;
-        console.log('___capability')
-        console.log(capability)
         if(isExpressivenessCapability(capability)){
             resultProp = 'patternImplementationFulfilledLanguageSupport';
         } else if(isConformanceCapability(capability)){
@@ -158,10 +156,11 @@ export default class PortabilityFilter extends ViewFilter {
 
             if (firstResult === undefined) {
                 //patternImplementationFulfilledLanguageSupport
-                firstResult = feature.results[engineId].result[resultProp];
+                console.log(feature.results[engineId])
+                firstResult = feature.results[engineId][resultProp];
             }
 
-            if (firstResult !== feature.results[engineId].result[resultProp]) {
+            if (firstResult !== feature.results[engineId][resultProp]) {
                 showFeature = true;
                 return;
             }
