@@ -33,7 +33,7 @@ export default class PortabilityFilter extends ViewFilter {
         }
         let that = this;
 
-        if(filterValues.portability_status === undefined){
+        if (filterValues.portability_status === undefined) {
             console.error('portability_status is undefined');
             return;
         }
@@ -46,21 +46,18 @@ export default class PortabilityFilter extends ViewFilter {
         console.log(constructs);
 
         let capability = filteredData.capability;
-        this.resultProp = undefined;
-        if(isExpressivenessCapability(capability)){
-            this.resultProp = 'patternImplementationFulfilledLanguageSupport';
-        } else if(isConformanceCapability(capability)){
-            this.resultProp = 'testResultTrivalentAggregation';
-        } else {
-           console.error('PortabilityStatus filter is not supported for this capability: ' + capability);
+
+        this.resultProp = this._getResultProp(capability);
+        if (this.resultProp === undefined) {
+            console.error('PortabilityStatus filter is not supported for this capability: ' + capability);
         }
 
-        for(var i=constructs.length -1; i >= 0; i -=1){
+        for (var i = constructs.length - 1; i >= 0; i -= 1) {
             let construct = constructs[i];
 
             if (filterValues.portability_status === PortabilityStatus.NOT_SAME) {
 
-                var showFeatures = that._filterFeaturesByNotSameStatus(construct, engines, capability);
+                var showFeatures = that._filterFeaturesByNotSameStatus(construct, engines);
                 if (showFeatures.length < 1) {
                     constructs.splice(i, 1);
                     summaryOutdated = true;
@@ -73,9 +70,9 @@ export default class PortabilityFilter extends ViewFilter {
                 construct.features[construct.features.length - 1]['lastFeature'] = true;
             } else {
                 if (!that._isConstructMatchingPortabilityStatus(construct, filterValues)) {
-                    if(viewModel.table.constructs[i].isFirstEntry){
+                    if (viewModel.table.constructs[i].isFirstEntry) {
                         // If viewModel.constructs[i+1] is undefined than the whole group has been removed, so do nothing
-                        this._updateGroupFirstEntry(constructs[i], constructs[i+1]);
+                        this._updateGroupFirstEntry(constructs[i], constructs[i + 1]);
                     }
 
                     constructs.splice(i, 1);
@@ -85,25 +82,35 @@ export default class PortabilityFilter extends ViewFilter {
             }
         }
 
-        if(summaryOutdated){
+        if (summaryOutdated) {
             viewModel.updateSummaryRow();
         }
     }
 
-    _updateGroupFirstEntry(oldFirstEntryConstruct, newFirstEntryConstruct){
+    _getResultProp(capability){
+        let resultProp = undefined;
+        if (isExpressivenessCapability(capability)) {
+            resultProp = 'patternImplementationFulfilledLanguageSupport';
+        } else if (isConformanceCapability(capability)) {
+            resultProp = 'testResultTrivalentAggregation';
+        }
+        return resultProp;
+    }
+
+    _updateGroupFirstEntry(oldFirstEntryConstruct, newFirstEntryConstruct) {
         let gIndex = oldFirstEntryConstruct.groupsIndex;
-        if(newFirstEntryConstruct !== undefined && newFirstEntryConstruct.groupsIndex === gIndex){
+        if (newFirstEntryConstruct !== undefined && newFirstEntryConstruct.groupsIndex === gIndex) {
             newFirstEntryConstruct.isFirstEntry = true;
         }
     }
 
 
-    _filterFeaturesByNotSameStatus(construct, engines, capability) {
+    _filterFeaturesByNotSameStatus(construct, engines) {
         var showFeatures = [];
 
         let that = this;
         construct.features.forEach(function (feature) {
-            if (that._hasDifferentResults(feature, engines, capability)) {
+            if (that._hasDifferentResults(feature, engines)) {
                 showFeatures.push(feature);
             }
         });
@@ -129,11 +136,12 @@ export default class PortabilityFilter extends ViewFilter {
     }
 
 
-    _getNumberOfFullSupportedTests(construct, enginesArray){
+    _getNumberOfFullSupportedTests(construct, enginesArray) {
         let count = enginesArray.length;
+        let that = this;
         enginesArray.forEach(function (engineId) {
             // If any test for this engine exists or fullSupport is false
-            if (!construct['results'].hasOwnProperty(engineId) || !construct['results'][engineId]['patternFulfilledLanguageSupport']) {
+            if (!construct['results'].hasOwnProperty(engineId) || !construct['results'][engineId][that.resultProp]) {
                 count -= 1;
             }
         });
@@ -141,16 +149,10 @@ export default class PortabilityFilter extends ViewFilter {
         return count;
     }
 
-    _hasDifferentResults(feature, engines, capability) {
+    _hasDifferentResults(feature, engines) {
         let showFeature = false;
         let firstResult = undefined;
-
-        let resultProp = undefined;
-        if(isExpressivenessCapability(capability)){
-            resultProp = 'patternImplementationFulfilledLanguageSupport';
-        } else if(isConformanceCapability(capability)){
-            resultProp = 'testResultTrivalentAggregation';
-        }
+        let that = this;
 
         engines.forEach(function (engineId) {
             // If any test for this engine exists or support same
@@ -161,11 +163,10 @@ export default class PortabilityFilter extends ViewFilter {
 
             if (firstResult === undefined) {
                 //patternImplementationFulfilledLanguageSupport
-                console.log(feature.results[engineId])
-                firstResult = feature.results[engineId][resultProp];
+                firstResult = feature.results[engineId][that.resultProp];
             }
 
-            if (firstResult !== feature.results[engineId][resultProp]) {
+            if (firstResult !== feature.results[engineId][that.resultProp]) {
                 showFeature = true;
                 return;
             }
