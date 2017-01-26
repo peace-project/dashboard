@@ -14,6 +14,7 @@ export const PortabilityStatus = {
 export default class PortabilityFilter extends ViewFilter {
     constructor() {
         super(PortabilityFilter.Name());
+        this.resultProp = undefined;
     }
 
     static Name() {
@@ -45,6 +46,15 @@ export default class PortabilityFilter extends ViewFilter {
         console.log(constructs);
 
         let capability = filteredData.capability;
+        this.resultProp = undefined;
+        if(isExpressivenessCapability(capability)){
+            this.resultProp = 'patternImplementationFulfilledLanguageSupport';
+        } else if(isConformanceCapability(capability)){
+            this.resultProp = 'testResultTrivalentAggregation';
+        } else {
+           console.error('PortabilityStatus filter is not supported for this capability: ' + capability);
+        }
+
         for(var i=constructs.length -1; i >= 0; i -=1){
             let construct = constructs[i];
 
@@ -121,16 +131,11 @@ export default class PortabilityFilter extends ViewFilter {
 
     _getNumberOfFullSupportedTests(construct, enginesArray){
         let count = enginesArray.length;
-
         enginesArray.forEach(function (engineId) {
             // If any test for this engine exists or fullSupport is false
             if (!construct['results'].hasOwnProperty(engineId) || !construct['results'][engineId]['patternFulfilledLanguageSupport']) {
                 count -= 1;
             }
-            /*
-            if (!construct['supportStatus'].hasOwnProperty(engineId) || !construct['supportStatus'][engineId].fullSupport) {
-                count -= 1;
-            }*/
         });
 
         return count;
