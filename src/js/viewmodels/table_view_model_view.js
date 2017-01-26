@@ -16,6 +16,7 @@ export default class TableViewModelView {
     initialize() {
         let filterManager = this.filterManager;
         let capability = filterManager.getFilteredData().capability;
+        console.log('capability____>> ' + capability)
 
         this.viewModel = createTableViewModel(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
         if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {

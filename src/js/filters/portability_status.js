@@ -2,6 +2,7 @@
 
 import ViewFilter from "./view_filter";
 import DefaultViewModel from "../viewmodels/default/default_view_model";
+import {isExpressivenessCapability, isConformanceCapability} from "../peace";
 
 export const PortabilityStatus = {
     ALL: '0',
@@ -23,7 +24,7 @@ export default class PortabilityFilter extends ViewFilter {
         return PortabilityStatus.ALL;
     }
 
-    applyFilter(viewModel, filterValues) {
+    applyFilter(viewModel, filteredData, filterValues) {
         console.log('Apply ' + this.getName() + ' filter');
 
         if (!(viewModel instanceof DefaultViewModel)) {
@@ -41,12 +42,15 @@ export default class PortabilityFilter extends ViewFilter {
 
         // Use reserve loop to iterate und mutating an array
         let constructs = viewModel.table.constructs;
+        console.log(constructs);
+
+        let capability = filteredData.capability;
         for(var i=constructs.length -1; i >= 0; i -=1){
             let construct = constructs[i];
 
             if (filterValues.portability_status === PortabilityStatus.NOT_SAME) {
 
-                var showFeatures = that._filterFeaturesByNotSameStatus(construct, engines);
+                var showFeatures = that._filterFeaturesByNotSameStatus(construct, engines, capability);
                 if (showFeatures.length < 1) {
                     constructs.splice(i, 1);
                     summaryOutdated = true;
@@ -84,12 +88,12 @@ export default class PortabilityFilter extends ViewFilter {
     }
 
 
-    _filterFeaturesByNotSameStatus(construct, engines) {
+    _filterFeaturesByNotSameStatus(construct, engines, capability) {
         var showFeatures = [];
 
         let that = this;
         construct.features.forEach(function (feature) {
-            if (that._isMatchingPortabilityStatusFeature(feature, engines)) {
+            if (that._hasDifferentResults(feature, engines, capability)) {
                 showFeatures.push(feature);
             }
         });
@@ -120,20 +124,32 @@ export default class PortabilityFilter extends ViewFilter {
 
         enginesArray.forEach(function (engineId) {
             // If any test for this engine exists or fullSupport is false
-            if (!construct['supportStatus'].hasOwnProperty(engineId) || !construct['supportStatus'][engineId].fullSupport) {
+            if (!construct['results'].hasOwnProperty(engineId) || !construct['results'][engineId]['patternFulfilledLanguageSupport']) {
                 count -= 1;
             }
+            /*
+            if (!construct['supportStatus'].hasOwnProperty(engineId) || !construct['supportStatus'][engineId].fullSupport) {
+                count -= 1;
+            }*/
         });
 
         return count;
     }
 
-    _isMatchingPortabilityStatusFeature(feature, engines) {
+    _hasDifferentResults(feature, engines, capability) {
         let showFeature = false;
         let firstResult = undefined;
 
-        engines.forEach(function (engineId) {
+        let resultProp = undefined;
+        console.log('___capability')
+        console.log(capability)
+        if(isExpressivenessCapability(capability)){
+            resultProp = 'patternImplementationFulfilledLanguageSupport';
+        } else if(isConformanceCapability(capability)){
+            resultProp = 'testResultTrivalentAggregation';
+        }
 
+        engines.forEach(function (engineId) {
             // If any test for this engine exists or support same
             if (!feature.results.hasOwnProperty(engineId)) {
                 showFeature = true;
@@ -141,10 +157,11 @@ export default class PortabilityFilter extends ViewFilter {
             }
 
             if (firstResult === undefined) {
-                firstResult = feature.results[engineId].result.testResult
+                //patternImplementationFulfilledLanguageSupport
+                firstResult = feature.results[engineId].result[resultProp];
             }
 
-            if (firstResult !== feature.results[engineId].result.testResult) {
+            if (firstResult !== feature.results[engineId].result[resultProp]) {
                 showFeature = true;
                 return;
             }

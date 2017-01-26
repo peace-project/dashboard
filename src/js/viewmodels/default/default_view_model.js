@@ -32,6 +32,8 @@ export default class DefaultViewModel {
 
         this._addConstructs(filteredData.groups.data, filteredData.constructs.data,
             filteredData.features.data, filteredData.tests.data);
+
+        console.log(this.table)
     }
 
     _addConstructs(groups, constructs, features, tests) {
@@ -111,6 +113,7 @@ export function getSupportClass(result, languageSupport){
         return (result === '+')  ? 'support-true' : 'support-false';
     }
 }
+
 /*
 export function getResultClass(result, resultHtml, upperBound) {
     // add result class

@@ -98,8 +98,6 @@ export default class FilterManager {
                 that.filterValues[filterName] = newFilterValues;
             }
 
-            console.log('VALUES ' + filterName)
-            console.log(that.filterValues[filterName]);
             that.oldFilterValues[filterName] = filter.copyFilterValues(that.filterValues[filterName]);
 
             filter.applyFilter(that.capabilityData, that.filteredData, that.filterValues, filterValuesChanges);
@@ -109,7 +107,6 @@ export default class FilterManager {
                     return;
                 }
                 filter.getDependentFilters().forEach( filterName => {
-                    console.log('+++ Apply ' + filterName);
                     that.applyFilter(filterName, undefined, false);
                 })
             }
@@ -131,7 +128,7 @@ export default class FilterManager {
             that.filterValues[filterName] = newFilterValues;
         }
 
-        filter.applyFilter(viewModel, that.filterValues);
+        filter.applyFilter(viewModel, that.filteredData, that.filterValues);
     }
 
     applyAllFilters() {

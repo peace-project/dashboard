@@ -121,14 +121,12 @@ export function normalizeCapability(rawData, capability) {
     let engines = copyAndFormat(rawData.getEngines()) || [];
     let testIndependentData = rawData.getIndependentTestsByCapability(capability) || [];
 
-
     addTestResults(testResults, capabilityData);
     addFeatureResults(featureResults, capabilityData);
     addEngines(engines, capabilityData);
     addIndependentTests(testIndependentData, capabilityData);
 
-    return normalizeFeatureTree(capabilityData, capability, rawData)
-
+    return normalizeFeatureTree(capabilityData, capability, rawData);
 }
 
 

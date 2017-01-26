@@ -24,8 +24,6 @@ export default class Construct {
         this.features = [];
         this.capability = getCapabilityFromId(this.id);
 
-
-
         this['groupName'] = group.name;
         this['groupDesc'] = group.description;
 
