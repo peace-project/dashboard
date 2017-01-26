@@ -18,7 +18,6 @@ export default class TestsFilter extends Filter{
         }
 
         let testData = capabilityData.getFeatureResultsByLanguage(filterValues.language);
-        console.log(capabilityData);
         if(testData === undefined){
             console.log('INFO: stop tests filter. No tests found')
             return;

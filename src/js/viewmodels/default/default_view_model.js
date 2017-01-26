@@ -42,7 +42,7 @@ export default class DefaultViewModel {
     }
 
 
-    _getConstructResultProp(capability){
+    _getConstructResultProp(capability) {
         let resultProp = undefined;
         if (isExpressivenessCapability(capability)) {
             resultProp = 'patternFulfilledLanguageSupport';
@@ -78,7 +78,6 @@ export default class DefaultViewModel {
                 //that.independentTests[feat.testIndependentIndex] =  independentTests[feat.testIndependentIndex];
             });
 
-
             // Reset old value of isFirstEntry to avoid duplicate group marking
             // Marks construct as the first row of a group
             viewConstruct.isFirstEntry = false;
@@ -87,14 +86,9 @@ export default class DefaultViewModel {
                 viewConstruct.isFirstEntry = true;
             }
 
-
-           that._updateSummaryRow(viewConstruct);
-
+            that._updateSummaryRow(viewConstruct);
             that.table.constructs.push(viewConstruct);
-
         });
-
-
     }
 
     updateSummaryRow() {
@@ -109,51 +103,36 @@ export default class DefaultViewModel {
     _updateSummaryRow(construct) {
         let that = this;
         Object.keys(construct.results).forEach(engineID => {
-
-            console.log('construct.results[engineID][this.resultProp]='+that.resultProp)
-            console.log(construct.results[engineID])
-
             if (isConformanceCapability(that.capability) && construct.results[engineID][that.resultProp] === '+') {
                 that.table.summaryRow[engineID] += 1;
             } else if (isExpressivenessCapability(that.capability) && construct.results[engineID][that.resultProp] === 'true') {
-
-                //if (construct.upperBound === '+') {
-                    that.table.summaryRow[engineID] += 1;
-                //}
-            }
-            /*
-            if (construct.featuresIndexes.length === construct.supportStatus[engineID].supportedFeature) {
                 that.table.summaryRow[engineID] += 1;
-            } else if (isExpressivenessCapability(that.capability) && construct.supportStatus[engineID].supportedFeature > 0) {
-                if (construct.upperBound === '+') {
-                    that.table.summaryRow[engineID] += 1;
-                }
-            }*/
+            }
         });
     }
 }
 
-export function getSupportClass(result, languageSupport){
+export function getSupportClass(result, languageSupport) {
     if (result === '+/-' && languageSupport === result) {
         return 'support-partial-true';
-    } else if(result === '+/-'){
+    } else if (result === '+/-') {
         return 'support-partial';
     } else {
-        return (result === '+')  ? 'support-true' : 'support-false';
+        return (result === '+') ? 'support-true' : 'support-false';
     }
 }
 
 /*
-export function getResultClass(result, resultHtml, upperBound) {
-    // add result class
-    if (resultHtml !== '+/-') {
-        return 'support-' + result;
-    } else if (upperBound !== undefined && resultHtml == '+/-' && upperBound === resultHtml) {
-        return 'support-partial-true';
-    } else {
-        return 'support-partial';
-    }
-} */
+ export function getResultClass(result, resultHtml, upperBound) {
+ // add result class
+ if (resultHtml !== '+/-') {
+ return 'support-' + result;
+ } else if (upperBound !== undefined && resultHtml == '+/-' && upperBound === resultHtml) {
+ return 'support-partial-true';
+ } else {
+ return 'support-partial';
+ }
+ } */
 
 
 

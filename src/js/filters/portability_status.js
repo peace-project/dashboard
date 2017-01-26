@@ -43,11 +43,9 @@ export default class PortabilityFilter extends ViewFilter {
 
         // Use reserve loop to iterate und mutating an array
         let constructs = viewModel.table.constructs;
-        console.log(constructs);
-
         let capability = filteredData.capability;
 
-        this.resultProp = this._getResultProp(capability);
+        this.resultProp = this._getFeatureResultProp(capability);
         if (this.resultProp === undefined) {
             console.error('PortabilityStatus filter is not supported for this capability: ' + capability);
         }
@@ -87,7 +85,7 @@ export default class PortabilityFilter extends ViewFilter {
         }
     }
 
-    _getResultProp(capability){
+    _getFeatureResultProp(capability){
         let resultProp = undefined;
         if (isExpressivenessCapability(capability)) {
             resultProp = 'patternImplementationFulfilledLanguageSupport';
