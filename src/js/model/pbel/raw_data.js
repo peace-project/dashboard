@@ -65,4 +65,9 @@ export default class RawDataModel {
     getEngines() {
         return this._engines;
     }
+
+    getMetrics(){
+        return this._metricTypes;
+
+    }
 }

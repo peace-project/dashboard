@@ -12,8 +12,6 @@ export class FCGFiltersComponent {
         this.dimensionData = options.dimensionData;
         this.searchable = options.searchable || false;
         this.searchFullData = options.searchFullData || undefined;
-        console.log('_____this.searchFullData____');
-        console.log(this.searchFullData);
         this._init();
     }
 

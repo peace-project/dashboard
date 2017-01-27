@@ -126,6 +126,7 @@ function process(page) {
         };
 
         if (isPerformanceCapability(capability)) {
+            console.log(rawData);
             filteredData['metrics'] = rawData.getMetrics();
         }
 
