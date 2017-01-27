@@ -31,8 +31,8 @@ export default class PortabilityFilter extends ViewFilter {
         if (!(viewModel instanceof DefaultViewModel)) {
             throw Error('filteredData is not of type DefaultViewModel. filteredData=' + viewModel.constructor.name);
         }
-        let that = this;
 
+        let that = this;
         if (filterValues.portability_status === undefined) {
             console.error('portability_status is undefined');
             return;
@@ -147,6 +147,14 @@ export default class PortabilityFilter extends ViewFilter {
         return count;
     }
 
+    /**
+     * Checks if the feature results differ among the engines
+     *
+     * @param feature
+     * @param engines
+     * @returns {boolean}
+     * @private
+     */
     _hasDifferentResults(feature, engines) {
         let showFeature = false;
         let firstResult = undefined;

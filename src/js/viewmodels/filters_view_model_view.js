@@ -65,6 +65,8 @@ export default class FiltersViewModelView {
 
                 if (constructFilters.searchable) {
                     constructFilters.searchFullData = capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data
+                    // needed for _doSearch
+                    that._addGroupName(constructFilters.searchFullData, filterManager.getFilteredData().groups.data);
                 }
 
                 featuresFilters.updateDimensionData(filterManager.getFilteredData().features.data);
@@ -134,25 +136,28 @@ export default class FiltersViewModelView {
                     // Update other filters
                     let langFilterValue = filterManager.getFilterValues().language;
 
-                    let filteredConstructs =  convertFilteredData('constructs', filterManager.getFilteredData().constructs.data, capabilityData, langFilterValue);
+                    let filteredConstructs =  convertFilteredData('constructs', filterManager.getFilteredData().constructs.data,
+                        capabilityData, langFilterValue);
                     constructFilters.updateDimensionData(filteredConstructs.dimensionData, filteredConstructs.toRemove);
 
                     let filteredFeatures =  convertFilteredData('features', filterManager.getFilteredData().features.data,
                         capabilityData, langFilterValue);
                     featuresFilters.updateDimensionData(filteredFeatures.dimensionData, filteredFeatures.toRemove);
 
-
                     // ViewModels
                     that.filtersCallback['onFilterFCG'](capability);
                 }
             });
 
+            // needed in _doSearch
+            let searchFullData = capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data;
+            this._addGroupName(searchFullData, filterManager.getFilteredData().groups.data);
 
             var constructFilters = new FCGFiltersComponent({
                 dimension: 'constructs',
                 dimensionData: filterManager.getFilteredData().constructs.data,
                 searchable: true,
-                searchFullData: capabilityData.getAllConstructsByLanguage(filterManager.getFilterValues().language).clone().data,
+                searchFullData: searchFullData,
                 filterValues: filterManager.getFilterValues(),
                 onFilter: function (newFilterValues) {
                     filterManager.applyFilter(ConstructFilter.Name(), newFilterValues, true);
@@ -195,5 +200,13 @@ export default class FiltersViewModelView {
 
         }
     }
+
+    _addGroupName(searchFullData, groupsData) {
+        for (let i = 0; i < searchFullData.length; ++i) {
+            searchFullData[i]['groupName'] = groupsData[searchFullData[i].groupsIndex].name;
+        }
+    }
+
+
 
 }

@@ -12,6 +12,8 @@ export class FCGFiltersComponent {
         this.dimensionData = options.dimensionData;
         this.searchable = options.searchable || false;
         this.searchFullData = options.searchFullData || undefined;
+        console.log('_____this.searchFullData____');
+        console.log(this.searchFullData);
         this._init();
     }
 
@@ -241,6 +243,7 @@ export class FCGFiltersComponent {
         // Thus searchFullData must contains unfiltered data of this dimension
         this.searchFullData.forEach(data => {
 
+
             // Stop here if the current construct has been filtered out by the group filter
             if (that.dimension === 'constructs' && !that.filterValues.groups.hasOwnProperty(data.groupName)) {
                 return;
@@ -258,8 +261,6 @@ export class FCGFiltersComponent {
 
             var value = data.name;
             var elem = $('input[data-dimension~="' + that.dimension + '"][value="' + value + '"]');
-
-            console.log(value.toLowerCase().indexOf(searchText))
 
             if (value.toLowerCase().indexOf(searchText) < 0) {
                 $(elem).parent().parent().hide();

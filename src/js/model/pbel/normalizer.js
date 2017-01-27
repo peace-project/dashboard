@@ -109,7 +109,6 @@ function addIndependentTests(tests, capabilityData) {
     tests.forEach(test => {
         let language = test.id.split('__')[1];
         capabilityData.add(language, test, DataType.TESTS_INDEPENDENT);
-
     });
 }
 
@@ -132,7 +131,6 @@ export function normalizeCapability(rawData, capability) {
 
 function normalizeFeatureTree(capabilityData, capability, rawData) {
     let allData = capabilityData.getAll();
-
 
     const afterAssignGroups = function (normalized, schema, parentIndex, fullNormalized) {
         normalized['name'] = capitalizeFirstLetter(normalized['name'].replaceAll('_', ' '));
@@ -160,14 +158,12 @@ function normalizeFeatureTree(capabilityData, capability, rawData) {
         // normalized['testIndexesEngine'] = testIndexesByEngines(testResult);
         let engineTestsIndependent = allData.getAllTestIndependentByLanguage(language); //.filter(test => test.feature === normalized.id);
 
-
         for(let key in engineTestsIndependent.data){
             if(engineTestsIndependent.data[key].feature === normalized.id){
                 normalized['testIndependentIndex'] = key;
             }
         }
     };
-
 
     const groups = new Schema('groups', {
             sortData: sortByName,
@@ -204,7 +200,6 @@ function normalizeFeatureTree(capabilityData, capability, rawData) {
         console.log('++++normalizedData++++');
         console.log(normalizedData);
         capabilityData.addAll(normalizedData, featureSet.name);
-
     });
 
     return capabilityData;

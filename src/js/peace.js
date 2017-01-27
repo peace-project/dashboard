@@ -144,8 +144,7 @@ function process(page) {
         let featureFilter = new FeatureFilter();
         let testsFilter = new TestsFilter();
 
-        //Specify hierarchy
-
+        // Specify hierarchy
         languageFilter.setDependentFilters([EngineFilter.Name(), GroupFilter.Name(), ConstructFilter.Name(), FeatureFilter.Name(), TestsFilter.Name()]);
         engineFilter.setDependentFilters([TestsFilter.Name()]);
         groupFilter.setDependentFilters([ConstructFilter.Name(), FeatureFilter.Name(), TestsFilter.Name()]);
