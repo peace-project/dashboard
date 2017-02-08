@@ -76,11 +76,12 @@ export default class TestResultPopover extends RenderComponent {
             this.context[name] = measure.value;
         });
 
+
         this.context['deploymentPackage'] = testResult.deploymentPackage;
         //context['extensions'] = testResult.extensions;
         this.context['testDeployableHtml'] = getHtmlTestResult(this.context.testDeployable);
         this.context['testSuccessfulHtml'] = getHtmlTestResult(this.context.testSuccessful);
-        this.context['logFilePaths'] = (testResult .logFiles) ? createLinkFromPaths(testResult.logFiles.split(' ')) : undefined;
+        this.context['logFilePaths'] = (testResult.logFiles) ? createLinkFromPaths(testResult.logFiles.split(' ')) : undefined;
         this.context['engineDependentFilePaths'] = (testResult.files) ? createLinkFromPaths(testResult.files.split(' ')) : undefined;
 
         this.context['executionDuration'] = testResult.executionDuration.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
