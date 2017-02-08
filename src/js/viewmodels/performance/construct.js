@@ -11,9 +11,12 @@ export default class Construct {
 
     addFeatures(features, tests, metricsInfo, resultOrder) {
         let that = this;
+        console.log('this.featuresIndexes')
         this.featuresIndexes.forEach(index => {
             let feature = features[index];
-            if (feature === undefined || feature.testIndexes.length < 1) {
+            console.log(feature )
+
+            if (feature === undefined || feature.testResultIndex.length < 1) {
                 return;
             }
 
