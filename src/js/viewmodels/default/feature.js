@@ -1,5 +1,4 @@
 import {getCapabilityFromId, getHtmlTestResult} from "../helpers";
-import {getResultClass} from "./default_view_model";
 import {getSupportClass} from "./default_view_model";
 import {getMetricName} from "../helpers";
 

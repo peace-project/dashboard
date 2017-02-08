@@ -197,8 +197,6 @@ function normalizeFeatureTree(capabilityData, capability, rawData) {
 
     featureTree.languages.forEach(featureSet => {
         let normalizedData = normalize(featureSet, groups);
-        console.log('++++normalizedData++++');
-        console.log(normalizedData);
         capabilityData.addAll(normalizedData, featureSet.name);
     });
 

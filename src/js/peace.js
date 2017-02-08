@@ -11,7 +11,6 @@ import PortabilityFilter from "./filters/portability_status";
 import TestsFilter from "./filters/tests_filter";
 import {normalizeCapability} from "./model/pbel/normalizer";
 import RawDataModel from "./model/pbel/raw_data";
-import {createViewModel} from "./viewmodels/table_view_model_view";
 import {convertFilteredData} from "./viewmodels/view_model_converter";
 import TableViewModelView from "./viewmodels/table_view_model_view";
 import FiltersViewModelView from "./viewmodels/filters_view_model_view";

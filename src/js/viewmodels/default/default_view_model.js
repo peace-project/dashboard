@@ -37,8 +37,6 @@ export default class DefaultViewModel {
 
         this._addConstructs(filteredData.groups.data, filteredData.constructs.data, filteredData.features.data,
             filteredData.tests.data);
-
-        console.log(this.table)
     }
 
 

@@ -1,7 +1,6 @@
 import SupportStatus from "./support_status";
 import Feature from "./feature";
 import {getCapabilityFromId} from "../helpers";
-import {getResultClass} from "./default_view_model";
 import {getHtmlTestResult} from "../helpers";
 import {getSupportClass} from "./default_view_model";
 
@@ -83,8 +82,6 @@ export default class Construct {
         if(name === 'support'){
             this.results[engineID]['html'] = getHtmlTestResult(metric.value, this.extensions['languageSupport'], this.capability);
         } */
-
-
     }
 
 
@@ -113,8 +110,6 @@ export default class Construct {
                 that.upperBound = viewFeature.upperBound;
             }*/
 
-
-
             capability = getCapabilityFromId(viewFeature.id);
             if (typeof capability !== 'string') {
                 return;
@@ -122,10 +117,10 @@ export default class Construct {
 
 
             // Update support status
-           Object.keys(viewFeature.results).forEach(function (engineId) {
+           /*Object.keys(viewFeature.results).forEach(function (engineId) {
                 let testResult = viewFeature.results[engineId];
                 //that._updateSupportStatus(testResult, capability);
-            });
+            });*/
 
             viewFeature['groupName'] = this.groupName;
             that.features.push(viewFeature);
