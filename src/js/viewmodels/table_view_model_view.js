@@ -10,7 +10,13 @@ export default class TableViewModelView {
         this.filterManager = filterManager;
         this.capabilityData = capabilityData;
         this.viewModel;
+
+        // serve as local copy
+        this.testResults;
+        this.testIndependentData;
+
         this.capabilityTableComponent; // the view
+        this.oldLanguage;
     }
 
     initialize() {
@@ -18,6 +24,7 @@ export default class TableViewModelView {
         let capability = filterManager.getFilteredData().capability;
 
         this.viewModel = createTableViewModel(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+        console.log(this.viewModel);
         if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
             filterManager.applyViewModelFilter(PortabilityFilter.Name(), this.viewModel);
         }
@@ -25,6 +32,8 @@ export default class TableViewModelView {
         this._replaceTestResults(this.filterManager.getFilterValues().language);
         this.capabilityTableComponent = new CapabilityTableComponent(this.viewModel);
         //this._createComponents(capabilityData, filterManager);
+
+        this.oldLanguage = filterManager.getFilterValues().language;
     }
 
     /**
@@ -34,10 +43,14 @@ export default class TableViewModelView {
      * @private
      */
     _replaceTestResults(language){
-        let testResults = this.capabilityData.getTestResultsByLanguage(language);
-        let testIndependentData = this.capabilityData.getAllTestIndependentByLanguage(language);
-        this.viewModel['testResults'] = (testResults) ? testResults.data : undefined;
-        this.viewModel['testsIndependent'] = testIndependentData.data;
+        this.testResults = this.capabilityData.getTestResultsByLanguage(language);
+        this.testIndependentData = this.capabilityData.getAllTestIndependentByLanguage(language);
+        this._addTestResults();
+    }
+
+    _addTestResults(){
+        this.viewModel['testResults'] = (this.testResults) ? this.testResults.data : undefined;
+        this.viewModel['testsIndependent'] = this.testIndependentData.data;
     }
 
     getViewModel(){
@@ -52,18 +65,25 @@ export default class TableViewModelView {
 
     _updateViewModel(capability, language){
         this.viewModel = createTableViewModel(this.filterManager.getFilteredData(), capability, language);
+        this._addTestResults();
         if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
             this.filterManager.applyViewModelFilter(PortabilityFilter.Name(),this. viewModel);
         }
     }
 
-
-    updateViewModelView(capability, replace) {
+    /**
+     * Updates the view model of the result table according to the current filter values.
+     *
+     * @param capability
+     */
+    updateViewModelView(capability) {
         let language = this.filterManager.getFilterValues().language;
         this._updateViewModel(capability, language);
 
-        // Replace all test results due to  the language change
-        if(replace === true){
+        // Replace all test results due to the language change
+        let languageChanged = this.oldLanguage !== language;
+        this.oldLanguage = language;
+        if(languageChanged === true){
             this._replaceTestResults(this.filterManager.getFilterValues().language);
         }
         this.capabilityTableComponent.updateModel(this.viewModel);
@@ -76,6 +96,7 @@ export default class TableViewModelView {
             // We have applied a different PortabilityStatus than ALL which has reduced the items of the viewModel
             // Hence, build a complete viewModel again
             this.viewModel =  createTableViewModel(this.filterManager.getFilteredData(), capability, this.filterManager.getFilterValues().language);
+            this._addTestResults();
         }
 
         this.filterManager.applyViewModelFilter(PortabilityFilter.Name(), this.viewModel, newFilterValues);

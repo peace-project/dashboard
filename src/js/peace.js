@@ -88,7 +88,7 @@ function process(page) {
 
         let filtersViewModelView = new FiltersViewModelView(filterManager, {
             onFilterLanguage: function (capability) {
-                tableViewModelView.updateViewModelView(capability, true)
+                tableViewModelView.updateViewModelView(capability)
             },
             onFilterEngines: function (capability) {
                 tableViewModelView.updateViewModelView(capability)

@@ -96,9 +96,6 @@ export class CapabilityTableComponent extends RenderComponent {
         } else if (isPerformanceCapability(viewModel.capability)) {
             featureTitleColspan = featureTitleColspan * 4
         }
-        console.log('__________viewModel');
-        console.log(viewModel);
-
 
         this.viewModel = viewModel;
         this.context = viewModel.table;
