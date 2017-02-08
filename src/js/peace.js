@@ -17,8 +17,7 @@ import TableViewModelView from "./viewmodels/table_view_model_view";
 import FiltersViewModelView from "./viewmodels/filters_view_model_view";
 
 
-var page, capability;
-var rawData;
+var page, rawData;
 
 
 export const CapabilityTypes = {
@@ -33,7 +32,7 @@ export function Peace(page) {
         return false;
     }
 
-    loadData(page)
+    loadData()
         .then(res => {
             rawData = createDataModel(res);
             process(page);
@@ -61,7 +60,7 @@ export function isPerformanceCapability(capability) {
 }
 
 
-function loadData(page) {
+function loadData() {
     return fetchPbelData();
 }
 
