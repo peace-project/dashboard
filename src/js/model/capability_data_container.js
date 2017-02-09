@@ -8,7 +8,6 @@ export default class CapabilityDataContainer {
     constructor(data, capability) {
         this.capability = capability;
         this.data = data;
-
     }
 
     getEnginesByLanguage(language) {
@@ -83,11 +82,10 @@ export default class CapabilityDataContainer {
     }
 
     getAllLanguage() {
+        console.log('_______this.data')
+        console.log(this.data)
         return Object.keys(this.data);
     }
-
-
-
 
     copyByLang(lang, target) {
         if (!this.hasLanguage(lang)) {

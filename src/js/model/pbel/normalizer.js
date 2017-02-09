@@ -100,7 +100,9 @@ function addEngines(engines, capabilityData) {
         }
 
         let language = engine.language.split('__')[0];
-        capabilityData.add(language, engine, DataType.ENGINES);
+        if(capabilityData.hasData(language, DataType.TESTS_INDEPENDENT)){
+            capabilityData.add(language, engine, DataType.ENGINES);
+        }
     });
 }
 
@@ -122,8 +124,9 @@ export function normalizeCapability(rawData, capability) {
 
     addTestResults(testResults, capabilityData);
     addFeatureResults(featureResults, capabilityData);
-    addEngines(engines, capabilityData);
     addIndependentTests(testIndependentData, capabilityData);
+    addEngines(engines, capabilityData);
+
 
     return normalizeFeatureTree(capabilityData, capability, rawData);
 }

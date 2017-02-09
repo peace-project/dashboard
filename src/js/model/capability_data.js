@@ -70,6 +70,20 @@ export default class CapabilityData {
             this[_data].data[language][dataType] = new NormalizedDataContainer([newData], dataType);
         }
     }
+
+    /**
+     * Tests if data for the given {@code DataType} and language exists
+     *
+     * @param language
+     * @param dataType
+     * @returns {boolean}
+     */
+    hasData(language, dataType){
+        if(this[_data].data[language]){
+            return this[_data].data[language].hasOwnProperty(DataType.TESTS_INDEPENDENT);
+        }
+        return false;
+    }
 /*
     getAllLanguages() {
         this[_data].getAllLanguages();
