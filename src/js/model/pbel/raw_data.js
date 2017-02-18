@@ -1,30 +1,21 @@
 export default class RawDataModel {
 
     constructor(data) {
-
-
         //this.capabilities = data.pebl.benchmark.capabilities;
         this._metricTypes = data.pebl.benchmark.metricTypes;
         this._independentTests = data.pebl.benchmark.tests;
         this._testResults = data.pebl.result.testResults;
-        this._featureResults = data.pebl.result.featureResults;
+        this._aggregatedResults = data.pebl.result.aggregatedResults;
 
         //TODO rename to capabilities
         this._capabilities = data.pebl.benchmark.capabilities;
         this._engines = data.pebl.result.engines;
-        this._tools = data.pebl.result.tools;
-        //this.tests = data.pebl.result.featureResults;
-        //this.metrics = data.metrics;
-        // this.independentTests = data.pebl.result.testResults;
-
-        //this['data'] = dataTypes;
-        //console.log(data.pebl.result);
     }
 
 
     getFeatureResultsByCapability(capability) {
         let that = this;
-        return this._featureResults.filter(test => that._getMeasurementByCapability(test, capability));
+        return this._aggregatedResults.filter(test => that._getMeasurementByCapability(test, capability));
     }
 
     getTestResultsByCapability(capability) {

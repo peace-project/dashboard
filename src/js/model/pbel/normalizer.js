@@ -127,7 +127,6 @@ export function normalizeCapability(rawData, capability) {
     addIndependentTests(testIndependentData, capabilityData);
     addEngines(engines, capabilityData);
 
-
     return normalizeFeatureTree(capabilityData, capability, rawData);
 }
 
