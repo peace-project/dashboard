@@ -55,13 +55,25 @@ function addFeatureResults(featureResults, capabilityData) {
     let measurementByLanguage = {};
     featureResults.forEach(test => {
         test.measurements.forEach(measure => {
-            let splittedMetric = measure.metric.split('__');
-            // Skip language independent results
-            if (splittedMetric.length < 3) {
+            let splitMetric = measure.metric.split('__');
+
+            //skip other capabilities
+            let capability = splitMetric[0];
+            //check undefined and if there is any value
+            if(capability === undefined || !capability || 0 === capability.length){
                 return;
             }
 
-            let language = measure.metric.split('__')[1];
+            if(capability.toLowerCase() !== capabilityData.getCapability().toLowerCase()){
+                return;
+            }
+
+            // Skip language independent results
+            if (splitMetric.length < 3) {
+                return;
+            }
+
+            let language = splitMetric[1];
             if (measurementByLanguage[language] === undefined) {
                 measurementByLanguage[language] = {
                     engine: test.engine,
