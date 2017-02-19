@@ -14,16 +14,11 @@ import RawDataModel from "./model/pbel/raw_data";
 import {convertFilteredData} from "./viewmodels/view_model_converter";
 import TableViewModelView from "./viewmodels/table_view_model_view";
 import FiltersViewModelView from "./viewmodels/filters_view_model_view";
+import {isPerformanceCapability, hasCapability
+} from "./dashboard_info";
 
 
 var page, rawData;
-
-
-export const CapabilityTypes = {
-    CONFORMANCE: 'conformance',
-    EXPRESSIVENESS: 'expressiveness',
-    PERFORMANCE: 'performance',
-};
 
 export function Peace(page) {
     if (page === undefined || page == null) {
@@ -41,24 +36,6 @@ export function Peace(page) {
     //console.log(rawData);
 }
 
-//TODO should be called via Peace.checkCapabilityType
-export function checkCapabilityType(capability, type) {
-    return (capability.toLowerCase() === type);
-}
-
-export function isConformanceCapability(capability) {
-    return checkCapabilityType(capability, CapabilityTypes.CONFORMANCE);
-}
-
-export function isExpressivenessCapability(capability) {
-    return checkCapabilityType(capability, CapabilityTypes.EXPRESSIVENESS);
-}
-
-export function isPerformanceCapability(capability) {
-    return checkCapabilityType(capability, CapabilityTypes.PERFORMANCE);
-}
-
-
 function loadData() {
     return fetchPbelData();
 }
@@ -72,12 +49,16 @@ function process(page) {
         console.log('Failed to initialize JSON rawData');
         return;
     }
-    if (page === 'conformance' || page === 'expressiveness' || page === 'performance') {
+
+    if (hasCapability(page)) {
+
         let capability = page;
 
         let normalizedData = normalizeCapability(rawData, capability);
         //TODO getAll should be called transparently, since most of the time we will use CapabilityDataContainer anyway
         var capabilityData = normalizedData.getAll();
+        console.log('_______--capabilityData')
+        console.log(capabilityData);
 
         //TODO Rename to ProcessPipeline
         let filterManager = setUpFilterManager(capabilityData, capability);
@@ -107,6 +88,8 @@ function process(page) {
         engineOverview();
     } else if (page === 'engines-compare') {
         engineCompare();
+    } else {
+        throw new Error('Unsupported capability page: ' + page);
     }
 
 
@@ -174,9 +157,5 @@ function process(page) {
         let filteredConstructs = convertFilteredData(dimensionName, filterManager.getFilteredData().constructs.data, capabilityData, langFilterValue);
         filterComp.updateDimensionData(filteredConstructs.dimensionData, filteredConstructs.toRemove);
     }
-
-
-
-
 
 }

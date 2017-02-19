@@ -1,8 +1,7 @@
 import SupportStatus from "./support_status";
 import Feature from "./feature";
-import {getCapabilityFromId} from "../helpers";
+import {getCapabilityFromId, getSupportClass} from "../helpers";
 import {getHtmlTestResult} from "../helpers";
-import {getSupportClass} from "./default_view_model";
 
 //TODO rename to ViewConstruct
 export default class Construct {

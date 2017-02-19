@@ -95,3 +95,13 @@ export function getMetricName(metric) {
     const length = splittedMetric.length - 1;
     return (length > -1) ? splittedMetric[length] : undefined;
 }
+
+export function getSupportClass(result, languageSupport) {
+    if (result === '+/-' && languageSupport === result) {
+        return 'support-partial-true';
+    } else if (result === '+/-') {
+        return 'support-partial';
+    } else {
+        return (result === '+') ? 'support-true' : 'support-false';
+    }
+}

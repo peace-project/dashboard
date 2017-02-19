@@ -1,13 +1,13 @@
 import RenderComponent from "../render/render_component";
-import {isExpressivenessCapability, isPerformanceCapability} from "../peace";
 import EngineInfoPopover from "./popovers/engine_info";
 import PerformanceResultPopover from "./popovers/performance_result";
 import TestInfoPopover from "./popovers/tests_info";
 import TestResultPopover from "./popovers/test_result";
+import {isPerformanceCapability, isExpressivenessCapability, getTableTemplateId} from "../dashboard_info";
 
 export class CapabilityTableComponent extends RenderComponent {
     constructor(viewModel) {
-        super('#cap-table-div', viewModel.capability + '_table');
+        super('#cap-table-div', getTableTemplateId(viewModel.capability));
         this.updateModel(viewModel);
     }
 
@@ -91,11 +91,11 @@ export class CapabilityTableComponent extends RenderComponent {
 
     updateModel(viewModel, preventRendering) {
         var featureTitleColspan = viewModel.engines.length + 1;
-        if (isExpressivenessCapability(viewModel.capability)) {
+        /*if (isExpressivenessCapability(viewModel.capability)) {
             featureTitleColspan = featureTitleColspan + 1;
-        } else if (isPerformanceCapability(viewModel.capability)) {
+        } else  if (isPerformanceCapability(viewModel.capability)) {
             featureTitleColspan = featureTitleColspan * 4
-        }
+        }*/
 
         this.viewModel = viewModel;
         this.context = viewModel.table;

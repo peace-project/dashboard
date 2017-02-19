@@ -3,10 +3,11 @@ import Renderer from "./renderer";
 export default class RenderComponent {
     constructor(elementId, templateId, parentComp) {
         this.elementId = elementId;
-        this.templateId = templateId;
         this.parentComp = parentComp;
         this.context = {};
         this.html = {};
+
+        this.templateId = (templateId !== null && templateId !== undefined) ? templateId.toLowerCase() : undefined;
 
         //TODO singleton
         this.renderer = new Renderer();

@@ -26,12 +26,13 @@ const _data = Symbol('data');
  */
 
 export default class CapabilityData {
-    constructor(capability) {
+    constructor(capability, extensions) {
         this[_data] = {};
         this._capability = capability;
+        this._extensions = extensions;
 
         if (Object.keys(this[_data]).length === 0 && this[_data].constructor === Object) {
-            this[_data] = new CapabilityDataContainer({}, this._capability);
+            this[_data] = new CapabilityDataContainer({}, this._capability, this._extensions);
         }
     }
 
@@ -108,7 +109,7 @@ export default class CapabilityData {
 
         // CapabilityDataContainer add some convenient methods for users
         // and its data can be modified
-        return new CapabilityDataContainer(clone, this._capability);
+        return new CapabilityDataContainer(clone, this._capability, this._extensions);
     }
 
     copyByLang(lang, target) {

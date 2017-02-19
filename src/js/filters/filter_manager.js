@@ -13,8 +13,6 @@ export default class FilterManager {
     }
 
 
-
-
     getFilteredData() {
         return this.filteredData;
     }

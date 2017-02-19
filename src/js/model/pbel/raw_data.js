@@ -26,6 +26,10 @@ export default class RawDataModel {
         });
     }
 
+    getCapabilityExtensions(capability) {
+        return this.getFeatureTreeByCapability(capability)['extensions'];
+    }
+
     _getMeasurementByCapability(test, capability) {
         return test.measurements.filter(measure => {
             let cap = measure.metric.split('__')[0];

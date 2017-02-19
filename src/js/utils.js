@@ -8,22 +8,36 @@ export function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+export function capitalizeAllFirstLetters(string) {
+    return string.replace(/\w\S*/g, capitalizeFirstLetter);
+   // return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+
 export function sortDataAlphabetic(arr, key){
         return _.sortBy(arr, function (obj) {return obj[key]});
     }
 
-export function shallowCopy(array){
+export function shallowCopy(array, formatter){
     var copy = [];
     for (var index in array) {
         copy[index] = array[index];
+        if(formatter !== undefined){
+            copy[index] = formatter(copy[index]);
+        }
+
     }
     return copy;
 }
 
-export function shallowObjectCopy(object){
+export function shallowObjectCopy(object, formatter){
     var copy = {};
     Object.keys(object).forEach(key => {
         copy[key] = object[key];
+        if(formatter !== undefined){
+            copy[key] = formatter(copy[key]);
+        }
     });
     return copy;
 }

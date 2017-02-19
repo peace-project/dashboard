@@ -2,12 +2,15 @@ import {groupEngineByName} from "../helpers";
 import Construct from "./construct";
 
 export default class PerformanceViewModel {
-    constructor(filteredData, capability, language/*, testResults, independentTests*/) {
+    constructor(filteredData, capability, language, extensions) {
         this.capability = capability;
         this.language = language;
 
             // TableViewModel
         this.table = {
+            groupTitle: extensions['group'],
+            constructTitle: extensions['featureSet'],
+            featureTitle: extensions['feature'],
             constructs: [],
             engines: groupEngineByName(filteredData.engines.data),
         };
@@ -15,13 +18,12 @@ export default class PerformanceViewModel {
         // SubViewModel (i.e. for popovers)
         this.features = {};
         this.engines = filteredData.engines.data;
-
         //this.independentTests = independentTests.map(test =>  this._formatIndependentTest(test));
 
-        this._addConstructs(filteredData.constructs.data, filteredData.features.data, filteredData.tests, filteredData.metrics);
+        this._addConstructs(filteredData.constructs.data, filteredData.features.data, filteredData.testResults.data, filteredData.metrics);
     }
 
-    _addConstructs(constructs, features, tests, metricsInfo) {
+    _addConstructs(constructs, features, testResults, metricsInfo) {
         let that = this;
 
         let resultOrder = [];
@@ -35,7 +37,7 @@ export default class PerformanceViewModel {
             if (construct === undefined) { return; }
 
             let viewConstruct = new Construct(construct);
-            viewConstruct.addFeatures(features, tests, metricsInfo, resultOrder);
+            viewConstruct.addFeatures(features, testResults, metricsInfo, resultOrder);
             that.table.constructs.push(viewConstruct);
 
             viewConstruct.features.forEach(feat => {

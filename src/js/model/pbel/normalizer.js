@@ -5,9 +5,6 @@ import CapabilityData from "../capability_data";
 import Schema from "./schema";
 import {DataType} from "../normalized_data_container";
 
-// Inspired by normalizr
-
-
 const sortByName = function (data) {
     return sortDataAlphabetic(data, 'name');
 };
@@ -53,7 +50,7 @@ function copyAndFormat(engines) {
  }
  }*/
 
-
+// TODO rename to aggregatedResults
 function addFeatureResults(featureResults, capabilityData) {
     let measurementByLanguage = {};
     featureResults.forEach(test => {
@@ -78,7 +75,7 @@ function addFeatureResults(featureResults, capabilityData) {
 
     for (let language in measurementByLanguage) {
         if (measurementByLanguage.hasOwnProperty(language)) {
-            capabilityData.add(language, measurementByLanguage[language], DataType.FEATURE_RESULTS);
+            capabilityData.add(language, measurementByLanguage[language], DataType.AGGREGATED_RESULTS);
             //console.log(language);
         }
     }
@@ -115,7 +112,8 @@ function addIndependentTests(tests, capabilityData) {
 }
 
 export function normalizeCapability(rawData, capability) {
-    let capabilityData = new CapabilityData(capability);
+    let extensions =  rawData.getCapabilityExtensions(capability);
+    let capabilityData = new CapabilityData(capability, extensions);
 
     let testResults = rawData.getTestResultsByCapability(capability) || [];
     let aggregatedResults = rawData.getAggregatedResultsByCapability(capability) || [];
@@ -130,6 +128,16 @@ export function normalizeCapability(rawData, capability) {
     return normalizeFeatureTree(capabilityData, capability, rawData);
 }
 
+/**
+ *
+ * Inspired by the normalizr library (https://github.com/paularmstrong/normalizr)
+ * TODO make it more readable
+ *
+ * @param capabilityData
+ * @param capability
+ * @param rawData
+ * @returns {*}
+ */
 
 function normalizeFeatureTree(capabilityData, capability, rawData) {
     let allData = capabilityData.getAll();
@@ -204,19 +212,33 @@ function normalizeFeatureTree(capabilityData, capability, rawData) {
 }
 
 function addTestResultIndex(normalized, testResults) {
-    normalized['testResultIndex'] = {};
+    normalized['testResultIndex'] = [];
 
     if (testResults === undefined) {
         return;
     }
 
+    //console.log(testResults);
+
     for (let key in testResults.data) {
         let id = testResults.data[key].test.replace('__test', '');
         if (id.toLowerCase() === normalized.id.toLowerCase()) {
-            let engineId = testResults.data[key].engine;
-            normalized['testResultIndex'][engineId] = normalized['testResultIndex'][engineId] || [];
-            normalized['testResultIndex'][engineId] = key;
-          //  break;
+           let engineId = testResults.data[key].engine;
+
+            /**
+             * Sort by engine to ease the creation of the table representation. This is done during  the normalization
+             * phase (not in the viewmodel) since there is no need to build it each time the table get updated or filtered
+             */
+
+            if(normalized['testResultIndex'][engineId] === undefined){
+                normalized['testResultIndex'][engineId] = [];
+            }
+            normalized['testResultIndex'][engineId].push(key);
+
+            //normalized['testResultIndex'].push(key);
+            console.log('*******testResults')
+            console.log(normalized);
+            //  break;
         }
     }
 }
@@ -224,6 +246,8 @@ function addTestResultIndex(normalized, testResults) {
 function addFeatureResultIndexes(normalized, featureResults) {
     // Always add metricIndexes property to avoid checking against undefined
     normalized['metricIndexes'] = [];
+   // console.log('______-featureResults')
+   // console.log(featureResults)
 
     if (featureResults === undefined || !Array.isArray(normalized['metrics'])) {
         return;

@@ -4,12 +4,12 @@ import GroupFilter from "../filters/group_filter";
 import ConstructFilter from "../filters/construct_filter";
 import FeatureFilter from "../filters/feature_filter";
 import LanguageFilter from "../filters/language_filter";
-import {isPerformanceCapability} from "../peace";
 import {PortabilityStatus} from "../filters/portability_status";
 import PortabilityFilterComponent from "../components/filters/portability_filter";
 import {FCGFiltersComponent} from "../components/filters/fcg_filters";
 import {EnginesFilterComponent} from "../components/filters/engines_filters";
 import {convertFilteredData} from "./view_model_converter";
+import {isPerformanceCapability} from "../dashboard_info";
 export default class FiltersViewModelView {
 
     constructor(filterManager, filtersCallback) {

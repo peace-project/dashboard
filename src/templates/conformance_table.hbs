@@ -2,8 +2,8 @@
 <table class="cap-table table">
     <thead>
         <tr>
-            <th rowspan="3" class="group-col th-last-child">Group</th>
-            <th rowspan="3" class="construct-col th-last-child">Construct</th>
+            <th rowspan="3" class="group-col th-last-child">{{groupTitle}}</th>
+            <th rowspan="3" class="construct-col th-last-child">{{constructTitle}}</th>
             <th class="text-center engine-col" colspan="{{engines.instancesCount}}">Engine</th>
         </tr>
         <tr>
@@ -71,8 +71,9 @@
                     <!-- feature -->
                     <tr class="collapse-header collapse row-feat-title row-feat-{{@../index}}{{@index}}">
                         <td></td>
-                        <td class="collapse-title-cell" {{#unless ../moreThanTwoFeatures}} colspan="{{../../../featureTitleColspan}}"{{/unless}}><div class="collapse-title-border">Features</div> </td>
-
+                        <td class="collapse-title-cell" {{#unless ../moreThanTwoFeatures}} colspan="{{math ../../../engines.instancesCount "+" 1}}"{{/unless}}>
+                            <div class="collapse-title-border">{{../../featureTitle}}</div>
+                        </td>
                         {{#if ../moreThanTwoFeatures}}
                             {{#each ../../../engines}}
                                 {{#each instances}}
@@ -120,7 +121,7 @@
                      {{#if lastFeature}}
                     <tr class="feature-end collapse row-feat-{{@../../index}}{{@../index}}">
                         <td class="collapse-end-first-cell"></td>
-                        <td class="collapse-end-cell" colspan="{{../../../../featureTitleColspan}}">
+                        <td class="collapse-end-cell" colspan="{{math ../../../../engines.instancesCount "+" 2}}">
                             <div class="collapse-end-border"></div> 
                         </td>
                     </tr> 

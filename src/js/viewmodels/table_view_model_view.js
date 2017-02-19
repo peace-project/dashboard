@@ -1,15 +1,21 @@
-
-import {isConformanceCapability, isExpressivenessCapability, isPerformanceCapability} from "../peace";
-
 import PortabilityFilter from "../filters/portability_status";
 import {createTableViewModel} from "./view_model_converter";
 import {CapabilityTableComponent} from "../components/capability_table";
+import {hasPortabilityFilter} from "../dashboard_info";
+import {capitalizeAllFirstLetters} from "../utils";
 
 export default class TableViewModelView {
     constructor(filterManager, capabilityData) {
         this.filterManager = filterManager;
         this.capabilityData = capabilityData;
         this.viewModel;
+        this.capabilityExtensions = {};
+
+        //Copy
+        let extKey
+        for(extKey in this.capabilityData['extensions']){
+            this.capabilityExtensions[extKey] = capitalizeAllFirstLetters(this.capabilityData['extensions'][extKey]);
+        }
 
         // serve as local copy
         this.testResults;
@@ -23,9 +29,11 @@ export default class TableViewModelView {
         let filterManager = this.filterManager;
         let capability = filterManager.getFilteredData().capability;
 
-        this.viewModel = createTableViewModel(filterManager.getFilteredData(), capability, filterManager.getFilterValues().language);
+        this.viewModel = createTableViewModel(filterManager.getFilteredData(), capability,
+            filterManager.getFilterValues().language, this.capabilityExtensions);
         console.log(this.viewModel);
-        if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
+
+        if (hasPortabilityFilter(capability)) {
             filterManager.applyViewModelFilter(PortabilityFilter.Name(), this.viewModel);
         }
 
@@ -64,10 +72,10 @@ export default class TableViewModelView {
 
 
     _updateViewModel(capability, language){
-        this.viewModel = createTableViewModel(this.filterManager.getFilteredData(), capability, language);
+        this.viewModel = createTableViewModel(this.filterManager.getFilteredData(), capability, language, this.capabilityExtensions);
         this._addTestResults();
-        if (isConformanceCapability(capability) || isExpressivenessCapability(capability)) {
-            this.filterManager.applyViewModelFilter(PortabilityFilter.Name(),this. viewModel);
+        if (hasPortabilityFilter(capability)) {
+            this.filterManager.applyViewModelFilter(PortabilityFilter.Name(), this. viewModel);
         }
     }
 
@@ -95,7 +103,8 @@ export default class TableViewModelView {
         if (reBuildViewModel) {
             // We have applied a different PortabilityStatus than ALL which has reduced the items of the viewModel
             // Hence, build a complete viewModel again
-            this.viewModel =  createTableViewModel(this.filterManager.getFilteredData(), capability, this.filterManager.getFilterValues().language);
+            this.viewModel =  createTableViewModel(this.filterManager.getFilteredData(), capability,
+                this.filterManager.getFilterValues().language, this.capabilityExtensions);
             this._addTestResults();
         }
 

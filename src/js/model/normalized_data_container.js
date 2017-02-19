@@ -6,7 +6,7 @@ export const DataType = {
     FEATURES: 'features',
     ENGINES: 'engines',
     TESTS_INDEPENDENT: 'tests_independent',
-    FEATURE_RESULTS: 'featureResults',
+    AGGREGATED_RESULTS: 'aggregatedResults',
     TEST_RESULTS: 'testResults'
 }
 
@@ -97,7 +97,7 @@ export default class NormalizedDataContainer {
                     versionLong: versionLong
                 };
             });
-        } else if (this.dimension === DataType.FEATURE_RESULTS) {
+        } else if (this.dimension === DataType.AGGREGATED_RESULTS) {
             //Missing: featureID, executionDuration
             this.data.forEach((val, index) => {
                 target[index] = {

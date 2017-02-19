@@ -4,7 +4,7 @@ import CapabilityData from "./model/capability_data";
 import {shallowCopy} from "./utils";
 
 //used for engines-overview page
-
+/*
 export function normalizeAll(dataModel) {
     //throw new Error("Unsupported operation");
     //TODO
@@ -182,5 +182,5 @@ function copyEngines(engines) {
         }
     }
     return copy;
-}
+} */
 

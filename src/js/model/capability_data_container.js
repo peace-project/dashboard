@@ -5,8 +5,9 @@ import {DataType} from "./normalized_data_container";
 //This will also free users to append 'data' fpr accessing data
 
 export default class CapabilityDataContainer {
-    constructor(data, capability) {
+    constructor(data, capability, extensions) {
         this.capability = capability;
+        this.extensions = extensions;
         this.data = data;
     }
 
@@ -60,7 +61,7 @@ export default class CapabilityDataContainer {
     }
 
     getFeatureResultsByLanguage(language){
-        return this.data[language][DataType.FEATURE_RESULTS];
+        return this.data[language][DataType.AGGREGATED_RESULTS];
     }
 
     getTestResultsByLanguage(language){
@@ -82,8 +83,6 @@ export default class CapabilityDataContainer {
     }
 
     getAllLanguage() {
-        console.log('_______this.data')
-        console.log(this.data)
         return Object.keys(this.data);
     }
 

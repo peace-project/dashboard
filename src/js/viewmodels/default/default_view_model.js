@@ -1,20 +1,28 @@
 import {groupEngineByName} from "../helpers";
 import Construct from "./construct";
-import {isExpressivenessCapability, isConformanceCapability} from "../../peace";
+import {getAggregatedConstructMetric} from "../../dashboard_info";
 
 //rename to default tableViewModel
 export default class DefaultViewModel {
-    constructor(filteredData, capability, language) {
+
+    constructor(filteredData, capability, language, extensions) {
         this.capability = capability;
         this.language = language;
+        console.log('___filteredData')
+        console.log(filteredData)
 
         // TableViewModel
         this.table = {
+            groupTitle: extensions['group'],
+            constructTitle: extensions['featureSet'],
+            featureTitle: extensions['feature'],
             constructs: [],
             summaryRow: {},
             engines: groupEngineByName(filteredData.engines.data),
             enginesCount: 0
         };
+
+
         this.table.enginesCount = this.table.engines.instancesCount;
 
         // For SubViewModels (i.e. for popovers)
@@ -30,27 +38,30 @@ export default class DefaultViewModel {
             }
         });
 
-        this.resultProp = this._getConstructResultProp(capability);
-        if (this.resultProp === undefined) {
-            console.error('PortabilityStatus filter is not supported for this capability: ' + capability);
+        this.aggregatedConstructResult = getAggregatedConstructMetric(capability);
+
+       if (this.aggregatedConstructResult === undefined) {
+            console.error('Error: Aggregated result not defined for this capability: ' + capability);
         }
 
         this._addConstructs(filteredData.groups.data, filteredData.constructs.data, filteredData.features.data,
             filteredData.tests.data);
     }
 
-
-    _getConstructResultProp(capability) {
-        let resultProp = undefined;
-        if (isExpressivenessCapability(capability)) {
-            resultProp = 'patternFulfilledLanguageSupport';
-        } else if (isConformanceCapability(capability)) {
-            resultProp = 'testResultTrivalentAggregation';
-        }
-        return resultProp;
-    }
+    /**
+     * Add constructs
+     *
+     * @param groups
+     * @param constructs
+     * @param features
+     * @param tests contains all aggregatedResults data that remains unaffected by the filter after its creation.
+     * This ease the retrieval of test data (e.g. metric) via fixed and unique indices.
+     * @private
+     */
 
     _addConstructs(groups, constructs, features, tests) {
+
+
         // clear constructs
         this.table.constructs.length = 0;
         let that = this;
@@ -90,6 +101,10 @@ export default class DefaultViewModel {
     }
 
     updateSummaryRow() {
+        if(this.aggregatedConstructResult === undefined){
+            return;
+        }
+
         let that = this;
         //that.summaryRow[engine.id] = 0;
         Object.keys(that.table.summaryRow).forEach(key => that.table.summaryRow[key] = 0);
@@ -99,38 +114,20 @@ export default class DefaultViewModel {
     }
 
     _updateSummaryRow(construct) {
+        if(this.aggregatedConstructResult == undefined){
+            return;
+        }
+
         let that = this;
         Object.keys(construct.results).forEach(engineID => {
-            if (isConformanceCapability(that.capability) && construct.results[engineID][that.resultProp] === '+') {
-                that.table.summaryRow[engineID] += 1;
-            } else if (isExpressivenessCapability(that.capability) && construct.results[engineID][that.resultProp] === 'true') {
+            let  htmlResult = construct.results[engineID][that.aggregatedConstructResult];
+            if (htmlResult === '+' || htmlResult === 'true') {
                 that.table.summaryRow[engineID] += 1;
             }
         });
     }
 }
 
-export function getSupportClass(result, languageSupport) {
-    if (result === '+/-' && languageSupport === result) {
-        return 'support-partial-true';
-    } else if (result === '+/-') {
-        return 'support-partial';
-    } else {
-        return (result === '+') ? 'support-true' : 'support-false';
-    }
-}
-
-/*
- export function getResultClass(result, resultHtml, upperBound) {
- // add result class
- if (resultHtml !== '+/-') {
- return 'support-' + result;
- } else if (upperBound !== undefined && resultHtml == '+/-' && upperBound === resultHtml) {
- return 'support-partial-true';
- } else {
- return 'support-partial';
- }
- } */
 
 
 

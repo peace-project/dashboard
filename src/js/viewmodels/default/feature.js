@@ -1,5 +1,4 @@
-import {getCapabilityFromId, getHtmlTestResult} from "../helpers";
-import {getSupportClass} from "./default_view_model";
+import {getCapabilityFromId, getHtmlTestResult, getSupportClass} from "../helpers";
 import {getMetricName} from "../helpers";
 
 //TODO rename to ViewFeature

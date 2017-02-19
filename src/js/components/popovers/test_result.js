@@ -1,9 +1,11 @@
 import RenderComponent from "../../render/render_component";
-import {createLinkFromPaths} from "../../viewmodels/helpers";
-import {getMetricName} from "../../viewmodels/helpers";
-import {getHtmlTestResult} from "../../viewmodels/helpers";
-import {getDateFromTimestamp} from "../../viewmodels/helpers";
-import {formatTestCase} from "../../viewmodels/helpers";
+import {
+    createLinkFromPaths,
+    getMetricName,
+    getHtmlTestResult,
+    getDateFromTimestamp,
+    formatTestCase
+} from "../../viewmodels/helpers";
 
 export default class TestResultPopover extends RenderComponent {
     constructor(options) {

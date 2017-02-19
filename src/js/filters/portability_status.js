@@ -2,7 +2,7 @@
 
 import ViewFilter from "./view_filter";
 import DefaultViewModel from "../viewmodels/default/default_view_model";
-import {isExpressivenessCapability, isConformanceCapability} from "../peace";
+import {getAggregatedMetric} from "../dashboard_info";
 
 export const PortabilityStatus = {
     ALL: '0',
@@ -14,7 +14,7 @@ export const PortabilityStatus = {
 export default class PortabilityFilter extends ViewFilter {
     constructor() {
         super(PortabilityFilter.Name());
-        this.resultProp = undefined;
+        this.aggregatedFeatureResult = undefined;
     }
 
     static Name() {
@@ -45,8 +45,8 @@ export default class PortabilityFilter extends ViewFilter {
         let constructs = viewModel.table.constructs;
         let capability = filteredData.capability;
 
-        this.resultProp = this._getFeatureResultProp(capability);
-        if (this.resultProp === undefined) {
+        this.aggregatedFeatureResult = getAggregatedMetric(capability);
+        if (this.aggregatedFeatureResult === undefined) {
             console.error('PortabilityStatus filter is not supported for this capability: ' + capability);
         }
 
@@ -85,15 +85,6 @@ export default class PortabilityFilter extends ViewFilter {
         }
     }
 
-    _getFeatureResultProp(capability){
-        let resultProp = undefined;
-        if (isExpressivenessCapability(capability)) {
-            resultProp = 'patternImplementationFulfilledLanguageSupport';
-        } else if (isConformanceCapability(capability)) {
-            resultProp = 'testResultTrivalentAggregation';
-        }
-        return resultProp;
-    }
 
     _updateGroupFirstEntry(oldFirstEntryConstruct, newFirstEntryConstruct) {
         let gIndex = oldFirstEntryConstruct.groupsIndex;
@@ -139,7 +130,7 @@ export default class PortabilityFilter extends ViewFilter {
         let that = this;
         enginesArray.forEach(function (engineId) {
             // If any test for this engine exists or fullSupport is false
-            if (!construct['results'].hasOwnProperty(engineId) || !construct['results'][engineId][that.resultProp]) {
+            if (!construct['results'].hasOwnProperty(engineId) || !construct['results'][engineId][that.aggregatedFeatureResult]) {
                 count -= 1;
             }
         });
@@ -169,10 +160,10 @@ export default class PortabilityFilter extends ViewFilter {
 
             if (firstResult === undefined) {
                 //patternImplementationFulfilledLanguageSupport
-                firstResult = feature.results[engineId][that.resultProp];
+                firstResult = feature.results[engineId][that.aggregatedFeatureResult];
             }
 
-            if (firstResult !== feature.results[engineId][that.resultProp]) {
+            if (firstResult !== feature.results[engineId][that.aggregatedFeatureResult]) {
                 showFeature = true;
                 return;
             }
