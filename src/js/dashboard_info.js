@@ -11,38 +11,42 @@ export const CapabilityTypes = {
     EXPRESSIVENESS: 'expressiveness',
     PERFORMANCE: 'performance',
     STATIC_ANALYSIS: 'staticAnalysis',
+    ROBUSTNESS: 'robustness',
 };
 
 const CapabilityInfo = {
     'conformance': {
         'tableViewModel': 'DefaultViewModel',
         'tableTemplateId': 'conformance_table',
-        'aggregatedConstructMetric' : 'testResultTrivalentAggregation',
-        'aggregatedFeatureMetric' : 'testResultTrivalentAggregation',
-        'portabilityFilter' : true
-
+        'aggregatedConstructMetric': 'testResultTrivalentAggregation',
+        'aggregatedFeatureMetric': 'testResultTrivalentAggregation',
+        'portabilityFilter': true
     },
     'expressiveness': {
         'tableViewModel': 'DefaultViewModel',
         'tableTemplateId': 'expressiveness_table',
-        'aggregatedConstructMetric' : 'patternFulfilledLanguageSupport',
-        'aggregatedFeatureMetric' : 'patternImplementationFulfilledLanguageSupport',
-        'portabilityFilter' : true,
-
+        'aggregatedConstructMetric': 'patternFulfilledLanguageSupport',
+        'aggregatedFeatureMetric': 'patternImplementationFulfilledLanguageSupport',
+        'portabilityFilter': true
     },
     'staticAnalysis': {
         'tableViewModel': 'DefaultViewModel',
         'tableTemplateId': 'conformance_table',
-        'aggregatedConstructMetric' : 'testResultTrivalentAggregation',
-        'aggregatedFeatureMetric' : 'testResultTrivalentAggregation',
-        'portabilityFilter' : true,
-
-
+        'aggregatedConstructMetric': 'testResultTrivalentAggregation',
+        'aggregatedFeatureMetric': 'testResultTrivalentAggregation',
+        'portabilityFilter': true
+    },
+    'robustness': {
+        'tableViewModel': 'DefaultViewModel',
+        'tableTemplateId': 'conformance_table',
+        'aggregatedConstructMetric': 'testResultTrivalentAggregation',
+        'aggregatedFeatureMetric': 'testResultTrivalentAggregation',
+        'portabilityFilter': true
     },
     'performance': {
         'tableViewModel': 'PerformanceViewModel',
         'tableTemplateId': 'performance_table',
-        'portabilityFilter' : false,
+        'portabilityFilter': false,
     }
 };
 
