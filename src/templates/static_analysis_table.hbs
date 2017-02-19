@@ -1,0 +1,138 @@
+
+<table class="cap-table table">
+    <thead>
+    <tr>
+        <th rowspan="3" class="group-col th-last-child">Group</th>
+        <th rowspan="3" class="construct-col th-last-child">Rules</th>
+        <th class="text-center engine-col" colspan="{{engines.instancesCount}}">Engine</th>
+    </tr>
+    <tr>
+        {{#each engines}}
+            <th class="text-center engine-col-{{@index}}" colspan="{{instances.length}}"> {{capitalize name}}</th>
+        {{/each}}
+    </tr>
+    <tr>
+        {{#each engines}}
+            {{#each instances}}
+                <th class="cell-version engine-col-{{@../index}}">
+                    <a role="button" tabindex="0" data-engine-info="{{index}}"  class="engine-info" >
+                        {{versionLong}}</a></th>
+            {{/each}}
+        {{/each}}
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr>
+        <td class="border-top">∑</td>
+        <td class="construct-col">{{constructs.length}}</td>
+        {{#each engines}}
+            {{#each instances}}
+                <td>{{#getProperty ../../summaryRow id}} {{this}} {{/getProperty}}</td>
+            {{/each}}
+        {{/each}}
+    </tr>
+
+
+    {{#each constructs}}
+        <tr {{# if features.length}} class="collapse-parent-row" data-toggle="collapse" data-target=".row-feat-{{@../index}}{{@index}}" {{/if}} >
+
+            <td {{#if isFirstEntry}}class="border-top"{{/if}}>
+                {{#if isFirstEntry}}
+                <div>{{groupName}}
+                    <a title="{{groupDesc}}" data-toggle="tooltip" class="group-info">
+                        <span class="entypo-info"></span></a>
+                {{/if}}
+            </div>
+            </td>
+            <td class="construct-col">
+                <div>
+                    <span class="entypo-right-open"></span>{{name}}
+                    <a title="{{description}}" data-toggle="tooltip" class="construct-info">
+                        <span class="entypo-info"></span>
+                    </a>
+                    {{#if moreThanTwoFeatures}} <span class="info-badge">{{features.length}}</span> {{/if}}
+                </div>
+            </td>
+
+            {{#each ../engines}}
+                {{#each instances}}
+                    <td class="result">
+                        {{#getProperty ../../results id}}
+                            <span class="{{html_class}}">{{html}}</span>
+                        {{/getProperty}}
+
+                    </td>
+                {{/each}}
+            {{/each}}
+        </tr>
+
+        {{#if features.length}}
+            <!-- feature -->
+            <tr class="collapse-header collapse row-feat-title row-feat-{{@../index}}{{@index}}">
+                <td></td>
+                <td class="collapse-title-cell" {{#unless ../moreThanTwoFeatures}} colspan="{{../../../featureTitleColspan}}"{{/unless}}><div class="collapse-title-border">Features</div> </td>
+
+                {{#if ../moreThanTwoFeatures}}
+                    {{#each ../../../engines}}
+                        {{#each instances}}
+                            <td class="collapse-header-cell">
+                                {{#getProperty ../../../../results id}}
+                                    {{#if engineID}}
+                                        {{supportedFeature}}/{{../../../../../features.length}}
+                                    {{/if}}
+                                {{/getProperty}}
+
+                            </td>
+                        {{/each}}
+                    {{/each}}
+                {{/if}}
+            </tr>
+            {{#each features}}
+
+                <tr class="collapse-row collapse row-feat-{{@../../index}}{{@../index}}">
+                    <td class="collapse-feature-first-cell"></td>
+                    <td class="collapse-feature-cell">
+                        <div class="collapse-cell-border">
+                            <p>{{name}}
+                                <a role="button" tabindex="0" data-feature-index="{{index}}" data-test-index="{{testIndependentIndex}}" class="info-feature">
+                                    <span class="entypo-help-circled"></span>
+                                </a></p>
+                        </div>
+                    </td>
+
+                    {{#each ../../../engines}}
+                        {{#each instances}}
+                            <td class="result">
+                                {{#getProperty ../../results id}}
+                                    <a role="button" tabindex="0"
+                                       data-feature-name="{{../../../name}}"
+                                       data-test-index="{{#getProperty ../../../testResultIndex ../id}}{{this}}{{/getProperty}}"
+                                       data-engine-id="{{../id}}" class="info-engine-test">
+                                        <span class="{{html_class}}">{{html}}</span>
+                                    </a>
+                                {{/getProperty}}
+                            </td>
+                        {{/each}}
+                    {{/each}}
+                </tr>
+
+                {{#if lastFeature}}
+                    <tr class="feature-end collapse row-feat-{{@../../index}}{{@../index}}">
+                        <td class="collapse-end-first-cell"></td>
+                        <td class="collapse-end-cell" colspan="{{../../../../featureTitleColspan}}">
+                            <div class="collapse-end-border"></div>
+                        </td>
+                    </tr>
+                {{/if}}
+            {{/each}}
+            <!-- feature end-->
+
+
+        {{/if}}
+
+    {{/each}}
+
+    </tbody>
+
+</table>
