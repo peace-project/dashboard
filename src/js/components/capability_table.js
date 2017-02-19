@@ -3,7 +3,7 @@ import EngineInfoPopover from "./popovers/engine_info";
 import PerformanceResultPopover from "./popovers/performance_result";
 import TestInfoPopover from "./popovers/tests_info";
 import TestResultPopover from "./popovers/test_result";
-import {isPerformanceCapability, isExpressivenessCapability, getTableTemplateId} from "../dashboard_info";
+import {isPerformanceCapability, getTableTemplateId} from "../dashboard_info";
 
 export class CapabilityTableComponent extends RenderComponent {
     constructor(viewModel) {
