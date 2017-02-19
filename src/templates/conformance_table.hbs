@@ -39,8 +39,7 @@
 
                     <td {{#if isFirstEntry}}class="border-top"{{/if}}>
                         {{#if isFirstEntry}} 
-                            <div>
-                            {{groupName}} 
+                            <div>{{groupName}}
                             <a title="{{groupDesc}}" data-toggle="tooltip" class="group-info">
                             <span class="entypo-info"></span></a>
                         {{/if}}
@@ -59,7 +58,7 @@
                         {{#each ../engines}}
                             {{#each instances}}
                                  <td class="result">
-                                {{#getProperty ../../supportStatus id}}
+                                {{#getProperty ../../results id}}
                                     <span class="{{html_class}}">{{html}}</span>
                                 {{/getProperty}}
 
@@ -78,7 +77,7 @@
                             {{#each ../../../engines}}
                                 {{#each instances}}
                                      <td class="collapse-header-cell">
-                                    {{#getProperty ../../../../supportStatus id}} 
+                                    {{#getProperty ../../../../results id}}
                                         {{#if engineID}}
                                             {{supportedFeature}}/{{../../../../../features.length}}
                                          {{/if}}

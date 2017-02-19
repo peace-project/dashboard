@@ -39,9 +39,12 @@
         {{#each constructs}}
                 <tr {{# if features.length}} class="collapse-parent-row" data-toggle="collapse" data-target=".row-feat-{{@../index}}{{@index}}" {{/if}} >
 
-                    <td {{#if isFirstEntry}}class="border-top"{{/if}}>{{#if isFirstEntry}} <div>{{groupName}} <a title="{{groupDesc}}" data-toggle="tooltip" class="group-info">
-                        <span class="entypo-info"></span>
-                    </a></div>{{/if}}</td>
+                    <td {{#if isFirstEntry}}class="border-top"{{/if}}>{{#if isFirstEntry}}
+                        <div>{{groupName}}
+                            <a title="{{groupDesc}}" data-toggle="tooltip" class="group-info">
+                                <span class="entypo-info"></span>
+                            </a>
+                        </div>{{/if}}</td>
 
                     <td class="construct-col">
                         <div>
@@ -95,10 +98,7 @@
                         <td class="collapse-feature-cell">
                             <div class="collapse-cell-border">
                                     <p>{{name}}
-                                    <a role="button" tabindex="0"
-                                       data-feature-index="{{index}}"
-                                       data-test-index="{{testIndependentIndex}}"
-                                       class="info-feature">
+                                    <a role="button" tabindex="0" data-feature-index="{{index}}" data-test-index="{{testIndependentIndex}}" class="info-feature">
                                     <span class="entypo-help-circled"></span>
                                     </a>
                                 </p>
