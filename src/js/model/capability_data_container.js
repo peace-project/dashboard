@@ -51,6 +51,7 @@ export default class CapabilityDataContainer {
         return this.data[language].engines.data[index];
     }
 
+
     /*
     getAllTestsByLanguage(language){
         return this.data[language].tests;
@@ -80,6 +81,17 @@ export default class CapabilityDataContainer {
 
     hasLanguage(language) {
         return this.data.hasOwnProperty(language);
+    }
+
+    hasCompleteFeatureTree(language){
+        if(this.data.hasOwnProperty(language)){
+           return (this.data[language].hasOwnProperty(DataType.GROUPS)
+           && this.data[language].hasOwnProperty(DataType.CONSTRUCTS)
+           && this.data[language].hasOwnProperty(DataType.FEATURES)
+           && this.data[language].hasOwnProperty(DataType.ENGINES));
+        }
+
+        return false;
     }
 
     getAllLanguage() {

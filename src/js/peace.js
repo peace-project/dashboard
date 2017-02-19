@@ -57,6 +57,8 @@ function process(page) {
         let normalizedData = normalizeCapability(rawData, capability);
         //TODO getAll should be called transparently, since most of the time we will use CapabilityDataContainer anyway
         var capabilityData = normalizedData.getAll();
+
+
         console.log('_______--capabilityData')
         console.log(capabilityData);
 
@@ -113,9 +115,17 @@ function process(page) {
         let filterManager = new FilterManager(capabilityData, filteredData);
         // Adding order represents the calling order. It must be adhered to
 
-        let defaultLang = 'BPMN';
-        if (!capabilityData.hasLanguage(defaultLang)) {
-            console.warn(defaultLang + " does not exist")
+        let defaultLang;
+        if (capabilityData.hasLanguage('BPMN')) {
+            defaultLang = 'BPMN';
+        } else if(capabilityData.hasLanguage('BPEL')){
+            defaultLang = 'BPEL';
+        } else {
+            throw new Error("No data found for capability "+ capability);
+        }
+
+        if(!capabilityData.hasCompleteFeatureTree(defaultLang)){
+            throw new Error("The feature tree for "+ defaultLang+ " is not complete. The tree must consist of Groups, featureSets, features.");
         }
 
         let languageFilter = new LanguageFilter();
