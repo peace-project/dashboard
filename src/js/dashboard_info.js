@@ -52,8 +52,6 @@ export function hasPortabilityFilter(capability) {
 }
 
 export function getAggregatedConstructMetric(capability) {
-    console.log('getCapInfoProp='+capability);
-    console.log(getCapInfoProp(capability, 'aggregatedConstructMetric'));
     return getCapInfoProp(capability, 'aggregatedConstructMetric');
 }
 
@@ -89,20 +87,8 @@ export function checkCapabilityType(capability, type) {
     return (capability.toLowerCase() === type.toLowerCase());
 }
 
-export function isConformanceCapability(capability) {
-    return checkCapabilityType(capability, CapabilityTypes.CONFORMANCE);
-}
-
-export function isExpressivenessCapability(capability) {
-    return checkCapabilityType(capability, CapabilityTypes.EXPRESSIVENESS);
-}
-
 export function isPerformanceCapability(capability) {
     return checkCapabilityType(capability, CapabilityTypes.PERFORMANCE);
-}
-
-export function isStaticAnalysisCapability(capability) {
-    return checkCapabilityType(capability, CapabilityTypes.STATIC_ANALYSIS);
 }
 
 export function hasCapability(capability) {
