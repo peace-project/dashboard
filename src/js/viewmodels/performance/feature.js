@@ -2,7 +2,7 @@ import CategoryTestResult from "./category_test_result";
 import {createLinkFromPaths} from "../helpers";
 
 export default class Feature {
-    constructor(feature, tests, metricsInfo, resultOrder) {
+    constructor(feature, testResults, metricsInfo, resultOrder) {
         //this.lastFeature = false;
         this.results = {};
         this.otherResults = {};
@@ -13,15 +13,22 @@ export default class Feature {
             that[key] = feature[key];
         });
 
-        this._addTests(tests, metricsInfo, resultOrder);
+        console.log("FEATURES___")
+        console.log(this)
+        this._addTests(testResults, metricsInfo, resultOrder);
     }
 
-    _addTests(tests, metricsInfo, resultOrder) {
+    _addTests(testResults, metricsInfo, resultOrder) {
         let that = this;
 
         let isFirstEntry = true;
-        this.testIndexes.forEach(function (testIndex) {
-            let test = tests[testIndex];
+
+        this.testResults.forEach(function (testIndex) {
+
+        });
+
+        this.testResultIndex.forEach(function (testIndex) {
+            let test = testResults[testIndex];
             if (test !== undefined && test.result !== undefined) {
 
                 Object.keys(test.result).forEach(category => {
