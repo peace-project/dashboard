@@ -13,7 +13,7 @@ export default class RawDataModel {
     }
 
 
-    getFeatureResultsByCapability(capability) {
+    getAggregatedResultsByCapability(capability) {
         let that = this;
         return this._aggregatedResults.filter(test => that._getMeasurementByCapability(test, capability));
     }

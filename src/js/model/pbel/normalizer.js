@@ -118,12 +118,12 @@ export function normalizeCapability(rawData, capability) {
     let capabilityData = new CapabilityData(capability);
 
     let testResults = rawData.getTestResultsByCapability(capability) || [];
-    let featureResults = rawData.getFeatureResultsByCapability(capability) || [];
+    let aggregatedResults = rawData.getAggregatedResultsByCapability(capability) || [];
     let engines = copyAndFormat(rawData.getEngines()) || [];
     let testIndependentData = rawData.getIndependentTestsByCapability(capability) || [];
 
     addTestResults(testResults, capabilityData);
-    addFeatureResults(featureResults, capabilityData);
+    addFeatureResults(aggregatedResults, capabilityData);
     addIndependentTests(testIndependentData, capabilityData);
     addEngines(engines, capabilityData);
 
@@ -194,9 +194,7 @@ function normalizeFeatureTree(capabilityData, capability, rawData) {
     });
 
 
-    //var data = {};
     let featureTree = rawData.getFeatureTreeByCapability(capability);
-
     featureTree.languages.forEach(featureSet => {
         let normalizedData = normalize(featureSet, groups);
         capabilityData.addAll(normalizedData, featureSet.name);
