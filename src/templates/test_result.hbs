@@ -31,10 +31,11 @@
             <td>Successful</td>
             <td class="test-desc-val tresult-{{testSuccessful}}">
             <span>{{testSuccessfulHtml}}</span> {{testSuccessful}}</td>
-        </tr>   
+        </tr>
+
         <tr>
             <td>Execution duration </td> 
-            <td class="test-desc-val">{{executionDuration}} ms</td>
+            <td class="test-desc-val">{{#if executionDuration}}{{executionDuration}} ms{{/if}}</td>
         </tr>
         <tr>
             <td>Execution date</td>

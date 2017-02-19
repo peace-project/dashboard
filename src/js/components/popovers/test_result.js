@@ -86,9 +86,9 @@ export default class TestResultPopover extends RenderComponent {
         this.context['logFilePaths'] = (testResult.logFiles) ? createLinkFromPaths(testResult.logFiles.split(' ')) : undefined;
         this.context['engineDependentFilePaths'] = (testResult.files) ? createLinkFromPaths(testResult.files.split(' ')) : undefined;
 
-        this.context['executionDuration'] = testResult.executionDuration.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        this.context['executionTimestamp'] = getDateFromTimestamp(parseInt(testResult.executionTimestamp));
-        this.context['testCaseResults'] = testResult.testCaseResults.map(formatTestCase);
+        this.context['executionDuration'] = (testResult['executionDuration'] !== undefined) ? testResult.executionDuration.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : undefined;
+        this.context['executionTimestamp'] = (testResult['executionTimestamp'] !== undefined) ?  getDateFromTimestamp(parseInt(testResult.executionTimestamp)) : undefined;
+        this.context['testCaseResults'] = (testResult['testCaseResults'] !== undefined) ? testResult.testCaseResults.map(formatTestCase) : undefined;
 
         return super.renderTemplate();
     }
