@@ -29,7 +29,7 @@
                 <td colspan="2" class="popup-tb-val">
                     <ul class="list-files">
                         {{#each processFiles}}
-                            <li><span class="entypo-doc-text"></span><a href="data/{{url}}">{{title}}</a></li>
+                            <li><span class="entypo-doc-text"></span><a href="{{url}}">{{title}}</a></li>
                         {{/each}}
                     </ul>
                 </td>
@@ -41,7 +41,7 @@
             <td colspan="2" class="popup-tb-val">
                 <ul class="list-files">
                 {{#each files}}
-                    <li><span class="entypo-doc-text"></span><a href="data/{{url}}">{{title}}</a></li>
+                    <li><span class="entypo-doc-text"></span><a href="{{url}}">{{title}}</a></li>
                 {{/each}}
                 </ul>
             </td>
@@ -51,7 +51,7 @@
         <tr>
             <td class="popup-tb-title">Process Image</td>
             <td colspan="2" class="popup-tb-val">
-               <a target="_blank" href="data/{{image.src}}"><img  class="process-image" alt="{{image.alt}}" src="data/{{image.src}}" /> </a>
+               <a target="_blank" href="{{image.src}}"><img  class="process-image" alt="{{image.alt}}" src="{{image.src}}" /> </a>
             </td>
         </tr>
         {{/if}}
