@@ -1,0 +1,36 @@
+Mär 07, 2017 3:47:44 PM org.apache.catalina.core.AprLifecycleListener init
+INFORMATION: Loaded APR based Apache Tomcat Native library 1.1.29 using APR version 1.4.8.
+Mär 07, 2017 3:47:44 PM org.apache.catalina.core.AprLifecycleListener init
+INFORMATION: APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+Mär 07, 2017 3:47:45 PM org.apache.catalina.core.AprLifecycleListener initializeSSL
+INFORMATION: OpenSSL successfully initialized (OpenSSL 1.0.1e 11 Feb 2013)
+Mär 07, 2017 3:47:45 PM org.apache.coyote.AbstractProtocol init
+INFORMATION: Initializing ProtocolHandler ["http-apr-8080"]
+Mär 07, 2017 3:47:45 PM org.apache.coyote.AbstractProtocol init
+INFORMATION: Initializing ProtocolHandler ["ajp-apr-8009"]
+Mär 07, 2017 3:47:45 PM org.apache.catalina.startup.Catalina load
+INFORMATION: Initialization processed in 1433 ms
+Mär 07, 2017 3:47:45 PM org.apache.catalina.core.StandardService startInternal
+INFORMATION: Starting service Catalina
+Mär 07, 2017 3:47:45 PM org.apache.catalina.core.StandardEngine startInternal
+INFORMATION: Starting Servlet Engine: Apache Tomcat/7.0.53
+Mär 07, 2017 3:47:45 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMATION: Deploying web application directory C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\docs
+Mär 07, 2017 3:47:46 PM org.apache.catalina.util.SessionIdGenerator createSecureRandom
+INFORMATION: Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [161] milliseconds.
+Mär 07, 2017 3:47:46 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMATION: Deploying web application directory C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\examples
+Mär 07, 2017 3:47:46 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMATION: Deploying web application directory C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\host-manager
+Mär 07, 2017 3:47:46 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMATION: Deploying web application directory C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\manager
+Mär 07, 2017 3:47:46 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMATION: Deploying web application directory C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\ode
+Mär 07, 2017 3:47:58 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFORMATION: Deploying web application directory C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\ROOT
+Mär 07, 2017 3:47:58 PM org.apache.coyote.AbstractProtocol start
+INFORMATION: Starting ProtocolHandler ["http-apr-8080"]
+Mär 07, 2017 3:47:58 PM org.apache.coyote.AbstractProtocol start
+INFORMATION: Starting ProtocolHandler ["ajp-apr-8009"]
+Mär 07, 2017 3:47:58 PM org.apache.catalina.startup.Catalina start
+INFORMATION: Server startup in 13435 ms

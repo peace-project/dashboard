@@ -1,0 +1,8 @@
+Mär 07, 2017 3:50:41 PM org.apache.catalina.core.ApplicationContext log
+INFORMATION: Initializing Spring FrameworkServlet 'dispatcher'
+Mär 07, 2017 3:50:45 PM org.apache.catalina.core.ApplicationContext log
+INFORMATION: ContextListener: contextInitialized()
+Mär 07, 2017 3:50:45 PM org.apache.catalina.core.ApplicationContext log
+INFORMATION: SessionListener: contextInitialized()
+Mär 07, 2017 3:50:45 PM org.apache.catalina.core.ApplicationContext log
+INFORMATION: ContextListener: attributeAdded('org.apache.jasper.compiler.TldLocationsCache', 'org.apache.jasper.compiler.TldLocationsCache@33befd7c')

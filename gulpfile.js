@@ -160,6 +160,7 @@ function watch() {
 
 gulp.task('test', function() {
     browserSync.init({
+        browser: "chrome",
         notify: false,
         server: {
             baseDir: paths.dist

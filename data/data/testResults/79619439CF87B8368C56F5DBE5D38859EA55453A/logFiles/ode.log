@@ -1,0 +1,57 @@
+15:47:54,621 WARN  [AxisServlet] No transportReceiver for org.apache.axis2.transport.http.AxisServletListener found. An instance for HTTP will be configured automatically. Please update your axis2.xml file!
+15:47:55,083 INFO  [ODEServer] Using DAO Connection Factory class org.apache.ode.dao.jpa.BPELDAOConnectionFactoryImpl.
+15:47:56,864 DEBUG [BpelServerImpl] BPEL SERVER initializing 
+15:47:57,745 DEBUG [BpelServerImpl] BPEL SERVER starting.
+15:47:57,759 INFO  [BpelServerImpl] BPEL Server Started.
+15:47:57,763 INFO  [SystemSchedulesConfig] SYSTEM CRON configuration: C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\ode\WEB-INF\conf\schedules.xml
+15:47:58,385 INFO  [DeploymentPoller] Poller started.
+15:47:58,388 INFO  [ODEServer] Process deployment polling started on path C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\ode\WEB-INF\processes.
+15:47:58,452 INFO  [ODEServer] ODE Service Engine has been started.
+15:47:58,390 DEBUG [CronScheduler] Refreshing SYSTEM CRON jobs.
+15:47:58,466 DEBUG [SystemSchedulesConfig] SYSTEM CRON configuration found cron jobs: []
+15:48:03,336 DEBUG [CronScheduler] Cancelling PROCESS CRON jobs for: {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1
+15:48:03,337 DEBUG [CronScheduler] Scheduling PROCESS CRON jobs for: {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1
+15:48:03,338 DEBUG [BpelEngineImpl] Unregister process: serviceId={http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1, process=null
+15:48:03,339 DEBUG [BpelServerImpl] register: {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1
+15:48:03,339 DEBUG [BpelServerImpl] Registering process {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1 with server.
+15:48:03,348 DEBUG [BpelEngineImpl] Register process: serviceId={http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}SequenceTestInterfaceService:TestInterfacePort, process=BpelProcess[{http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1]
+15:48:03,351 DEBUG [BpelProcess] Activating {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1
+15:48:03,387 DEBUG [WSAEndpoint] Constructed a new WSAEndpoint: <?xml version="1.0" encoding="UTF-8"?>
+<EndpointReference xmlns="http://www.w3.org/2005/08/addressing"><Metadata><ServiceName xmlns="http://www.w3.org/2006/05/addressing/wsdl" EndpointName="TestInterfacePort" xmlns:servicens="http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface">servicens:SequenceTestInterfaceService</ServiceName></Metadata><Address>http://localhost:8080/ode/processes/SequenceTestInterface</Address></EndpointReference>
+15:48:03,393 DEBUG [BpelProcess] Activated {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1 myrole MyRoleLink: EPR is org.apache.ode.bpel.epr.WSAEndpoint@713fdee3
+15:48:03,394 DEBUG [BpelProcess] Activated {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1
+15:48:03,395 DEBUG [NStateLatch] Rehydrating process {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1
+15:48:03,477 DEBUG [BpelProcess] Creating new process DAO for {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1 (guid=17cve4hqeekkebenhtu3hg9t4hrpjxlq)...
+15:48:03,478 DEBUG [BpelProcess] Creating process DAO for {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1 (guid=17cve4hqeekkebenhtu3hg9t4hrpjxlq)
+15:48:03,479 DEBUG [BpelProcess] Created new process DAO for {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1 (guid=17cve4hqeekkebenhtu3hg9t4hrpjxlq)
+15:48:03,479 DEBUG [BpelProcess] Created new process DAO for {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1 (guid=17cve4hqeekkebenhtu3hg9t4hrpjxlq).
+15:48:03,580 INFO  [BpelServerImpl] Registered process {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1.
+15:48:03,580 DEBUG [CronScheduler] Cancelling PROCESS CRON jobs for: {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1
+15:48:03,580 DEBUG [CronScheduler] Scheduling PROCESS CRON jobs for: {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1
+15:48:03,581 INFO  [DeploymentPoller] Deployment of artifact Sequence successful: [{http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1]
+15:48:04,540 DEBUG [WSAEndpoint] Filled transfo map with service: {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}SequenceTestInterfaceService
+15:48:04,542 DEBUG [WSAEndpoint] Filled transfo map with port: TestInterfacePort
+15:48:04,549 DEBUG [BpelEngineImpl] Routed: svcQname {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}SequenceTestInterfaceService --> [BpelProcess[{http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1]]
+15:48:04,560 DEBUG [MessageExchangeImpl] SET MEX property isTwoWay = true
+15:48:04,573 DEBUG [MyRoleMessageExchangeImpl] invoke() EPR= null ==> BpelProcess[{http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1]
+15:48:04,638 DEBUG [WSAEndpoint] Filled transfo map with service: {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}SequenceTestInterfaceService
+15:48:04,639 DEBUG [WSAEndpoint] Filled transfo map with port: TestInterfacePort
+15:48:04,664 DEBUG [BpelEngineImpl] handleJobDetails: InvokeInternal event for mexid hqejbhcnphrc42dki6l4ck
+15:48:04,722 DEBUG [BpelProcess] >> handleJobDetails(jobData=JobDetails( instanceId: null mexId: hqejbhcnphrc42dki6l4ck processId: {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1 type: INVOKE_INTERNAL channel: null correlatorId: null correlationKeySet: null retryCount: null inMem: false detailsExt: {}))
+15:48:04,725 DEBUG [BpelProcess] InvokeInternal event for mexid hqejbhcnphrc42dki6l4ck
+15:48:04,800 DEBUG [MessageExchangeImpl] GET MEX property org.apache.ode.bpel.myRoleSessionId = null
+15:48:04,801 DEBUG [MessageExchangeImpl] GET MEX property org.apache.ode.bpel.myRoleSessionId = null
+15:48:04,801 DEBUG [MessageExchangeImpl] GET MEX property org.apache.ode.bpel.partnerRoleSessionId = null
+15:48:04,801 DEBUG [BpelProcess] INPUTMSG: MyRoleLink.startProcessSync: MSG RCVD keys=[] mySessionId=null partnerSessionId=null
+15:48:04,847 DEBUG [BpelProcess] INPUTMSG: MyRoleLink.startProcessSync: routing failed, CREATING NEW INSTANCE
+15:48:04,912 DEBUG [BpelRuntimeContextImpl] BpelRuntimeContextImpl created for instance 251. INDEXED STATE={}
+15:48:04,924 DEBUG [InstanceLockManager] Thread[ODEServer-1,5,main]: lock(iid=251, time=1MICROSECONDS)
+15:48:04,925 DEBUG [InstanceLockManager] Thread[ODEServer-1,5,main]: lock(iid=251, time=1MICROSECONDS)-->GRANTED
+15:48:04,980 DEBUG [BpelProcess] SELECT: PickResponseChannel#9: USING CORRELATOR MyRoleLink.startProcessSync
+15:48:04,986 DEBUG [BpelProcess] SELECT: PickResponseChannel#9: CHECKING for NEW INSTANCE match
+15:48:04,986 DEBUG [BpelProcess] INPUTMSGMATCH: Changing process instance state from ready to active
+15:48:04,987 DEBUG [BpelProcess] SELECT: PickResponseChannel#9: FOUND match for NEW instance mexRef={MyRoleMex#hqejbhcnphrc42dki6l4ck [Client hqejbhcnphrc42dki6l4cj] calling {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}SequenceTestInterfaceService.startProcessSync(...)}
+15:48:05,037 DEBUG [BpelProcess] ProcessImpl {http://dsg.wiai.uniba.de/betsy/activities/bpel/sequence}Sequence-1 completed OK.
+15:48:05,322 DEBUG [InstanceLockManager] Thread[ODEServer-1,5,main]: unlock(iid=251)
+15:48:05,323 DEBUG [MyRoleMessageExchangeImpl] Received myrole mex response callback
+15:48:05,598 DEBUG [MyRoleMessageExchangeImpl] Releasing mex hqejbhcnphrc42dki6l4ck

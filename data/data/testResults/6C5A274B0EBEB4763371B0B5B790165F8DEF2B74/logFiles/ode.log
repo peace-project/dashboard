@@ -1,0 +1,51 @@
+15:48:45,774 WARN  [AxisServlet] No transportReceiver for org.apache.axis2.transport.http.AxisServletListener found. An instance for HTTP will be configured automatically. Please update your axis2.xml file!
+15:48:46,126 INFO  [ODEServer] Using DAO Connection Factory class org.apache.ode.dao.jpa.BPELDAOConnectionFactoryImpl.
+15:48:47,481 DEBUG [BpelServerImpl] BPEL SERVER initializing 
+15:48:48,363 DEBUG [BpelServerImpl] BPEL SERVER starting.
+15:48:48,378 INFO  [BpelServerImpl] BPEL Server Started.
+15:48:48,382 INFO  [SystemSchedulesConfig] SYSTEM CRON configuration: C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\ode\WEB-INF\conf\schedules.xml
+15:48:48,885 INFO  [DeploymentPoller] Poller started.
+15:48:48,885 INFO  [ODEServer] Process deployment polling started on path C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\ode\WEB-INF\processes.
+15:48:48,886 DEBUG [CronScheduler] Refreshing SYSTEM CRON jobs.
+15:48:48,898 INFO  [ODEServer] ODE Service Engine has been started.
+15:48:48,899 DEBUG [SystemSchedulesConfig] SYSTEM CRON configuration found cron jobs: []
+15:48:52,671 ERROR [BpelC] file:/C:/projects/betsy/server/ode__1_3_6/apache-tomcat-7.0.53/webapps/ode/WEB-INF/processes/SA00095-OnEventVariableOutboundUseAssign/SA00095-OnEventVariableOutboundUseAssign.bpel:54: error: [UndeclaredVariable] Attempt to reference undeclared variable "InitDataSync".
+15:48:52,681 ERROR [ProcessStoreImpl] Deploy failed; error: [CompilationErrors] Compilation completed with 1 error(s):
+	file:/C:/projects/betsy/server/ode__1_3_6/apache-tomcat-7.0.53/webapps/ode/WEB-INF/processes/SA00095-OnEventVariableOutboundUseAssign/SA00095-OnEventVariableOutboundUseAssign.bpel:54: error: [UndeclaredVariable] Attempt to reference undeclared variable "InitDataSync".
+
+org.apache.ode.bpel.compiler.api.CompilationException: error: [CompilationErrors] Compilation completed with 1 error(s):
+	file:/C:/projects/betsy/server/ode__1_3_6/apache-tomcat-7.0.53/webapps/ode/WEB-INF/processes/SA00095-OnEventVariableOutboundUseAssign/SA00095-OnEventVariableOutboundUseAssign.bpel:54: error: [UndeclaredVariable] Attempt to reference undeclared variable "InitDataSync".
+
+	at org.apache.ode.bpel.compiler.BpelCompiler.compile(BpelCompiler.java:783)
+	at org.apache.ode.bpel.compiler.BpelC.compile(BpelC.java:263)
+	at org.apache.ode.bpel.compiler.BpelC.compile(BpelC.java:333)
+	at org.apache.ode.store.DeploymentUnitDir$5.run(DeploymentUnitDir.java:204)
+	at org.apache.ode.utils.InternPool.runBlock(InternPool.java:57)
+	at org.apache.ode.store.DeploymentUnitDir.compile(DeploymentUnitDir.java:201)
+	at org.apache.ode.store.DeploymentUnitDir.compile(DeploymentUnitDir.java:162)
+	at org.apache.ode.store.ProcessStoreImpl.deploy(ProcessStoreImpl.java:204)
+	at org.apache.ode.store.ProcessStoreImpl.deploy(ProcessStoreImpl.java:172)
+	at org.apache.ode.axis2.deploy.DeploymentPoller.check(DeploymentPoller.java:160)
+	at org.apache.ode.axis2.deploy.DeploymentPoller.access$300(DeploymentPoller.java:60)
+	at org.apache.ode.axis2.deploy.DeploymentPoller$PollingThread.run(DeploymentPoller.java:251)
+15:48:52,689 ERROR [DeploymentPoller] Deployment of SA00095-OnEventVariableOutboundUseAssign failed, aborting for now.
+org.apache.ode.bpel.iapi.ContextException: Deploy failed; error: [CompilationErrors] Compilation completed with 1 error(s):
+	file:/C:/projects/betsy/server/ode__1_3_6/apache-tomcat-7.0.53/webapps/ode/WEB-INF/processes/SA00095-OnEventVariableOutboundUseAssign/SA00095-OnEventVariableOutboundUseAssign.bpel:54: error: [UndeclaredVariable] Attempt to reference undeclared variable "InitDataSync".
+
+	at org.apache.ode.store.ProcessStoreImpl.deploy(ProcessStoreImpl.java:208)
+	at org.apache.ode.store.ProcessStoreImpl.deploy(ProcessStoreImpl.java:172)
+	at org.apache.ode.axis2.deploy.DeploymentPoller.check(DeploymentPoller.java:160)
+	at org.apache.ode.axis2.deploy.DeploymentPoller.access$300(DeploymentPoller.java:60)
+	at org.apache.ode.axis2.deploy.DeploymentPoller$PollingThread.run(DeploymentPoller.java:251)
+Caused by: org.apache.ode.bpel.compiler.api.CompilationException: error: [CompilationErrors] Compilation completed with 1 error(s):
+	file:/C:/projects/betsy/server/ode__1_3_6/apache-tomcat-7.0.53/webapps/ode/WEB-INF/processes/SA00095-OnEventVariableOutboundUseAssign/SA00095-OnEventVariableOutboundUseAssign.bpel:54: error: [UndeclaredVariable] Attempt to reference undeclared variable "InitDataSync".
+
+	at org.apache.ode.bpel.compiler.BpelCompiler.compile(BpelCompiler.java:783)
+	at org.apache.ode.bpel.compiler.BpelC.compile(BpelC.java:263)
+	at org.apache.ode.bpel.compiler.BpelC.compile(BpelC.java:333)
+	at org.apache.ode.store.DeploymentUnitDir$5.run(DeploymentUnitDir.java:204)
+	at org.apache.ode.utils.InternPool.runBlock(InternPool.java:57)
+	at org.apache.ode.store.DeploymentUnitDir.compile(DeploymentUnitDir.java:201)
+	at org.apache.ode.store.DeploymentUnitDir.compile(DeploymentUnitDir.java:162)
+	at org.apache.ode.store.ProcessStoreImpl.deploy(ProcessStoreImpl.java:204)
+	... 4 more

@@ -1,0 +1,83 @@
+15:48:23,037 WARN  [AxisServlet] No transportReceiver for org.apache.axis2.transport.http.AxisServletListener found. An instance for HTTP will be configured automatically. Please update your axis2.xml file!
+15:48:23,537 INFO  [ODEServer] Using DAO Connection Factory class org.apache.ode.dao.jpa.BPELDAOConnectionFactoryImpl.
+15:48:25,181 DEBUG [BpelServerImpl] BPEL SERVER initializing 
+15:48:26,380 DEBUG [BpelServerImpl] BPEL SERVER starting.
+15:48:26,396 INFO  [BpelServerImpl] BPEL Server Started.
+15:48:26,400 INFO  [SystemSchedulesConfig] SYSTEM CRON configuration: C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\ode\WEB-INF\conf\schedules.xml
+15:48:26,960 INFO  [DeploymentPoller] Poller started.
+15:48:26,961 INFO  [ODEServer] Process deployment polling started on path C:\projects\betsy\server\ode__1_3_6\apache-tomcat-7.0.53\webapps\ode\WEB-INF\processes.
+15:48:26,963 INFO  [ODEServer] ODE Service Engine has been started.
+15:48:26,964 DEBUG [CronScheduler] Refreshing SYSTEM CRON jobs.
+15:48:26,966 DEBUG [SystemSchedulesConfig] SYSTEM CRON configuration found cron jobs: []
+15:48:31,397 DEBUG [CronScheduler] Cancelling PROCESS CRON jobs for: {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1
+15:48:31,397 DEBUG [CronScheduler] Scheduling PROCESS CRON jobs for: {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1
+15:48:31,398 DEBUG [BpelEngineImpl] Unregister process: serviceId={http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1, process=null
+15:48:31,398 DEBUG [BpelServerImpl] register: {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1
+15:48:31,399 DEBUG [BpelServerImpl] Registering process {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1 with server.
+15:48:31,409 DEBUG [BpelEngineImpl] Register process: serviceId={http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}WCP04-ExclusiveChoiceTestInterfaceService:TestInterfacePort, process=BpelProcess[{http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1]
+15:48:31,413 DEBUG [BpelProcess] Activating {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1
+15:48:31,450 DEBUG [WSAEndpoint] Constructed a new WSAEndpoint: <?xml version="1.0" encoding="UTF-8"?>
+<EndpointReference xmlns="http://www.w3.org/2005/08/addressing"><Metadata><ServiceName xmlns="http://www.w3.org/2006/05/addressing/wsdl" EndpointName="TestInterfacePort" xmlns:servicens="http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface">servicens:WCP04-ExclusiveChoiceTestInterfaceService</ServiceName></Metadata><Address>http://localhost:8080/ode/processes/WCP04-ExclusiveChoiceTestInterface</Address></EndpointReference>
+15:48:31,457 DEBUG [BpelProcess] Activated {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1 myrole MyRoleLink: EPR is org.apache.ode.bpel.epr.WSAEndpoint@315b6895
+15:48:31,458 DEBUG [BpelProcess] Activated {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1
+15:48:31,458 DEBUG [NStateLatch] Rehydrating process {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1
+15:48:31,525 DEBUG [BpelProcess] Creating new process DAO for {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1 (guid=14bnrs7l5iespsf0hf3kdu0sr5i12303)...
+15:48:31,526 DEBUG [BpelProcess] Creating process DAO for {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1 (guid=14bnrs7l5iespsf0hf3kdu0sr5i12303)
+15:48:31,527 DEBUG [BpelProcess] Created new process DAO for {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1 (guid=14bnrs7l5iespsf0hf3kdu0sr5i12303)
+15:48:31,527 DEBUG [BpelProcess] Created new process DAO for {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1 (guid=14bnrs7l5iespsf0hf3kdu0sr5i12303).
+15:48:31,628 INFO  [BpelServerImpl] Registered process {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1.
+15:48:31,628 DEBUG [CronScheduler] Cancelling PROCESS CRON jobs for: {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1
+15:48:31,629 DEBUG [CronScheduler] Scheduling PROCESS CRON jobs for: {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1
+15:48:31,629 INFO  [DeploymentPoller] Deployment of artifact WCP04-ExclusiveChoice successful: [{http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1]
+15:48:31,981 DEBUG [WSAEndpoint] Filled transfo map with service: {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}WCP04-ExclusiveChoiceTestInterfaceService
+15:48:31,982 DEBUG [WSAEndpoint] Filled transfo map with port: TestInterfacePort
+15:48:31,986 DEBUG [BpelEngineImpl] Routed: svcQname {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}WCP04-ExclusiveChoiceTestInterfaceService --> [BpelProcess[{http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1]]
+15:48:31,993 DEBUG [MessageExchangeImpl] SET MEX property isTwoWay = true
+15:48:32,001 DEBUG [MyRoleMessageExchangeImpl] invoke() EPR= null ==> BpelProcess[{http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1]
+15:48:32,067 DEBUG [WSAEndpoint] Filled transfo map with service: {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}WCP04-ExclusiveChoiceTestInterfaceService
+15:48:32,068 DEBUG [WSAEndpoint] Filled transfo map with port: TestInterfacePort
+15:48:32,087 DEBUG [BpelEngineImpl] handleJobDetails: InvokeInternal event for mexid hqejbhcnphrc42dlp3ewmo
+15:48:32,126 DEBUG [BpelProcess] >> handleJobDetails(jobData=JobDetails( instanceId: null mexId: hqejbhcnphrc42dlp3ewmo processId: {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1 type: INVOKE_INTERNAL channel: null correlatorId: null correlationKeySet: null retryCount: null inMem: false detailsExt: {}))
+15:48:32,126 DEBUG [BpelProcess] InvokeInternal event for mexid hqejbhcnphrc42dlp3ewmo
+15:48:32,173 DEBUG [MessageExchangeImpl] GET MEX property org.apache.ode.bpel.myRoleSessionId = null
+15:48:32,174 DEBUG [MessageExchangeImpl] GET MEX property org.apache.ode.bpel.myRoleSessionId = null
+15:48:32,174 DEBUG [MessageExchangeImpl] GET MEX property org.apache.ode.bpel.partnerRoleSessionId = null
+15:48:32,175 DEBUG [BpelProcess] INPUTMSG: MyRoleLink.startProcessSyncString: MSG RCVD keys=[] mySessionId=null partnerSessionId=null
+15:48:32,215 DEBUG [BpelProcess] INPUTMSG: MyRoleLink.startProcessSyncString: routing failed, CREATING NEW INSTANCE
+15:48:32,253 DEBUG [BpelRuntimeContextImpl] BpelRuntimeContextImpl created for instance 251. INDEXED STATE={}
+15:48:32,262 DEBUG [InstanceLockManager] Thread[ODEServer-1,5,main]: lock(iid=251, time=1MICROSECONDS)
+15:48:32,263 DEBUG [InstanceLockManager] Thread[ODEServer-1,5,main]: lock(iid=251, time=1MICROSECONDS)-->GRANTED
+15:48:32,325 DEBUG [BpelProcess] SELECT: PickResponseChannel#9: USING CORRELATOR MyRoleLink.startProcessSyncString
+15:48:32,332 DEBUG [BpelProcess] SELECT: PickResponseChannel#9: CHECKING for NEW INSTANCE match
+15:48:32,332 DEBUG [BpelProcess] INPUTMSGMATCH: Changing process instance state from ready to active
+15:48:32,334 DEBUG [BpelProcess] SELECT: PickResponseChannel#9: FOUND match for NEW instance mexRef={MyRoleMex#hqejbhcnphrc42dlp3ewmo [Client hqejbhcnphrc42dlp3ewmn] calling {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}WCP04-ExclusiveChoiceTestInterfaceService.startProcessSyncString(...)}
+15:48:32,414 DEBUG [BpelProcess] ProcessImpl {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1 completed OK.
+15:48:32,891 DEBUG [InstanceLockManager] Thread[ODEServer-1,5,main]: unlock(iid=251)
+15:48:32,891 DEBUG [MyRoleMessageExchangeImpl] Received myrole mex response callback
+15:48:32,906 DEBUG [MyRoleMessageExchangeImpl] Releasing mex hqejbhcnphrc42dlp3ewmo
+15:48:32,958 DEBUG [WSAEndpoint] Filled transfo map with service: {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}WCP04-ExclusiveChoiceTestInterfaceService
+15:48:32,958 DEBUG [WSAEndpoint] Filled transfo map with port: TestInterfacePort
+15:48:32,959 DEBUG [BpelEngineImpl] Routed: svcQname {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}WCP04-ExclusiveChoiceTestInterfaceService --> [BpelProcess[{http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1]]
+15:48:32,960 DEBUG [MessageExchangeImpl] SET MEX property isTwoWay = true
+15:48:32,962 DEBUG [MyRoleMessageExchangeImpl] invoke() EPR= null ==> BpelProcess[{http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1]
+15:48:32,971 DEBUG [WSAEndpoint] Filled transfo map with service: {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}WCP04-ExclusiveChoiceTestInterfaceService
+15:48:32,971 DEBUG [WSAEndpoint] Filled transfo map with port: TestInterfacePort
+15:48:32,972 DEBUG [BpelEngineImpl] handleJobDetails: InvokeInternal event for mexid hqejbhcnphrc42dlp3ewms
+15:48:32,980 DEBUG [BpelProcess] >> handleJobDetails(jobData=JobDetails( instanceId: null mexId: hqejbhcnphrc42dlp3ewms processId: {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1 type: INVOKE_INTERNAL channel: null correlatorId: null correlationKeySet: null retryCount: null inMem: false detailsExt: {}))
+15:48:32,980 DEBUG [BpelProcess] InvokeInternal event for mexid hqejbhcnphrc42dlp3ewms
+15:48:32,997 DEBUG [MessageExchangeImpl] GET MEX property org.apache.ode.bpel.myRoleSessionId = null
+15:48:32,997 DEBUG [MessageExchangeImpl] GET MEX property org.apache.ode.bpel.myRoleSessionId = null
+15:48:32,998 DEBUG [MessageExchangeImpl] GET MEX property org.apache.ode.bpel.partnerRoleSessionId = null
+15:48:32,998 DEBUG [BpelProcess] INPUTMSG: MyRoleLink.startProcessSyncString: MSG RCVD keys=[] mySessionId=null partnerSessionId=null
+15:48:33,001 DEBUG [BpelProcess] INPUTMSG: MyRoleLink.startProcessSyncString: routing failed, CREATING NEW INSTANCE
+15:48:33,006 DEBUG [BpelRuntimeContextImpl] BpelRuntimeContextImpl created for instance 252. INDEXED STATE={}
+15:48:33,008 DEBUG [InstanceLockManager] Thread[ODEServer-1,5,main]: lock(iid=252, time=1MICROSECONDS)
+15:48:33,009 DEBUG [InstanceLockManager] Thread[ODEServer-1,5,main]: lock(iid=252, time=1MICROSECONDS)-->GRANTED
+15:48:33,012 DEBUG [BpelProcess] SELECT: PickResponseChannel#9: USING CORRELATOR MyRoleLink.startProcessSyncString
+15:48:33,014 DEBUG [BpelProcess] SELECT: PickResponseChannel#9: CHECKING for NEW INSTANCE match
+15:48:33,015 DEBUG [BpelProcess] INPUTMSGMATCH: Changing process instance state from ready to active
+15:48:33,016 DEBUG [BpelProcess] SELECT: PickResponseChannel#9: FOUND match for NEW instance mexRef={MyRoleMex#hqejbhcnphrc42dlp3ewms [Client hqejbhcnphrc42dlp3ewmr] calling {http://dsg.wiai.uniba.de/betsy/activities/wsdl/testinterface}WCP04-ExclusiveChoiceTestInterfaceService.startProcessSyncString(...)}
+15:48:33,026 DEBUG [BpelProcess] ProcessImpl {http://dsg.wiai.uniba.de/betsy/patterns/bpel/control-flow/exclusiveChoice}WCP04-ExclusiveChoice-1 completed OK.
+15:48:33,073 DEBUG [InstanceLockManager] Thread[ODEServer-1,5,main]: unlock(iid=252)
+15:48:33,073 DEBUG [MyRoleMessageExchangeImpl] Received myrole mex response callback
+15:48:33,079 DEBUG [MyRoleMessageExchangeImpl] Releasing mex hqejbhcnphrc42dlp3ewms
